@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <!-- Config -->
+    <th:block th:replace="/layout/fragments/config :: configFragment"></th:block>
+
+    <body class="d-flex h-100 bg-light">
+        <!-- Navigation fragment -->
+        <th:block th:replace="/layout/fragments/navbar :: navbarFragment"></th:block>
+
+        <!-- Main layout -->
+        <div class="container-fluid d-flex flex-column">
+            <!-- Side 와 Main 이 Wrap 되지 않도록 -->
+            <div class="row flex-nowrap h-100">
+                <!-- Side Bar -->
+                <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+
+                <!-- main fragment -->
+                <th:block layout:fragment="content"></th:block>
+            </div>
+
+            <!-- footer fragment -->
+            <th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
+        </div>
+    </body>
+</html>
