@@ -16,17 +16,18 @@ public class ProjectController {
     projectService projectService;
     @RequestMapping(value={"/project"}, method = RequestMethod.GET)
     public ModelAndView example(ModelAndView mav){
+
+        // Sample Database CRUD
         projectEntity sample = new projectEntity();
         sample.setName("Sample");
-        int insertID = projectService.insertProject(sample);
-        sample.setDescription("Modify");
-        projectService.updateProject(sample);
+        if (projectService.insertProject(sample) == 1) {
+            sample.setDescription("Modify");
+            projectService.updateProject(sample);
 
-        var qq = projectService.getProjectList(null);
+            var qq = projectService.getProjectList(null);
 
-        projectService.deleteProject(sample);
-
-
+            projectService.deleteProject(sample);
+        }
 
         mav.setViewName("sub/project");
         return mav;
