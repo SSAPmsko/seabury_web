@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class projectVO {
+public class ProjectVO {
     Integer ID;
     String Name;
     String Description;

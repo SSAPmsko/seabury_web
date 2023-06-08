@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class projectEntity {
+public class ProjectEntity {
     Integer ID;
     String Name;
     String Description;

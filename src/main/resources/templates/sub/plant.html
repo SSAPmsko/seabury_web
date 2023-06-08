@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+    <!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
+    <!-- 이전 버전 layout:decorator="~{layout/layout}"> -->
+
+    <!-- Begin Page Content -->
+    <th:block >
+        <div layout:fragment="content">
+            <h1>Plant Fragment</h1>
+        </div>
+    </th:block>
+</html>

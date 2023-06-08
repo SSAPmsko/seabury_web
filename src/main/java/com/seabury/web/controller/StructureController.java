@@ -1,7 +1,7 @@
 package com.seabury.web.controller;
 
-import com.seabury.web.entity.ProjectEntity;
-import com.seabury.web.service.ProjectService;
+import com.seabury.web.entity.StructureEntity;
+import com.seabury.web.service.StructureService;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,26 +10,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ProjectController {
+public class StructureController {
 
     @Autowired
-    ProjectService projectService;
-    @RequestMapping(value={"/project"}, method = RequestMethod.GET)
+    StructureService StructureService;
+    @RequestMapping(value={"/Structure"}, method = RequestMethod.GET)
     public ModelAndView example(ModelAndView mav){
 
         // Sample Database CRUD
-        ProjectEntity sample = new ProjectEntity();
+        StructureEntity sample = new StructureEntity();
         sample.setName("Sample");
-        if (projectService.insertProject(sample) == 1) {
+        if (StructureService.insertStructure(sample) == 1) {
             sample.setDescription("Modify");
-            projectService.updateProject(sample);
+            StructureService.updateStructure(sample);
 
-            var qq = projectService.getProjectList(null);
+            var qq = StructureService.getStructureList(null);
 
-            projectService.deleteProject(sample);
+            StructureService.deleteStructure(sample);
         }
 
-        mav.setViewName("sub/project");
+        mav.setViewName("sub/Structure");
         return mav;
     }
 }

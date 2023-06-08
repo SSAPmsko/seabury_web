@@ -1,41 +1,41 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.projectEntity;
-import com.seabury.web.mapper.projectMapper;
-import com.seabury.web.vo.projectVO;
+import com.seabury.web.entity.ProjectEntity;
+import com.seabury.web.mapper.ProjectMapper;
+import com.seabury.web.vo.ProjectVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class projectServiceImpl implements projectService {
+public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
-    projectMapper projectMapper;
+    ProjectMapper projectMapper;
 
     @Override
-    public List<projectEntity> getProjectList(projectEntity projectEntity) {
+    public List<ProjectEntity> getProjectList(ProjectEntity projectEntity) {
         return projectMapper.getProjectList(projectEntity);
     }
 
     @Override
-    public int insertProject(projectEntity projectEntity) {
+    public int insertProject(ProjectEntity projectEntity) {
         return projectMapper.insertProject(projectEntity);
     }
 
     @Override
-    public int updateProject(projectEntity projectEntity) {
+    public int updateProject(ProjectEntity projectEntity) {
         return projectMapper.updateProject(projectEntity);
     }
 
     @Override
-    public int deleteProject(projectEntity projectEntity) {
+    public int deleteProject(ProjectEntity projectEntity) {
         return projectMapper.deleteProject(projectEntity);
     }
 
-    public projectVO ConvertEntityToVO(projectEntity projectEntity) {
-        projectVO projectVO = new projectVO();
+    public ProjectVO ConvertEntityToVO(ProjectEntity projectEntity) {
+        ProjectVO projectVO = new ProjectVO();
 
         if (projectEntity != null) {
             projectVO.setID(projectEntity.getID());
@@ -59,8 +59,8 @@ public class projectServiceImpl implements projectService {
         return projectVO;
     }
 
-    public projectEntity ConvertVOToEntity(projectVO projectVO) {
-        projectEntity projectEntity = new projectEntity();
+    public ProjectEntity ConvertVOToEntity(ProjectVO projectVO) {
+        ProjectEntity projectEntity = new ProjectEntity();
 
         if (projectVO != null){
             projectEntity.setID(projectVO.getID());
