@@ -25,7 +25,7 @@ function initTree() {
                 { "id" : "item7",  "parent" : "item4", "text" : "Demo HBWR 01", "icon":  "jstree-file", "state" : {"select" : true} },
                 { "id" : "item8",  "parent" : "item4", "text" : "Demo HBWR 02", "icon" : "jstree-file" },
                 { "id" : "item9",  "parent" : "item5", "text" : "Project 01", "icon" : "jstree-file" },
-                { "id" : "item10", "parent" : "item7", "text" : "Project 02", "icon" : "jstree-file" },
+                { "id" : "item10", "parent" : "item6", "text" : "Project 02", "icon" : "jstree-file" },
             ]
         },
         'plugins' : ["themes", "search"],

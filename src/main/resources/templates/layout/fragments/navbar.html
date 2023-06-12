@@ -14,30 +14,22 @@
                             <a class="nav-link active" aria-current="page" href="#">Plant</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Project</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/project')">Project</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Scenario</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Scenario</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Work</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/work')">Work</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Equipment</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Equipment</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sources</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Sources</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Shield</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/shield')">Shield</a>
                         </li>
                         
                         <!-- KYC 230612 -->
@@ -57,40 +49,8 @@
         </nav>
 
         <!-- Custom styles for this template -->
-        <link href="/static/custom/css/offcanvas.css" rel="stylesheet">
-        <script src="/static/custom/js/offcanvas.js"></script>
-        
-        <!-- KYC -->
-        <script>
-        	function SubMenuClick(_target){        		
-        		/* $.ajax({
-        			url : _target,
-        			method : "GET",
-        			type : "json",
-        			async : true,        			
-        			contentType : "application/json",
-        			success : function(result) {        				
-        			},
-        			error : function(result) {
-        				alert("정상 처리에 실패 하였습니다.");
-        			}
-        		}).done(function(fragment){
-        			$("#page-body").empty();
-        			$("#page-body").replaceWith(fragment);
-        		}); */
-        		
-      		 $("#page-body").empty();
-               $("#page-body").load(_target, function (responseTxt, statusTxt, xhr) {
-                   if (statusTxt == "success") {
-                       //$(".gnb-wrap").removeClass("on");
-                       //$("#window").data("kendoWindow").close();
-                       console.log("External content loaded successfully!");
-                   }
-                   if (statusTxt == "error") {
-                       console.log("Error: " + xhr.status + ": " + xhr.statusText);
-                   }
-               });
-        	}        	
-        </script>
+        <link href="/static/custom/css/navbar.css" rel="stylesheet">
+        <script src="/static/custom/js/navbar.js"></script>
+
     </th:block>
 </html>

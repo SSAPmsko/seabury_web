@@ -14,7 +14,7 @@ public class UnitController {
     UnitService unitService;
     @RequestMapping(value={"/unit"}, method = RequestMethod.GET)
     public ModelAndView example(ModelAndView mav){
-        mav.setViewName("sub/unit");
+        mav.setViewName("sub/unit/unit");
         return mav;
     }
 }

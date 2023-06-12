@@ -18,6 +18,7 @@ public class ProjectController {
     public ModelAndView example(ModelAndView mav){
 
         // Sample Database CRUD
+        /*
         ProjectEntity sample = new ProjectEntity();
         sample.setName("Sample");
         if (projectService.insertProject(sample) == 1) {
@@ -28,8 +29,9 @@ public class ProjectController {
 
             projectService.deleteProject(sample);
         }
+        */
 
-        mav.setViewName("sub/project");
+        mav.setViewName("sub/project/project");
         return mav;
     }
 }

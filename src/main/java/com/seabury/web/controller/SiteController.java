@@ -16,7 +16,7 @@ public class SiteController {
     SiteService siteService;
     @RequestMapping(value={"/site"}, method = RequestMethod.GET)
     public ModelAndView example(ModelAndView mav){
-        mav.setViewName("sub/site");
+        mav.setViewName("sub/site/site");
         return mav;
     }
 }

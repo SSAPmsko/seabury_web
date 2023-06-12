@@ -14,7 +14,7 @@ public class PlantController {
     PlantService plantService;
     @RequestMapping(value={"/plant"}, method = RequestMethod.GET)
     public ModelAndView example(ModelAndView mav){
-        mav.setViewName("sub/plant");
+        mav.setViewName("sub/plant/plant");
         return mav;
     }
 }
