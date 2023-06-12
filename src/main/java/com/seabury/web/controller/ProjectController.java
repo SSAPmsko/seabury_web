@@ -24,7 +24,7 @@ public class ProjectController {
             sample.setDescription("Modify");
             projectService.updateProject(sample);
 
-            var qq = projectService.getProjectList(null);
+            var qq = projectService.getProjectList(new ProjectEntity());
 
             projectService.deleteProject(sample);
         }
