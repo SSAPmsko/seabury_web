@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">    
 
     <!-- Config -->
     <th:block th:replace="/layout/fragments/config :: configFragment"></th:block>
@@ -15,10 +15,13 @@
             <!-- Side 와 Main 이 Wrap 되지 않도록 -->
             <div class="row flex-nowrap h-100">
                 <!-- Side Bar -->
-                <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+                <!-- <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block> -->
 
                 <!-- main fragment -->
-                <th:block layout:fragment="content"></th:block>
+                <div id="page-body">
+                	<th:block layout:fragment="content"></th:block>
+                </div>
+                
             </div>
 
             <!-- footer fragment -->

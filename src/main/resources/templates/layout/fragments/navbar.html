@@ -30,6 +30,18 @@
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </li>
+                        
+                        <!-- KYC 230612 -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Reference</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_103_inh')">ICRP 72/103 연령별 호흡 DCF</a></li>                                
+                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_103_ing')">ICRP 72/103 연령별 섭취 DCF</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_103_w')">ICRP 103 작업자 호흡/섭취 DCF</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_ext')">FGR13 외부피복 DCF</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_103_ext')">FGR15 외부피복 DCF</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -38,5 +50,39 @@
         <!-- Custom styles for this template -->
         <link href="/static/custom/css/offcanvas.css" rel="stylesheet">
         <script src="/static/custom/js/offcanvas.js"></script>
+        
+        <!-- KYC -->
+        <script>
+        	function SubMenuClick(_target){        		
+        		/* $.ajax({
+        			url : _target,
+        			method : "GET",
+        			type : "json",
+        			async : true,        			
+        			contentType : "application/json",
+        			success : function(result) {        				
+        			},
+        			error : function(result) {
+        				alert("정상 처리에 실패 하였습니다.");
+        			}
+        		}).done(function(fragment){
+        			$("#page-body").empty();
+        			$("#page-body").replaceWith(fragment);
+        		}); */
+        		
+      		 $("#page-body").empty();
+               $("#page-body").load(_target, function (responseTxt, statusTxt, xhr) {
+                   if (statusTxt == "success") {
+                       //$(".gnb-wrap").removeClass("on");
+                       //$("#window").data("kendoWindow").close();
+                       console.log("External content loaded successfully!");
+                   }
+                   if (statusTxt == "error") {
+                       console.log("Error: " + xhr.status + ": " + xhr.statusText);
+                   }
+               });
+                  
+        	}        	
+        </script>
     </th:block>
 </html>
