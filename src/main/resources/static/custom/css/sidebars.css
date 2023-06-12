@@ -57,3 +57,13 @@ main {
 .scrollarea {
   overflow-y: auto;
 }
+
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+ .item {
+    flex: 0 0 auto;
+  }
+}
