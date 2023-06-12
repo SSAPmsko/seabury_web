@@ -1,14 +1,185 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
-    <!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
-    <!-- 이전 버전 layout:decorator="~{layout/layout}"> -->
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 
-    <!-- Begin Page Content -->
-    <th:block >
-        <div layout:fragment="content">
-            <h1>Structure Fragment</h1>
-        </div>
-    </th:block>
+<!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
+<!-- 이전 버전 layout:decorator="~{layout/layout}"> -->
+<head>
+<style>
+main {
+	background: #f2f4f7;
+	min-height: 700px;
+}
+
+.row {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.container-fluid {
+	width: 95%;
+	margin: 20px;
+	display: grid;
+	grid-template-columns: 45% 45%; /* 각 행(세로줄)의 길이 */
+	grid-template-rows: 600px; /* 각 열(가로줄)의 길이 */
+	gap: 30px; /* 자식요소간의 간격 */
+}
+</style>
+</head>
+<!-- Begin Page Content -->
+<th:block>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<div class="col"
+				style="border: 1px solid #e2e2e2; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 10px;">
+
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Name:</label> <input
+								type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Name:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Description:</label>
+							<input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Description:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Creator::</label>
+							<input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Creator:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Location:</label>
+							<input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Location:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Start
+								date:</label> <input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Start date:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">End
+								date:</label> <input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="End date:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Dose
+								Limit:</label> <input type="text" readonly
+								class="form-control-plaintext" id="staticEmail2"
+								value="Dose Limit:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Status:</label>
+							<input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Status:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-3">
+							<label for="staticEmail2" class="visually-hidden">Structure:</label>
+							<input type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Structure:">
+						</div>
+						<div class="col-9">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="temp-box"></div>
+			<div class="col"
+				style="border: 1px solid #e2e2e2; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 10px;">
+				<div class="container-lg">
+					<div class="row">
+						<div class="col-auto">
+							<label for="staticEmail2" class="visually-hidden">Type:</label> <input
+								type="text" readonly class="form-control-plaintext"
+								id="staticEmail2" value="Type:">
+						</div>
+						<div class="col-auto">
+							<label for="inputPassword2" class="visually-hidden">Password</label>
+							<input type="text" class="form-control" id="inputPassword2">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
 </html>
