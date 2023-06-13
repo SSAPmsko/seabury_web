@@ -23,7 +23,7 @@ public class RadiationSourceController {
 	@Resource
 	RadiationSourceService radiationsourceService;
 	
-	@PostMapping(value="/radiationsource/getND_60_103_INH_List")
+	@PostMapping(value="/radiationsource/getND_60_103_INH_List.do")
 	public @ResponseBody List<ND_60_103_INH_Entity> getND_60_103_INH_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
 				
 		String tb_name = (String)message.get("tbname");
@@ -39,7 +39,7 @@ public class RadiationSourceController {
 		return ND_60_INH_IN_List;
 	}	
 
-	@PostMapping(value="/radiationsource/getND_60_103_ING_List")
+	@PostMapping(value="/radiationsource/getND_60_103_ING_List.do")
 	public @ResponseBody List<ND_60_103_ING_Entity> getND_60_103_ING_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
 				
 		String tb_name = (String)message.get("tbname");

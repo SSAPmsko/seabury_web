@@ -3,15 +3,16 @@
     <th:block th:fragment="navbarFragment">
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Home</a>
+                <!--<a class="navbar-brand" href="#">Home</a>-->
+                <img width="120" height="32" src="/static/img/logo/seabury_negative.png" href="https://www.seaburysolutions.co.kr/"/>
                 <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav m-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Plant</a>
+                            <a class="nav-link" href="#" onclick="SubMenuClick('/plant')">Plant</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" onclick="SubMenuClick('/project')">Project</a>
