@@ -12,6 +12,9 @@
     <link href="/static/bootstrap-5.3.0-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- JQuery -->
+    <script src="/static/jquery-3.7.0/jquery-3.7.0.min.js"></script>
+
     <meta name="theme-color" content="#712cf9">
 
     <style>
@@ -73,7 +76,7 @@
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form>
+    <form class="form-signin" action="/loginDo" method="post" >
         <img class="h3 mb-3 fw-normal" width="260" height="50" src="/static/img/logo/seabury_positive.png" href="https://www.seaburysolutions.co.kr/"/>
         <!--<h1 class="h3 mb-3 fw-normal">Please sign in</h1>-->
 
@@ -88,10 +91,10 @@
 
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" id="chkSave" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="return test();">Sign in</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="return checkForm();">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
     </form>
 </main>
@@ -99,9 +102,61 @@
 </body>
 
 <script>
-function test() {
-   alert("Submit button clicked!");
-   return true;
+$(document).ready(function(){
+    initLogin();
+});
+
+function initLogin(){
+    var chkSave = getCookie('chkSave'); // 저장 상태 확인
+    var floatingInput = getCookie('floatingInput'); // 저장된 아이디 쿠키
+    if (chkSave == 'true' && floatingInput){
+        $("#chkSave").prop("checked", true); // 체크버튼 활성화
+        $("#floatingInput").val(floatingInput); // 저장된 아이디 입력
+        $("#floatingPassword").focus(); // 패스워드 입력창 포커스
+    }
+}
+
+// form check
+function checkForm(){
+	var id = $.trim($("#floatingInput").val());
+	var pw = $.trim($("#floatingPassword").val());
+
+	// 아이디 공백 체크
+	if(!id){
+		alert("아이디를 입력해 주세요.");
+		$("#floatingInput").focus();
+		return false;
+	}
+
+	// 패스워드 공백 체크
+	if(!pw){
+		alert("비밀번호를 입력해 주세요.");
+		$("#floatingPassword").focus();
+		return false;
+	}
+
+	// 공백제거
+	$("#floatingInput").val(id);
+	$("#floatingPassword").val(pw);
+
+	// 쿠키 설정
+	var flag = $("#chkSave").prop("checked");
+
+	if (flag == true){
+	    setCookie('chkSave', flag, 7) /* 7일 뒤 만료됨 */
+        setCookie('floatingInput', id, 7) /* 7일 뒤 만료됨 */
+	}
+}
+
+function setCookie(name, value, exp) {
+  var date = new Date();
+  date.setTime(date.getTime() + exp*24*60*60*1000);
+  document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+}
+
+function getCookie(name) {
+  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return value? value[2] : null;
 }
 </script>
 </html>
