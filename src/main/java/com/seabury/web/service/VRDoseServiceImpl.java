@@ -17,6 +17,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class VRDoseServiceImpl implements VRDoseService {
@@ -27,9 +28,9 @@ public class VRDoseServiceImpl implements VRDoseService {
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
     @Override
-    public ArrayMap<String, Object> getProject(String property, String id) {
+    public ArrayMap<String, Object> getProject(String id) {
 
-        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() +  "/plannerdbapplication/resources/projectdb/" + property + "/" + id);
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() +  "/plannerdbapplication/resources/projectdb/projects/" + id);
 
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
@@ -45,6 +46,30 @@ public class VRDoseServiceImpl implements VRDoseService {
         }
 
         return new ArrayMap<String, Object>();
+    }
+
+    @Override
+    public ArrayList<ArrayMap<String, Object>> getProjects(String roomId) {
+
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects");
+        if (!StringUtils.isEmpty(roomId)){
+            gUrl.set("roomId", roomId);
+        }
+
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            Object result = request.execute().parseAs(Object.class);
+
+            if (result instanceof ArrayList){
+                return (ArrayList<ArrayMap<String, Object>>)result;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<ArrayMap<String, Object>>();
     }
 
     private HttpRequestFactory getRequestFactory() {
