@@ -1,42 +1,47 @@
- <div> 
- 	<div id="Source_Dropdown" style="margin-top: 5px;">		
-		<label for="sourceList">Radiation Source : </label>
-		<select id="id_source" style="width:450px;">
-			<option value="nd_60_ing_in">nd_60_ing_in</option>
-			<option value="nd_60_ing_1">nd_60_ing_1</option>
-			<option value="nd_60_ing_5">nd_60_ing_5</option>
-			<option value="nd_60_ing_10">nd_60_ing_10</option>
-			<option value="nd_60_ing_15">nd_60_ing_15</option>
-			<option value="nd_60_ing_ad">nd_60_ing_ad</option>
-			<option value="nd_60_ing_w">nd_60_ing_w</option>
-			<option value="nd_103_ing_in">nd_103_ing_in</option>
-			<option value="nd_103_ing_1">nd_103_ing_1</option>
-			<option value="nd_103_ing_5">nd_103_ing_5</option>
-			<option value="nd_103_ing_10">nd_103_ing_10</option>
-			<option value="nd_103_ing_15">nd_103_ing_15</option>
-			<option value="nd_103_ing_AD">nd_103_ing_AD</option>
-		</select>
-	</div>	
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block>
+    <section layout:fragment="content">
+        <div id="Source_Dropdown" style="margin-top: 5px;">
+            <label for="sourceList">Radiation Source : </label>
+            <select id="id_source" style="width:450px;">
+                <option value="nd_60_ing_in">nd_60_ing_in</option>
+                <option value="nd_60_ing_1">nd_60_ing_1</option>
+                <option value="nd_60_ing_5">nd_60_ing_5</option>
+                <option value="nd_60_ing_10">nd_60_ing_10</option>
+                <option value="nd_60_ing_15">nd_60_ing_15</option>
+                <option value="nd_60_ing_ad">nd_60_ing_ad</option>
+                <option value="nd_60_ing_w">nd_60_ing_w</option>
+                <option value="nd_103_ing_in">nd_103_ing_in</option>
+                <option value="nd_103_ing_1">nd_103_ing_1</option>
+                <option value="nd_103_ing_5">nd_103_ing_5</option>
+                <option value="nd_103_ing_10">nd_103_ing_10</option>
+                <option value="nd_103_ing_15">nd_103_ing_15</option>
+                <option value="nd_103_ing_AD">nd_103_ing_AD</option>
+            </select>
+        </div>
 
-	<div id="grid_60_103_ing" style="margin-top:15px;"></div>
- </div>
- 
- <script type="text/javascript">
+        <div id="grid_60_103_ing" style="margin-top:15px;"></div>
+    </section>
+
+    <script type="text/javascript">
  $(document).ready(function () {
 		$("#id_source").kendoDropDownList({
 			change : onChange
 		});
 		LoadRadiationSource();
-		
+
 	});
-	
+
 	 function onChange() {
 		 LoadRadiationSource();
   };
-	
+
 	function LoadRadiationSource() {
 		var formObj = new Object();
-		formObj.tbname = $("#id_source").val();		
+		formObj.tbname = $("#id_source").val();
 
 		$.ajax({
 			url : "/radiationsource/getND_60_103_ING_List.do",
@@ -54,12 +59,12 @@
 				alert("정상 처리에 실패 하였습니다.");
 			}
 		});
-		
-		
+
+
 	}
-	
-	function WriteData(loadataSource){		
-		var gridDataSource = new kendo.data.DataSource({	        
+
+	function WriteData(loadataSource){
+		var gridDataSource = new kendo.data.DataSource({
 	        data : loadataSource,
 	        pageSize: 15,
 	        schema: {
@@ -75,18 +80,18 @@
 	            }
 	        }
 	    });
-		 
+
 		$("#grid_60_103_ing").kendoGrid({
 	        dataSource: gridDataSource,
 	        sortable: true,
-	        selectable: "single",	        
-	        pageable: {	        	
+	        selectable: "single",
+	        pageable: {
 	            buttonCount: 5
 	        },
 	        scrollable: false,
 	        persistSelection: true,
-	        navigatable: true,        
-	        columns: [{	            
+	        navigatable: true,
+	        columns: [{
 	            field: "half_life1",
 	            title: "Half Life1",
 	            width: 240
@@ -111,4 +116,8 @@
 	        }]
 	    });
 	}
- </script>
+
+    </script>
+
+</th:block>
+</html>

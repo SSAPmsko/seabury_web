@@ -1,57 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <th:block th:fragment="navbarFragment">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
-            <div class="container-fluid">
-                <!--<a class="navbar-brand" href="#">Home</a>-->
-                <img width="120" height="32" src="/static/img/logo/seabury_negative.png" href="https://www.seaburysolutions.co.kr/"/>
-                <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-                    <ul class="navbar-nav m-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/plant')">Plant</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/project')">Project</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Scenario</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/work')">Work</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Equipment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/scenario')">Sources</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="SubMenuClick('/shield')">Shield</a>
-                        </li>
-                        
-                        <!-- KYC 230612 -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Reference</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_103_inh')">ICRP 72/103 연령별 호흡 DCF</a></li>                                
-                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_103_ing')">ICRP 72/103 연령별 섭취 DCF</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_103_w')">ICRP 103 작업자 호흡/섭취 DCF</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_60_ext')">FGR13 외부피복 DCF</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="SubMenuClick('/radiationsource/nd_103_ext')">FGR15 외부피복 DCF</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+<th:block th:fragment="navbarFragment">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+        <div class="container-fluid">
+            <!--<a class="navbar-brand" href="#">Home</a>-->
+            <a href="main"><img width="120" height="32" src="/static/img/logo/seabury_negative.png" href="main"/></a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" id="plant" href="plant">Plant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="project" href="project">Project</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="scenario" href="scenario">Scenario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="work" href="work">Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="equipment" href="equipment">Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="sources" href="sources">Sources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="shield" href="shield">Shield</a>
+                    </li>
+
+                    <!-- KYC 230612 -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Reference</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" id="nd_60_103_inh" href="nd_60_103_inh">ICRP 72/103 연령별 호흡
+                                DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_60_103_ing" href="nd_60_103_ing">ICRP 72/103 연령별 섭취
+                                DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_103_w" href="nd_103_w">ICRP 103 작업자 호흡/섭취 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_60_ext" href="nd_60_ext">FGR13 외부피복 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_103_ext" href="nd_103_ext">FGR15 외부피복 DCF</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Logout</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <!-- Custom styles for this template -->
-        <link href="/static/custom/css/navbar.css" rel="stylesheet">
-        <script src="/static/custom/js/navbar.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="/static/layout/css/navbar.css" rel="stylesheet">
+    <script src="/static/layout/js/navbar.js"></script>
 
-    </th:block>
+</th:block>
 </html>

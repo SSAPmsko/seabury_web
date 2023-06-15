@@ -8,22 +8,65 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.seabury.web.service.CommonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import com.seabury.web.entity.ND_60_103_ING_Entity;
 import com.seabury.web.entity.ND_60_103_INH_Entity;
 import com.seabury.web.service.RadiationSourceService;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class RadiationSourceController {
+	@Autowired
+	CommonService commonService;
 
 	@Resource
 	RadiationSourceService radiationsourceService;
+
+	/* kyc 0612 - Add Reference */
+	@GetMapping(value="/nd_60_103_inh")
+	public ModelAndView radiationsource_nd_60_103_inh(ModelAndView mav){
+		mav.setViewName("sub/radiationsource/nd_60_103_inh");
+		return mav;
+	}
+
+	@GetMapping(value="/nd_60_103_ing")
+	public ModelAndView radiationsource_nd_60_103_ing(ModelAndView mav){
+		mav.setViewName("sub/radiationsource/nd_60_103_ing");
+		return mav;
+	}
+
+	@PostMapping(value="/nd_60_103_ing")
+	public void radiationsource_nd_60_103_inh(HttpServletRequest request, HttpServletResponse response){
+		// 인증 성공 후 돌아가야 할 페이지로 리다이렉션 한다.
+		try {
+			commonService.sendRedirect(request, response, "sub/radiationsource/nd_60_103_ing");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@GetMapping(value="/nd_103_ext")
+	public ModelAndView radiationsource_nd_103_ext(ModelAndView mav){
+		mav.setViewName("sub/radiationsource/nd_103_ext");
+		return mav;
+	}
+
+	@GetMapping(value="/nd_60_ext")
+	public ModelAndView radiationsource_nd_60_ext(ModelAndView mav){
+		mav.setViewName("sub/radiationsource/nd_60_ext");
+		return mav;
+	}
+
+	@GetMapping(value="/radiationsource/nd_103_w")
+	public ModelAndView radiationsource_nd_103_w(ModelAndView mav){
+		mav.setViewName("sub/radiationsource/nd_103_w");
+		return mav;
+	}
 	
-	@PostMapping(value="/radiationsource/getND_60_103_INH_List.do")
+	@PostMapping(value="/getND_60_103_INH_List")
 	public @ResponseBody List<ND_60_103_INH_Entity> getND_60_103_INH_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
 				
 		String tb_name = (String)message.get("tbname");
@@ -39,7 +82,7 @@ public class RadiationSourceController {
 		return ND_60_INH_IN_List;
 	}	
 
-	@PostMapping(value="/radiationsource/getND_60_103_ING_List.do")
+	@PostMapping(value="/getND_60_103_ING_List")
 	public @ResponseBody List<ND_60_103_ING_Entity> getND_60_103_ING_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
 				
 		String tb_name = (String)message.get("tbname");
