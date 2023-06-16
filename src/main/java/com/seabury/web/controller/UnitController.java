@@ -21,7 +21,7 @@ public class UnitController {
 
     @RequestMapping(value={"/unit"}, method = RequestMethod.GET)
     public ModelAndView unit(ModelAndView mav){
-        mav.setViewName("sub/unit/unit");
+        mav.setViewName("view/sub/unit/unit");
         return mav;
     }
 

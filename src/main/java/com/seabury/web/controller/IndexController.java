@@ -31,13 +31,13 @@ public class IndexController {
             projectService.deleteProject(sample);
         }*/
 
-        mav.setViewName("example/index");
+        mav.setViewName("view/example/index");
         return mav;
     }
     
     @GetMapping(value="/main")
     public ModelAndView main(ModelAndView mav){
-        mav.setViewName("main/index");
+        mav.setViewName("view/main/index");
         return mav;
     }
 }

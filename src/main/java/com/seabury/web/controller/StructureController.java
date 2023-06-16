@@ -23,7 +23,7 @@ public class StructureController {
 
     @RequestMapping(value={"/structure"}, method = RequestMethod.GET)
     public ModelAndView structure(ModelAndView mav){
-        mav.setViewName("sub/structure/structure");
+        mav.setViewName("view/sub/structure/structure");
         return mav;
     }
 

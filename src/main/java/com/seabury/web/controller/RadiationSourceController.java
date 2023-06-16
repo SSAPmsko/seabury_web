@@ -28,13 +28,13 @@ public class RadiationSourceController {
 	/* kyc 0612 - Add Reference */
 	@GetMapping(value="/nd_60_103_inh")
 	public ModelAndView radiationsource_nd_60_103_inh(ModelAndView mav){
-		mav.setViewName("sub/radiationsource/nd_60_103_inh");
+		mav.setViewName("view/sub/radiationsource/nd_60_103_inh");
 		return mav;
 	}
 
 	@GetMapping(value="/nd_60_103_ing")
 	public ModelAndView radiationsource_nd_60_103_ing(ModelAndView mav){
-		mav.setViewName("sub/radiationsource/nd_60_103_ing");
+		mav.setViewName("view/sub/radiationsource/nd_60_103_ing");
 		return mav;
 	}
 
@@ -42,7 +42,7 @@ public class RadiationSourceController {
 	public void radiationsource_nd_60_103_inh(HttpServletRequest request, HttpServletResponse response){
 		// 인증 성공 후 돌아가야 할 페이지로 리다이렉션 한다.
 		try {
-			commonService.sendRedirect(request, response, "sub/radiationsource/nd_60_103_ing");
+			commonService.sendRedirect(request, response, "view/sub/radiationsource/nd_60_103_ing");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,19 +50,19 @@ public class RadiationSourceController {
 
 	@GetMapping(value="/nd_103_ext")
 	public ModelAndView radiationsource_nd_103_ext(ModelAndView mav){
-		mav.setViewName("sub/radiationsource/nd_103_ext");
+		mav.setViewName("view/sub/radiationsource/nd_103_ext");
 		return mav;
 	}
 
 	@GetMapping(value="/nd_60_ext")
 	public ModelAndView radiationsource_nd_60_ext(ModelAndView mav){
-		mav.setViewName("sub/radiationsource/nd_60_ext");
+		mav.setViewName("view/sub/radiationsource/nd_60_ext");
 		return mav;
 	}
 
-	@GetMapping(value="/radiationsource/nd_103_w")
+	@GetMapping(value="/nd_103_w")
 	public ModelAndView radiationsource_nd_103_w(ModelAndView mav){
-		mav.setViewName("sub/radiationsource/nd_103_w");
+		mav.setViewName("view/sub/radiationsource/nd_103_w");
 		return mav;
 	}
 	

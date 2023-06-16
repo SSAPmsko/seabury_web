@@ -31,7 +31,7 @@ public class ProjectController {
     @RequestMapping(value={"/project"}, method = RequestMethod.GET)
     public ModelAndView project(ModelAndView mav){
 
-        ArrayMap<String, Object> projectData =  vrDoseService.getProject("1");
+        ArrayMap<String, Object> projectData =  vrDoseService.getProject("4");
 
         if (projectData.size() > 0 ) {
             mav.addAllObjects(projectData);
@@ -41,10 +41,11 @@ public class ProjectController {
         ArrayList<ArrayMap<String, Object>> projectsData = vrDoseService.getProjects("");
 
         if (projectsData.size() > 0 ) {
+            projectsData.get(0).get("id");
             mav.addObject(projectsData);
         }
 
-        mav.setViewName("sub/project/project");
+        mav.setViewName("view/sub/project/project");
         return mav;
     }
 

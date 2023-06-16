@@ -23,7 +23,7 @@ public class SiteController {
 
     @RequestMapping(value={"/site"}, method = RequestMethod.GET)
     public ModelAndView site(ModelAndView mav){
-        mav.setViewName("sub/site/site");
+        mav.setViewName("view/sub/site/site");
         return mav;
     }
 

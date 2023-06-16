@@ -22,7 +22,7 @@ public class PlantController {
 
     @RequestMapping(value={"/plant"}, method = RequestMethod.GET)
     public ModelAndView plant(ModelAndView mav){
-        mav.setViewName("sub/plant/plant");
+        mav.setViewName("view/sub/plant/plant");
         return mav;
     }
 
