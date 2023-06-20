@@ -4,7 +4,98 @@
       layout:decorate="~{layout/layout}">
 <th:block>
     <section layout:fragment="content">
-        <h1>103 W</h1>
+        <div id="Source_Dropdown" style="margin-top: 5px;">
+            <label for="id_source">Radiation Source : </label>
+            <select id="id_source" style="width:450px;">
+                <option value="nd_103_inh_w">ICRP103 기준/ 작업자의 호흡 DCF</option>
+                <option value="nd_103_ing_w">ICRP103 기준/ 작업자의 섭취 DCF</option>
+            </select>
+        </div>
+
+        <div id="grid_103_w" style="margin-top:15px;"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#id_source").kendoDropDownList({
+            change : onChange
+        });
+        LoadRadiationSource();
+    });
+
+	function onChange() {
+		 //Read - grid read 다시 실행
+		$("#grid_103_w").data("kendoGrid").dataSource.read();
+	};
+
+	function LoadRadiationSource() {
+		$("#grid_103_w").kendoGrid({
+            columns: [{
+	            field: "half_life1",
+	            title: "Half Life1",
+	            width: 240
+	        }, {
+	            field: "half_life2",
+	            title: "Half Life2"
+	        }, {
+	            field: "half_life2unit",
+	            title: "Unit"
+	        }, {
+	            field: "half_life3",
+	            title: "Half Life3",
+	            width: 150
+	        }, {
+	            field: "half_life3unit",
+	            title: "Unit",
+	            width: 150
+	        }, {
+	            field: "type",
+	            title: "Type",
+	            width: 150
+	        }],
+            dataSource: {
+                transport: {
+                    read: function(options){
+                        $.ajax({
+                            url : "/getND_103_W_List",
+                            method : "POST",
+                            type : "json",
+                            async : true,
+                            data : JSON.stringify({
+                                tbname : $("#id_source").val()
+                            }),
+                            contentType : "application/json",
+                            success: function(result) {
+                              options.success(result);
+                            },
+                            error: function(result) {
+                              options.error(result);
+                            }
+                        });
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            half_life1: { type: "string" },
+                            half_life2: { type: "float" },
+                            half_life2unit: { type: "string" },
+                            half_life3: { type: "float" },
+                            half_life3unit: { type: "string" },
+                            type: { type: "string" }
+                        }
+                    }
+                },
+                pageSize: 30
+            },
+            height : 750,
+            scrollable : true,
+            sortable: true,
+            resizable:true,
+            pageable: true
+        });
+	}
+
+        </script>
     </section>
 </th:block>
 </html>
