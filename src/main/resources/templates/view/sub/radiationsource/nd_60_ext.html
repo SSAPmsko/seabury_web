@@ -4,7 +4,97 @@
       layout:decorate="~{layout/layout}">
 <th:block>
     <section layout:fragment="content">
-        <h1>60 EXT</h1>
+        <div id="Source_Dropdown" style="margin-top: 5px;">
+            <label for="id_source">Radiation Source : </label>
+            <select id="id_source" style="width:450px;">
+                <option value="nd_60_ext_1">FGR13 Supplement CD/ 지표면 두께 1cm 외부피폭 DCF</option>
+                <option value="nd_60_ext_5">FGR13 Supplement CD/ 지표면 두께 5cm 외부피폭 DCF</option>
+                <option value="nd_60_ext_15">FGR13 Supplement CD/ 지표면 두께 15cm 외부피폭 DCF</option>
+                <option value="nd_60_ext_sf">FGR13 Supplement CD/ 지표면 외부피폭 DCF</option>
+                <option value="nd_60_ext_in">FGR13 Supplement CD/ 지표면 Infinite 외부피폭 DCF</option>
+                <option value="nd_60_ext_wat">FGR13 Supplement CD/ Water Submersion 외부피폭 DCF</option>
+                <option value="nd_60_ext_air">FGR13 Supplement CD/ Air Submersion 외부피폭 DCF</option>
+            </select>
+        </div>
+
+        <div id="grid_60_ext" style="margin-top:15px;"></div>
+
+        <script type="text/javascript">
+ $(document).ready(function () {
+			$("#id_source").kendoDropDownList({
+				change : onChange
+			});
+			LoadRadiationSource();
+
+		});
+
+	function onChange() {
+		 //Read - grid read 다시 실행
+		$("#grid_60_ext").data("kendoGrid").dataSource.read();
+	};
+	function LoadRadiationSource() {
+		$("#grid_60_ext").kendoGrid({
+		   columns: [{
+	            field: "adrenals",
+	            title: "adrenals",
+	            width: 240
+	        }, {
+	        	field: "bladder_wall",
+	            title: "bladder_wall",
+	        }, {
+	        	field: "bone_surface",
+	            title: "bone_surface",
+	        }, {
+	        	field: "brain",
+	            title: "brain",
+	        }, {
+	            field: "breast",
+	            title: "breast",
+	            width: 150
+	        }],
+		  dataSource: {
+	          transport: {
+	              read: function(options){
+	            	$.ajax({
+	            		url : "/getND_60_EXT_List",
+	        			method : "POST",
+	        			type : "json",
+	        			async : true,
+	        			data : JSON.stringify({
+	        				tbname : $("#id_source").val()
+	        			}),
+	        			contentType : "application/json",
+	            		success: function(result) {
+	           	          options.success(result);
+	           	        },
+	           	        error: function(result) {
+	           	          options.error(result);
+	           	        }
+	            	});
+	              }
+	          },
+	          schema: {
+	  	        model: {
+	  	            fields: {
+	  	            	adrenals: { type: "float" },
+	                	bladder_wall: { type: "float" },
+	                	bone_surface: { type: "float" },
+	                	brain: { type: "float" },
+	                	breast: { type: "float" }
+	  	            }
+	  	        }
+	  	    },
+	  	    pageSize: 30
+		  },
+		  height : 750,
+		  scrollable : true,
+		  sortable: true,
+		  resizable:true,
+	      pageable: true
+		});
+	}
+
+        </script>
     </section>
 </th:block>
 </html>

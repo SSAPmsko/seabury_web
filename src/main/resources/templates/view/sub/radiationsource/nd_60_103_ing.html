@@ -7,117 +7,84 @@
         <div id="Source_Dropdown" style="margin-top: 5px;">
             <label for="sourceList">Radiation Source : </label>
             <select id="id_source" style="width:450px;">
-                <option value="nd_60_ing_in">nd_60_ing_in</option>
-                <option value="nd_60_ing_1">nd_60_ing_1</option>
-                <option value="nd_60_ing_5">nd_60_ing_5</option>
-                <option value="nd_60_ing_10">nd_60_ing_10</option>
-                <option value="nd_60_ing_15">nd_60_ing_15</option>
-                <option value="nd_60_ing_ad">nd_60_ing_ad</option>
-                <option value="nd_60_ing_w">nd_60_ing_w</option>
-                <option value="nd_103_ing_in">nd_103_ing_in</option>
-                <option value="nd_103_ing_1">nd_103_ing_1</option>
-                <option value="nd_103_ing_5">nd_103_ing_5</option>
-                <option value="nd_103_ing_10">nd_103_ing_10</option>
-                <option value="nd_103_ing_15">nd_103_ing_15</option>
-                <option value="nd_103_ing_AD">nd_103_ing_AD</option>
+                <option value="nd_60_ing_in">ICRP72/3개월(Infant) 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_1">ICRP72/1세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_5">ICRP72/5세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_10">ICRP72/10세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_15">ICRP72/15세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_ad">ICRP72/성인 연령군에 대한 섭취 DCF</option>
+                <option value="nd_60_ing_w">ICRP68/작업자의 섭취 DCF</option>
+                <option value="nd_103_ing_in">ICRP103 기준/3개월(Infant) 연령군에 대한 섭취 DCF</option>
+                <option value="nd_103_ing_1">ICRP103 기준/1세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_103_ing_5">ICRP103 기준/5세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_103_ing_10">ICRP103 기준/10세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_103_ing_15">ICRP103 기준/15세 연령군에 대한 섭취 DCF</option>
+                <option value="nd_103_ing_AD">ICRP103 기준/성인 연령군에 대한 섭취 DCF</option>
             </select>
         </div>
 
         <div id="grid_60_103_ing" style="margin-top:15px;"></div>
 
-        <script type="text/javascript">
- $(document).ready(function () {
-		$("#id_source").kendoDropDownList({
-			change : onChange
-		});
-		LoadRadiationSource();
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#id_source").kendoDropDownList({
+            change : onChange
+        });
+        LoadRadiationSource();
+    });
 
-	});
+    function onChange() {
 
-	 function onChange() {
-		 LoadRadiationSource();
-  };
+         $("#grid_60_103_ing").data("kendoGrid").dataSource.read();
+    };
 
 	function LoadRadiationSource() {
-		var formObj = new Object();
-		formObj.tbname = $("#id_source").val();
-
-		$.ajax({
-			url : "/getND_60_103_ING_List",
-			method : "POST",
-			type : "json",
-			async : true,
-			data : JSON.stringify(formObj),
-			contentType : "application/json",
-			success : function(result) {
-				if (result != null) {
-					WriteData(result);
-				}
-			},
-			error : function(result) {
-				alert("정상 처리에 실패 하였습니다.");
-			}
-		});
-
-
-	}
-
-	function WriteData(loadataSource){
-		var gridDataSource = new kendo.data.DataSource({
-	        data : loadataSource,
-	        pageSize: 15,
-	        schema: {
-	            model: {
-	                fields: {
-	                	half_life1: { type: "string" },
-	                	half_life2: { type: "float" },
-	                	half_life2unit: { type: "string" },
-	                	half_life3: { type: "float" },
-	                	half_life3unit: { type: "string" },
-	                	type: { type: "string" }
-	                }
-	            }
-	        }
-	    });
-
 		$("#grid_60_103_ing").kendoGrid({
-	        dataSource: gridDataSource,
-	        sortable: true,
-	        selectable: "single",
-	        pageable: {
-	            buttonCount: 5
-	        },
-	        scrollable: false,
-	        persistSelection: true,
-	        navigatable: true,
-	        columns: [{
-	            field: "half_life1",
-	            title: "Half Life1",
-	            width: 240
-	        }, {
-	            field: "half_life2",
-	            title: "Half Life2"
-	        }, {
-	            field: "half_life2unit",
-	            title: "Unit"
-	        }, {
-	            field: "half_life3",
-	            title: "Half Life3",
-	            width: 150
-	        }, {
-	            field: "half_life3unit",
-	            title: "Unit",
-	            width: 150
-	        }, {
-	            field: "type",
-	            title: "Type",
-	            width: 150
-	        }]
-	    });
-	}
-
-
-        </script>
+            columns: [
+                { field: "half_life1" },
+                { field: "half_life2" },
+                { field: "half_life2unit" }
+            ],
+            dataSource: {
+                transport: {
+                    read: function(options){
+                        $.ajax({
+                            url : "/getND_60_103_ING_List",
+                            method : "POST",
+                            type : "json",
+                            async : true,
+                            data : JSON.stringify({
+                                tbname : $("#id_source").val()
+                            }),
+                            contentType : "application/json",
+                            success: function(result) {
+                              options.success(result);
+                            },
+                            error: function(result) {
+                              options.error(result);
+                            }
+                        });
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            half_life1: { type: "string" },
+                            half_life2: { type: "float" },
+                            half_life2unit: { type: "string" }
+                        }
+                    }
+                },
+                pageSize: 30
+            },
+            height : 750,
+            scrollable : true,
+            sortable: true,
+            resizable:true,
+            pageable: true
+        });
+    }
+</script>
     </section>
 </th:block>
 </html>
