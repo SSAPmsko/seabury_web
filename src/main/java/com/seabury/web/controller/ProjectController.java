@@ -2,20 +2,27 @@ package com.seabury.web.controller;
 
 import com.google.api.client.util.ArrayMap;
 import com.seabury.web.entity.ProjectEntity;
+import com.seabury.web.entity.VRDose_ProjectEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.ProjectService;
 import com.seabury.web.service.VRDoseService;
+import com.seabury.web.vo.ReturnParam;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProjectController {
@@ -28,33 +35,80 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
-    @RequestMapping(value={"/project"}, method = RequestMethod.GET)
-    public ModelAndView project(ModelAndView mav){
-
-        ArrayMap<String, Object> projectData =  vrDoseService.getProject("4");
-
-        if (projectData.size() > 0 ) {
-            mav.addAllObjects(projectData);
-        }
-
-
-        ArrayList<ArrayMap<String, Object>> projectsData = vrDoseService.getProjects("");
-
-        if (projectsData.size() > 0 ) {
-            projectsData.get(0).get("id");
-            mav.addObject(projectsData);
-        }
-
-        mav.setViewName("view/sub/project/project");
+    @RequestMapping(value = {"/projectList"}, method = RequestMethod.GET)
+    public ModelAndView projectList(ModelAndView mav) {
+        mav.setViewName("view/sub/project/projectList");
         return mav;
     }
 
-    @RequestMapping(value={"/project"}, method = RequestMethod.POST)
-    public void project(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = {"/projectList"}, method = RequestMethod.POST)
+    public void projectList(HttpServletRequest request, HttpServletResponse response) {
         try {
-            commonService.sendRedirect(request, response, "login");
+            commonService.sendRedirect(request, response, "projectList");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = {"/projectDetail"}, method = RequestMethod.GET)
+    public ModelAndView projectDetail(ModelAndView mav, @RequestParam(value = "id", required = false) String id) {
+
+        // id가 null 이면 생성, null 이 아니면 수정
+        if (StringUtils.isEmpty(id)){
+            mav.addObject("editMode", false);
+            mav.addObject("date", LocalDate.now());
+            mav.addObject("startDate", LocalDate.now());
+            mav.addObject("endDate", LocalDate.now());
+            mav.setViewName("view/sub/project/projectDetail");
+        } else {
+            mav.addObject("editMode", true);
+            mav.addAllObjects(vrDoseService.getProject(id));
+            mav.setViewName("view/sub/project/projectDetail");
+        }
+        return mav;
+    }
+
+    @RequestMapping(value={"/projectInsert"}, method = RequestMethod.POST)
+    public @ResponseBody Map<String, Object> projectInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.setSuccess("");
+        rp.put("result", vrDoseService.insertProject(requestMap));
+
+        return rp;
+    }
+
+    @RequestMapping(value={"/projectUpdate"}, method = RequestMethod.POST)
+    public @ResponseBody Map<String, Object> projectUpdate(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.setSuccess("");
+        rp.put("result", vrDoseService.updateProject(requestMap));
+
+        return rp;
+    }
+
+    @RequestMapping(value={"/projectDelete"}, method = RequestMethod.DELETE)
+    public @ResponseBody Map<String, Object> projectDelete(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.setSuccess("");
+        rp.put("result", vrDoseService.deleteProject(requestMap));
+
+        return rp;
+    }
+
+    @RequestMapping(value = {"/projectDetail"}, method = RequestMethod.POST)
+    public void projectDetail(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            commonService.sendRedirect(request, response, "projectDetail");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = {"/getProjectList"}, method = RequestMethod.POST)
+    public @ResponseBody List<ArrayList> getProjectList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+        return vrDoseService.getProjects("");
     }
 }

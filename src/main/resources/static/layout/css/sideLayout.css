@@ -1,0 +1,23 @@
+/*
+.custom_wrapper {
+	display : -webkit-flex;
+	display : flex;
+}
+.custom_main {
+	-webkit-flex : 1;
+	flex : 1;
+}
+.custom_side {
+	width : 300px;
+}
+*/
+html {
+    overflow:hidden
+}
+body {
+    overflow:hidden
+}
+
+.mainContent{
+    overflow:auto
+}
