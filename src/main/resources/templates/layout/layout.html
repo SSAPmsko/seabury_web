@@ -11,11 +11,11 @@
         <th:block th:replace="/layout/fragments/navbar :: navbarFragment"></th:block>
 
         <!-- Main layout -->
-        <div class="container-fluid d-flex flex-column">
+        <div class="mainContent container-fluid d-flex flex-column">
             <!-- Side 와 Main 이 Wrap 되지 않도록 -->
             <div class="row flex-nowrap h-100">
                 <!-- main fragment -->
-                <div id="page-body">
+                <div id="page-body" style="margin-top:15px;">
                 	<th:block layout:fragment="content"></th:block>
                 </div>
                 

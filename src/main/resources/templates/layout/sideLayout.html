@@ -11,21 +11,26 @@
         <th:block th:replace="/layout/fragments/navbar :: navbarFragment"></th:block>
 
         <!-- Main layout -->
-        <div class="container-fluid d-flex flex-column">
+        <div class="mainContent container-fluid d-flex flex-column">
             <!-- Side 와 Main 이 Wrap 되지 않도록 -->
-            <div class="row flex-nowrap h-100">
+            <div class="row h-100">
                 <!-- Side Bar -->
-                <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+                <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+                    <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+                </div>
 
                 <!-- main fragment -->
-                <div id="page-body">
+                <div class="col" id="page-body" style="margin-top:15px;">
                 	<th:block layout:fragment="content"></th:block>
                 </div>
-                
             </div>
 
             <!-- footer fragment -->
             <th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
         </div>
+
+        <!-- Custom styles for this template -->
+        <link href="/static/layout/css/sideLayout.css" rel="stylesheet">
+
     </body>
 </html>
