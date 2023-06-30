@@ -108,7 +108,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = {"/getProjectList"}, method = RequestMethod.POST)
-    public @ResponseBody List<ArrayList> getProjectList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+    public @ResponseBody List<Map<String, Object>> getProjectList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getProjects("");
     }
 }

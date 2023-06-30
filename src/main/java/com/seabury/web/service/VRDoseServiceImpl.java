@@ -64,6 +64,13 @@ public class VRDoseServiceImpl implements VRDoseService {
             for (Object item : result = request.execute().parseAs(result.getClass())) {
                 if (item instanceof ArrayMap){
                     ArrayMap<String, Object> castingItem = (ArrayMap<String, Object>)item;
+
+                    try {
+                        Float.parseFloat(castingItem.get("doseLimit").toString());
+                    } catch (Exception e) {
+                        castingItem.put("doseLimit", "0.0");
+                    }
+
                     castingItem.remove("properties"); // <<<<<<<<<< properties 필드가 Object 형태로 반환되어, 데이터 파싱할때 문제가 발생됨. 사용하지 않는 필드여서 삭제.
                 }
             }

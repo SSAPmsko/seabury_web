@@ -101,13 +101,11 @@ function loadData() {
                 read: function(options){
                     $.ajax({
                         url : "/getProjectList",
-                        method : "POST",
-                        type : "json",
-                        async : true,
-                        data : JSON.stringify({
-                            //tbname : $("#id_source").val()
-                        }),
-                        contentType : "application/json",
+                        type: 'POST',
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
                         success: function(result) {
                           options.success(result);
                         },
