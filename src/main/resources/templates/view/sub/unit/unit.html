@@ -4,246 +4,105 @@
       layout:decorate="~{layout/layout}">
 
 <!-- Begin Page Content -->
-<head>
-    <style>
-main {
-	background: #f2f4f7;
-	min-height: 700px;
-}
 
-.row {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-.grid1 {
-	grid-row-start: 1;
-	
-	font-family: Arial;
-}
-
-.grid2 {
-	grid-row-start: 2;
-	grid-row-end: span 3;
-	
-	font-family: Arial;
-}
-
-.grid3 {
-	grid-row-start: 1;
-	grid-row-end: span 3;
-	grid-column-start: 2;
-	
-	font-family: Arial;
-}
-
-legend {
-	float: none;
-	width: auto;
-	padding-right: 0.75rem;
-	padding-left: 0.75rem;
-	font-family:Arial;
-	font-weight: 900;
-}
-.textstyle {
-	font-weight: bold;
-}
-.gridlayer {
-	width: 90%;
-	margin: 20px;
-	display: grid;
-	grid-template-columns: 45% 45%; /* 각 행(세로줄)의 길이 */
-	grid-template-rows: 240px 240px 140px; /* 각 열(가로줄)의 길이 */
-	gap: 20px; /* 자식요소간의 간격 */
-}
-
-    </style>
-</head>
 <!-- Begin Page Content -->
 
 <th:block>
-    <section layout:fragment="content">
-        <div class="gridlayer container-fluid">
-            <fieldset class="grid1"
-                      style=" margin-right: 10px; margin-left: 10px;">
-                <legend>속성</legend>
+    <div layout:fragment="content">
+        <div class="row g-2 container-fluid">
+            <div class="col-6">
+                <fieldset>
+                    <legend>속성</legend>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="container-lg">
+                    <div class="row g-3">
+                        <!-- Type -->
+                        <div class="col-sm-6">
+                            <label for="txt_type" class="form-label">Type</label>
+                            <input type="text" class="form-control" id="txt_type" th:value="${type}">
+                        </div>
 
-                            <label for="staticEmail2" class="visually-hidden">Type</label> <input
-                                type="text" readonly class="textstyle form-control-plaintext"
-                                id="staticEmail2" value="Type"> <select
-                                disabled="disabled" class="form-select" id="validationCustom04"
-                                required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>...</option>
-                        </select>
+                        <!-- Parent -->
+                        <div class="col-sm-6">
+                            <label for="txt_parent" class="form-label">Parent</label>
+                            <input type="text" class="form-control" id="txt_parent" th:value="${parent}">
+                        </div>
+
+                        <!-- Name -->
+                        <div class="col-sm-6">
+                            <label for="txt_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_name" th:value="${name}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-sm-6">
+                            <label for="txt_description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="txt_description" th:value="${description}">
+                        </div>
+
+                        <legend>Unit Detail</legend>
+                        <!-- Operator -->
+                        <div class="col-sm-6">
+                            <label for="txt_operator" class="form-label">Operator</label>
+                            <input type="text" class="form-control" id="txt_operator" th:value="${operator}">
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-sm-6">
+                            <label for="txt_status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="txt_status" th:value="${status}">
+                        </div>
+
+                        <!-- Reactor type -->
+                        <div class="col-sm-6">
+                            <label for="txt_reactortype" class="form-label">Reactor type</label>
+                            <input type="text" class="form-control" id="txt_reactortype" th:value="${reactortype}">
+                        </div>
+
+                        <!-- Reactor supplier -->
+                        <div class="col-sm-6">
+                            <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
+                            <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${reactorsupplier}">
+                        </div>
+
+                        <!-- Construction began -->
+                        <div class="col-sm-6">
+                            <label for="dt_constructionbegan" class="form-label">Construction began</label>
+                            <input type="date" class="form-control" id="dt_constructionbegan" th:value="${constructionbegan}">
+                        </div>
+
+                        <!-- Commission date -->
+                        <div class="col-sm-6">
+                            <label for="dt_commissiondate" class="form-label">Commission date</label>
+                            <input type="date" class="form-control" id="dt_commissiondate" th:value="${commissiondate}">
+                        </div>
+
+                        <!-- Decommission date -->
+                        <div class="col-sm-6">
+                            <label for="dt_decommissiondate" class="form-label">Decommission date</label>
+                            <input type="date" class="form-control" id="dt_decommissiondate" th:value="${decommissiondate}">
+                        </div>
+
+                        <!-- Thermal capacity -->
+                        <div class="col-sm-6">
+                            <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
+                            <input type="text" class="form-control" id="txt_thermalcapacity" th:value="${thermalcapacity}">
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="container-lg">
+                </fieldset>
+            </div>
 
-                            <label for="staticEmail2" class="visually-hidden">Parent</label>
-                            <input type="text" readonly
-                                   class="textstyle form-control-plaintext" id="staticEmail2"
-                                   value="Parent"> <select class="form-select"
-                                                           id="validationCustom04" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>...</option>
-                        </select>
+            <div class="col-6">
+                <fieldset>
+                    <legend>Image</legend>
+                    <div class="container-lg">
+                        <div class="row">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
+                                 class="img-fluid" alt="...">
                         </div>
                     </div>
-
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Name</label> <input
-                                type="text" readonly class="textstyle form-control-plaintext"
-                                id="staticEmail2" value="Name"> <label
-                                for="inputPassword2" class="visually-hidden">Password</label> <input
-                                type="text" class="form-control" id="inputPassword2">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Description</label>
-                            <input type="text" readonly
-                                   class="textstyle form-control-plaintext" id="staticEmail2"
-                                   value="Description"> <label for="inputPassword2"
-                                                               class="visually-hidden">Password</label> <input
-                                type="text"
-                                class="form-control" id="inputPassword2">
-
-                        </div>
-                    </div>
-                </div>
-
-            </fieldset>
-            <fieldset class="grid2"
-                      style=" margin-right: 10px; margin-left: 10px;">
-                <legend>Unit Detail</legend>
-                <div class="row">
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Operator</label>
-                            <input type="text" readonly
-                                   class="textstyle form-control-plaintext" id="staticEmail2"
-                                   value="Operator"> <label for="inputPassword2"
-                                                            class="visually-hidden">Password</label> <input type="text"
-                                                                                                            class="form-control"
-                                                                                                            id="inputPassword2">
-
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Status</label>
-                            <input type="text" readonly
-                                   class="textstyle form-control-plaintext" id="staticEmail2"
-                                   value="Status"> <label for="inputPassword2"
-                                                          class="visually-hidden">Password</label> <input type="text"
-                                                                                                          class="form-control"
-                                                                                                          id="inputPassword2">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Reactor
-                                type</label> <input type="text" readonly
-                                                    class="textstyle form-control-plaintext" id="staticEmail2"
-                                                    value="Reactor type"> <label for="inputPassword2"
-                                                                                 class="visually-hidden">Password</label>
-                            <input type="text"
-                                   class="form-control" id="inputPassword2">
-
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Consturdction
-                                began</label> <input type="text" readonly
-                                                     class="textstyle form-control-plaintext" id="staticEmail2"
-                                                     value="Consturdction began"> <label for="inputPassword2"
-                                                                                         class="visually-hidden">Password</label>
-                            <input type="date"
-                                   id="datePicker" class="form-control" value="2021-11-08">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Commission
-                                date</label> <input type="text" readonly
-                                                    class="textstyle form-control-plaintext" id="staticEmail2"
-                                                    value="Commission date"> <label for="inputPassword2"
-                                                                                    class="visually-hidden">Password</label>
-                            <input type="date"
-                                   id="datePicker" class="form-control" data-placeholder="선택"
-                                   required aria-required="true" value={startDateValue}
-                                   className={styles.selectDay} onChange={StartDateValueHandler}>
-
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="container-lg">
-
-                            <label for="staticEmail2" class="visually-hidden">Decommission
-                                date</label> <input type="text" readonly
-                                                    class="textstyle form-control-plaintext" id="staticEmail2"
-                                                    value="Decommission date"> <label for="inputPassword2"
-                                                                                      class="visually-hidden">Password</label>
-                            <input type="date"
-                                   id="datePicker" class="form-control" data-placeholder="선택"
-                                   required aria-required="true" value={startDateValue}
-                                   className={styles.selectDay} onChange={StartDateValueHandler}>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="container-lg">
-
-                    <label for="staticEmail2" class="visually-hidden">Thermal
-                        capacity</label> <input type="text" readonly
-                                                class="textstyle form-control-plaintext" id="staticEmail2"
-                                                value="Thermal capacity"> <label for="inputPassword2"
-                                                                                 class="visually-hidden">Password</label>
-                    <input type="text"
-                           class="form-control" id="inputPassword2">
-
-                </div>
-            </fieldset>
-            <div class="temp-box"></div>
-            <fieldset class="grid3"
-                      style="	 margin-right: 10px; margin-left: 10px;">
-                <legend>Image</legend>
-                <div class="container-lg">
-                    <div class="row">
-
-
-                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
-                             class="img-fluid" alt="...">
-                    </div>
-                </div>
-            </fieldset>
+                </fieldset>
+            </div>
         </div>
-
-        <!-- Custom styles for this template -->
-        <script src="/static/view/sub/js/unit.js"></script>
-    </section>
+    </div>
 </th:block>
 </html>
