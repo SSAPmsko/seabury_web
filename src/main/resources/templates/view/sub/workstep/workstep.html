@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- Begin Page Content -->
+
+<!-- Begin Page Content -->
+
+<th:block>
+  <div layout:fragment="content">
+    <div class="row g-2 container-fluid">
+      <div class="col-6">
+        <fieldset>
+          <legend>속성</legend>
+
+          <div class="row g-3">
+            <!-- Type -->
+            <div class="col-sm-6">
+              <label for="txt_type" class="form-label">Step</label>
+              <input type="text" class="form-control" id="txt_type" th:value="${type}">
+            </div>
+
+            <!-- Parent -->
+            <div class="col-sm-6">
+              <label for="txt_parent" class="form-label">Parent</label>
+              <input type="text" class="form-control" id="txt_parent" th:value="${parent}">
+            </div>
+
+            <!-- Name -->
+            <div class="col-sm-6">
+              <label for="txt_name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="txt_name" th:value="${name}">
+            </div>
+
+            <!-- Description -->
+            <div class="col-sm-6">
+              <label for="txt_description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="txt_description" th:value="${description}">
+            </div>
+
+            <legend>Detail</legend>
+            <!-- Operator -->
+            <div class="col-sm-6">
+              <label for="txt_operator" class="form-label">Operator</label>
+              <input type="text" class="form-control" id="txt_operator" th:value="${operator}">
+            </div>
+
+            <!-- Status -->
+            <div class="col-sm-6">
+              <label for="txt_status" class="form-label">Status</label>
+              <input type="text" class="form-control" id="txt_status" th:value="${status}">
+            </div>
+
+            <!-- Reactor type -->
+            <div class="col-sm-6">
+              <label for="txt_reactortype" class="form-label">Reactor type</label>
+              <input type="text" class="form-control" id="txt_reactortype" th:value="${reactortype}">
+            </div>
+
+            <!-- Reactor supplier -->
+            <div class="col-sm-6">
+              <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
+              <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${reactorsupplier}">
+            </div>
+
+            <!-- Construction began -->
+            <div class="col-sm-6">
+              <label for="dt_constructionbegan" class="form-label">Construction began</label>
+              <input type="date" class="form-control" id="dt_constructionbegan" th:value="${constructionbegan}">
+            </div>
+
+            <!-- Commission date -->
+            <div class="col-sm-6">
+              <label for="dt_commissiondate" class="form-label">Commission date</label>
+              <input type="date" class="form-control" id="dt_commissiondate" th:value="${commissiondate}">
+            </div>
+
+            <!-- Decommission date -->
+            <div class="col-sm-6">
+              <label for="dt_decommissiondate" class="form-label">Decommission date</label>
+              <input type="date" class="form-control" id="dt_decommissiondate" th:value="${decommissiondate}">
+            </div>
+
+            <!-- Thermal capacity -->
+            <div class="col-sm-6">
+              <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
+              <input type="text" class="form-control" id="txt_thermalcapacity" th:value="${thermalcapacity}">
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="col-6">
+        <fieldset>
+          <legend>Worker Detail</legend>
+          <div class="container-lg">
+            <div class="table-responsive">
+              <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                  <th scope="col">순번</th>
+                  <th scope="col">Step</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">Header</th>
+                  <th scope="col">Header</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>1,001</td>
+                  <td>random</td>
+                  <td>data</td>
+                  <td>placeholder</td>
+                  <td>text</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>1,002</td>
+                  <td>placeholder</td>
+                  <td>irrelevant</td>
+                  <td>visual</td>
+                  <td>layout</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>1,003</td>
+                  <td>data</td>
+                  <td>rich</td>
+                  <td>dashboard</td>
+                  <td>tabular</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>1,003</td>
+                  <td>information</td>
+                  <td>placeholder</td>
+                  <td>illustrative</td>
+                  <td>data</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>1,004</td>
+                  <td>text</td>
+                  <td>random</td>
+                  <td>layout</td>
+                  <td>dashboard</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>1,005</td>
+                  <td>dashboard</td>
+                  <td>irrelevant</td>
+                  <td>text</td>
+                  <td>placeholder</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>1,006</td>
+                  <td>dashboard</td>
+                  <td>illustrative</td>
+                  <td>rich</td>
+                  <td>data</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>1,007</td>
+                  <td>placeholder</td>
+                  <td>tabular</td>
+                  <td>information</td>
+                  <td>irrelevant</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>1,008</td>
+                  <td>random</td>
+                  <td>data</td>
+                  <td>placeholder</td>
+                  <td>text</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>1,009</td>
+                  <td>placeholder</td>
+                  <td>irrelevant</td>
+                  <td>visual</td>
+                  <td>layout</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>1,010</td>
+                  <td>data</td>
+                  <td>rich</td>
+                  <td>dashboard</td>
+                  <td>tabular</td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>1,011</td>
+                  <td>information</td>
+                  <td>placeholder</td>
+                  <td>illustrative</td>
+                  <td>data</td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>1,012</td>
+                  <td>text</td>
+                  <td>placeholder</td>
+                  <td>layout</td>
+                  <td>dashboard</td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>1,013</td>
+                  <td>dashboard</td>
+                  <td>irrelevant</td>
+                  <td>text</td>
+                  <td>visual</td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td>1,014</td>
+                  <td>dashboard</td>
+                  <td>illustrative</td>
+                  <td>rich</td>
+                  <td>data</td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>1,015</td>
+                  <td>random</td>
+                  <td>tabular</td>
+                  <td>information</td>
+                  <td>text</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</th:block>
+</html>

@@ -1,201 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/sideLayout}">
-<!-- VRDose Mapping Sample -->
-<!-- th:text={id} -->
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/Layout}">
 
-<head>
-<style>
-main {
-	background: #f2f4f7;
-	min-height: 700px;
-}
-
-.row {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-legend {
-	float: none;
-	width: auto;
-	padding-right: 0.75rem;
-	padding-left: 0.75rem;
-	font-family: Arial;
-	font-weight: 900;
-}
-
-.grid1 {
-	grid-row-start: 1;
-	font-family: Arial;
-}
-
-.grid2 {
-	grid-row-start: 1;
-	grid-column-start: 2;
-	font-family: Arial;
-}
-
-.textstyle {
-	font-weight: bold;
-}
-
-.gridlayer {
-	width: 90%;
-	margin: 20px;
-	display: grid;
-	grid-template-columns: 45% 45%; /* 각 행(세로줄)의 길이 */
-	grid-template-rows: 520px; /* 각 열(가로줄)의 길이 */
-	gap: 20px; /* 자식요소간의 간격 */
-}
-</style>
-<script>
-	
-</script>
-</head>
 <!-- Begin Page Content -->
 <th:block>
 	<section layout:fragment="content">
-		<div class="gridlayer container-fluid">
-			<fieldset class="grid1"
-				style="margin-right: 10px; margin-left: 10px;">
-				<legend>속성</legend>
+		<div class="row g-2 container-fluid">
+			<div class="col-6">
+				<fieldset>
+					<legend>Properties</legend>
 
-
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Name</label> <input
-								type="text" readonly class="textstyle form-control-plaintext"
-								id="staticEmail2" value="Name"> <label
-								for="inputPassword2" class="visually-hidden">Password</label> <input
-								type="text" class="form-control" id="inputPassword2">
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Description</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Description"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
+					<div class="row g-3">
+						<!-- Name -->
+						<div class="col-sm-12">
+							<label for="txt_name" class="form-label">Name</label>
+							<input type="text" class="form-control" id="txt_name" th:value="${name}">
 						</div>
 
+						<!-- Description -->
+						<div class="col-sm-12">
+							<label for="txt_description" class="form-label">Description</label>
+							<input type="text" class="form-control" id="txt_description" th:value="${description}">
+						</div>
+
+						<!-- Create Date -->
+						<div class="col-sm-6">
+							<label for="dt_date" class="form-label">Create Date</label>
+							<input type="date" class="form-control" id="dt_date" th:value="${date}">
+						</div>
+
+						<!-- Creator -->
+						<div class="col-sm-6">
+							<label for="txt_creator" class="form-label">Creator</label>
+							<input type="text" class="form-control" id="txt_creator" th:value="${createdBy}">
+						</div>
+
+						<!-- Room -->
+						<div class="col-sm-6">
+							<label for="txt_room" class="form-label">Room</label>
+							<input type="text" class="form-control" id="txt_room" th:value="${room}">
+						</div>
+
+						<!-- Start Date -->
+						<div class="col-sm-6">
+
+							<label for="dt_startDate" class="form-label">Start date</label>
+							<input type="date" id="dt_startDate" class="form-control" th:value="${startDate}">
+						</div>
+
+						<!-- End Date -->
+						<div class="col-sm-6">
+							<label for="dt_endDate" class="form-label">End date</label>
+							<input type="date" id="dt_endDate" class="form-control" th:value="${endDate}">
+						</div>
+
+						<!-- dose Limit -->
+						<div class="col-sm-6">
+							<label for="txt_doseLimit" class="form-label">Dose Limit</label>
+							<input type="text" class="form-control" id="txt_doseLimit" th:value="${doseLimit}">
+						</div>
+
+						<!-- justification -->
+						<div class="col-sm-12">
+							<label for="txt_justification" class="form-label">Justification</label>
+							<input type="text" class="form-control" id="txt_justification" th:value="${justification}">
+						</div>
 					</div>
+				</fieldset>
+			</div>
+
+			<div class="col-6">
+				<fieldset>
+					<legend>Image</legend>
+					<div class="container-lg">
+						<div class="row">
+							<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="col-12 mb-3 d-flex justify-content-center">
+				<div>
+					<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
+					<a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Save</a>
+					<a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
 				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Creator</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Creator"> <select class="form-select"
-								id="validationCustom04" required>
-								<option selected disabled value="">Choose...</option>
-								<option>...</option>
-							</select>
-						</div>
-
-					</div>
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Location</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Location"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
-						</div>
-					</div>
-
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Start
-								date</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Start date"> <input type="date" id="datePicker"
-								class="form-control" value="2013-11-27">
-
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">End
-								date</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="End date"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="date"
-								id="datePicker" class="form-control" value="2013-11-27">
-						</div>
-					</div>
-
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Dose
-								Limit</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Dose Limit"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
-						</div>
-
-					</div>
-					<div class="col">
-						<div class="container-lg">
-
-							<label for="staticEmail2" class="visually-hidden">Status</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Status"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
-						</div>
-					</div>
-
-				</div>
-				<div class="container-lg">
-
-					<label for="staticEmail2" class="visually-hidden">Structure</label>
-					<input type="text" readonly
-						class="textstyle form-control-plaintext" id="staticEmail2"
-						value="Structure"> <select class="form-select"
-						id="validationCustom04" required>
-						<option selected disabled value="">Choose...</option>
-						<option>...</option>
-					</select>
-
-
-				</div>
-			</fieldset>
-
-			<div class="temp-box"></div>
-			<fieldset class="grid2"
-				style="margin-right: 10px; margin-left: 10px;">
-				<legend>Image</legend>
-				<div class="container-lg">
-					<div class="row">
-
-						<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
-					</div>
-				</div>
-			</fieldset>
+			</div>
 		</div>
 
 		<!-- Custom styles for this template -->
-		<script src="/static/view/sub/js/project.js"></script>
+		<script src="/static/view/sub/project/js/projectDetail.js"></script>
 	</section>
 </th:block>
 </html>
