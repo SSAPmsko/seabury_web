@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.WorkpackMapper">
+    <select id="getWorkpackList" resultType="com.seabury.web.entity.WorkpackEntity">
+        SELECT * FROM public."Workpack"
+
+        <where>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Image)">
+                AND "Image" = #{Image}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Operator)">
+                AND "Operator" = #{Operator}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ReactorType)">
+                AND "ReactorType" = #{ReactorType}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ReactorSupplier)">
+                AND "ReactorSupplier" = #{ReactorSupplier}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ConstructionBegan)">
+                AND "ConstructionBegan" = #{ConstructionBegan}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(CommissionDate)">
+                AND "CommissionDate" = #{CommissionDate}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(DecommissionDate)">
+                AND "DecommissionDate" = #{DecommissionDate}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ThermalCapacity)">
+                AND "ThermalCapacity" = #{ThermalCapacity}
+            </if>
+            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Status)">
+                AND "Status" = #{Status}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    # Insert or Update 된 ID 리턴
+    1. useGeneratedKeys="true"
+    2. keyProperty="변수명"
+    3. keyColumn="Sql컬럼명"
+    -->
+    <insert id="insertWorkpack" parameterType="com.seabury.web.entity.WorkpackEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+        INSERT INTO public."Workpack"(
+        "Image", "Operator", "ReactorType", "ReactorSupplier", "ConstructionBegan", "CommissionDate", "DecommissionDate", "ThermalCapacity", "Status")
+        VALUES (#{Image}, #{Operator}, #{ReactorType}, #{ReactorSupplier}, #{ConstructionBegan}, #{CommissionDate}, #{DecommissionDate}, #{ThermalCapacity}, #{Status});
+    </insert>
+
+    <update id="updateWorkpack" parameterType="com.seabury.web.entity.WorkpackEntity">
+        UPDATE public."Workpack"
+        SET "Image"=#{Image}, "Operator"=#{Operator}, "ReactorType"=#{ReactorType}, "ReactorSupplier"=#{ReactorSupplier}, "ConstructionBegan"=#{ConstructionBegan}, "CommissionDate"=#{CommissionDate}, "DecommissionDate"=#{DecommissionDate}, "ThermalCapacity"=#{ThermalCapacity}, "Status"=#{Status}
+        WHERE "ID"=#{ID};
+    </update>
+
+    <delete id="deleteWorkpack" parameterType="com.seabury.web.entity.WorkpackEntity">
+        DELETE FROM public."Workpack"
+        WHERE "ID"=#{ID};
+    </delete>
+</mapper>

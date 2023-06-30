@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- Begin Page Content -->
+
+<!-- Begin Page Content -->
+
+<th:block>
+    <div layout:fragment="content">
+        <div class="row g-2 container-fluid">
+            <div class="col-12">
+                <fieldset>
+                    <legend>속성</legend>
+
+                    <div class="row g-3">
+                        <!-- Name -->
+                        <div class="col-sm-12">
+                            <label for="txt_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_name" th:value="${name}">
+                        </div>
+
+                        <!-- Parent -->
+                        <div class="col-sm-12">
+                            <label for="txt_parent" class="form-label">Parent</label>
+                            <input type="text" class="form-control" id="txt_parent" th:value="${parent}">
+                        </div>
+
+                        <!-- Name -->
+                        <div class="col-sm-12">
+                            <label for="txt_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_name" th:value="${name}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-sm-12">
+                            <label for="txt_description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="txt_description" th:value="${description}">
+                        </div>
+
+                        <!-- Operator -->
+                        <div class="col-sm-12">
+                            <label for="txt_operator" class="form-label">Operator</label>
+                            <input type="text" class="form-control" id="txt_operator" th:value="${operator}">
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-sm-12">
+                            <label for="txt_status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="txt_status" th:value="${status}">
+                        </div>
+
+                        <!-- Reactor type -->
+                        <div class="col-sm-12">
+                            <label for="txt_reactortype" class="form-label">Reactor type</label>
+                            <input type="text" class="form-control" id="txt_reactortype" th:value="${reactortype}">
+                        </div>
+
+                        <!-- Reactor supplier -->
+                        <div class="col-sm-12">
+                            <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
+                            <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${reactorsupplier}">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
