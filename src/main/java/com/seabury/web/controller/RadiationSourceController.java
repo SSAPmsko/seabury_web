@@ -8,12 +8,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.seabury.web.entity.*;
 import com.seabury.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.seabury.web.entity.ND_60_103_ING_Entity;
-import com.seabury.web.entity.ND_60_103_INH_Entity;
 import com.seabury.web.service.RadiationSourceService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -96,5 +95,53 @@ public class RadiationSourceController {
 		System.out.println(ND_60_ING_IN_List.size());
 
 		return ND_60_ING_IN_List;
+	}
+
+	@PostMapping(value="/getND_60_EXT_List")
+	public @ResponseBody List<ND_60_EXT_Entity> getND_60_EXT_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+
+		String tb_name = (String)message.get("tbname");
+
+		Map<String, String> ParamSelect = new HashMap<>();
+
+		ParamSelect.put("table_name", tb_name);
+
+		List<ND_60_EXT_Entity> ND_60_EXT_List = radiationsourceService.getND60_EXT_List(ParamSelect);
+
+		System.out.println(ND_60_EXT_List.size());
+
+		return ND_60_EXT_List;
+	}
+
+	@PostMapping(value="/getND_103_W_List")
+	public @ResponseBody List<ND_103_W_Entity> getND_103_W_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+
+		String tb_name = (String)message.get("tbname");
+
+		Map<String, String> ParamSelect = new HashMap<>();
+
+		ParamSelect.put("table_name", tb_name);
+
+		List<ND_103_W_Entity> ND_103_W_List = radiationsourceService.getND103_W_List(ParamSelect);
+
+		System.out.println(ND_103_W_List.size());
+
+		return ND_103_W_List;
+	}
+
+	@PostMapping(value="/getND_103_EXT_List")
+	public @ResponseBody List<ND_103_EXT_Entity> getND_103_EXT_List(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+
+		String tb_name = (String)message.get("tbname");
+
+		Map<String, String> ParamSelect = new HashMap<>();
+
+		ParamSelect.put("table_name", tb_name);
+
+		List<ND_103_EXT_Entity> ND_103_EXT_List = radiationsourceService.getND103_EXT_List(ParamSelect);
+
+		System.out.println(ND_103_EXT_List.size());
+
+		return ND_103_EXT_List;
 	}
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 
 <!-- Begin Page Content -->
 <head>
-<style>
+    <style>
 main {
 	background: #f2f4f7;
 	min-height: 700px;
@@ -56,182 +56,194 @@ legend {
 	grid-template-rows: 240px 240px 140px; /* 각 열(가로줄)의 길이 */
 	gap: 20px; /* 자식요소간의 간격 */
 }
-</style>
+
+    </style>
 </head>
 <!-- Begin Page Content -->
-<body>
-	<th:block>
-		<div layout:fragment="content">
-			<div class="gridlayer container-fluid">
-				<fieldset class="grid1"
-					style=" margin-right: 10px; margin-left: 10px;">
-					<legend>속성</legend>
 
-					<div class="row">
-					<div class="col">
-						<div class="container-lg">
+<th:block>
+    <section layout:fragment="content">
+        <div class="gridlayer container-fluid">
+            <fieldset class="grid1"
+                      style=" margin-right: 10px; margin-left: 10px;">
+                <legend>속성</legend>
 
-							<label for="staticEmail2" class="visually-hidden">Type</label> <input
-								type="text" readonly class="textstyle form-control-plaintext"
-								id="staticEmail2" value="Type"> <select
-								disabled="disabled" class="form-select" id="validationCustom04"
-								required>
-								<option selected disabled value="">Choose...</option>
-								<option>...</option>
-							</select>
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
+                <div class="row">
+                    <div class="col">
+                        <div class="container-lg">
 
-							<label for="staticEmail2" class="visually-hidden">Parent</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Parent"> <select class="form-select"
-								id="validationCustom04" required>
-								<option selected disabled value="">Choose...</option>
-								<option>...</option>
-							</select>
-						</div>
-					</div>
+                            <label for="staticEmail2" class="visually-hidden">Type</label> <input
+                                type="text" readonly class="textstyle form-control-plaintext"
+                                id="staticEmail2" value="Type"> <select
+                                disabled="disabled" class="form-select" id="validationCustom04"
+                                required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>...</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container-lg">
 
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Parent</label>
+                            <input type="text" readonly
+                                   class="textstyle form-control-plaintext" id="staticEmail2"
+                                   value="Parent"> <select class="form-select"
+                                                           id="validationCustom04" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>...</option>
+                        </select>
+                        </div>
+                    </div>
 
-							<label for="staticEmail2" class="visually-hidden">Name</label> <input
-								type="text" readonly class="textstyle form-control-plaintext"
-								id="staticEmail2" value="Name"> <label
-								for="inputPassword2" class="visually-hidden">Password</label> <input
-								type="text" class="form-control" id="inputPassword2">
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="container-lg">
 
-							<label for="staticEmail2" class="visually-hidden">Description</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Description"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
+                            <label for="staticEmail2" class="visually-hidden">Name</label> <input
+                                type="text" readonly class="textstyle form-control-plaintext"
+                                id="staticEmail2" value="Name"> <label
+                                for="inputPassword2" class="visually-hidden">Password</label> <input
+                                type="text" class="form-control" id="inputPassword2">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-				</div>
+                            <label for="staticEmail2" class="visually-hidden">Description</label>
+                            <input type="text" readonly
+                                   class="textstyle form-control-plaintext" id="staticEmail2"
+                                   value="Description"> <label for="inputPassword2"
+                                                               class="visually-hidden">Password</label> <input
+                                type="text"
+                                class="form-control" id="inputPassword2">
 
-				</fieldset>
-				<fieldset class="grid2"
-					style=" margin-right: 10px; margin-left: 10px;">
-					<legend>Unit Detail</legend>
-					<div class="row">
-					<div class="col">
-						<div class="container-lg">
+                        </div>
+                    </div>
+                </div>
 
-							<label for="staticEmail2" class="visually-hidden">Operator</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Operator"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
+            </fieldset>
+            <fieldset class="grid2"
+                      style=" margin-right: 10px; margin-left: 10px;">
+                <legend>Unit Detail</legend>
+                <div class="row">
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Operator</label>
+                            <input type="text" readonly
+                                   class="textstyle form-control-plaintext" id="staticEmail2"
+                                   value="Operator"> <label for="inputPassword2"
+                                                            class="visually-hidden">Password</label> <input type="text"
+                                                                                                            class="form-control"
+                                                                                                            id="inputPassword2">
 
-							<label for="staticEmail2" class="visually-hidden">Status</label>
-							<input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Status"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Status</label>
+                            <input type="text" readonly
+                                   class="textstyle form-control-plaintext" id="staticEmail2"
+                                   value="Status"> <label for="inputPassword2"
+                                                          class="visually-hidden">Password</label> <input type="text"
+                                                                                                          class="form-control"
+                                                                                                          id="inputPassword2">
 
-							<label for="staticEmail2" class="visually-hidden">Reactor
-								type</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Reactor type"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="text"
-								class="form-control" id="inputPassword2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Reactor
+                                type</label> <input type="text" readonly
+                                                    class="textstyle form-control-plaintext" id="staticEmail2"
+                                                    value="Reactor type"> <label for="inputPassword2"
+                                                                                 class="visually-hidden">Password</label>
+                            <input type="text"
+                                   class="form-control" id="inputPassword2">
 
-							<label for="staticEmail2" class="visually-hidden">Consturdction
-								began</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Consturdction began"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="date"
-								id="datePicker" class="form-control" value="2021-11-08">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Consturdction
+                                began</label> <input type="text" readonly
+                                                     class="textstyle form-control-plaintext" id="staticEmail2"
+                                                     value="Consturdction began"> <label for="inputPassword2"
+                                                                                         class="visually-hidden">Password</label>
+                            <input type="date"
+                                   id="datePicker" class="form-control" value="2021-11-08">
 
-							<label for="staticEmail2" class="visually-hidden">Commission
-								date</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Commission date"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="date"
-								id="datePicker" class="form-control" data-placeholder="선택"
-								required aria-required="true" value={startDateValue}
-								className={styles.selectDay} onChange={StartDateValueHandler}>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-					<div class="col">
-						<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Commission
+                                date</label> <input type="text" readonly
+                                                    class="textstyle form-control-plaintext" id="staticEmail2"
+                                                    value="Commission date"> <label for="inputPassword2"
+                                                                                    class="visually-hidden">Password</label>
+                            <input type="date"
+                                   id="datePicker" class="form-control" data-placeholder="선택"
+                                   required aria-required="true" value={startDateValue}
+                                   className={styles.selectDay} onChange={StartDateValueHandler}>
 
-							<label for="staticEmail2" class="visually-hidden">Decommission
-								date</label> <input type="text" readonly
-								class="textstyle form-control-plaintext" id="staticEmail2"
-								value="Decommission date"> <label for="inputPassword2"
-								class="visually-hidden">Password</label> <input type="date"
-								id="datePicker" class="form-control" data-placeholder="선택"
-								required aria-required="true" value={startDateValue}
-								className={styles.selectDay} onChange={StartDateValueHandler}>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="container-lg">
 
-						</div>
-					</div>
-				</div>
-				<div class="container-lg">
+                            <label for="staticEmail2" class="visually-hidden">Decommission
+                                date</label> <input type="text" readonly
+                                                    class="textstyle form-control-plaintext" id="staticEmail2"
+                                                    value="Decommission date"> <label for="inputPassword2"
+                                                                                      class="visually-hidden">Password</label>
+                            <input type="date"
+                                   id="datePicker" class="form-control" data-placeholder="선택"
+                                   required aria-required="true" value={startDateValue}
+                                   className={styles.selectDay} onChange={StartDateValueHandler}>
 
-					<label for="staticEmail2" class="visually-hidden">Thermal
-						capacity</label> <input type="text" readonly
-						class="textstyle form-control-plaintext" id="staticEmail2"
-						value="Thermal capacity"> <label for="inputPassword2"
-						class="visually-hidden">Password</label> <input type="text"
-						class="form-control" id="inputPassword2">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-lg">
 
-				</div>
-				</fieldset>
-				<div class="temp-box"></div>
-				<fieldset class="grid3"
-					style="	 margin-right: 10px; margin-left: 10px;">
-					<legend>Image</legend>
-					<div class="container-lg">
-						<div class="row">
-							
+                    <label for="staticEmail2" class="visually-hidden">Thermal
+                        capacity</label> <input type="text" readonly
+                                                class="textstyle form-control-plaintext" id="staticEmail2"
+                                                value="Thermal capacity"> <label for="inputPassword2"
+                                                                                 class="visually-hidden">Password</label>
+                    <input type="text"
+                           class="form-control" id="inputPassword2">
 
-							<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
-						</div>
-					</div>
-				</fieldset>
-			</div>
-		</div>
-	</th:block>
-</body>
+                </div>
+            </fieldset>
+            <div class="temp-box"></div>
+            <fieldset class="grid3"
+                      style="	 margin-right: 10px; margin-left: 10px;">
+                <legend>Image</legend>
+                <div class="container-lg">
+                    <div class="row">
+
+
+                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
+                             class="img-fluid" alt="...">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/js/unit.js"></script>
+    </section>
+</th:block>
 </html>
