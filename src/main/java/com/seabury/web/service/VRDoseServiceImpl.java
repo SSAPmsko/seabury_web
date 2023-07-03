@@ -139,6 +139,13 @@ public class VRDoseServiceImpl implements VRDoseService {
                 convertDate2ISO8601(map, "endDate");
                 //convertString2Float(map, "doseLimit"); // String Convert Float
                 map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
+
+                try {
+                    Float.parseFloat(map.get("doseLimit").toString());
+                } catch (Exception e) {
+                    map.put("doseLimit", "0.0");
+                }
+
                 String bodyStr = getJsonString(map);
 
                 HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
@@ -146,6 +153,8 @@ public class VRDoseServiceImpl implements VRDoseService {
                 HttpRequest request = getRequestFactory().buildPostRequest(gUrl, content);
 
                 result = request.execute().parseAs(result.getClass());
+
+                result.remove("properties"); // <<<<<<<<<< properties 필드가 Object 형태로 반환되어, 데이터 파싱할때 문제가 발생됨. 사용하지 않는 필드여서 삭제.
             } catch (Exception e) {
                 e.printStackTrace();
             }
