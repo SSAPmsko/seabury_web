@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/Layout}">
+
+<!-- Begin Page Content -->
+<th:block>
+    <section class="h-100" layout:fragment="content">
+        <div class="row g-2 container-fluid">
+            <div class="col-12">
+                <a href="#" class="btn btn-primary" onclick="dataGridCreateExecute();">Create</a>
+                <a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Modify</a>
+                <a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
+            </div>
+
+            <div class="col" id="dataGrid">
+
+            </div>
+        </div>
+
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/project/js/scenarioList.js"></script>
+    </section>
+</th:block>
+</html>
