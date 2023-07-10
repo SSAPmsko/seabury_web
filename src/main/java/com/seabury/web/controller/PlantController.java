@@ -20,17 +20,17 @@ public class PlantController {
     @Autowired
     PlantService plantService;
 
-    @RequestMapping(value={"/plant"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/plantDetail"}, method = RequestMethod.GET)
     public ModelAndView plant(ModelAndView mav){
-        mav.setViewName("view/sub/plant/plant");
+        mav.setViewName("view/sub/plant/plantDetail");
         return mav;
     }
 
-    @RequestMapping(value={"/plant"}, method = RequestMethod.POST)
+    @RequestMapping(value={"/plantDetail"}, method = RequestMethod.POST)
     public void plant(HttpServletRequest request, HttpServletResponse response){
         // 인증 성공 후 돌아가야 할 페이지로 리다이렉션 한다.
         try {
-            commonService.sendRedirect(request, response, "plant");
+            commonService.sendRedirect(request, response, "plantDetail");
         } catch (Exception e) {
             e.printStackTrace();
         }
