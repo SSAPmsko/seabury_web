@@ -12,59 +12,59 @@ import java.util.List;
 public class SiteServiceImpl implements SiteService {
 
     @Autowired
-    SiteMapper SiteMapper;
+    SiteMapper siteMapper;
 
     @Override
-    public List<SiteEntity> getSiteList(SiteEntity SiteEntity) {
-        return SiteMapper.getSiteList(SiteEntity);
+    public List<SiteEntity> getSiteList(SiteEntity siteEntity) {
+        return siteMapper.getSiteList(siteEntity);
     }
 
     @Override
-    public int insertSite(SiteEntity SiteEntity) {
-        return SiteMapper.insertSite(SiteEntity);
+    public int insertSite(SiteEntity siteEntity) {
+        return siteMapper.insertSite(siteEntity);
     }
 
     @Override
-    public int updateSite(SiteEntity SiteEntity) {
-        return SiteMapper.updateSite(SiteEntity);
+    public int updateSite(SiteEntity siteEntity) {
+        return siteMapper.updateSite(siteEntity);
     }
 
     @Override
-    public int deleteSite(SiteEntity SiteEntity) {
-        return SiteMapper.deleteSite(SiteEntity);
+    public int deleteSite(SiteEntity siteEntity) {
+        return siteMapper.deleteSite(siteEntity);
     }
 
-    public SiteVO ConvertEntityToVO(SiteEntity SiteEntity) {
-        SiteVO SiteVO = new SiteVO();
+    public SiteVO ConvertEntityToVO(SiteEntity siteEntity) {
+        SiteVO siteVO = new SiteVO();
 
-        if (SiteEntity != null) {
-            SiteVO.setID(SiteEntity.getID());
-            SiteVO.setImage(SiteEntity.getImage());
-            SiteVO.setOperator(SiteEntity.getOperator());
-            SiteVO.setReactorType(SiteEntity.getReactorType());
-            SiteVO.setReactorSupplier(SiteEntity.getReactorSupplier());
-            SiteVO.setConstructionBegan(SiteEntity.getConstructionBegan());
-            SiteVO.setCommissionDate(SiteEntity.getCommissionDate());
-            SiteVO.setDecommissionDate(SiteEntity.getDecommissionDate());
-            SiteVO.setStatus(SiteEntity.getStatus());
+        if (siteEntity != null) {
+            siteVO.setID(siteEntity.getID());
+            siteVO.setImage(siteEntity.getImage());
+            siteVO.setOperator(siteEntity.getOperator());
+            siteVO.setReactorType(siteEntity.getReactorType());
+            siteVO.setReactorSupplier(siteEntity.getReactorSupplier());
+            siteVO.setConstructionBegan(siteEntity.getConstructionBegan());
+            siteVO.setCommissionDate(siteEntity.getCommissionDate());
+            siteVO.setDecommissionDate(siteEntity.getDecommissionDate());
+            siteVO.setStatus(siteEntity.getStatus());
         }
-        return SiteVO;
+        return siteVO;
     }
 
-    public SiteEntity ConvertVOToEntity(SiteVO SiteVO) {
-        SiteEntity SiteEntity = new SiteEntity();
+    public SiteEntity ConvertVOToEntity(SiteVO siteVO) {
+        SiteEntity siteEntity = new SiteEntity();
 
-        if (SiteVO != null){
-            SiteEntity.setID(SiteVO.getID());
-            SiteEntity.setImage(SiteVO.getImage());
-            SiteEntity.setOperator(SiteVO.getOperator());
-            SiteEntity.setReactorType(SiteVO.getReactorType());
-            SiteEntity.setReactorSupplier(SiteVO.getReactorSupplier());
-            SiteEntity.setConstructionBegan(SiteVO.getConstructionBegan());
-            SiteEntity.setCommissionDate(SiteVO.getCommissionDate());
-            SiteEntity.setDecommissionDate(SiteVO.getDecommissionDate());
-            SiteEntity.setStatus(SiteVO.getStatus());
+        if (siteVO != null){
+            siteEntity.setID(siteVO.getID());
+            siteEntity.setImage(siteVO.getImage());
+            siteEntity.setOperator(siteVO.getOperator());
+            siteEntity.setReactorType(siteVO.getReactorType());
+            siteEntity.setReactorSupplier(siteVO.getReactorSupplier());
+            siteEntity.setConstructionBegan(siteVO.getConstructionBegan());
+            siteEntity.setCommissionDate(siteVO.getCommissionDate());
+            siteEntity.setDecommissionDate(siteVO.getDecommissionDate());
+            siteEntity.setStatus(siteVO.getStatus());
         }
-        return SiteEntity;
+        return siteEntity;
     }
 }

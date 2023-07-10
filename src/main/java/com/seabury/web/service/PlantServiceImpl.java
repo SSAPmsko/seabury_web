@@ -12,59 +12,59 @@ import java.util.List;
 public class PlantServiceImpl implements PlantService {
 
     @Autowired
-    PlantMapper PlantMapper;
+    PlantMapper plantMapper;
 
     @Override
-    public List<PlantEntity> getPlantList(PlantEntity PlantEntity) {
-        return PlantMapper.getPlantList(PlantEntity);
+    public List<PlantEntity> getPlantList(PlantEntity plantEntity) {
+        return plantMapper.getPlantList(plantEntity);
     }
 
     @Override
-    public int insertPlant(PlantEntity PlantEntity) {
-        return PlantMapper.insertPlant(PlantEntity);
+    public int insertPlant(PlantEntity plantEntity) {
+        return plantMapper.insertPlant(plantEntity);
     }
 
     @Override
-    public int updatePlant(PlantEntity PlantEntity) {
-        return PlantMapper.updatePlant(PlantEntity);
+    public int updatePlant(PlantEntity plantEntity) {
+        return plantMapper.updatePlant(plantEntity);
     }
 
     @Override
-    public int deletePlant(PlantEntity PlantEntity) {
-        return PlantMapper.deletePlant(PlantEntity);
+    public int deletePlant(PlantEntity plantEntity) {
+        return plantMapper.deletePlant(plantEntity);
     }
 
-    public PlantVO ConvertEntityToVO(PlantEntity PlantEntity) {
-        PlantVO PlantVO = new PlantVO();
+    public PlantVO ConvertEntityToVO(PlantEntity plantEntity) {
+        PlantVO plantVO = new PlantVO();
 
-        if (PlantEntity != null) {
-            PlantVO.setID(PlantEntity.getID());
-            PlantVO.setImage(PlantEntity.getImage());
-            PlantVO.setOperator(PlantEntity.getOperator());
-            PlantVO.setReactorType(PlantEntity.getReactorType());
-            PlantVO.setReactorSupplier(PlantEntity.getReactorSupplier());
-            PlantVO.setConstructionBegan(PlantEntity.getConstructionBegan());
-            PlantVO.setCommissionDate(PlantEntity.getCommissionDate());
-            PlantVO.setDecommissionDate(PlantEntity.getDecommissionDate());
-            PlantVO.setStatus(PlantEntity.getStatus());
+        if (plantEntity != null) {
+            plantVO.setID(plantEntity.getID());
+            plantVO.setImage(plantEntity.getImage());
+            plantVO.setOperator(plantEntity.getOperator());
+            plantVO.setReactorType(plantEntity.getReactorType());
+            plantVO.setReactorSupplier(plantEntity.getReactorSupplier());
+            plantVO.setConstructionBegan(plantEntity.getConstructionBegan());
+            plantVO.setCommissionDate(plantEntity.getCommissionDate());
+            plantVO.setDecommissionDate(plantEntity.getDecommissionDate());
+            plantVO.setStatus(plantEntity.getStatus());
         }
-        return PlantVO;
+        return plantVO;
     }
 
-    public PlantEntity ConvertVOToEntity(PlantVO PlantVO) {
-        PlantEntity PlantEntity = new PlantEntity();
+    public PlantEntity ConvertVOToEntity(PlantVO plantVO) {
+        PlantEntity plantEntity = new PlantEntity();
 
-        if (PlantVO != null){
-            PlantEntity.setID(PlantVO.getID());
-            PlantEntity.setImage(PlantVO.getImage());
-            PlantEntity.setOperator(PlantVO.getOperator());
-            PlantEntity.setReactorType(PlantVO.getReactorType());
-            PlantEntity.setReactorSupplier(PlantVO.getReactorSupplier());
-            PlantEntity.setConstructionBegan(PlantVO.getConstructionBegan());
-            PlantEntity.setCommissionDate(PlantVO.getCommissionDate());
-            PlantEntity.setDecommissionDate(PlantVO.getDecommissionDate());
-            PlantEntity.setStatus(PlantVO.getStatus());
+        if (plantVO != null){
+            plantEntity.setID(plantVO.getID());
+            plantEntity.setImage(plantVO.getImage());
+            plantEntity.setOperator(plantVO.getOperator());
+            plantEntity.setReactorType(plantVO.getReactorType());
+            plantEntity.setReactorSupplier(plantVO.getReactorSupplier());
+            plantEntity.setConstructionBegan(plantVO.getConstructionBegan());
+            plantEntity.setCommissionDate(plantVO.getCommissionDate());
+            plantEntity.setDecommissionDate(plantVO.getDecommissionDate());
+            plantEntity.setStatus(plantVO.getStatus());
         }
-        return PlantEntity;
+        return plantEntity;
     }
 }

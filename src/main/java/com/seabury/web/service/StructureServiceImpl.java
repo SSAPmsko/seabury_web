@@ -12,53 +12,53 @@ import java.util.List;
 public class StructureServiceImpl implements StructureService {
 
     @Autowired
-    StructureMapper StructureMapper;
+    StructureMapper structureMapper;
 
     @Override
-    public List<StructureEntity> getStructureList(StructureEntity StructureEntity) {
-        return StructureMapper.getStructureList(StructureEntity);
+    public List<StructureEntity> getStructureList(StructureEntity structureEntity) {
+        return structureMapper.getStructureList(structureEntity);
     }
 
     @Override
-    public int insertStructure(StructureEntity StructureEntity) {
-        return StructureMapper.insertStructure(StructureEntity);
+    public int insertStructure(StructureEntity structureEntity) {
+        return structureMapper.insertStructure(structureEntity);
     }
 
     @Override
-    public int updateStructure(StructureEntity StructureEntity) {
-        return StructureMapper.updateStructure(StructureEntity);
+    public int updateStructure(StructureEntity structureEntity) {
+        return structureMapper.updateStructure(structureEntity);
     }
 
     @Override
-    public int deleteStructure(StructureEntity StructureEntity) {
-        return StructureMapper.deleteStructure(StructureEntity);
+    public int deleteStructure(StructureEntity structureEntity) {
+        return structureMapper.deleteStructure(structureEntity);
     }
 
-    public StructureVO ConvertEntityToVO(StructureEntity StructureEntity) {
-        StructureVO StructureVO = new StructureVO();
+    public StructureVO ConvertEntityToVO(StructureEntity structureEntity) {
+        StructureVO structureVO = new StructureVO();
 
-        if (StructureEntity != null) {
-            StructureVO.setName(StructureEntity.getName());
-            StructureVO.setDescription(StructureEntity.getDescription());
-            StructureVO.setParent_ID(StructureEntity.getParent_ID());
-            StructureVO.setType(StructureEntity.getType());
-            StructureVO.setObject_ID(StructureEntity.getObject_ID());
+        if (structureEntity != null) {
+            structureVO.setName(structureEntity.getName());
+            structureVO.setDescription(structureEntity.getDescription());
+            structureVO.setParent_ID(structureEntity.getParent_ID());
+            structureVO.setType(structureEntity.getType());
+            structureVO.setObject_ID(structureEntity.getObject_ID());
         }
-        return StructureVO;
+        return structureVO;
     }
 
-    public StructureEntity ConvertVOToEntity(StructureVO StructureVO) {
-        StructureEntity StructureEntity = new StructureEntity();
+    public StructureEntity ConvertVOToEntity(StructureVO structureVO) {
+        StructureEntity structureEntity = new StructureEntity();
 
-        if (StructureVO != null){
-            StructureEntity.setName(StructureVO.getName());
-            StructureEntity.setDescription(StructureVO.getDescription());
-            StructureEntity.setParent_ID(StructureVO.getParent_ID());
-            StructureEntity.setType(StructureVO.getType());
-            StructureEntity.setObject_ID(StructureVO.getObject_ID());
+        if (structureVO != null){
+            structureEntity.setName(structureVO.getName());
+            structureEntity.setDescription(structureVO.getDescription());
+            structureEntity.setParent_ID(structureVO.getParent_ID());
+            structureEntity.setType(structureVO.getType());
+            structureEntity.setObject_ID(structureVO.getObject_ID());
 
         }
-        return StructureEntity;
+        return structureEntity;
     }
 }
 

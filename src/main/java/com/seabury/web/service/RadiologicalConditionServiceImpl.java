@@ -1,17 +1,15 @@
 package com.seabury.web.service;
 
 import com.seabury.web.entity.RadiologicalConditionEntity;
-import com.seabury.web.entity.ScenarioEntity;
 import com.seabury.web.mapper.RadiologicalConditionMapper;
 import com.seabury.web.vo.RadiologicalConditionVO;
-import com.seabury.web.vo.ScenarioVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RadiologicalConditionServicempl implements RadiologicalConditionService {
+public class RadiologicalConditionServiceImpl implements RadiologicalConditionService {
 
     @Autowired
     RadiologicalConditionMapper RadiologicalConditionMapper;

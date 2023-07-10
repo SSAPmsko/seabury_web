@@ -12,59 +12,59 @@ import java.util.List;
 public class UnitServiceImpl implements UnitService {
 
     @Autowired
-    UnitMapper UnitMapper;
+    UnitMapper unitMapper;
 
     @Override
-    public List<UnitEntity> getUnitList(UnitEntity UnitEntity) {
-        return UnitMapper.getUnitList(UnitEntity);
+    public List<UnitEntity> getUnitList(UnitEntity unitEntity) {
+        return unitMapper.getUnitList(unitEntity);
     }
 
     @Override
-    public int insertUnit(UnitEntity UnitEntity) {
-        return UnitMapper.insertUnit(UnitEntity);
+    public int insertUnit(UnitEntity unitEntity) {
+        return unitMapper.insertUnit(unitEntity);
     }
 
     @Override
-    public int updateUnit(UnitEntity UnitEntity) {
-        return UnitMapper.updateUnit(UnitEntity);
+    public int updateUnit(UnitEntity unitEntity) {
+        return unitMapper.updateUnit(unitEntity);
     }
 
     @Override
-    public int deleteUnit(UnitEntity UnitEntity) {
-        return UnitMapper.deleteUnit(UnitEntity);
+    public int deleteUnit(UnitEntity unitEntity) {
+        return unitMapper.deleteUnit(unitEntity);
     }
 
-    public UnitVO ConvertEntityToVO(UnitEntity UnitEntity) {
-        UnitVO UnitVO = new UnitVO();
+    public UnitVO ConvertEntityToVO(UnitEntity unitEntity) {
+        UnitVO unitVO = new UnitVO();
 
-        if (UnitEntity != null) {
-            UnitVO.setID(UnitEntity.getID());
-            UnitVO.setImage(UnitEntity.getImage());
-            UnitVO.setOperator(UnitEntity.getOperator());
-            UnitVO.setReactorType(UnitEntity.getReactorType());
-            UnitVO.setReactorSupplier(UnitEntity.getReactorSupplier());
-            UnitVO.setConstructionBegan(UnitEntity.getConstructionBegan());
-            UnitVO.setCommissionDate(UnitEntity.getCommissionDate());
-            UnitVO.setDecommissionDate(UnitEntity.getDecommissionDate());
-            UnitVO.setStatus(UnitEntity.getStatus());
+        if (unitEntity != null) {
+            unitVO.setID(unitEntity.getID());
+            unitVO.setImage(unitEntity.getImage());
+            unitVO.setOperator(unitEntity.getOperator());
+            unitVO.setReactorType(unitEntity.getReactorType());
+            unitVO.setReactorSupplier(unitEntity.getReactorSupplier());
+            unitVO.setConstructionBegan(unitEntity.getConstructionBegan());
+            unitVO.setCommissionDate(unitEntity.getCommissionDate());
+            unitVO.setDecommissionDate(unitEntity.getDecommissionDate());
+            unitVO.setStatus(unitEntity.getStatus());
         }
-        return UnitVO;
+        return unitVO;
     }
 
-    public UnitEntity ConvertVOToEntity(UnitVO UnitVO) {
-        UnitEntity UnitEntity = new UnitEntity();
+    public UnitEntity ConvertVOToEntity(UnitVO unitVO) {
+        UnitEntity unitEntity = new UnitEntity();
 
-        if (UnitVO != null){
-            UnitEntity.setID(UnitVO.getID());
-            UnitEntity.setImage(UnitVO.getImage());
-            UnitEntity.setOperator(UnitVO.getOperator());
-            UnitEntity.setReactorType(UnitVO.getReactorType());
-            UnitEntity.setReactorSupplier(UnitVO.getReactorSupplier());
-            UnitEntity.setConstructionBegan(UnitVO.getConstructionBegan());
-            UnitEntity.setCommissionDate(UnitVO.getCommissionDate());
-            UnitEntity.setDecommissionDate(UnitVO.getDecommissionDate());
-            UnitEntity.setStatus(UnitVO.getStatus());
+        if (unitVO != null){
+            unitEntity.setID(unitVO.getID());
+            unitEntity.setImage(unitVO.getImage());
+            unitEntity.setOperator(unitVO.getOperator());
+            unitEntity.setReactorType(unitVO.getReactorType());
+            unitEntity.setReactorSupplier(unitVO.getReactorSupplier());
+            unitEntity.setConstructionBegan(unitVO.getConstructionBegan());
+            unitEntity.setCommissionDate(unitVO.getCommissionDate());
+            unitEntity.setDecommissionDate(unitVO.getDecommissionDate());
+            unitEntity.setStatus(unitVO.getStatus());
         }
-        return UnitEntity;
+        return unitEntity;
     }
 }

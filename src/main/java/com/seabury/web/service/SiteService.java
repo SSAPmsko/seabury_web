@@ -5,9 +5,9 @@ import com.seabury.web.entity.SiteEntity;
 import java.util.List;
 
 public interface SiteService {
-    public List<SiteEntity> getSiteList(SiteEntity SiteEntity);
+    public List<SiteEntity> getSiteList(SiteEntity siteEntity);
 
-    public int insertSite(SiteEntity SiteEntity);
-    public int updateSite(SiteEntity SiteEntity);
-    public int deleteSite(SiteEntity SiteEntity);
+    public int insertSite(SiteEntity siteEntity);
+    public int updateSite(SiteEntity siteEntity);
+    public int deleteSite(SiteEntity siteEntity);
 }

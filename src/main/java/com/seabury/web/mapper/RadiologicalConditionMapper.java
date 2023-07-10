@@ -2,7 +2,7 @@ package com.seabury.web.mapper;
 
 import com.seabury.web.entity.RadiologicalConditionEntity;
 import com.seabury.web.entity.ProjectEntity;
-import com.seabury.web.entity.WorkerInformationEntity;
+import com.seabury.web.entity.WorkerEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

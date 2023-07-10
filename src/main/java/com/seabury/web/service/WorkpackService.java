@@ -7,9 +7,9 @@ import com.seabury.web.entity.WorkpackEntity;
 import java.util.List;
 
 public interface WorkpackService {
-    public List<WorkpackEntity> getWorkpackList(WorkpackEntity WorkpackEntity);
+    public List<WorkpackEntity> getWorkpackList(WorkpackEntity workpackEntity);
 
-    public int insertWorkpack(WorkpackEntity WorkpackEntity);
-    public int updateWorkpack(WorkpackEntity WorkpackEntity);
-    public int deleteWorkpack(WorkpackEntity WorkpackEntity);
+    public int insertWorkpack(WorkpackEntity workpackEntity);
+    public int updateWorkpack(WorkpackEntity workpackEntity);
+    public int deleteWorkpack(WorkpackEntity workpackEntity);
 }

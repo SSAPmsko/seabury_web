@@ -5,9 +5,9 @@ import com.seabury.web.entity.UnitEntity;
 import java.util.List;
 
 public interface UnitService {
-    public List<UnitEntity> getUnitList(UnitEntity UnitEntity);
+    public List<UnitEntity> getUnitList(UnitEntity unitEntity);
 
-    public int insertUnit(UnitEntity UnitEntity);
-    public int updateUnit(UnitEntity UnitEntity);
-    public int deleteUnit(UnitEntity UnitEntity);
+    public int insertUnit(UnitEntity unitEntity);
+    public int updateUnit(UnitEntity unitEntity);
+    public int deleteUnit(UnitEntity unitEntity);
 }
