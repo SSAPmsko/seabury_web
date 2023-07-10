@@ -63,6 +63,11 @@
     2. keyProperty="변수명"
     3. keyColumn="Sql컬럼명"
     -->
+    <select id="selectProject" parameterType="java.lang.Integer" resultType="com.seabury.web.entity.ProjectEntity">
+        SELECT * FROM public."Project"
+        WHERE "ID"=#{ID};
+    </select>
+
     <insert id="insertProject" parameterType="com.seabury.web.entity.ProjectEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Project"(
         "Name", "Description", "Creator", "Location", "Start_date", "End_date", "Dose_limit", "Status", "Image", "ReportType", "Job_ID", "Document_ID", "ProducedBy", "RadiationCalculator", "Justification", "Structure_ID")

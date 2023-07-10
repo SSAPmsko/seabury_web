@@ -14,6 +14,8 @@ mybatis 최신 버전에서는 @Mapper 사용해야함
 public interface ProjectMapper {
     List<ProjectEntity> getProjectList(ProjectEntity projectEntity);
 
+    ProjectEntity selectProject(Integer ID);
+
     int insertProject(ProjectEntity projectEntity);
     int updateProject(ProjectEntity projectEntity);
     int deleteProject(ProjectEntity projectEntity);

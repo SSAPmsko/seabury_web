@@ -20,6 +20,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public ProjectEntity selectProject(Integer ID) {
+        return projectMapper.selectProject(ID);
+    }
+
+    @Override
     public int insertProject(ProjectEntity projectEntity) {
         return projectMapper.insertProject(projectEntity);
     }
