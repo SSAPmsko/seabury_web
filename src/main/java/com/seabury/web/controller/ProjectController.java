@@ -60,6 +60,7 @@ public class ProjectController {
             mav.addObject("date", LocalDate.now());
             mav.addObject("startDate", LocalDate.now());
             mav.addObject("endDate", LocalDate.now());
+            mav.addObject("doseLimit", 0.0);
             mav.setViewName("view/sub/project/projectDetail");
         } else {
             mav.addObject("editMode", true);

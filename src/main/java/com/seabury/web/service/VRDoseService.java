@@ -17,4 +17,24 @@ public interface VRDoseService {
     ArrayMap updateProject(HashMap<String,Object> map);
 
     Boolean deleteProject(HashMap<String,Object> map);
+
+    ArrayList getAllScenario(String projectId);
+
+    ArrayMap getScenario(String id);
+
+    List<ArrayMap<String, Object>> getEquipments(String scenarioId);
+
+    List<ArrayMap<String, Object>> getWorkers(String scenarioId);
+
+    List<ArrayMap<String, Object>> getSources(String scenarioId);
+
+    List<ArrayMap<String, Object>> getShields(String scenarioId);
+
+    ArrayMap insertScenario(HashMap<String,Object> map);
+
+    ArrayMap updateScenario(HashMap<String,Object> map);
+
+    Boolean deleteScenario(HashMap<String,Object> map);
+
+    List<ArrayMap<String, Object>> getWorkSteps(String scenarioId);
 }
