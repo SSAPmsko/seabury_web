@@ -16,5 +16,5 @@ public interface VRDoseService {
 
     ArrayMap updateProject(HashMap<String,Object> map);
 
-    Boolean deleteProject(HashMap<String,Object> map);
+    Boolean  deleteProject(HashMap<String,Object> map);
 }
