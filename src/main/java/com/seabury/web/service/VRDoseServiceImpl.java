@@ -1,17 +1,24 @@
 package com.seabury.web.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.api.client.util.ArrayMap;
 import com.google.api.client.util.DateTime;
 import com.seabury.web.entity.VRDose_ProjectEntity;
 import com.seabury.web.entity.VRDose_PropertiesEntity;
 import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -19,6 +26,11 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 @Service
 public class VRDoseServiceImpl implements VRDoseService {
@@ -38,9 +50,9 @@ public class VRDoseServiceImpl implements VRDoseService {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
             result = request.execute().parseAs(result.getClass());
-            convertLong2Date(result, "date");
-            convertLong2Date(result, "startDate");
-            convertLong2Date(result, "endDate");
+            convertLongToDate(result, "date");
+            convertLongToDate(result, "startDate");
+            convertLongToDate(result, "endDate");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,15 +75,12 @@ public class VRDoseServiceImpl implements VRDoseService {
 
             for (Object item : result = request.execute().parseAs(result.getClass())) {
                 if (item instanceof ArrayMap){
-                    ArrayMap<String, Object> castingItem = (ArrayMap<String, Object>)item;
-
+                    ArrayMap<String, Object> castingItem = CastingObjectToString(item);
                     try {
                         Float.parseFloat(castingItem.get("doseLimit").toString());
                     } catch (Exception e) {
                         castingItem.put("doseLimit", "0.0");
                     }
-
-                    castingItem.remove("properties"); // <<<<<<<<<< properties 필드가 Object 형태로 반환되어, 데이터 파싱할때 문제가 발생됨. 사용하지 않는 필드여서 삭제.
                 }
             }
         } catch (Exception e) {
@@ -103,9 +112,9 @@ public class VRDoseServiceImpl implements VRDoseService {
             }
             */
 
-            convertDate2ISO8601(map, "date");
-            convertDate2ISO8601(map, "startDate");
-            convertDate2ISO8601(map, "endDate");
+            convertDateToISO8601(map, "date");
+            convertDateToISO8601(map, "startDate");
+            convertDateToISO8601(map, "endDate");
             //convertString2Float(map, "doseLimit"); // String Convert Float
             map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
             String bodyStr = getJsonString(map);
@@ -129,14 +138,14 @@ public class VRDoseServiceImpl implements VRDoseService {
 
         Object obj = map.get("id");
         if (!StringUtils.isEmpty(obj)) {
-            String projectId = obj.toString();
+            String id = obj.toString();
 
-            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects/" + projectId);
+            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects/" + id);
 
             try {
-                convertDate2ISO8601(map, "date");
-                convertDate2ISO8601(map, "startDate");
-                convertDate2ISO8601(map, "endDate");
+                convertDateToISO8601(map, "date");
+                convertDateToISO8601(map, "startDate");
+                convertDateToISO8601(map, "endDate");
                 //convertString2Float(map, "doseLimit"); // String Convert Float
                 map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
 
@@ -153,8 +162,6 @@ public class VRDoseServiceImpl implements VRDoseService {
                 HttpRequest request = getRequestFactory().buildPostRequest(gUrl, content);
 
                 result = request.execute().parseAs(result.getClass());
-
-                result.remove("properties"); // <<<<<<<<<< properties 필드가 Object 형태로 반환되어, 데이터 파싱할때 문제가 발생됨. 사용하지 않는 필드여서 삭제.
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -167,9 +174,9 @@ public class VRDoseServiceImpl implements VRDoseService {
 
         Object obj = map.get("id");
         if (!StringUtils.isEmpty(obj)) {
-            String projectId = obj.toString();
+            String id = obj.toString();
 
-            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects/" + projectId);
+            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects/" + id);
 
             try {
                 HttpRequest request = getRequestFactory().buildDeleteRequest(gUrl);
@@ -181,6 +188,259 @@ public class VRDoseServiceImpl implements VRDoseService {
             }
         }
         return false;
+    }
+
+    @Override
+    public ArrayList getAllScenario(String projectId){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata");
+        if (!StringUtils.isEmpty(projectId)){
+            gUrl.set("projectId", projectId);
+        }
+
+        ArrayList result = new ArrayList();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            result = request.execute().parseAs(result.getClass());
+
+            for (Object item : result = request.execute().parseAs(result.getClass())) {
+                CastingObjectToString(item);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public ArrayMap getScenario(String id) {
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + id);
+
+        ArrayMap result = new ArrayMap();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            result = request.execute().parseAs(result.getClass());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public ArrayMap insertScenario(HashMap<String,Object> map){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata");
+
+        ArrayMap result = new ArrayMap();
+
+        try {
+            convertDateToISO8601(map, "date");
+            convertDateToISO8601(map, "startDate");
+            convertDateToISO8601(map, "endDate");
+
+            map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
+            String bodyStr = getJsonString(map);
+
+            HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
+
+            HttpRequest request = getRequestFactory().buildPostRequest(gUrl, content);
+
+            result = request.execute().parseAs(result.getClass());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public ArrayMap updateScenario(HashMap<String,Object> map) {
+
+        ArrayMap result = new ArrayMap();
+
+        Object obj = map.get("id");
+        if (!StringUtils.isEmpty(obj)) {
+            String id = obj.toString();
+
+            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + id);
+
+            try {
+                convertDateToISO8601(map, "date");
+                convertDateToISO8601(map, "startDate");
+                convertDateToISO8601(map, "endDate");
+                //convertString2Float(map, "doseLimit"); // String Convert Float
+                map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
+
+                try {
+                    Float.parseFloat(map.get("doseLimit").toString());
+                } catch (Exception e) {
+                    map.put("doseLimit", "0.0");
+                }
+
+                String bodyStr = getJsonString(map);
+
+                HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
+
+                HttpRequest request = getRequestFactory().buildPostRequest(gUrl, content);
+
+                result = request.execute().parseAs(result.getClass());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Boolean deleteScenario(HashMap<String,Object> map) {
+
+        Object obj = map.get("id");
+        if (!StringUtils.isEmpty(obj)) {
+            String id = obj.toString();
+
+            GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + id);
+
+            try {
+                HttpRequest request = getRequestFactory().buildDeleteRequest(gUrl);
+
+                request.execute();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<ArrayMap<String, Object>> getEquipments(String scenarioId){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
+
+        List<ArrayMap<String, Object>> result = new ArrayList<>();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+
+            Object participantInfo = scenarioData.get("participantInfo");
+            if(participantInfo instanceof ArrayList){
+                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
+                result = datalist.stream().filter(n -> n.get("type").equals("OBJECT")).collect(Collectors.toList());
+                result.forEach((item -> item.forEach((k, v) -> {
+                    if (v.getClass().getSimpleName().equals("Object")){
+                        CastingObjectToString(item);
+                    }
+                })));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<ArrayMap<String, Object>> getWorkers(String scenarioId){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
+
+        List<ArrayMap<String, Object>> result = new ArrayList<>();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+
+            Object participantInfo = scenarioData.get("participantInfo");
+            if(participantInfo instanceof ArrayList){
+                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
+                result = datalist.stream().filter(n -> n.get("type").equals("MANIKIN")).collect(Collectors.toList());
+                result.forEach((item -> item.forEach((k, v) -> {
+                    if (v.getClass().getSimpleName().equals("Object")){
+                        CastingObjectToString(item);
+                    }
+                })));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<ArrayMap<String, Object>> getSources(String scenarioId){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
+
+        List<ArrayMap<String, Object>> result = new ArrayList<>();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+
+            Object participantInfo = scenarioData.get("participantInfo");
+            if(participantInfo instanceof ArrayList){
+                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
+                result = datalist.stream().filter(n -> n.get("type").equals("SOURCE")).collect(Collectors.toList());
+                result.forEach((item -> item.forEach((k, v) -> {
+                    if (v.getClass().getSimpleName().equals("Object")){
+                        CastingObjectToString(item);
+                    }
+                })));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<ArrayMap<String, Object>> getShields(String scenarioId){
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
+
+        List<ArrayMap<String, Object>> result = new ArrayList<>();
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+
+            Object participantInfo = scenarioData.get("participantInfo");
+            if(participantInfo instanceof ArrayList){
+                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
+                result = datalist.stream().filter(n -> n.get("type").equals("SHIELD")).collect(Collectors.toList());
+                result.forEach((item -> item.forEach((k, v) -> {
+                    if (v.getClass().getSimpleName().equals("Object")){
+                        CastingObjectToString(item);
+                    }
+                })));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<ArrayMap<String, Object>> getWorkSteps(String scenarioId){
+
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId + "/workplan");
+
+        List<ArrayMap<String, Object>> result = new ArrayList<>();
+
+        try {
+            HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
+
+            InputStream inputStream = request.execute().getContent();
+
+            String xmlString = getXmlString(inputStream);
+            Object elementWorkPlan =  xmlToJson(xmlString);
+
+            if (elementWorkPlan != null){
+                LinkedHashMap castingWorkPlan = (LinkedHashMap)elementWorkPlan;
+                LinkedHashMap castingWorkPlanData = (LinkedHashMap)castingWorkPlan.get("WorkPlan");
+                LinkedHashMap castingSteps = (LinkedHashMap)castingWorkPlanData.get("steps");
+                result = (ArrayList)castingSteps.get("WorkStep");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     private HttpRequestFactory getRequestFactory() {
@@ -196,15 +456,15 @@ public class VRDoseServiceImpl implements VRDoseService {
         return this.requestFactory;
     }
 
-    private void convertLong2Date(ArrayMap map, String key){
+    private void convertLongToDate(ArrayMap map, String key){
         map.put(key, new SimpleDateFormat("yyyy-MM-dd").format(new Date(Long.parseLong(map.get(key).toString()))));
     }
 
-    private void convertLong2Datetime(ArrayMap map, String key){
+    private void convertLongToDatetime(ArrayMap map, String key){
         map.put(key, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(Long.parseLong(map.get(key).toString()))));
     }
 
-    private void convertDate2ISO8601(HashMap<String,Object> map, String key){
+    private void convertDateToISO8601(HashMap<String,Object> map, String key){
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(map.get(key).toString());
             map.put(key, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(date));
@@ -229,5 +489,39 @@ public class VRDoseServiceImpl implements VRDoseService {
         });
 
         return json.toString();
+    }
+
+    private ArrayMap<String, Object> CastingObjectToString(Object item){
+        ArrayMap<String, Object> result = new ArrayMap<>();
+        if (item instanceof ArrayMap){
+            ArrayMap<String, Object> castingItem = (ArrayMap<String, Object>)item;
+            castingItem.forEach((k, v)-> {
+                if (v.getClass().getSimpleName().equals("Object")) {
+                    castingItem.put(k, "");
+                }
+            });
+            result = castingItem;
+        }
+        return result;
+    }
+
+    private String getXmlString(InputStream inputStream) throws Exception{
+        StringBuilder stringBuilder = new StringBuilder();
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line).append("\n");
+        }
+        bufferedReader.close();
+
+        return stringBuilder.toString();
+    }
+
+    private Object xmlToJson(String xml) throws Exception {
+        JSONObject jsonObject = XML.toJSONObject(xml);
+        ObjectMapper objectMapper = new ObjectMapper();
+/*        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);*/
+        return  objectMapper.readValue(jsonObject.toString(), Object.class);
     }
 }
