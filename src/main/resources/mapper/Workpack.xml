@@ -6,31 +6,34 @@
         SELECT * FROM public."Workpack"
 
         <where>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Image)">
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Image != null and Image != ''">
                 AND "Image" = #{Image}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Operator)">
+            <if test="Operator != null and Operator != ''">
                 AND "Operator" = #{Operator}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ReactorType)">
+            <if test="ReactorType != null and ReactorType != ''">
                 AND "ReactorType" = #{ReactorType}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ReactorSupplier)">
+            <if test="ReactorSupplier != null and ReactorSupplier != ''">
                 AND "ReactorSupplier" = #{ReactorSupplier}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ConstructionBegan)">
+            <if test="ConstructionBegan != null and ConstructionBegan != ''">
                 AND "ConstructionBegan" = #{ConstructionBegan}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(CommissionDate)">
+            <if test="CommissionDate != null and CommissionDate != ''">
                 AND "CommissionDate" = #{CommissionDate}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(DecommissionDate)">
+            <if test="DecommissionDate != null and DecommissionDate != ''">
                 AND "DecommissionDate" = #{DecommissionDate}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ThermalCapacity)">
+            <if test="ThermalCapacity != null and ThermalCapacity != ''">
                 AND "ThermalCapacity" = #{ThermalCapacity}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Status)">
+            <if test="Status != null and Status != ''">
                 AND "Status" = #{Status}
             </if>
         </where>

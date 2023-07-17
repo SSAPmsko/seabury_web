@@ -16,7 +16,7 @@ public class PlantVO {
     String ReactorSupplier;
     Timestamp ConstructionBegan;
     Timestamp CommissionDate;
-    Float DecommissionDate;
+    Timestamp DecommissionDate;
     String ThermalCapacity;
     Byte[] Status;
 }

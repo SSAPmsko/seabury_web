@@ -6,52 +6,55 @@
         SELECT * FROM public."Project"
 
         <where>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Name)">
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Description)">
+            <if test="Description != null and Description != ''">
                 AND "Description" = #{Description}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Creator)">
+            <if test="Creator != null and Creator != ''">
                 AND "Creator" = #{Creator}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Location)">
+            <if test="Location != null and Location != ''">
                 AND "Location" = #{Location}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Start_date)">
+            <if test="Start_date != null and Start_date != ''">
                 AND "Start_date" = #{Start_date}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(End_date)">
+            <if test="End_date != null and End_date != ''">
                 AND "End_date" = #{End_date}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Dose_limit)">
+            <if test="Dose_limit != null and Dose_limit != ''">
                 AND "Dose_limit" = #{Dose_limit}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Status)">
+            <if test="Status != null and Status != ''">
                 AND "Status" = #{Status}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Image)">
+            <if test="Image != null and Image != ''">
                 AND "Image" = #{Image}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ReportType)">
+            <if test="ReportType != null and ReportType != ''">
                 AND "ReportType" = #{ReportType}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Job_ID)">
+            <if test="Job_ID != null and Job_ID != ''">
                 AND "Job_ID" = #{Job_ID}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Document_ID)">
+            <if test="Document_ID != null and Document_ID != ''">
                 AND "Document_ID" = #{Document_ID}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(ProducedBy)">
+            <if test="ProducedBy != null and ProducedBy != ''">
                 AND "ProducedBy" = #{ProducedBy}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(RadiationCalculator)">
+            <if test="RadiationCalculator != null and RadiationCalculator != ''">
                 AND "RadiationCalculator" = #{RadiationCalculator}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Justification)">
+            <if test="Justification != null and Justification != ''">
                 AND "Justification" = #{Justification}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Structure_ID)">
+            <if test="Structure_ID != null and Structure_ID != ''">
                 AND "Structure_ID" = #{Structure_ID}
             </if>
         </where>

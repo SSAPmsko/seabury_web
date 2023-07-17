@@ -6,22 +6,25 @@
         SELECT * FROM public."Workers"
 
         <where>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Project_ID)">
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Project_ID != null and Project_ID != ''">
                 AND "Project_ID" = #{Project_ID}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Scenario_ID)">
+            <if test="Scenario_ID != null and Scenario_ID != ''">
                 AND "Scenario_ID" = #{Scenario_ID}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Name)">
+            <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Role)">
+            <if test="Role != null and Role != ''">
                 AND "Role" = #{Role}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Protection)">
+            <if test="Protection != null and Protection != ''">
                 AND "Protection" = #{Protection}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Personnel_ID)">
+            <if test="Personnel_ID != null and Personnel_ID != ''">
                 AND "Personnel_ID" = #{Personnel_ID}
             </if>
         </where>

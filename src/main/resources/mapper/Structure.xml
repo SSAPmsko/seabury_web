@@ -6,19 +6,22 @@
         SELECT * FROM public."Structure"
 
         <where>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Name)">
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Description)">
+            <if test="Description != null and Description != ''">
                 AND "Description" = #{Description}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Parent_ID)">
+            <if test="Parent_ID != null and Parent_ID != ''">
                 AND "Parent_ID" = #{Parent_ID}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Type)">
+            <if test="Type != null and Type != ''">
                 AND "Type" = #{Type}
             </if>
-            <if test="!@org.apache.commons.lang3.StringUtils@isEmpty(Object_ID)">
+            <if test="Object_ID != null and Object_ID != ''">
                 AND "Object_ID" = #{Object_ID}
             </if>
         </where>
