@@ -1,6 +1,8 @@
+var rootName = "scenario";
+
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#scenario").addClass('active');
+    $("#" + rootName).addClass('active');
 
     var editMode = $("#txt_editMode").val();
 
@@ -13,7 +15,7 @@ $(document).ready(function(){
 
 function historyBack(){
     //window.history.back();
-    location.href = "scenarioList";
+    location.href = rootName +"List";
 }
 
 function dataGridSaveExecute(){
@@ -22,13 +24,13 @@ function dataGridSaveExecute(){
     var formData = {};
     formData.name = $('#txt_name').val();
     formData.date = $('#dt_date').val();
+    formData.lastModified = $('#dt_lastModified').val();
     formData.description = $('#txt_description').val();
-    formData.startDate = $('#dt_startDate').val();
-    formData.endDate = $('#dt_endDate').val();
+    formData.startTime = $('#dt_startTime').val();
+    formData.endTime = $('#dt_endTime').val();
     formData.createdBy = $('#txt_createdBy').val();
-    formData.justification = $('#txt_justification').val();
-    formData.doseLimit = $('#txt_doseLimit').val();
-    formData.room = $('#txt_room').val();
+    formData.modifiedBy = $('#txt_modifiedBy').val();
+    formData.status = $('#txt_status').val();
 
     formData.editMode = $('#txt_editMode').val();
     // Update
@@ -40,7 +42,6 @@ function dataGridSaveExecute(){
     else {
         url = "/scenarioInsert";
     }
-
 
     $.ajax({
         url : url,

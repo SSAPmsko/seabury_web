@@ -1,6 +1,8 @@
+var rootName = "project";
+
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#project").addClass('active');
+    $("#" + rootName).addClass('active');
 
     var editMode = $("#txt_editMode").val();
 
@@ -13,7 +15,7 @@ $(document).ready(function(){
 
 function historyBack(){
     //window.history.back();
-    location.href = "projectList";
+    location.href = rootName +"List";
 }
 
 function dataGridSaveExecute(){
