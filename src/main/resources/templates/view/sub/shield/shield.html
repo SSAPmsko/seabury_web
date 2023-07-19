@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/Layout}">
+
+<!-- Begin Page Content -->
+<th:block>
+	<section layout:fragment="content">
+		<div class="row g-2 container-fluid">
+			<div class="col-6">
+				<fieldset>
+					<legend>Properties</legend>
+
+					<div class="row g-3">
+						<!-- Name -->
+						<div class="col-sm-12">
+							<label for="txt_name" class="form-label">Name</label>
+							<input type="text" class="form-control" id="txt_name" th:value="${name}">
+						</div>
+
+						<!-- Description -->
+						<div class="col-sm-12">
+							<label for="txt_description" class="form-label">Description</label>
+							<input type="text" class="form-control" id="txt_description" th:value="${description}">
+						</div>
+
+						<!-- Create Date -->
+						<div class="col-sm-6">
+							<label for="dt_date" class="form-label">Create Date</label>
+							<input type="date" class="form-control" id="dt_date" th:value="${date}">
+						</div>
+
+						<!-- Creator -->
+						<div class="col-sm-6">
+							<label for="txt_creator" class="form-label">Creator</label>
+							<input type="text" class="form-control" id="txt_creator" th:value="${createdBy}">
+						</div>
+
+						<!-- Room -->
+						<div class="col-sm-6">
+							<label for="txt_room" class="form-label">Room</label>
+							<input type="text" class="form-control" id="txt_room" th:value="${room}">
+						</div>
+
+						<!-- Start Date -->
+						<div class="col-sm-6">
+
+							<label for="dt_startDate" class="form-label">Start date</label>
+							<input type="date" id="dt_startDate" class="form-control" th:value="${startDate}">
+						</div>
+
+						<!-- End Date -->
+						<div class="col-sm-6">
+							<label for="dt_endDate" class="form-label">End date</label>
+							<input type="date" id="dt_endDate" class="form-control" th:value="${endDate}">
+						</div>
+
+						<!-- dose Limit -->
+						<div class="col-sm-6">
+							<label for="txt_doseLimit" class="form-label">Dose Limit</label>
+							<input type="text" class="form-control" id="txt_doseLimit" th:value="${doseLimit}">
+						</div>
+
+						<!-- justification -->
+						<div class="col-sm-12">
+							<label for="txt_justification" class="form-label">Justification</label>
+							<input type="text" class="form-control" id="txt_justification" th:value="${justification}">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="col-6">
+				<fieldset>
+					<legend>Image</legend>
+					<div class="container-lg">
+						<div class="row">
+							<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="col-12 mb-3 d-flex justify-content-center">
+				<div>
+					<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
+					<a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Save</a>
+					<a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Custom styles for this template -->
+		<script src="/static/view/sub/project/js/projectDetail.js"></script>
+	</section>
+</th:block>
+</html>

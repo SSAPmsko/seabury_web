@@ -10,23 +10,17 @@
 <th:block>
     <section layout:fragment="content">
         <div class="row g-2 container-fluid">
+            <!-- Hidden Field-->
+            <div class="visually-hidden">
+                <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
+                <input type="text" class="form-control" id="txt_id" th:value="${id}">
+            </div>
+
             <div class="col-6">
                 <fieldset>
-                    <legend>속성</legend>
+                    <legend>Properties</legend>
 
                     <div class="row g-3">
-                        <!-- Name -->
-                        <div class="col-sm-12">
-                            <label for="txt_name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="txt_name" th:value="${name}">
-                        </div>
-
-                        <!-- Parent -->
-                        <div class="col-sm-12">
-                            <label for="txt_parent" class="form-label">Parent</label>
-                            <input type="text" class="form-control" id="txt_parent" th:value="${parent}">
-                        </div>
-
                         <!-- Name -->
                         <div class="col-sm-12">
                             <label for="txt_name" class="form-label">Name</label>
@@ -39,35 +33,74 @@
                             <input type="text" class="form-control" id="txt_description" th:value="${description}">
                         </div>
 
-                        <!-- Operator -->
-                        <div class="col-sm-12">
-                            <label for="txt_operator" class="form-label">Operator</label>
-                            <input type="text" class="form-control" id="txt_operator" th:value="${operator}">
+                        <!-- Create Date -->
+                        <div class="col-sm-6">
+                            <label for="dt_date" class="form-label">Create Date</label>
+                            <input type="date" class="form-control" id="dt_date" th:value="${date}">
+                        </div>
+
+                        <!-- Creator -->
+                        <div class="col-sm-6">
+                            <label for="txt_createdBy" class="form-label">Creator</label>
+                            <input type="text" class="form-control" id="txt_createdBy" th:value="${createdBy}">
+                        </div>
+
+                        <!-- Modify Date -->
+                        <div class="col-sm-6">
+                            <label for="dt_lastModified" class="form-label">Modify Date</label>
+                            <input type="date" class="form-control" id="dt_lastModified" th:value="${lastModified}">
+                        </div>
+
+                        <!-- Modifier -->
+                        <div class="col-sm-6">
+                            <label for="txt_modifiedBy" class="form-label">Modifier</label>
+                            <input type="text" class="form-control" id="txt_modifiedBy" th:value="${modifiedBy}">
                         </div>
 
                         <!-- Status -->
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <label for="txt_status" class="form-label">Status</label>
                             <input type="text" class="form-control" id="txt_status" th:value="${status}">
                         </div>
 
-                        <!-- Reactor type -->
-                        <div class="col-sm-12">
-                            <label for="txt_reactortype" class="form-label">Reactor type</label>
-                            <input type="text" class="form-control" id="txt_reactortype" th:value="${reactortype}">
+                        <!-- Start Date -->
+                        <div class="col-sm-6">
+
+                            <label for="dt_startTime" class="form-label">Start time</label>
+                            <input type="date" id="dt_startTime" class="form-control" th:value="${startTime}">
                         </div>
 
-                        <!-- Reactor supplier -->
-                        <div class="col-sm-12">
-                            <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
-                            <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${reactorsupplier}">
+                        <!-- End Date -->
+                        <div class="col-sm-6">
+                            <label for="dt_endTime" class="form-label">End time</label>
+                            <input type="date" id="dt_endTime" class="form-control" th:value="${endTime}">
                         </div>
                     </div>
                 </fieldset>
             </div>
 
-            <!-- Custom styles for this template -->
-            <script src="/static/view/sub/plant/js/scenarioDetail.js"></script>
+            <div class="col-6">
+                <fieldset>
+                    <legend>Image</legend>
+                    <div class="container-lg">
+                        <div class="row">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-12 mb-3 d-flex justify-content-center">
+                <div>
+                    <a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
+                    <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
+                    <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/scenario/js/scenarioDetail.js"></script>
     </section>
 </th:block>
 </html>
