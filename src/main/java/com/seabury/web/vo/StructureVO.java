@@ -9,9 +9,11 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class StructureVO {
+    Integer ID;
     String Name;
     String Description;
     Integer Parent_ID;
+    String Parent_Type;
     String Type;
     Integer Object_ID;
 }

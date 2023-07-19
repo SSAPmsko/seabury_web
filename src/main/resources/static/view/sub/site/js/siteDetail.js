@@ -2,6 +2,7 @@ $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#site").addClass('active');
 
+loadData();
     var editMode = $("#txt_editMode").val();
 
     if (editMode == 'true') {
@@ -16,13 +17,31 @@ function historyBack(){
     location.href = "siteList";
 }
 
+function loadData() {
+    $.ajax({
+                            url : "/getSiteList",
+                            type: 'POST',
+                            async: false,
+                            processData: false,
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8",
+                            success: function(result) {
+                              options.success(result);
+                            },
+                            error: function(result) {
+                              options.error(result);
+                            }
+                        });
+}
+
+
 function dataGridSaveExecute(){
 
     var url;
     var formData = {};
-    formData.type = $('#txt_type').val();
-    formData.parent = $('#txt_parent').val();
-    formData.name = $('#txt_name').val();
+//    formData.type = $('#txt_type').val();
+//    formData.parent = $('#txt_parent').val();
+//    formData.name = $('#txt_name').val();
     formData.description = $('#txt_description').val();
     formData.operator = $('#txt_operator').val();
     formData.status = $('#txt_status').val();

@@ -12,7 +12,7 @@ $(document).ready(function(){
 });
 
 function initTree() {
-    $('#jstree_div').jstree({
+   /* $('#jstree_div').jstree({
         'core' : {
         'data' : [
                 { "id" : "site_1",  "parent" : "#",       "text" : "고리원자력발전소", "state" : {"opened" : true}},
@@ -29,6 +29,38 @@ function initTree() {
             ]
         },
         'plugins' : ["themes", "search"],
+        'search' : {
+            'show_only_matches' : true,
+            'show_only_matches_children' : true,
+        },
+        'themes' : {
+            'dots' : false,
+            'icons' : false,
+        },
+    });
+*/
+$('#jstree_div').jstree({
+        'core' : {
+        'data' : [
+        $.ajax({
+            type: 'GET',
+            url: "/getStructureList",
+            dataType: "json",
+            error: function(request, status, error) {
+                alert(request.status)},
+            success: function(data) {
+              $('#jstree_div').jstree(true).delete_node(j1_1);
+                alert(data);
+                data.forEach(item => {
+                	var node = { id : item.id, text : item.name };
+                	$('#jstree_div').jstree().create_node(item.parent_ID, node, "last");
+                });
+
+            }})
+          ],
+          "check_callback": true
+        },
+        'plugins' : [ "themes","search"],
         'search' : {
             'show_only_matches' : true,
             'show_only_matches_children' : true,
@@ -63,4 +95,5 @@ function initTree() {
     $('#jstree_div').on('loaded.jstree', function() {
         //tree.jstree('open_all');
     });
+
 }

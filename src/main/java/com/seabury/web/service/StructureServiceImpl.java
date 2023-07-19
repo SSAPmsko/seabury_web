@@ -41,6 +41,7 @@ public class StructureServiceImpl implements StructureService {
             structureVO.setName(structureEntity.getName());
             structureVO.setDescription(structureEntity.getDescription());
             structureVO.setParent_ID(structureEntity.getParent_ID());
+            structureVO.setParent_Type(structureEntity.getParent_Type());
             structureVO.setType(structureEntity.getType());
             structureVO.setObject_ID(structureEntity.getObject_ID());
         }
@@ -54,6 +55,7 @@ public class StructureServiceImpl implements StructureService {
             structureEntity.setName(structureVO.getName());
             structureEntity.setDescription(structureVO.getDescription());
             structureEntity.setParent_ID(structureVO.getParent_ID());
+            structureEntity.setParent_Type(structureVO.getParent_Type());
             structureEntity.setType(structureVO.getType());
             structureEntity.setObject_ID(structureVO.getObject_ID());
 

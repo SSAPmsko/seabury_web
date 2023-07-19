@@ -1,6 +1,6 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#plant").addClass('active');
+    $("#unit").addClass('active');
 
     var editMode = $("#txt_editMode").val();
 
@@ -13,7 +13,23 @@ $(document).ready(function(){
 
 function historyBack(){
     //window.history.back();
-    location.href = "plantList";
+    location.href = "unitList";
+}
+function loadData() {
+    $.ajax({
+                            url : "/getUnitList",
+                            type: 'POST',
+                            async: false,
+                            processData: false,
+                            dataType: "json",
+                            contentType: "application/json;charset=UTF-8",
+                            success: function(result) {
+                              options.success(result);
+                            },
+                            error: function(result) {
+                              options.error(result);
+                            }
+                        });
 }
 
 function dataGridSaveExecute(){
@@ -33,12 +49,12 @@ function dataGridSaveExecute(){
     formData.editMode = $('#txt_editMode').val();
     // Update
     if (formData.editMode == 'true'){
-        url = "/plantUpdate";
+        url = "/unitUpdate";
         formData.id = $('#txt_id').val();
     }
     // Insert
     else {
-        url = "/plantInsert";
+        url = "/unitInsert";
     }
 
 
@@ -51,7 +67,7 @@ function dataGridSaveExecute(){
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            location.href = "plantDetail?" + "id=" + data.result.id;
+            location.href = "unitDetail?" + "id=" + data.result.id;
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
@@ -66,7 +82,7 @@ function dataGridDeleteExecute(){
         formData.id = $('#txt_id').val();
 
         $.ajax({
-            url : "/plantDelete",
+            url : "/unitDelete",
             type: 'DELETE',
             async: false,
             data: JSON.stringify(formData),
@@ -74,7 +90,7 @@ function dataGridDeleteExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                location.href = "plantList";
+                location.href = "unitList";
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");

@@ -100,7 +100,7 @@ function loadData() {
             transport: {
                 read: function(options){
                     $.ajax({
-                        url : "/getplantList",
+                        url : "/getPlantList",
                         type: 'POST',
                         async: false,
                         processData: false,
