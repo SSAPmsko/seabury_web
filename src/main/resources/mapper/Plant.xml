@@ -5,6 +5,7 @@
     <select id="getPlantList" resultType="com.seabury.web.entity.PlantEntity" parameterType="com.seabury.web.entity.PlantEntity">
         SELECT * FROM public."Plant"
 
+
         <where>
             <if test="ID != null and ID != ''">
                 AND "ID" = #{ID}

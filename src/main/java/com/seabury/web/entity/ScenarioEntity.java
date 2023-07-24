@@ -9,13 +9,13 @@ import java.sql.Timestamp;
 @Setter
 public class ScenarioEntity {
     Integer ID;
-    String Image;
+    Byte[] Image;
     String Operator;
     String ReactorType;
     String ReactorSupplier;
     Timestamp ConstructionBegan;
     Timestamp CommissionDate;
-    Float DecommissionDate;
+    Timestamp DecommissionDate;
     String ThermalCapacity;
-    Byte[] Status;
+    String Status;
 }

@@ -2,8 +2,10 @@ package com.seabury.web.controller;
 
 import com.seabury.web.entity.PlantEntity;
 import com.seabury.web.entity.SiteEntity;
+import com.seabury.web.entity.StructureEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.SiteService;
+import com.seabury.web.service.StructureService;
 import com.seabury.web.service.VRDoseService;
 import com.seabury.web.vo.ReturnParam;
 import lombok.var;
@@ -26,6 +28,9 @@ public class SiteController {
     @Autowired
     CommonService commonService;
     VRDoseService vrDoseService;
+
+    @Autowired
+    StructureService structureService;
     @Autowired
     SiteService siteService;
 
@@ -33,9 +38,15 @@ public class SiteController {
     @RequestMapping(value = {"/siteDetail"}, method = RequestMethod.GET)
     public ModelAndView siteDetail(ModelAndView mav) {
         SiteEntity whereSite = new SiteEntity();
-        whereSite.setID(2);
-        List<SiteEntity> qq = siteService.getSiteList(whereSite);
+        whereSite.setID(1);
+        List<SiteEntity> Site1list = siteService.getSiteList(whereSite);
 
+        StructureEntity whereStructure = new StructureEntity();
+        List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
+
+        mav.setViewName("view/sub/plant/plantDetail");
+        mav.addObject("Structurelist", Structurelist);
+        mav.addObject("Site1list", Site1list);
 
         mav.setViewName("view/sub/site/siteDetail");
         return mav;

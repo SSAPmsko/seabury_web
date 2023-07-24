@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 public class PlantVO {
     Integer ID;
-    String Image;
+    Byte[] Image;
     String Operator;
     String ReactorType;
     String ReactorSupplier;
@@ -18,5 +18,5 @@ public class PlantVO {
     Timestamp CommissionDate;
     Timestamp DecommissionDate;
     String ThermalCapacity;
-    Byte[] Status;
+    String Status;
 }

@@ -44,7 +44,15 @@ public class PlantController {
 
         mav.setViewName("view/sub/plant/plantDetail");
         mav.addObject("Structurelist", Structurelist);
-        mav.addObject("Platn1list", Platn1list);
+        mav.addObject("Plant1list", Platn1list);
+
+        return mav;
+    }
+
+    @RequestMapping(value={"/plantList"}, method = RequestMethod.GET)
+    public ModelAndView plantList(ModelAndView mav ){
+
+        mav.setViewName("view/sub/plant/plantList");
 
         return mav;
     }

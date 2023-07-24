@@ -47,12 +47,12 @@ $('#jstree_div').jstree({
             url: "/getStructureList",
             dataType: "json",
             error: function(request, status, error) {
-                alert(request.status)},
+               },
             success: function(data) {
               $('#jstree_div').jstree(true).delete_node(j1_1);
-                alert(data);
+
                 data.forEach(item => {
-                	var node = { id : item.id, text : item.name };
+                	var node = { id : item.id, text : item.name , type : item.type };
                 	$('#jstree_div').jstree().create_node(item.parent_ID, node, "last");
                 });
 
@@ -86,7 +86,13 @@ $('#jstree_div').jstree({
     // Selected Changed Event
     $('#jstree_div').on("changed.jstree", function (e, data) {
         if (data.selected.length > 0) {
-            alert(data.selected);
+            $('#jstree_div').jstree('get_selected',true)
+            var dataType = data.node.original.type;
+            var temp = dataType.toString().toLowerCase();
+
+            var dataId = data.node.original.id;
+            location.href= temp + "Detail" ;
+
             //$('#jstree_div').jstree().get_node(data.selected, true).children('.jstree-anchor').focus();
         }
     });

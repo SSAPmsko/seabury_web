@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Setter
 public class PlantEntity {
     Integer ID;
-    String Image;
+    Byte[] Image;
     String Operator;
     String ReactorType;
     String ReactorSupplier;
@@ -17,5 +17,5 @@ public class PlantEntity {
     Timestamp CommissionDate;
     Timestamp DecommissionDate;
     String ThermalCapacity;
-    Byte[] Status;
+    String Status;
 }

@@ -24,7 +24,7 @@ public class StructureController {
     CommonService commonService;
 
     @Autowired
-    StructureService StructureService;
+    StructureService structureService;
 
     @Autowired
     VRDoseService vrDoseService;

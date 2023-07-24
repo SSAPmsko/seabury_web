@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#plant").addClass('active');
-
+    timestamp();
     loadData();
 
     var editMode = $("#txt_editMode").val();
@@ -12,6 +12,12 @@ $(document).ready(function(){
         $('#btn_delete').addClass("visually-hidden")
     }
 });
+
+function timestamp(){
+    var today = new Date();
+    today.setHours(today.getHours() + 9);
+    return today.toISOString().replace('T', ' ').substring(0, 19);
+}
 
 function historyBack(){
     //window.history.back();
@@ -51,11 +57,8 @@ $.ajax({
                             error: function(data) {
                                             alert(data)},
                             success: function(data) {
-                            alert(data.operator)
-                            data.forEach(item => {
-                            var node = { id : item.id, text : item.operator };
-                            $('#txt_operator1').val(node.text);
-                            });
+
+
 
 
                         }
