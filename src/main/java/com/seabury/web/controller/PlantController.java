@@ -8,10 +8,7 @@ import com.seabury.web.service.StructureService;
 import com.seabury.web.vo.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,9 +31,9 @@ public class PlantController {
     StructureService structureService;
 
     @RequestMapping(value={"/plantDetail"}, method = RequestMethod.GET)
-    public ModelAndView plantDetail(ModelAndView mav ){
+    public ModelAndView plantDetail(ModelAndView mav ,@RequestParam(value = "id", required = false) int id){
         PlantEntity wherePlant = new PlantEntity();
-        wherePlant.setID(2);
+        wherePlant.setID(id);
         List<PlantEntity> Platn1list = plantService.getPlantList(wherePlant);
 
         StructureEntity whereStructure = new StructureEntity();
@@ -105,7 +102,7 @@ public class PlantController {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", plantService.insertPlant(message));
+        rp.put("result", plantService.deletePlant(message));
 
         return rp;
     }

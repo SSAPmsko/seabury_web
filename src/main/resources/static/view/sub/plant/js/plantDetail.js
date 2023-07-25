@@ -126,7 +126,7 @@ function dataGridDeleteExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                location.href = "plantList";
+                location.href = "plantDetail";
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");
