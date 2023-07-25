@@ -8,8 +8,162 @@
 })()
 
 $(document).ready(function(){
-  initTree();
+    // loadData
+    var treeData = loadData();
+
+    if (treeData != null) {
+        // Init Bootstrap TreeView
+        initBootstrapTree(treeData);
+
+        // Init Bootstrap TreeView Settings
+        $('#bt_treeview_div').treeview('expandAll', { levels: 99, silent: false });
+
+        // Find Node
+        const urlParams = new URL(location.href).searchParams;
+        if (urlParams.size > 0) {
+            var paramId = urlParams.get('id');
+
+            var i;
+            for( i = 0;  i < $('#bt_treeview_div').data('treeview').getEnabled().length; i++){
+                var tagId = $('#bt_treeview_div').data('treeview').getEnabled()[i].tags[0];
+                if(tagId == paramId) {
+                    var nodeId = $('#bt_treeview_div').data('treeview').getEnabled()[i].nodeId;
+
+                    $('#bt_treeview_div').treeview('selectNode', [ nodeId, { silent: true } ]); // silent : ture = 노드를 선택만 하는 옵션
+                }
+            }
+        } else {
+            //$('#bt_treeview_div').treeview('selectNode', [ 0, { silent: false } ]);
+        }
+    }
 });
+
+function initBootstrapTree(treeData){
+    // Bootstrap Tree init
+    $('#bt_treeview_div').treeview({
+        data: treeData,
+        //enableLinks: true,
+        onNodeSelected: function (event, node) {
+            // tags[0] : id
+            // tags[1] : parent_id
+            //alert("text:" + node.text + ", tags:" + node.tags[0]);
+            location.href = node.href + "?id=" + node.tags[0];
+        },
+        onNodeUnSelected: function (event, node) {
+            //alert("text:" + node.text + ", tags:" + node.tags[0]);
+        },
+        onNodeCollapsed: function(event, node) {
+        // li node에는 slide toggle속성을 사용할수 없음. 추후 개발
+        /*
+        var i;
+        for (i = 0; i< $('#bt_treeview_div').find("li").length; i++){
+            var el = $('#bt_treeview_div').find("li")[i];
+            if (el.getAttribute("data-nodeid") == node.nodeId) {
+                    el.slideToggle(500, function () {
+                    });
+                }
+            }
+        */
+        },
+        onNodeExpanded: function (event, node) {
+
+        }
+    });
+
+    // Search Tree
+    var findExpandibleNodess = function() {
+        return $('#bt_treeview_div').treeview('search', [ $('#bt_treeview_search').val(), { ignoreCase: false, exactMatch: false } ]);
+    };
+    var expandibleNodes = findExpandibleNodess();
+
+    // Expand/collapse/toggle nodes
+    $('#bt_treeview_search').on('keyup', function (e) {
+        expandibleNodes = findExpandibleNodess();
+        $('.expand-node').prop('disabled', !(expandibleNodes.length >= 1));
+    });
+
+     // Expand/collapse all
+    $('#btn_expand').on('click', function (e) {
+        $('#bt_treeview_div').treeview('expandAll', { levels: 99, silent: false });
+    });
+    $('#btn_collapse').on('click', function (e) {
+        $('#bt_treeview_div').treeview('collapseAll', { silent: false });
+    });
+}
+
+function loadData() {
+    var resultList = new Array();
+
+    $.ajax({
+        type: 'GET',
+        url: "/getStructureList",
+        dataType: "json",
+        async: false,
+        error: function(request, status, error) {
+
+        },
+        success: function(data) {
+            var tempList = new Array();
+            data.forEach(item => {
+                var node = { tags : [item.id, item.parent_ID], text : item.name , href : typeToHref(item.type), type : item.type };
+                tempList.push(node);
+            });
+
+            // Sorting Node - Site
+            tempList.filter(n => n.type == 'Site').forEach(item => {
+                resultList.push(item);
+            });
+            // Sorting Node - Plant
+            tempList.filter(n => n.type == 'Plant').forEach(item => {
+                var parentNode = resultList.find(n => n.tags[0] == item.tags[1]);
+
+                if (parentNode != null) {
+                    if (parentNode.nodes == null) {
+                        parentNode.nodes = new Array();
+                    }
+                    parentNode.nodes.push(item);
+                }
+            });
+            // Sorting Node - Unit
+            tempList.filter(n => n.type == 'Unit').forEach(item => {
+                resultList.forEach(parentItem => {
+                    if (parentItem.nodes != null) {
+                        var parentNode = parentItem.nodes.find(m => m.type == 'Plant' && m.tags[0] == item.tags[1]);
+
+                        if (parentNode != null) {
+                            if (parentNode.nodes == null) {
+                                parentNode.nodes = new Array();
+                            }
+                            parentNode.nodes.push(item);
+                        }
+                    }
+                });
+            });
+            // Sorting Node - Project (추후 구현)
+        }
+    });
+
+    return JSON.stringify(resultList);
+}
+
+function typeToHref(type){
+    switch (type){
+        case "Site":
+        return "../siteDetail";
+
+        case "Plant":
+        return "../plantDetail";
+
+        case "Unit":
+        return "../unitDetail";
+
+        case "Project":
+        return "../projectDetail";
+
+        default:
+        break;
+    }
+}
 
 function initTree() {
    /* $('#jstree_div').jstree({
