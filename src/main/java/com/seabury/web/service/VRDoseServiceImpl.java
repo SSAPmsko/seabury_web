@@ -656,7 +656,7 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object>  getEquipment(String scenarioId, String id) {
+    public Map<String, Object> getEquipment(String scenarioId, String id) {
 
         Map<String, Object>  result = new ArrayMap();
 
@@ -673,7 +673,7 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object>  getWorker(String scenarioId, String id) {
+    public Map<String, Object> getWorker(String scenarioId, String id) {
 
         Map<String, Object>  result = new ArrayMap();
 
@@ -690,7 +690,7 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object>  getSource(String scenarioId, String id) {
+    public Map<String, Object> getSource(String scenarioId, String id) {
 
         Map<String, Object>  result = new ArrayMap();
 
@@ -707,7 +707,7 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object>  getShield(String scenarioId, String id) {
+    public Map<String, Object> getShield(String scenarioId, String id) {
 
         Map<String, Object>  result = new ArrayMap();
 
