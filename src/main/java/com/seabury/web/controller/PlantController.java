@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,8 @@ public class PlantController {
     StructureService structureService;
 
     @RequestMapping(value={"/plantDetail"}, method = RequestMethod.GET)
-    public ModelAndView plantDetail(ModelAndView mav ,@RequestParam(value = "id", required = false) int id){
+    public ModelAndView plantDetail(ModelAndView mav ,@RequestParam(value = "id", required = false) Integer id){
+
         PlantEntity wherePlant = new PlantEntity();
         wherePlant.setID(id);
         List<PlantEntity> Platn1list = plantService.getPlantList(wherePlant);
@@ -39,12 +42,26 @@ public class PlantController {
         StructureEntity whereStructure = new StructureEntity();
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
 
-        mav.setViewName("view/sub/plant/plantDetail");
-        mav.addObject("Structurelist", Structurelist);
-        mav.addObject("Plant1list", Platn1list);
+        /*if (id == null){
+            mav.addObject("editMode", false);
+            mav.addObject("constructionBegan", LocalDate.now());
+            mav.addObject("commissionDate", LocalDate.now());
+            mav.addObject("decommissionDate", LocalDate.now());
+            mav.addObject("thermalCapacity", 0.0);
 
+
+            mav.setViewName("view/sub/plant/plantDetail");
+        } else {*/
+            mav.addObject("editMode", true);
+
+
+            mav.addObject("Plant1list", Platn1list);
+            mav.setViewName("view/sub/plant/plantDetail");
+       /* }*/
+        mav.addObject("Structurelist", Structurelist);
         return mav;
     }
+
 
     @RequestMapping(value={"/plantList"}, method = RequestMethod.GET)
     public ModelAndView plantList(ModelAndView mav ){
@@ -53,32 +70,8 @@ public class PlantController {
 
         return mav;
     }
-
-
-
-
-    @RequestMapping(value = {"/getStructureList"}, method = RequestMethod.GET)
-    public @ResponseBody List<StructureEntity> getStructureList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) StructureEntity message) {
-        StructureEntity whereStructure = new StructureEntity();
-
-        List<StructureEntity> qq = structureService.getStructureList(whereStructure);
-
-
-        return qq;
-    }
-
-    @RequestMapping(value = {"/getPlantList"}, method = RequestMethod.POST)
-    public @ResponseBody List<PlantEntity> getPlantList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) PlantEntity message) {
-        PlantEntity wherePlant = new PlantEntity();
-        wherePlant.setID(2);
-        List<PlantEntity> qq = plantService.getPlantList(wherePlant);
-
-
-        return qq;
-    }
-
     @RequestMapping(value={"/plantInsert"}, method = RequestMethod.POST)
-    public @ResponseBody Map<String, Object> plantInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) PlantEntity message){
+    public @ResponseBody Map<String, Object> plantInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody PlantEntity message){
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
@@ -88,7 +81,7 @@ public class PlantController {
     }
 
     @RequestMapping(value={"/plantUpdate"}, method = RequestMethod.POST)
-    public @ResponseBody Map<String, Object> plantUpdate(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) PlantEntity message){
+    public @ResponseBody Map<String, Object> plantUpdate(HttpServletRequest request, HttpServletResponse response, @RequestBody PlantEntity message){
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
@@ -103,6 +96,7 @@ public class PlantController {
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
         rp.put("result", plantService.deletePlant(message));
+
 
         return rp;
     }

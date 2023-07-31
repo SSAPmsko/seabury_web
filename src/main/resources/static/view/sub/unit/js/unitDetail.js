@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#unit").addClass('active');
-
+$("#parent_picker").attr("disabled", true);
     var editMode = $("#txt_editMode").val();
 
     if (editMode == 'true') {
@@ -11,11 +11,46 @@ $(document).ready(function(){
     }
 });
 
+$("#type_picker").change(function(){
+                // 변경된 값으로 비교 후 alert 표출
+                if($("#type_picker option:checked").val() == "Site"){
+                    $("#parent_picker").attr("disabled", true);
+                } else if($("#type_picker option:checked").val() == "Plant"){
+
+                    $("#parent_picker").attr("disabled", false);
+
+                } else if($("#type_picker option:checked").val() == "Unit"){
+
+                    $("#parent_picker").attr("disabled", false);
+                }
+ });
+
 function historyBack(){
     //window.history.back();
     location.href = "unitList";
 }
 function loadData() {
+//structure 리스트
+$.ajax({
+            type: 'GET',
+            url: "/getStructureList",
+            dataType: "json",
+            error: function(request, status, error) {
+                alert(request.status)},
+            success: function(data) {
+                data.forEach(item => {
+                	var node = {
+                	type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	};
+                	var $typeSelect = $('#type_picker');
+                	var $parentSelect = $('#parent_picker');
+                	$typeSelect.append(new Option(node.type ,node.type , true , true));
+                	$parentSelect.append(new Option(node.parent_type ,node.parent_type , true , true));
+                });
+
+            }})
+
+/*//unit
     $.ajax({
                             url : "/getUnitList",
                             type: 'POST',
@@ -24,27 +59,27 @@ function loadData() {
                             dataType: "json",
                             contentType: "application/json;charset=UTF-8",
                             success: function(result) {
-                              options.success(result);
+
                             },
                             error: function(result) {
                               options.error(result);
                             }
-                        });
+                        });*/
 }
 
 function dataGridSaveExecute(){
 
     var url;
     var formData = {};
-    formData.name = $('#txt_name').val();
-    formData.date = $('#dt_date').val();
     formData.description = $('#txt_description').val();
-    formData.startDate = $('#dt_startDate').val();
-    formData.endDate = $('#dt_endDate').val();
-    formData.createdBy = $('#txt_createdBy').val();
-    formData.justification = $('#txt_justification').val();
-    formData.doseLimit = $('#txt_doseLimit').val();
-    formData.room = $('#txt_room').val();
+            formData.operator = $('#txt_operator').val();
+            formData.status = $('#txt_status').val();
+            formData.reactorType = $('#txt_reactortype').val();
+            formData.reactorSupplier = $('#txt_reactorsupplier').val();
+            formData.constructionBegan = $('#dt_constructionbegan').val();
+            formData.commissionDate = $('#dt_commissiondate').val();
+            formData.decommissionDate = $('#dt_decommissiondate').val();
+            formData.ThermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
 
     formData.editMode = $('#txt_editMode').val();
     // Update
@@ -67,7 +102,7 @@ function dataGridSaveExecute(){
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            location.href = "unitDetail?" + "id=" + data.result.id;
+            location.href = "unitDetail?" + "id=" + formData.id;
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
@@ -90,7 +125,7 @@ function dataGridDeleteExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                location.href = "unitList";
+                location.href = "plantList";
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");

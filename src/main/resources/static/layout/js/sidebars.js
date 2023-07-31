@@ -105,7 +105,7 @@ function loadData() {
         success: function(data) {
             var tempList = new Array();
             data.forEach(item => {
-                var node = { tags : [item.id, item.parent_ID], text : item.name , href : typeToHref(item.type), type : item.type };
+                var node = { tags : [item.object_ID, item.parent_ID], text : item.name , href : typeToHref(item.type), type : item.type };
                 tempList.push(node);
             });
 

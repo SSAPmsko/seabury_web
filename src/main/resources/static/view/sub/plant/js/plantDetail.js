@@ -2,7 +2,7 @@ $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#plant").addClass('active');
     timestamp();
-    loadData();
+$("#parent_picker").attr("disabled", true);
 
     var editMode = $("#txt_editMode").val();
 
@@ -13,6 +13,19 @@ $(document).ready(function(){
     }
 });
 
+$("#type_picker").change(function(){
+                // 변경된 값으로 비교 후 alert 표출
+                if($("#type_picker option:checked").val() == "Site"){
+                    $("#parent_picker").attr("disabled", true);
+                } else if($("#type_picker option:checked").val() == "Plant"){
+
+                    $("#parent_picker").attr("disabled", false);
+
+                } else if($("#type_picker option:checked").val() == "Unit"){
+
+                    $("#parent_picker").attr("disabled", false);
+                }
+ });
 function timestamp(){
     var today = new Date();
     today.setHours(today.getHours() + 9);
@@ -40,13 +53,13 @@ $.ajax({
                 	};
                 	var $typeSelect = $('#type_picker');
                 	var $parentSelect = $('#parent_picker');
-                	$typeSelect.append(new Option(node.type ,node.object_id , true , true));
-                	$parentSelect.append(new Option(node.parent_type ,node.parent_id , true , true));
+                	$typeSelect.append(new Option(node.type ,node.type , true , true));
+                	$parentSelect.append(new Option(node.parent_type ,node.parent_type , true , true));
                 });
 
             }})
 
-//plant 리스트
+/*//plant 리스트
     $.ajax({
                             url : "/getPlantList",
                             type: 'POST',
@@ -55,14 +68,14 @@ $.ajax({
                             dataType: "json",
                             contentType: "application/json;charset=UTF-8",
                             error: function(data) {
-                                            alert(data)},
+                                            alert("ㅁㄴㅇㅁㄴㄹ")},
                             success: function(data) {
 
 
 
 
                         }
-                        });
+                        });*/
 }
 
 function dataGridSaveExecute(){
@@ -72,15 +85,15 @@ function dataGridSaveExecute(){
     //formData.type = $('#txt_type1').val();
       //  formData.parent = $('#txt_parent1').val();
         //formData.name = $('#txt_name1').val();
-        formData.description = $('#txt_description1').val();
-        formData.operator = $('#txt_operator1').val();
-        formData.status = $('#txt_status1').val();
-        formData.reactortype = $('#txt_reactortype1').val();
-        formData.reactorsupplier = $('#txt_reactorsupplier1').val();
-        formData.constructionbegan = $('#dt_constructionbegan1').val();
-        formData.commissiondate = $('#dt_commissiondate1').val();
-        formData.decommissiondate = $('#dt_decommissiondate1').val();
-        formData.thermalcapacity = $('#txt_thermalcapacity1').val();
+        formData.description = $('#txt_description').val();
+        formData.operator = $('#txt_operator').val();
+        formData.status = $('#txt_status').val();
+        formData.reactorType = $('#txt_reactortype').val();
+        formData.reactorSupplier = $('#txt_reactorsupplier').val();
+        formData.constructionBegan = $('#dt_constructionbegan').val();
+        formData.commissionDate = $('#dt_commissiondate').val();
+        formData.decommissionDate = $('#dt_decommissiondate').val();
+        formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
 
     formData.editMode = $('#txt_editMode').val();
     // Update
@@ -103,7 +116,8 @@ function dataGridSaveExecute(){
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            location.href = "plantDetail?" + "id=" + data.result.id;
+        //location.href = "plantList";
+            location.href = "plantDetail?" + "id=" + formData.id;
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
@@ -126,7 +140,7 @@ function dataGridDeleteExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                location.href = "plantDetail";
+                location.href = "plantList";
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");

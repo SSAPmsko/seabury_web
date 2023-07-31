@@ -16,6 +16,6 @@ public class PlantEntity {
     Timestamp ConstructionBegan;
     Timestamp CommissionDate;
     Timestamp DecommissionDate;
-    String ThermalCapacity;
+    Float ThermalCapacity;
     String Status;
 }

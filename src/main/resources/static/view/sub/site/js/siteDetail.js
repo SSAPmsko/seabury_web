@@ -1,8 +1,8 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#site").addClass('active');
+$("#parent_picker").attr("disabled", true);
 
-loadData();
     var editMode = $("#txt_editMode").val();
 
     if (editMode == 'true') {
@@ -12,12 +12,47 @@ loadData();
     }
 });
 
+$("#type_picker").change(function(){
+                // 변경된 값으로 비교 후 alert 표출
+                if($("#type_picker option:checked").text() == "Site"){
+                    $("#parent_picker").attr("disabled", true);
+                } else if($("#type_picker option:checked").text() == "Plant"){
+
+                    $("#parent_picker ").attr("disabled", false);
+
+                } else if($("#type_picker option:checked").text() == "Unit"){
+
+                    $("#parent_picker").attr("disabled", false);
+                }
+ });
 function historyBack(){
     //window.history.back();
     location.href = "siteList";
 }
 
 function loadData() {
+
+//structure 리스트
+
+$.ajax({
+            type: 'GET',
+            url: "/getStructureList",
+            dataType: "json",
+            error: function(request, status, error) {
+                alert(request.status)},
+            success: function(data) {
+                data.forEach(item => {
+                	var node = {
+                	id:item.id, type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	};
+                	var $typeSelect = $('#type_picker');
+                	var $parentSelect = $('#parent_picker');
+                	$typeSelect.append(new Option(node.type ,node.object_id , true , true));
+                	$parentSelect.append(new Option(node.parent_type ,node.parent_id , true , true));
+                });
+
+            }})
+/*//site
     $.ajax({
                             url : "/getSiteList",
                             type: 'POST',
@@ -31,11 +66,38 @@ function loadData() {
                             error: function(result) {
                               options.error(result);
                             }
-                        });
+                        });*/
 }
 
 
 function dataGridSaveExecute(){
+
+
+    var strucData = {};
+
+    strucData.id = $('txt_strucid').val();
+    strucData.type = $('#type_picker option:checked').text();
+    strucData.parent = $('#parent_picker option:checked').text();
+    strucData.name = $('#txt_name').val();
+    strucData.description = $('#txt_description').val();
+    strucData.object_id = $('#type_picker').val();
+    strucData.parent_id = $('#parent_picker').val();
+    $.ajax({
+            url : "/structureUpdate",
+            type: 'POST',
+            async: false,
+            data: JSON.stringify(strucData),
+            processData: false,
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success : function(data) {
+                alert("정상");
+            },
+            error : function(data) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        });
+
 
     var url;
     var formData = {};
@@ -45,22 +107,16 @@ function dataGridSaveExecute(){
     formData.description = $('#txt_description').val();
     formData.operator = $('#txt_operator').val();
     formData.status = $('#txt_status').val();
-    formData.reactortype = $('#txt_reactortype').val();
-    formData.reactorsupplier = $('#txt_reactorsupplier').val();
-    formData.constructionbegan = $('#dt_constructionbegan').val();
-    formData.commissiondate = $('#dt_commissiondate').val();
-    formData.decommissiondate = $('#dt_decommissiondate').val();
-    formData.thermalcapacity = $('#txt_thermalcapacity').val();
-
+    formData.reactorType = $('#txt_reactortype').val();
+    formData.reactorSupplier = $('#txt_reactorsupplier').val();
+    formData.constructionBegan = $('#dt_constructionbegan').val();
+    formData.commissionDate = $('#dt_commissiondate').val();
+    formData.decommissionDate = $('#dt_decommissiondate').val();
+    formData.ThermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
     formData.editMode = $('#txt_editMode').val();
-    // Update
-    if (formData.editMode == 'true'){
-        url = "/siteUpdate";
-        formData.id = $('#txt_id').val();
-    }    // Insert
-    else {
-        url = "/siteInsert";
-    }
+
+    url = "/siteUpdate";
+    formData.id = $('#txt_id').val();
 
 
     $.ajax({
@@ -72,12 +128,14 @@ function dataGridSaveExecute(){
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            location.href = "siteDetail?" + "id=" + data.result.id;
+            location.href = "siteDetail?" + "id=" + formData.id;
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
+
+
 }
 
 function dataGridDeleteExecute(){
@@ -95,7 +153,7 @@ function dataGridDeleteExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                location.href = "siteList";
+                location.href = "plantList";
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");

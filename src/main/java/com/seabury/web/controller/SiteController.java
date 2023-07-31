@@ -3,18 +3,15 @@ package com.seabury.web.controller;
 import com.seabury.web.entity.PlantEntity;
 import com.seabury.web.entity.SiteEntity;
 import com.seabury.web.entity.StructureEntity;
+import com.seabury.web.entity.UnitEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.SiteService;
 import com.seabury.web.service.StructureService;
 import com.seabury.web.service.VRDoseService;
 import com.seabury.web.vo.ReturnParam;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,14 +33,14 @@ public class SiteController {
 
 
     @RequestMapping(value = {"/siteDetail"}, method = RequestMethod.GET)
-    public ModelAndView siteDetail(ModelAndView mav) {
+    public ModelAndView siteDetail(ModelAndView mav, @RequestParam(value = "id", required = false) Integer id) {
         SiteEntity whereSite = new SiteEntity();
-        whereSite.setID(1);
+        whereSite.setID(id);
         List<SiteEntity> Site1list = siteService.getSiteList(whereSite);
 
         StructureEntity whereStructure = new StructureEntity();
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
-
+        mav.addObject("editMode", true);
         mav.setViewName("view/sub/plant/plantDetail");
         mav.addObject("Structurelist", Structurelist);
         mav.addObject("Site1list", Site1list);
@@ -63,35 +60,35 @@ public class SiteController {
     }
 
     @RequestMapping(value = {"/siteInsert"}, method = RequestMethod.POST)
-    public @ResponseBody Map<String, Object> siteInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String, Object> requestMap) {
+    public @ResponseBody Map<String, Object> siteInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) SiteEntity message) {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", vrDoseService.insertProject(requestMap));
+        rp.put("result", siteService.insertSite(message));
 
         return rp;
     }
 
+
     @RequestMapping(value = {"/siteUpdate"}, method = RequestMethod.POST)
-    public @ResponseBody Map<String, Object> siteUpdate(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String, Object> requestMap) {
+    public @ResponseBody Map<String, Object> siteUpdate(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) SiteEntity message) {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", vrDoseService.updateProject(requestMap));
+        rp.put("result", message);
 
         return rp;
     }
 
     @RequestMapping(value = {"/siteDelete"}, method = RequestMethod.DELETE)
-    public @ResponseBody Map<String, Object> siteDelete(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String, Object> requestMap) {
+    public @ResponseBody Map<String, Object> siteDelete(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) SiteEntity message) {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", vrDoseService.deleteProject(requestMap));
+        rp.put("result", siteService.deleteSite(message));
 
         return rp;
     }
-
 
     @RequestMapping(value = {"/getSiteList"}, method = RequestMethod.POST)
     public @ResponseBody List<SiteEntity> getSiteList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) SiteEntity message) {

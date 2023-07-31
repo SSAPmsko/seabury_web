@@ -8,32 +8,42 @@
 <!-- Begin Page Content -->
 
 <th:block>
-  <div layout:fragment="content">
+  <section layout:fragment="content">
     <div class="row g-2 container-fluid">
+      <div class="visually-hidden">
+        <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
+        <input type="text" class="form-control" id="txt_id" th:value="${Unit1list[0].ID}">
+      </div>
       <div class="col-6">
         <fieldset>
           <legend>속성</legend>
 
           <div class="row g-3">
-            <!-- Type -->
-            <div class="col-sm-6">
-              <label for="txt_type" class="form-label">Type</label>
-              <input type="text" class="form-control" id="txt_type" th:value="${type}">
-            </div>
-
-            <!-- Parent -->
-            <div class="col-sm-6">
-              <label for="txt_parent" class="form-label">Parent</label>
-              <input type="text" class="form-control" id="txt_parent" th:value="${parent}">
-            </div>
-
             <!-- Name -->
+            <div class="col-sm-6">
+              <label  class="form-label">Type</label>
+              <!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
+              <select class="form-select" aria-label="Default select example" id="type_picker">
+
+
+              </select>
+            </div>
+
+            <!-- Description -->
+            <div class="col-sm-6">
+              <label  class="form-label">Parent Type</label>
+              <!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
+              <select class="form-select" aria-label="Default select example" id="parent_picker">
+              </select>
+            </div>
+
+            <!-- Creator -->
             <div class="col-sm-6">
               <label for="txt_name" class="form-label">Name</label>
               <input type="text" class="form-control" id="txt_name" th:value="${Structurelist[0].Name}">
             </div>
 
-            <!-- Description -->
+            <!-- Room -->
             <div class="col-sm-6">
               <label for="txt_description" class="form-label">Description</label>
               <input type="text" class="form-control" id="txt_description" th:value="${Structurelist[0].Description}">
@@ -102,11 +112,18 @@
           </div>
         </fieldset>
       </div>
+      <div class="col-12 mb-3 d-flex justify-content-center">
+        <div>
+
+          <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
+          <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+        </div>
+      </div>
     </div>
-  </div>
+
 
     <!-- Custom styles for this template -->
-    <script src="/static/view/sub/js/unitDetail.js"></script>
+    <script src="/static/view/sub/unit/js/unitDetail.js"></script>
     </section>
 </th:block>
 </html>
