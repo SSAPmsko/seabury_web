@@ -1,7 +1,10 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#plant").addClass('active');
+    loadData();
     timestamp();
+$("#parent_picker").attr("disabled", true);
+$("#type_picker").text
 $("#parent_picker").attr("disabled", true);
 
     var editMode = $("#txt_editMode").val();
@@ -49,7 +52,7 @@ $.ajax({
             success: function(data) {
                 data.forEach(item => {
                 	var node = {
-                	type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	id: item.id type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
                 	};
                 	var $typeSelect = $('#type_picker');
                 	var $parentSelect = $('#parent_picker');
@@ -80,6 +83,27 @@ $.ajax({
 
 function dataGridSaveExecute(){
 
+var strucData = {};
+
+    strucData.id = $('#txt_strucid').val();
+    strucData.name = $('#txt_name').val();
+    strucData.description = $('#txt_description').val();
+    $.ajax({
+            url : "/structureUpdate",
+            type: 'POST',
+            async: false,
+            data: JSON.stringify(strucData),
+            processData: false,
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success : function(data) {
+
+            },
+            error : function(data) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        });
+
     var url;
     var formData = {};
     //formData.type = $('#txt_type1').val();
@@ -96,15 +120,8 @@ function dataGridSaveExecute(){
         formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
 
     formData.editMode = $('#txt_editMode').val();
-    // Update
-    if (formData.editMode == 'true'){
         url = "/plantUpdate";
         formData.id = $('#txt_id').val();
-    }
-    // Insert
-    else {
-        url = "/plantInsert";
-    }
 
 
     $.ajax({
@@ -127,6 +144,25 @@ function dataGridSaveExecute(){
 
 function dataGridDeleteExecute(){
     if(confirm("해당 아이템을 삭제 하시겠습니까?")){
+
+    var strucData = {};
+
+            strucData.id = $('#txt_strucid').val();
+            $.ajax({
+                    url : "/structureDelete",
+                    type: 'POST',
+                    async: false,
+                    data: JSON.stringify(strucData),
+                    processData: false,
+                    dataType: "json",
+                    contentType: "application/json;charset=UTF-8",
+                    success : function(data) {
+
+                    },
+                    error : function(data) {
+                        alert("정상 처리에 실패 하였습니다.");
+                    }
+                });
 
      var formData = {};
         formData.id = $('#txt_id').val();

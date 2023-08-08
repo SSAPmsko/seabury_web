@@ -34,7 +34,10 @@ public class CreateController {
         StructureEntity whereStructure = new StructureEntity();
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
         mav.addObject("Structurelist", Structurelist);
-
+        mav.addObject("constructionBegan", LocalDate.now());
+        mav.addObject("commissionDate", LocalDate.now());
+        mav.addObject("decommissionDate", LocalDate.now());
+        mav.addObject("thermalCapacity", 0.0);
         mav.setViewName("view/sub/create/createDetail");
 
         return mav;

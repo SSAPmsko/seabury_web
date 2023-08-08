@@ -69,6 +69,27 @@ $.ajax({
 
 function dataGridSaveExecute(){
 
+var strucData = {};
+
+    strucData.id = $('#txt_strucid').val();
+    strucData.name = $('#txt_name').val();
+    strucData.description = $('#txt_description').val();
+    $.ajax({
+            url : "/structureUpdate",
+            type: 'POST',
+            async: false,
+            data: JSON.stringify(strucData),
+            processData: false,
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success : function(data) {
+
+            },
+            error : function(data) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        });
+
     var url;
     var formData = {};
     formData.description = $('#txt_description').val();
@@ -79,7 +100,7 @@ function dataGridSaveExecute(){
             formData.constructionBegan = $('#dt_constructionbegan').val();
             formData.commissionDate = $('#dt_commissiondate').val();
             formData.decommissionDate = $('#dt_decommissiondate').val();
-            formData.ThermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
+            formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
 
     formData.editMode = $('#txt_editMode').val();
     // Update
@@ -112,6 +133,25 @@ function dataGridSaveExecute(){
 
 function dataGridDeleteExecute(){
     if(confirm("해당 아이템을 삭제 하시겠습니까?")){
+
+    var strucData = {};
+
+        strucData.id = $('#txt_strucid').val();
+        $.ajax({
+                url : "/structureDelete",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify(strucData),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
 
      var formData = {};
         formData.id = $('#txt_id').val();

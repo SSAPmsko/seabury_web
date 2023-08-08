@@ -34,6 +34,8 @@ public class UnitController {
         List<UnitEntity> Unit1list = unitService.getUnitList(whereUnit);
 
         StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setObject_ID(id);
+        whereStructure.setType("Unit");
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
         mav.addObject("editMode", true);
 

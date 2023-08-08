@@ -44,7 +44,7 @@
 
     <update id="updateStructure" parameterType="com.seabury.web.entity.StructureEntity">
         UPDATE public."Structure"
-        SET "Name"=#{Name}, "Description"=#{Description}, "Parent_ID"=#{Parent_ID}, "Type"=#{Type}, "Object_ID"=#{Object_ID}, "Parent_Type"=#{Parent_Type}
+        SET "Name"=#{Name}, "Description"=#{Description}
         WHERE "ID"=#{ID};
     </update>
 

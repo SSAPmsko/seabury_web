@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#site").addClass('active');
-$("#parent_picker").attr("disabled", true);
+/*$("#parent_picker").attr("disabled", true);*/
 
     var editMode = $("#txt_editMode").val();
 
@@ -12,7 +12,7 @@ $("#parent_picker").attr("disabled", true);
     }
 });
 
-$("#type_picker").change(function(){
+/*$("#type_picker").change(function(){
                 // 변경된 값으로 비교 후 alert 표출
                 if($("#type_picker option:checked").text() == "Site"){
                     $("#parent_picker").attr("disabled", true);
@@ -24,7 +24,7 @@ $("#type_picker").change(function(){
 
                     $("#parent_picker").attr("disabled", false);
                 }
- });
+ });*/
 function historyBack(){
     //window.history.back();
     location.href = "siteList";
@@ -45,10 +45,10 @@ $.ajax({
                 	var node = {
                 	id:item.id, type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
                 	};
-                	var $typeSelect = $('#type_picker');
+                	/*var $typeSelect = $('#type_picker');
                 	var $parentSelect = $('#parent_picker');
                 	$typeSelect.append(new Option(node.type ,node.object_id , true , true));
-                	$parentSelect.append(new Option(node.parent_type ,node.parent_id , true , true));
+                	$parentSelect.append(new Option(node.parent_type ,node.parent_id , true , true));*/
                 });
 
             }})
@@ -75,13 +75,9 @@ function dataGridSaveExecute(){
 
     var strucData = {};
 
-    strucData.id = $('txt_strucid').val();
-    strucData.type = $('#type_picker option:checked').text();
-    strucData.parent = $('#parent_picker option:checked').text();
+    strucData.id = $('#txt_strucid').val();
     strucData.name = $('#txt_name').val();
     strucData.description = $('#txt_description').val();
-    strucData.object_id = $('#type_picker').val();
-    strucData.parent_id = $('#parent_picker').val();
     $.ajax({
             url : "/structureUpdate",
             type: 'POST',
@@ -91,7 +87,7 @@ function dataGridSaveExecute(){
             dataType: "json",
             contentType: "application/json;charset=UTF-8",
             success : function(data) {
-                alert("정상");
+
             },
             error : function(data) {
                 alert("정상 처리에 실패 하였습니다.");
@@ -112,7 +108,7 @@ function dataGridSaveExecute(){
     formData.constructionBegan = $('#dt_constructionbegan').val();
     formData.commissionDate = $('#dt_commissiondate').val();
     formData.decommissionDate = $('#dt_decommissiondate').val();
-    formData.ThermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
+    formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
     formData.editMode = $('#txt_editMode').val();
 
     url = "/siteUpdate";
@@ -140,6 +136,25 @@ function dataGridSaveExecute(){
 
 function dataGridDeleteExecute(){
     if(confirm("해당 아이템을 삭제 하시겠습니까?")){
+
+    var strucData = {};
+
+            strucData.id = $('#txt_strucid').val();
+            $.ajax({
+                    url : "/structureDelete",
+                    type: 'POST',
+                    async: false,
+                    data: JSON.stringify(strucData),
+                    processData: false,
+                    dataType: "json",
+                    contentType: "application/json;charset=UTF-8",
+                    success : function(data) {
+
+                    },
+                    error : function(data) {
+                        alert("정상 처리에 실패 하였습니다.");
+                    }
+                });
 
      var formData = {};
         formData.id = $('#txt_id').val();

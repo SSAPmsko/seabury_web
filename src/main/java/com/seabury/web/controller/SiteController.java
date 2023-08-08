@@ -39,7 +39,11 @@ public class SiteController {
         List<SiteEntity> Site1list = siteService.getSiteList(whereSite);
 
         StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setObject_ID(id);
+        whereStructure.setType("Site");
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
+
+
         mav.addObject("editMode", true);
         mav.setViewName("view/sub/plant/plantDetail");
         mav.addObject("Structurelist", Structurelist);
@@ -75,7 +79,7 @@ public class SiteController {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", message);
+        rp.put("result", siteService.updateSite(message));
 
         return rp;
     }

@@ -9,7 +9,7 @@
 
 $(document).ready(function(){
     // loadData
-    var treeData = loadData();
+    var treeData = loadTreeData();
 
     if (treeData != null) {
         // Init Bootstrap TreeView
@@ -37,6 +37,9 @@ $(document).ready(function(){
         }
     }
 });
+function dataGridCreateExecute(){
+    location.href = "createDetail";
+}
 
 function initBootstrapTree(treeData){
     // Bootstrap Tree init
@@ -91,7 +94,7 @@ function initBootstrapTree(treeData){
     });
 }
 
-function loadData() {
+function loadTreeData() {
     var resultList = new Array();
 
     $.ajax({
