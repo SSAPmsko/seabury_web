@@ -1,8 +1,8 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.EquipmentEntity;
-import com.seabury.web.mapper.EquipmentMapper;
-import com.seabury.web.vo.EquipmentVO;
+import com.seabury.web.entity.dose.EquipmentEntity;
+import com.seabury.web.mapper.dose.EquipmentMapper;
+import com.seabury.web.vo.dose.EquipmentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

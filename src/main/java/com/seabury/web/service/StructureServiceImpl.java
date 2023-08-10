@@ -1,15 +1,21 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.StructureEntity;
-import com.seabury.web.mapper.StructureMapper;
-import com.seabury.web.vo.StructureVO;
+import com.seabury.web.entity.dose.StructureEntity;
+import com.seabury.web.mapper.dose.StructureMapper;
+import com.seabury.web.vo.dose.StructureVO;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class StructureServiceImpl implements StructureService {
+
+    @Autowired
+    @Qualifier(value = "sqlSession")
+    private SqlSession sqlSession;
 
     @Autowired
     StructureMapper structureMapper;

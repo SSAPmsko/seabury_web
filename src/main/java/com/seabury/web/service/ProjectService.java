@@ -1,6 +1,6 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.ProjectEntity;
+import com.seabury.web.entity.dose.ProjectEntity;
 
 import java.util.List;
 

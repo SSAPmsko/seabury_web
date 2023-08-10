@@ -2,7 +2,7 @@ package com.seabury.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.util.ArrayMap;
-import com.seabury.web.entity.VRDose_PropertiesEntity;
+import com.seabury.web.entity.dose.VRDose_PropertiesEntity;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;

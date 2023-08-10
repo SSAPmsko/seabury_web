@@ -1,13 +1,10 @@
 package com.seabury.web.controller;
 
-import com.google.api.client.util.ArrayMap;
-import com.seabury.web.entity.PlantEntity;
-import com.seabury.web.entity.StructureEntity;
+import com.seabury.web.entity.dose.StructureEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.StructureService;
 import com.seabury.web.service.VRDoseService;
-import com.seabury.web.vo.ReturnParam;
-import lombok.var;
+import com.seabury.web.vo.dose.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

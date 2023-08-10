@@ -1,6 +1,6 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.PlantEntity;
+import com.seabury.web.entity.dose.PlantEntity;
 
 import java.util.List;
 

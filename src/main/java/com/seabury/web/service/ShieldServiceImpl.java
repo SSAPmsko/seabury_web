@@ -1,10 +1,6 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.EquipmentEntity;
-import com.seabury.web.entity.ShieldEntity;
-import com.seabury.web.mapper.EquipmentMapper;
-import com.seabury.web.vo.EquipmentVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.seabury.web.entity.dose.ShieldEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

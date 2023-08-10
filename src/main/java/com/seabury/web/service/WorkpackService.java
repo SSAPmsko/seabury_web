@@ -1,8 +1,6 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.PlantEntity;
-import com.seabury.web.entity.ScenarioEntity;
-import com.seabury.web.entity.WorkpackEntity;
+import com.seabury.web.entity.dose.WorkpackEntity;
 
 import java.util.List;
 

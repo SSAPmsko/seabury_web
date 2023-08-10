@@ -1,6 +1,6 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.ShieldEntity;
+import com.seabury.web.entity.dose.ShieldEntity;
 
 import java.util.List;
 

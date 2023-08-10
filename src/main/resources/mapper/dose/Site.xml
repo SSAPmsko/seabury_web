@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.dose.SiteMapper">
+    <select id="getSiteList" resultType="com.seabury.web.entity.dose.SiteEntity">
+        SELECT * FROM public."Site"
+
+        <where>
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Image != null and Image != ''">
+                AND "Image" = #{Image}
+            </if>
+            <if test="Operator != null and Operator != ''">
+                AND "Operator" = #{Operator}
+            </if>
+            <if test="ReactorType != null and ReactorType != ''">
+                AND "ReactorType" = #{ReactorType}
+            </if>
+            <if test="ReactorSupplier != null and ReactorSupplier != ''">
+                AND "ReactorSupplier" = #{ReactorSupplier}
+            </if>
+            <if test="ConstructionBegan != null and ConstructionBegan != ''">
+                AND "ConstructionBegan" = #{ConstructionBegan}
+            </if>
+            <if test="CommissionDate != null and CommissionDate != ''">
+                AND "CommissionDate" = #{CommissionDate}
+            </if>
+            <if test="DecommissionDate != null and DecommissionDate != ''">
+                AND "DecommissionDate" = #{DecommissionDate}
+            </if>
+            <if test="ThermalCapacity != null and ThermalCapacity != ''">
+                AND "ThermalCapacity" = #{ThermalCapacity}
+            </if>
+            <if test="Status != null and Status != ''">
+                AND "Status" = #{Status}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    # Insert or Update 된 ID 리턴
+    1. useGeneratedKeys="true"
+    2. keyProperty="변수명"
+    3. keyColumn="Sql컬럼명"
+    -->
+    <insert id="insertSite" parameterType="com.seabury.web.entity.dose.SiteEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+        INSERT INTO public."Site"(
+        "Image", "Operator", "ReactorType", "ReactorSupplier", "ConstructionBegan", "CommissionDate", "DecommissionDate", "ThermalCapacity", "Status")
+        VALUES (#{Image}, #{Operator}, #{ReactorType}, #{ReactorSupplier}, #{ConstructionBegan}, #{CommissionDate}, #{DecommissionDate}, #{ThermalCapacity}, #{Status});
+    </insert>
+
+    <update id="updateSite" parameterType="com.seabury.web.entity.dose.SiteEntity">
+        UPDATE public."Site"
+        SET "Image"=#{Image}, "Operator"=#{Operator}, "ReactorType"=#{ReactorType}, "ReactorSupplier"=#{ReactorSupplier}, "ConstructionBegan"=#{ConstructionBegan}, "CommissionDate"=#{CommissionDate}, "DecommissionDate"=#{DecommissionDate}, "ThermalCapacity"=#{ThermalCapacity}, "Status"=#{Status}
+        WHERE "ID"=#{ID};
+    </update>
+
+    <delete id="deleteSite" parameterType="com.seabury.web.entity.dose.SiteEntity">
+        DELETE FROM public."Site"
+        WHERE "ID"=#{ID};
+    </delete>
+</mapper>

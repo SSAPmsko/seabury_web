@@ -1,8 +1,8 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.PlantEntity;
-import com.seabury.web.mapper.PlantMapper;
-import com.seabury.web.vo.PlantVO;
+import com.seabury.web.entity.dose.PlantEntity;
+import com.seabury.web.mapper.dose.PlantMapper;
+import com.seabury.web.vo.dose.PlantVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,7 @@ public class PlantServiceImpl implements PlantService {
     PlantMapper plantMapper;
 
     @Override
-    public List<PlantEntity> getPlantList(PlantEntity plantEntity) {
-        return plantMapper.getPlantList(plantEntity);
-    }
+    public List<PlantEntity> getPlantList(PlantEntity plantEntity) { return plantMapper.getPlantList(plantEntity); }
 
     @Override
     public int insertPlant(PlantEntity plantEntity) {

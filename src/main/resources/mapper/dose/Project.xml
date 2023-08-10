@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.dose.ProjectMapper">
+    <select id="getProjectList" resultType="com.seabury.web.entity.dose.ProjectEntity">
+        SELECT * FROM public."Project"
+
+        <where>
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Name != null and Name != ''">
+                AND "Name" = #{Name}
+            </if>
+            <if test="Description != null and Description != ''">
+                AND "Description" = #{Description}
+            </if>
+            <if test="Creator != null and Creator != ''">
+                AND "Creator" = #{Creator}
+            </if>
+            <if test="Location != null and Location != ''">
+                AND "Location" = #{Location}
+            </if>
+            <if test="Start_date != null and Start_date != ''">
+                AND "Start_date" = #{Start_date}
+            </if>
+            <if test="End_date != null and End_date != ''">
+                AND "End_date" = #{End_date}
+            </if>
+            <if test="Dose_limit != null and Dose_limit != ''">
+                AND "Dose_limit" = #{Dose_limit}
+            </if>
+            <if test="Status != null and Status != ''">
+                AND "Status" = #{Status}
+            </if>
+            <if test="Image != null and Image != ''">
+                AND "Image" = #{Image}
+            </if>
+            <if test="ReportType != null and ReportType != ''">
+                AND "ReportType" = #{ReportType}
+            </if>
+            <if test="Job_ID != null and Job_ID != ''">
+                AND "Job_ID" = #{Job_ID}
+            </if>
+            <if test="Document_ID != null and Document_ID != ''">
+                AND "Document_ID" = #{Document_ID}
+            </if>
+            <if test="ProducedBy != null and ProducedBy != ''">
+                AND "ProducedBy" = #{ProducedBy}
+            </if>
+            <if test="RadiationCalculator != null and RadiationCalculator != ''">
+                AND "RadiationCalculator" = #{RadiationCalculator}
+            </if>
+            <if test="Justification != null and Justification != ''">
+                AND "Justification" = #{Justification}
+            </if>
+            <if test="Structure_ID != null and Structure_ID != ''">
+                AND "Structure_ID" = #{Structure_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    # Insert or Update 된 ID 리턴
+    1. useGeneratedKeys="true"
+    2. keyProperty="변수명"
+    3. keyColumn="Sql컬럼명"
+    -->
+    <select id="selectProject" parameterType="java.lang.Integer" resultType="com.seabury.web.entity.dose.ProjectEntity">
+        SELECT * FROM public."Project"
+        WHERE "ID"=#{ID};
+    </select>
+
+    <insert id="insertProject" parameterType="com.seabury.web.entity.dose.ProjectEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+        INSERT INTO public."Project"(
+        "Name", "Description", "Creator", "Location", "Start_date", "End_date", "Dose_limit", "Status", "Image", "ReportType", "Job_ID", "Document_ID", "ProducedBy", "RadiationCalculator", "Justification", "Structure_ID")
+        VALUES (#{Name}, #{Description}, #{Creator}, #{Location}, #{Start_date}, #{End_date}, #{Dose_limit}, #{Status}, #{Image}, #{ReportType}, #{Job_ID}, #{Document_ID}, #{ProducedBy}, #{RadiationCalculator}, #{Justification}, #{Structure_ID});
+    </insert>
+
+    <update id="updateProject" parameterType="com.seabury.web.entity.dose.ProjectEntity">
+        UPDATE public."Project"
+        SET "Name"=#{Name}, "Description"=#{Description}, "Creator"=#{Creator}, "Location"=#{Location}, "Start_date"=#{Start_date}, "End_date"=#{End_date}, "Dose_limit"=#{Dose_limit}, "Status"=#{Status}, "ReportType"=#{ReportType}, "Job_ID"=#{Job_ID}, "Document_ID"=#{Document_ID}, "ProducedBy"=#{ProducedBy}, "RadiationCalculator"=#{RadiationCalculator}, "Justification"=#{Justification}, "Structure_ID"=#{Structure_ID}
+        WHERE "ID"=#{ID};
+    </update>
+
+    <delete id="deleteProject" parameterType="com.seabury.web.entity.dose.ProjectEntity">
+        DELETE FROM public."Project"
+        WHERE "ID"=#{ID};
+    </delete>
+</mapper>

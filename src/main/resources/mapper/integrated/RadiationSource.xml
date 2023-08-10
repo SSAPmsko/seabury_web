@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.integrated.RadiationSourceMapper">
+	<select id="GetND60_103_IHN_List" resultType="com.seabury.web.entity.integrated.ND_60_103_INH_Entity" parameterType="java.util.HashMap">
+		SELECT
+		adrenals, bone_surface, brain, breast, colon, e, esophagus, extratrachial_airways, half_life1, half_life2, half_life2unit, half_life3, half_life3unit, kidneys, liver, lower_large_intestine, lungs, muscle, nuclide, ovaries, pancreas, red_marrow, remainder, skin, small_intestine, spleen, stomach, testes, thymus, thyroid, type, upper_large_intestine, urinary_bladder, uterus, f1
+		FROM ${table_name}
+	</select>
+
+	<select id="GetND60_103_ING_List" resultType="com.seabury.web.entity.integrated.ND_60_103_ING_Entity" parameterType="java.util.HashMap">
+		SELECT
+		adrenals, bone_surface, brain, breast, colon, e, esophagus, extratrachial_airways, half_life1, half_life2, half_life2unit, half_life3, half_life3unit, kidneys, liver, lower_large_intestine, lungs, muscle, nuclide, ovaries, pancreas, red_marrow, remainder, skin, small_intestine, spleen, stomach, testes, thymus, thyroid, upper_large_intestine, urinary_bladder, uterus, f1
+		FROM ${table_name}
+	</select>
+
+	<select id="GetND60_EXT_List" resultType="com.seabury.web.entity.integrated.ND_60_EXT_Entity" parameterType="java.util.HashMap">
+		SELECT
+		adrenals, bladder_wall, bone_surface, brain, breast, e, esophagus, kidneys, liver, lower_large_intestine_wall, lungs, muscle, nuclide, ovaries, pancreas, red_marrow, skin, small_intestine_wall, spleen, stomach_wall, testes, thymus, thyroid, upper_large_intestine_wall, uterus, he
+		FROM ${table_name}
+	</select>
+
+	<select id="GetND103_EXT_List" resultType="com.seabury.web.entity.integrated.ND_103_EXT_Entity" parameterType="java.util.HashMap">
+		SELECT
+		adult, new_born, nuclide, y10_yr_old, y15_yr_old, y1_yr_old, y5_yr_old
+		FROM ${table_name}
+	</select>
+
+	<select id="GetND103_W_List" resultType="com.seabury.web.entity.integrated.ND_103_W_Entity" parameterType="java.util.HashMap">
+		SELECT
+		effective, half_life1, half_life2, half_life2unit, half_life3, half_life3unit, material, nuclide, amtd_amad
+		FROM ${table_name}
+	</select>
+
+</mapper>

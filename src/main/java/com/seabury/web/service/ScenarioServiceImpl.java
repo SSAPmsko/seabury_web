@@ -1,8 +1,8 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.ScenarioEntity;
-import com.seabury.web.mapper.ScenarioMapper;
-import com.seabury.web.vo.ScenarioVO;
+import com.seabury.web.entity.dose.ScenarioEntity;
+import com.seabury.web.mapper.dose.ScenarioMapper;
+import com.seabury.web.vo.dose.ScenarioVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

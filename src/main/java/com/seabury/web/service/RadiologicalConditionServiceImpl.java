@@ -1,8 +1,8 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.RadiologicalConditionEntity;
-import com.seabury.web.mapper.RadiologicalConditionMapper;
-import com.seabury.web.vo.RadiologicalConditionVO;
+import com.seabury.web.entity.dose.RadiologicalConditionEntity;
+import com.seabury.web.mapper.dose.RadiologicalConditionMapper;
+import com.seabury.web.vo.dose.RadiologicalConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

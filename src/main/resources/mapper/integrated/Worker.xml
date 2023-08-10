@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.integrated.WorkerMapper">
+    <select id="getWorkerList" resultType="com.seabury.web.entity.integrated.WorkerEntity" parameterType="com.seabury.web.entity.integrated.WorkerEntity">
+        SELECT * FROM public."Worker"
+
+        <where>
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Name != null and Name != ''">
+                AND "Name" = #{Name}
+            </if>
+            <if test="Description != null and Description != ''">
+                AND "Description" = #{Description}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    # Insert or Update 된 ID 리턴
+    1. useGeneratedKeys="true"
+    2. keyProperty="변수명"
+    3. keyColumn="Sql컬럼명"
+    -->
+    <insert id="insertWorker" parameterType="com.seabury.web.entity.integrated.WorkerEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+        INSERT INTO public."Worker"(
+        "Name", "Description")
+        VALUES (#{Name}, #{Description});
+    </insert>
+
+    <update id="updateWorker" parameterType="com.seabury.web.entity.integrated.WorkerEntity">
+        UPDATE public."Worker"
+        SET "Name"=#{Name}, "Description"=#{Description}
+        WHERE "ID"=#{ID};
+    </update>
+
+    <delete id="deleteWorker" parameterType="com.seabury.web.entity.integrated.WorkerEntity">
+        DELETE FROM public."Worker"
+        WHERE "ID"=#{ID};
+    </delete>
+</mapper>
