@@ -9,11 +9,11 @@
             <if test="ID != null and ID != ''">
                 AND "ID" = #{ID}
             </if>
-            <if test="Project_ID != null and Project_ID != ''">
-                AND "Project_ID" = #{Project_ID}
+            <if test="ProjectID != null and ProjectID != ''">
+                AND "ProjectID" = #{ProjectID}
             </if>
-            <if test="Scenario_ID != null and Scenario_ID != ''">
-                AND "Scenario_ID" = #{Scenario_ID}
+            <if test="ScenarioID != null and ScenarioID != ''">
+                AND "ScenarioID" = #{ScenarioID}
             </if>
             <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
@@ -24,8 +24,8 @@
             <if test="Protection != null and Protection != ''">
                 AND "Protection" = #{Protection}
             </if>
-            <if test="Personnel_ID != null and Personnel_ID != ''">
-                AND "Personnel_ID" = #{Personnel_ID}
+            <if test="PersonnelID != null and PersonnelID != ''">
+                AND "PersonnelID" = #{PersonnelID}
             </if>
         </where>
     </select>
@@ -38,13 +38,13 @@
     -->
     <insert id="insertWorkers" parameterType="com.seabury.web.entity.dose.WorkersEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Workers"(
-        "Project_ID", "Scenario_ID", "Name", "Role", "Protection", "Personnel_ID")
-        VALUES (#{Project_ID}, #{Scenario_ID}, #{Name}, #{Role}, #{Protection}, #{Personnel_ID});
+        "ProjectID", "ScenarioID", "Name", "Role", "Protection", "PersonnelID")
+        VALUES (#{ProjectID}, #{ScenarioID}, #{Name}, #{Role}, #{Protection}, #{PersonnelID});
     </insert>
 
     <update id="updateWorkers" parameterType="com.seabury.web.entity.dose.WorkersEntity">
         UPDATE public."Workers"
-        SET "Project_ID"=#{Project_ID}, "Scenario_ID"=#{Scenario_ID}, "Name"=#{Name}, "Role"=#{Role}, "Protection"=#{Protection}, "Personnel_ID"=#{Personnel_ID}
+        SET "ProjectID"=#{ProjectID}, "ScenarioID"=#{ScenarioID}, "Name"=#{Name}, "Role"=#{Role}, "Protection"=#{Protection}, "PersonnelID"=#{PersonnelID}
         WHERE "ID"=#{ID};
     </update>
 

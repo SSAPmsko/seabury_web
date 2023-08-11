@@ -36,7 +36,7 @@ public class PlantController {
         List<PlantEntity> Platn1list = plantService.getPlantList(wherePlant);
 
         StructureEntity whereStructure = new StructureEntity();
-        whereStructure.setObject_ID(id);
+        whereStructure.setObjectID(id);
         whereStructure.setType("Plant");
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
 

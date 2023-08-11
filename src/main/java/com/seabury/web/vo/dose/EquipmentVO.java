@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 @Setter
 public class EquipmentVO {
     Integer ID;
-    Integer Project_ID;
-    Integer Scenario_ID;
+    Integer ProjectID;
+    Integer ScenarioID;
     String Name;
     String Description;
 }

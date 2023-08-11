@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seabury.web.mapper.integrated.WorkFlowMapper">
+    <select id="getWorkFlowList" resultType="com.seabury.web.entity.integrated.WorkFlowEntity" parameterType="com.seabury.web.entity.integrated.WorkFlowEntity">
+        SELECT * FROM public."WorkFlow"
+
+        <where>
+            <if test="ID != null and ID != ''">
+                AND "ID" = #{ID}
+            </if>
+            <if test="Description != null and Description != ''">
+                AND "Description" = #{Description}
+            </if>
+            <if test="Description != null and Description != ''">
+                AND "Description" = #{Description}
+            </if>
+            <if test="AnalysisItem_ID != null and AnalysisItem_ID != ''">
+                AND "AnalysisItem_ID" = #{AnalysisItem_ID}
+            </if>
+            <if test="Worker_ID != null and Worker_ID != ''">
+                AND "Worker_ID" = #{Worker_ID}
+            </if>
+            <if test="Posture_ID != null and Posture_ID != ''">
+                AND "Posture_ID" = #{Posture_ID}
+            </if>
+            <if test="StartTime != null and StartTime != ''">
+                AND "StartTime" = #{StartTime}
+            </if>
+            <if test="EndTime != null and EndTime != ''">
+                AND "EndTime" = #{EndTime}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    # Insert or Update 된 ID 리턴
+    1. useGeneratedKeys="true"
+    2. keyProperty="변수명"
+    3. keyColumn="Sql컬럼명"
+    -->
+    <insert id="insertWorkFlow" parameterType="com.seabury.web.entity.integrated.WorkFlowEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+        INSERT INTO public."WorkFlow"(
+        "Name", "Description", "AnalysisItem_ID", "Worker_ID", "Posture_ID", "StartTime", "EndTime")
+        VALUES (#{Name}, #{Description});
+    </insert>
+
+    <update id="updateWorkFlow" parameterType="com.seabury.web.entity.integrated.WorkFlowEntity">
+        UPDATE public."WorkFlow"
+        SET "Name"=#{Name}, "Description"=#{Description}, "AnalysisItem_ID"=#{AnalysisItem_ID}, "Worker_ID"=#{Worker_ID}, "Posture_ID"=#{Posture_ID}, "StartTime"=#{StartTime}, "EndTime"=#{EndTime}
+        WHERE "ID"=#{ID};
+    </update>
+
+    <delete id="deleteWorkFlow" parameterType="com.seabury.web.entity.integrated.WorkFlowEntity">
+        DELETE FROM public."WorkFlow"
+        WHERE "ID"=#{ID};
+    </delete>
+</mapper>

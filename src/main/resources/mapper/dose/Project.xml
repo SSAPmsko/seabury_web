@@ -21,14 +21,14 @@
             <if test="Location != null and Location != ''">
                 AND "Location" = #{Location}
             </if>
-            <if test="Start_date != null and Start_date != ''">
-                AND "Start_date" = #{Start_date}
+            <if test="StartDate != null and StartDate != ''">
+                AND "StartDate" = #{StartDate}
             </if>
-            <if test="End_date != null and End_date != ''">
-                AND "End_date" = #{End_date}
+            <if test="EndDate != null and EndDate != ''">
+                AND "EndDate" = #{EndDate}
             </if>
-            <if test="Dose_limit != null and Dose_limit != ''">
-                AND "Dose_limit" = #{Dose_limit}
+            <if test="DoseLimit != null and DoseLimit != ''">
+                AND "DoseLimit" = #{DoseLimit}
             </if>
             <if test="Status != null and Status != ''">
                 AND "Status" = #{Status}
@@ -39,11 +39,11 @@
             <if test="ReportType != null and ReportType != ''">
                 AND "ReportType" = #{ReportType}
             </if>
-            <if test="Job_ID != null and Job_ID != ''">
-                AND "Job_ID" = #{Job_ID}
+            <if test="JobID != null and JobID != ''">
+                AND "JobID" = #{JobID}
             </if>
-            <if test="Document_ID != null and Document_ID != ''">
-                AND "Document_ID" = #{Document_ID}
+            <if test="DocumentID != null and DocumentID != ''">
+                AND "DocumentID" = #{DocumentID}
             </if>
             <if test="ProducedBy != null and ProducedBy != ''">
                 AND "ProducedBy" = #{ProducedBy}
@@ -54,8 +54,8 @@
             <if test="Justification != null and Justification != ''">
                 AND "Justification" = #{Justification}
             </if>
-            <if test="Structure_ID != null and Structure_ID != ''">
-                AND "Structure_ID" = #{Structure_ID}
+            <if test="StructureID != null and StructureID != ''">
+                AND "StructureID" = #{StructureID}
             </if>
         </where>
     </select>
@@ -73,13 +73,13 @@
 
     <insert id="insertProject" parameterType="com.seabury.web.entity.dose.ProjectEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Project"(
-        "Name", "Description", "Creator", "Location", "Start_date", "End_date", "Dose_limit", "Status", "Image", "ReportType", "Job_ID", "Document_ID", "ProducedBy", "RadiationCalculator", "Justification", "Structure_ID")
-        VALUES (#{Name}, #{Description}, #{Creator}, #{Location}, #{Start_date}, #{End_date}, #{Dose_limit}, #{Status}, #{Image}, #{ReportType}, #{Job_ID}, #{Document_ID}, #{ProducedBy}, #{RadiationCalculator}, #{Justification}, #{Structure_ID});
+        "Name", "Description", "Creator", "Location", "Startdate", "Enddate", "Doselimit", "Status", "Image", "ReportType", "JobID", "DocumentID", "ProducedBy", "RadiationCalculator", "Justification", "StructureID")
+        VALUES (#{Name}, #{Description}, #{Creator}, #{Location}, #{Startdate}, #{Enddate}, #{Doselimit}, #{Status}, #{Image}, #{ReportType}, #{JobID}, #{DocumentID}, #{ProducedBy}, #{RadiationCalculator}, #{Justification}, #{StructureID});
     </insert>
 
     <update id="updateProject" parameterType="com.seabury.web.entity.dose.ProjectEntity">
         UPDATE public."Project"
-        SET "Name"=#{Name}, "Description"=#{Description}, "Creator"=#{Creator}, "Location"=#{Location}, "Start_date"=#{Start_date}, "End_date"=#{End_date}, "Dose_limit"=#{Dose_limit}, "Status"=#{Status}, "ReportType"=#{ReportType}, "Job_ID"=#{Job_ID}, "Document_ID"=#{Document_ID}, "ProducedBy"=#{ProducedBy}, "RadiationCalculator"=#{RadiationCalculator}, "Justification"=#{Justification}, "Structure_ID"=#{Structure_ID}
+        SET "Name"=#{Name}, "Description"=#{Description}, "Creator"=#{Creator}, "Location"=#{Location}, "Startdate"=#{Startdate}, "Enddate"=#{Enddate}, "Doselimit"=#{Doselimit}, "Status"=#{Status}, "ReportType"=#{ReportType}, "JobID"=#{JobID}, "DocumentID"=#{DocumentID}, "ProducedBy"=#{ProducedBy}, "RadiationCalculator"=#{RadiationCalculator}, "Justification"=#{Justification}, "StructureID"=#{StructureID}
         WHERE "ID"=#{ID};
     </update>
 

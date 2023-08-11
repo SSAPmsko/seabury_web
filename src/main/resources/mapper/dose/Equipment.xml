@@ -9,11 +9,11 @@
             <if test="ID != null and ID != ''">
                 AND "ID" = #{ID}
             </if>
-            <if test="Project_ID != null and Project_ID != ''">
-                AND "Project_ID" = #{Project_ID}
+            <if test="ProjectID != null and ProjectID != ''">
+                AND "ProjectID" = #{ProjectID}
             </if>
-            <if test="Scenario_ID != null and Scenario_ID != ''">
-                AND "Scenario_ID" = #{Scenario_ID}
+            <if test="ScenarioID != null and ScenarioID != ''">
+                AND "ScenarioID" = #{ScenarioID}
             </if>
             <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
@@ -32,13 +32,13 @@
     -->
     <insert id="insertEquipment" parameterType="com.seabury.web.entity.dose.EquipmentEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Equipment"(
-        "Project_ID", "Scenario_ID", "Name", "Description")
-        VALUES (#{Project_ID}, #{Scenario_ID}, #{Name}, #{Description});
+        "ProjectID", "ScenarioID", "Name", "Description")
+        VALUES (#{ProjectID}, #{ScenarioID}, #{Name}, #{Description});
     </insert>
 
     <update id="updateEquipment" parameterType="com.seabury.web.entity.dose.EquipmentEntity">
         UPDATE public."Equipment"
-        SET "Project_ID"=#{Project_ID}, "Scenario_ID"=#{Scenario_ID}, "Name"=#{Name}, "Description"=#{Description}
+        SET "ProjectID"=#{ProjectID}, "ScenarioID"=#{ScenarioID}, "Name"=#{Name}, "Description"=#{Description}
         WHERE "ID"=#{ID};
     </update>
 
