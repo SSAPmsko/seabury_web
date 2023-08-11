@@ -36,7 +36,7 @@ public class SiteController {
         List<SiteEntity> Site1list = siteService.getSiteList(whereSite);
 
         StructureEntity whereStructure = new StructureEntity();
-        whereStructure.setObject_ID(id);
+        whereStructure.setObjectID(id);
         whereStructure.setType("Site");
         List<StructureEntity> Structurelist = structureService.getStructureList(whereStructure);
 

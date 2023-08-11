@@ -73,7 +73,7 @@ public class ScenarioController {
     public void scenarioDetail(HttpServletRequest request, HttpServletResponse response) {
         try {
             commonService.sendRedirect(request, response, "scenarioDetail");
-        } catch (Exception e) {
+        } catch (Exception e) {;
             e.printStackTrace();
         }
     }

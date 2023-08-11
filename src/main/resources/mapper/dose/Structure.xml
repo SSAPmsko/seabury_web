@@ -15,17 +15,17 @@
             <if test="Description != null and Description != ''">
                 AND "Description" = #{Description}
             </if>
-            <if test="Parent_ID != null and Parent_ID != ''">
-                AND "Parent_ID" = #{Parent_ID}
+            <if test="ParentID != null and ParentID != ''">
+                AND "ParentID" = #{ParentID}
             </if>
-            <if test="Parent_Type != null and Parent_Type != ''">
-                AND "Parent_Type" = #{Parent_Type}
+            <if test="ParentType != null and ParentType != ''">
+                AND "ParentType" = #{ParentType}
             </if>
             <if test="Type != null and Type != ''">
                 AND "Type" = #{Type}
             </if>
-            <if test="Object_ID != null and Object_ID != ''">
-                AND "Object_ID" = #{Object_ID}
+            <if test="ObjectID != null and ObjectID != ''">
+                AND "ObjectID" = #{ObjectID}
             </if>
         </where>
     </select>
@@ -38,8 +38,8 @@
     -->
     <insert id="insertStructure" parameterType="com.seabury.web.entity.dose.StructureEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Structure"(
-        "Name", "Description", "Parent_ID", "Type", "Object_ID", "Parent_Type")
-        VALUES (#{Name}, #{Description}, #{Parent_ID}, #{Type}, #{Object_ID}, #{Parent_Type});
+        "Name", "Description", "ParentID", "Type", "ObjectID", "ParentType")
+        VALUES (#{Name}, #{Description}, #{ParentID}, #{Type}, #{ObjectID}, #{ParentType});
     </insert>
 
     <update id="updateStructure" parameterType="com.seabury.web.entity.dose.StructureEntity">

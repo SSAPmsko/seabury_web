@@ -43,7 +43,7 @@ $.ajax({
             success: function(data) {
                 data.forEach(item => {
                 	var node = {
-                	id:item.id, type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	id:item.id, type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
                 	};
                 	/*var $typeSelect = $('#type_picker');
                 	var $parentSelect = $('#parent_picker');

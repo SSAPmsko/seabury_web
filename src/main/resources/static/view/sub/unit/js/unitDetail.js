@@ -40,12 +40,12 @@ $.ajax({
             success: function(data) {
                 data.forEach(item => {
                 	var node = {
-                	type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
                 	};
                 	var $typeSelect = $('#type_picker');
                 	var $parentSelect = $('#parent_picker');
                 	$typeSelect.append(new Option(node.type ,node.type , true , true));
-                	$parentSelect.append(new Option(node.parent_type ,node.parent_type , true , true));
+                	$parentSelect.append(new Option(node.parenttype ,node.parenttype , true , true));
                 });
 
             }})

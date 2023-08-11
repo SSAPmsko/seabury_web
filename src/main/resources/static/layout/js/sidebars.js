@@ -108,7 +108,7 @@ function loadTreeData() {
         success: function(data) {
             var tempList = new Array();
             data.forEach(item => {
-                var node = { tags : [item.object_ID, item.parent_ID], text : item.name , href : typeToHref(item.type), type : item.type };
+                var node = { tags : [item.objectID, item.parentID], text : item.name , href : typeToHref(item.type), type : item.type };
                 tempList.push(node);
             });
 
@@ -210,7 +210,7 @@ $('#jstree_div').jstree({
 
                 data.forEach(item => {
                 	var node = { id : item.id, text : item.name , type : item.type };
-                	$('#jstree_div').jstree().create_node(item.parent_ID, node, "last");
+                	$('#jstree_div').jstree().create_node(item.parentID, node, "last");
                 });
 
             }})
