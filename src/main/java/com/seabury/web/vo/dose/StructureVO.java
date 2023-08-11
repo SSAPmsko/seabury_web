@@ -12,8 +12,8 @@ public class StructureVO {
     Integer ID;
     String Name;
     String Description;
-    Integer Parent_ID;
-    String Parent_Type;
+    Integer ParentID;
+    String ParentType;
     String Type;
-    Integer Object_ID;
+    Integer ObjectID;
 }

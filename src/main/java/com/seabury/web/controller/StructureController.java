@@ -45,6 +45,7 @@ public class StructureController {
 
     @RequestMapping(value={"/structureList"}, method = RequestMethod.POST)
     public void structureList(HttpServletRequest request, HttpServletResponse response){
+
         try {
             commonService.sendRedirect(request, response, "structureList");
         } catch (Exception e) {

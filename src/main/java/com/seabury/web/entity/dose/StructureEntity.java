@@ -11,8 +11,8 @@ public class StructureEntity {
     Integer ID;
     String Name;
     String Description;
-    Integer Parent_ID;
+    Integer ParentID;
     String Type;
-    String Parent_Type;
-    Integer Object_ID;
+    String ParentType;
+    Integer ObjectID;
 }

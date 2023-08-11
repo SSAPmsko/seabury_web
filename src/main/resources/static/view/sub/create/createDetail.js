@@ -7,13 +7,15 @@ loadData();
 
 
 $("#type_picker").change(function(){
-                // 변경된 값으로 비교 후 alert 표출
+
                 if($("#type_picker option:checked").val() == "Site"){
                     $("#parent_picker").attr("disabled", true);
                 } else if($("#type_picker option:checked").val() == "Plant"){
                     $("#parent_picker").attr("disabled", false);
+
                 } else if($("#type_picker option:checked").val() == "Unit"){
                     $("#parent_picker").attr("disabled", false);
+
                 }
  });
 
@@ -27,42 +29,19 @@ $.ajax({
                 alert(request.status)},
             success: function(data) {
                 data.forEach(item => {
+                var $parentSelect = $('#parent_picker');
                 	var node = {
-                	type : item.type, name : item.name ,object_id : item.object_ID, parent_type : item.parent_Type ,parent_id : item.parent_ID
+                	type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
                 	};
+                    $parentSelect.append(new Option(node.name ,node.objectid , node.type , true));
 
-                	var $parentSelect = $('#parent_picker');
-                	$parentSelect.append(new Option(node.name ,node.object_id , true , true));
                 });
             }})
 }
 
 function dataGridSaveExecute(){
-
-    var strucData = {};
-    strucData.type = $('#type_picker option:checked').text();
-    strucData.parent_type = $('#parent_picker option:checked').text();
-    strucData.name = $('#txt_name').val();
-    strucData.description = $('#txt_description').val();
-    strucData.object_id = $('#type_picker').val();
-    strucData.parent_id = $('#parent_picker').val();
-    $.ajax({
-            url : "/structureInsert",
-            type: 'POST',
-            async: false,
-            data: JSON.stringify(strucData),
-            processData: false,
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success : function(data) {
-
-            },
-            error : function(data) {
-                alert("정상 처리에 실패 하였습니다.");
-            }
-        });
-
-    var url;
+var detailid;
+var url;
     var formData = {};
     formData.id = $('#txt_id').val();
     formData.type = $('#type_picker').val();
@@ -101,7 +80,9 @@ function dataGridSaveExecute(){
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
          var result = data.Result;
-        if (formData.type == "Site")
+         detailid = data.result.id;
+         alert("중지");
+        /*if (formData.type == "Site")
             {
                 location.href = "plantList";
 
@@ -112,12 +93,48 @@ function dataGridSaveExecute(){
             }else if(formData.type == "Plant")
             {
                 location.href = "plantList";
-            }
+            }*/
 
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
+
+    var structype;
+
+    if($("#type_picker option:checked").val() == "Site"){
+
+    } else if($("#type_picker option:checked").val() == "Plant"){
+         structype = "Site";
+    } else if($("#type_picker option:checked").val() == "Unit"){
+         structype = "Plant";
+    }
+
+    var strucData = {};
+
+    strucData.type = $('#type_picker option:checked').text();
+    strucData.parenttype = structype;
+    strucData.name = $('#txt_name').val();
+    strucData.description = $('#txt_description').val();
+    strucData.objectid = detailid;
+    strucData.parentid = $('#parent_picker').val();
+    $.ajax({
+            url : "/structureInsert",
+            type: 'POST',
+            async: false,
+            data: JSON.stringify(strucData),
+            processData: false,
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success : function(data) {
+
+            },
+            error : function(data) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        });
+
+
 }
 
