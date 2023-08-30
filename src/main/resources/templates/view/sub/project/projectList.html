@@ -5,21 +5,21 @@
 
 <!-- Begin Page Content -->
 <th:block>
-    <section class="h-100" layout:fragment="content">
-        <div class="row g-2 container-fluid">
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid g-2">
             <div class="col-12">
-                <a href="#" class="btn btn-primary" onclick="dataGridCreateExecute();">Create</a>
-                <a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
+                <a href="#" class="btn btn-primary" onclick="dg_projectCreateExecute();">Create</a>
+                <a href="#" class="btn btn-primary" onclick="dg_projectModifyExecute();">Modify</a>
+                <a href="#" class="btn btn-danger mx-3" onclick="dg_projectDeleteExecute();">Delete</a>
             </div>
 
-            <div class="col" id="dataGrid">
+            <div class="col p-0" id="dg_project">
 
             </div>
         </div>
 
         <!-- Custom styles for this template -->
-        <script src="/static/view/sub/project/js/projectList.js"></script>
+        <script src="/static/view/sub/project/js/projectList.js" type="text/javascript"></script>
     </section>
 </th:block>
 </html>

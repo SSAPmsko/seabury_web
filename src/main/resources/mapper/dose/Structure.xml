@@ -36,7 +36,12 @@
     2. keyProperty="변수명"
     3. keyColumn="Sql컬럼명"
     -->
-    <insert id="insertStructure" parameterType="com.seabury.web.entity.dose.StructureEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
+    <!-- useGeneratedKeys="true" keyProperty="ID" keyColumn="ID" -->
+    <insert id="insertStructure" parameterType="com.seabury.web.entity.dose.StructureEntity">
+        <selectKey keyColumn="last_value" resultType="java.lang.Long" order="AFTER">
+            SELECT last_value FROM "Structure_ID_seq";
+        </selectKey>
+
         INSERT INTO public."Structure"(
         "Name", "Description", "ParentID", "Type", "ObjectID", "ParentType")
         VALUES (#{Name}, #{Description}, #{ParentID}, #{Type}, #{ObjectID}, #{ParentType});

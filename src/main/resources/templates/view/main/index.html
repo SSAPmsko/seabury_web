@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/sideLayout}">
+      layout:decorate="~{layout/dockLayout}">
 <!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
 <!-- 이전 버전 layout:decorator="~{layout/layout}"> -->
 
 <!-- Begin Page Content -->
-<th:block >
+<th:block>
     <div layout:fragment="content">
         <div class="container-fluid">
             <main>
@@ -158,8 +158,6 @@
             </main>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
         <script src="/static/view/main/js/index.js"></script>
     </div>
 </th:block>

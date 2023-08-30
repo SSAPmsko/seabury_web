@@ -1,5 +1,6 @@
 package com.seabury.web.service;
 
+import com.seabury.web.entity.dose.SourceEntity;
 import com.seabury.web.entity.dose.StructureEntity;
 import com.seabury.web.mapper.dose.StructureMapper;
 import com.seabury.web.vo.dose.StructureVO;
@@ -17,6 +18,8 @@ public class StructureServiceImpl implements StructureService {
     @Qualifier(value = "sqlSession")
     private SqlSession sqlSession;
 
+    final String STRUCTUREMAPPER_PATH = "com.seabury.web.mapper.dose.StructureMapper";
+
     @Autowired
     StructureMapper structureMapper;
 
@@ -27,7 +30,9 @@ public class StructureServiceImpl implements StructureService {
 
     @Override
     public int insertStructure(StructureEntity structureEntity) {
-        return structureMapper.insertStructure(structureEntity);
+        return sqlSession.insert(STRUCTUREMAPPER_PATH + ".insertStructure", structureEntity);
+
+        //return structureMapper.insertStructure(structureEntity);
     }
 
     @Override

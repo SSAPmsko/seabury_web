@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">    
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
     <!-- Config -->
     <th:block th:replace="/layout/fragments/config :: configFragment"></th:block>
 
     <body class="d-flex">
-        <!-- Navigation fragment -->
-        <th:block th:replace="/layout/fragments/navbar :: navbarFragment"></th:block>
+    <!-- Navigation fragment -->
+    <th:block th:replace="/layout/fragments/navbar :: navbarFragment"></th:block>
 
         <!-- Main layout -->
         <div class="mainContent container-fluid" style="margin-bottom:65px"><!-- 65px footer height -->
             <!-- main fragment -->
             <div id="page-body" class="h-100" style="padding-top:10px;">
-                <th:block layout:fragment="content"></th:block>
+                <th:block th:replace="/layout/fragments/content :: contentFragment"></th:block>
             </div>
 
             <!-- footer fragment -->

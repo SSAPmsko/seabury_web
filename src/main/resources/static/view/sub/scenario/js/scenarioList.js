@@ -1,26 +1,26 @@
-    var rootName = "scenario";
+var rootName = "scenario";
 
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#" + rootName).addClass('active');
+    //$("#" + rootName).addClass('active');
 
     // DataGrid Data load
-    loadData();
+    dg_scenarioLoadData();
 
     // DataGrid Double Click Event
-     $("#dataGrid").on("dblclick ", "table", function(e) {
-        dataGridModifyExecute();
+     $("#dg_scenario").on("dblclick ", "table", function(e) {
+        dg_scenarioModifyExecute();
     });
 });
 
-function dataGridCreateExecute(){
+function dg_scenarioCreateExecute(){
     location.href = rootName + "Detail";
 }
 
-function dataGridDeleteExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+function dg_scenarioDeleteExecute(){
+    if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
         if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-            var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+            var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
             return true;
         } else {
             return false;
@@ -28,15 +28,15 @@ function dataGridDeleteExecute(){
     }
 }
 
-function dataGridModifyExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-        var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+function dg_scenarioModifyExecute(){
+    if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
+        var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
         location.href = rootName + "Detail?" + "id=" + id;
     }
 }
 
-function loadData() {
-    $("#dataGrid").kendoGrid({
+function dg_scenarioLoadData() {
+    $("#dg_scenario").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },

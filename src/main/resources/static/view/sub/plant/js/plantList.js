@@ -1,27 +1,27 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#plant").addClass('active');
+    //$("#plant").addClass('active');
 
     // DataGrid Data load
-    loadData();
+    dg_plantLoadData();
 
     // DataGrid Double Click Event
-     $("#dataGrid").on("dblclick ", "table", function(e) {
-        dataGridModifyExecute();
+     $("#dg_plant").on("dblclick ", "table", function(e) {
+        dg_plantModifyExecute();
     });
 
     // CheckButton Selected Event
-    //$("#dataGrid tbody").on("click", ".k-checkbox", onSelected);
+    //$("#dg_plant tbody").on("click", ".k-checkbox", onSelected);
 });
 
-function dataGridCreateExecute(){
+function dg_plantCreateExecute(){
     location.href = "plantDetail";
 }
 
-function dataGridDeleteExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+function dg_plantDeleteExecute(){
+    if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
         if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-            var plantId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+            var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
             //location.href = "write_del_ok.jsp?num=1";
             return true;
         } else {
@@ -30,9 +30,9 @@ function dataGridDeleteExecute(){
     }
 }
 
-function dataGridModifyExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-        var plantId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+function dg_plantModifyExecute(){
+    if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
+        var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
         location.href = "plantDetail?" + "id=" + plantId;
         /*
         $.ajax({
@@ -54,34 +54,8 @@ function dataGridModifyExecute(){
     }
 }
 
-/*
-function onSelected(e) {
-    var grid = $("#dataGrid").data("kendoGrid");
-    var row = $(e.target).closest("tr");
-
-    if(row.hasClass("k-selected")){
-        setTimeout(function(e) {
-            var grid = $("#dataGrid").data("kendoGrid");
-            grid.clearSelection();
-        })
-    } else {
-        grid.clearSelection();
-    };
-};
-
-var gridElement = $("#dataGrid");
-
-function resizeGrid() {
-    gridElement.data("kendoGrid").resize();
-}
-
-$(window).resize(function(){
-    resizeGrid();
-});
-*/
-
-function loadData() {
-    $("#dataGrid").kendoGrid({
+function dg_plantLoadData() {
+    $("#dg_plant").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },

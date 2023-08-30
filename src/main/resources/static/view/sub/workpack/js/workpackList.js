@@ -2,25 +2,25 @@ var rootName = "workpack";
 
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#" + rootName).addClass('active');
+    //$("#" + rootName).addClass('active');
 
     // DataGrid Data load
-    loadData();
+    dg_workpackLoadData();
 
     // DataGrid Double Click Event
-     $("#dataGrid").on("dblclick ", "table", function(e) {
-        dataGridModifyExecute();
+     $("#dg_workpack").on("dblclick ", "table", function(e) {
+        dg_workpackModifyExecute();
     });
 });
 
-function dataGridCreateExecute(){
+function dg_workpackCreateExecute(){
     location.href = rootName + "Detail";
 }
 
-function dataGridDeleteExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+function dg_workpackDeleteExecute(){
+    if ($("#dg_workpack").data("kendoGrid").getSelectedData().length > 0){
         if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-            var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+            var id = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].id;
             return true;
         } else {
             return false;
@@ -28,16 +28,16 @@ function dataGridDeleteExecute(){
     }
 }
 
-function dataGridModifyExecute(){
-    if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-        var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-        var scenarioId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].scenarioId;
+function dg_workpackModifyExecute(){
+    if ($("#dg_workpack").data("kendoGrid").getSelectedData().length > 0){
+        var id = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].id;
+        var scenarioId = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].scenarioId;
         location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
     }
 }
 
-function loadData() {
-    $("#dataGrid").kendoGrid({
+function dg_workpackLoadData() {
+    $("#dg_workpack").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },

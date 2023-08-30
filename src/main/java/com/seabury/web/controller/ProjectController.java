@@ -63,6 +63,31 @@ public class ProjectController {
         return mav;
     }
 
+    @RequestMapping(value = {"/projectDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> projectDetailProperties(@RequestParam(value = "id", required = false) String id) {
+
+        // id가 null 이면 생성, null 이 아니면 수정
+        Map<String, Object> result;
+        if (StringUtils.isEmpty(id)){
+            result = new HashMap<>();
+            result.put("editMode", false);
+            result.put("date", LocalDate.now());
+            result.put("startDate", LocalDate.now());
+            result.put("endDate", LocalDate.now());
+            result.put("doseLimit", 0.0);
+        } else {
+            result = vrDoseService.getProject(id);
+            result.put("editMode", true);
+        }
+
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
+    }
+
     @RequestMapping(value={"/projectInsert"}, method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> projectInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
         // ReturnParam 작성
