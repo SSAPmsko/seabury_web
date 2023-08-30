@@ -39,8 +39,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 
         if (equipmentEntity != null) {
             equipmentVO.setID(equipmentEntity.getID());
-            equipmentVO.setProject_ID(equipmentEntity.getProject_ID());
-            equipmentVO.setScenario_ID(equipmentEntity.getScenario_ID());
+            equipmentVO.setProjectID(equipmentEntity.getProjectID());
+            equipmentVO.setScenarioID(equipmentEntity.getScenarioID());
             equipmentVO.setName(equipmentEntity.getName());
             equipmentVO.setDescription(equipmentEntity.getDescription());
         }
@@ -52,8 +52,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 
         if (equipmentVO != null){
             equipmentEntity.setID(equipmentVO.getID());
-            equipmentEntity.setProject_ID(equipmentVO.getProject_ID());
-            equipmentEntity.setScenario_ID(equipmentVO.getScenario_ID());
+            equipmentEntity.setProjectID(equipmentVO.getProjectID());
+            equipmentEntity.setScenarioID(equipmentVO.getScenarioID());
             equipmentEntity.setName(equipmentVO.getName());
             equipmentEntity.setDescription(equipmentVO.getDescription());
         }

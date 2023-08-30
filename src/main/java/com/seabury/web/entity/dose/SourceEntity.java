@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 @Setter
 public class SourceEntity {
     Integer ID;
-    Integer Project_ID;
-    Integer Scenario_ID;
+    Integer ProjectID;
+    Integer ScenarioID;
     String Shield;
     String Material;
 }

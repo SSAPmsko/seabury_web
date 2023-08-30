@@ -39,12 +39,12 @@ public class WorkersServiceImpl implements WorkersService {
 
         if (workersEntity != null) {
             workersVO.setID(workersEntity.getID());
-            workersVO.setProject_ID(workersEntity.getProject_ID());
-            workersVO.setScenario_ID(workersEntity.getScenario_ID());
+            workersVO.setProjectID(workersEntity.getProjectID());
+            workersVO.setScenarioID(workersEntity.getScenarioID());
             workersVO.setName(workersEntity.getName());
             workersVO.setRole(workersEntity.getRole());
             workersVO.setProtection(workersEntity.getProtection());
-            workersVO.setPersonnel_ID(workersEntity.getPersonnel_ID());
+            workersVO.setPersonnelID(workersEntity.getPersonnelID());
         }
         return workersVO;
     }
@@ -54,12 +54,12 @@ public class WorkersServiceImpl implements WorkersService {
 
         if (workersVO != null) {
             workersEntity.setID(workersVO.getID());
-            workersEntity.setProject_ID(workersVO.getProject_ID());
-            workersEntity.setScenario_ID(workersVO.getScenario_ID());
+            workersEntity.setProjectID(workersVO.getProjectID());
+            workersEntity.setScenarioID(workersVO.getScenarioID());
             workersEntity.setName(workersVO.getName());
             workersEntity.setRole(workersVO.getRole());
             workersEntity.setProtection(workersVO.getProtection());
-            workersEntity.setPersonnel_ID(workersVO.getPersonnel_ID());
+            workersEntity.setPersonnelID(workersVO.getPersonnelID());
         }
         return workersEntity;
     }

@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class SourceVO {
     Integer ID;
-    Integer Project_ID;
-    Integer Scenario_ID;
+    Integer ProjectID;
+    Integer ScenarioID;
     String Shield;
     String Material;
 }

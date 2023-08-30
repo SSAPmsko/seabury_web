@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class WorkersEntity {
     Integer ID;
-    Integer Project_ID;
-    Integer Scenario_ID;
+    Integer ProjectID;
+    Integer ScenarioID;
     String Name;
     String Role;
     String Protection;
-    Integer Personnel_ID;
+    Integer PersonnelID;
 }

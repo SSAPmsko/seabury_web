@@ -48,18 +48,18 @@ public class ProjectServiceImpl implements ProjectService {
             projectVO.setDescription(projectEntity.getDescription());
             projectVO.setCreator(projectEntity.getCreator());
             projectVO.setLocation(projectEntity.getLocation());
-            projectVO.setStart_date(projectEntity.getStart_date());
-            projectVO.setEnd_date(projectEntity.getEnd_date());
-            projectVO.setDose_limit(projectEntity.getDose_limit());
+            projectVO.setStartDate(projectEntity.getStartDate());
+            projectVO.setEndDate(projectEntity.getEndDate());
+            projectVO.setDoseLimit(projectEntity.getDoseLimit());
             projectVO.setStatus(projectEntity.getStatus());
             projectVO.setImage(projectEntity.getImage());
             projectVO.setReportType(projectEntity.getReportType());
-            projectVO.setJob_ID(projectEntity.getJob_ID());
-            projectVO.setDocument_ID(projectEntity.getDocument_ID());
+            projectVO.setJobID(projectEntity.getJobID());
+            projectVO.setDocumentID(projectEntity.getDocumentID());
             projectVO.setProducedBy(projectEntity.getProducedBy());
             projectVO.setRadiationCalculator(projectEntity.getRadiationCalculator());
             projectVO.setJustification(projectEntity.getJustification());
-            projectVO.setStructure_ID(projectEntity.getStructure_ID());
+            projectVO.setDocumentID(projectEntity.getStructureID());
         }
         return projectVO;
     }
@@ -73,18 +73,18 @@ public class ProjectServiceImpl implements ProjectService {
             projectEntity.setDescription(projectVO.getDescription());
             projectEntity.setCreator(projectVO.getCreator());
             projectEntity.setLocation(projectVO.getLocation());
-            projectEntity.setStart_date(projectVO.getStart_date());
-            projectEntity.setEnd_date(projectVO.getEnd_date());
-            projectEntity.setDose_limit(projectVO.getDose_limit());
+            projectEntity.setStartDate(projectVO.getStartDate());
+            projectEntity.setEndDate(projectVO.getEndDate());
+            projectEntity.setDoseLimit(projectVO.getDoseLimit());
             projectEntity.setStatus(projectVO.getStatus());
             projectEntity.setImage(projectVO.getImage());
             projectEntity.setReportType(projectVO.getReportType());
-            projectEntity.setJob_ID(projectVO.getJob_ID());
-            projectEntity.setDocument_ID(projectVO.getDocument_ID());
+            projectEntity.setJobID(projectVO.getJobID());
+            projectEntity.setDocumentID(projectVO.getDocumentID());
             projectEntity.setProducedBy(projectVO.getProducedBy());
             projectEntity.setRadiationCalculator(projectVO.getRadiationCalculator());
             projectEntity.setJustification(projectVO.getJustification());
-            projectEntity.setStructure_ID(projectVO.getStructure_ID());
+            projectEntity.setStructureID(projectVO.getStructureID());
         }
         return projectEntity;
     }
