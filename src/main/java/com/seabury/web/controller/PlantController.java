@@ -23,7 +23,6 @@ public class PlantController {
     @Autowired
     CommonService commonService;
 
-
     @Autowired
     PlantService plantService;
 

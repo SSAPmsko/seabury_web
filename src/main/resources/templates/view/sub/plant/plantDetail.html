@@ -9,6 +9,35 @@
 <!-- Begin Page Content -->
 <th:block>
   <section layout:fragment="content">
+    <!--
+    <div style="text-align:left;">
+        <input id="jstree_search" type="text" value="" placeholder="Search"
+               style="box-shadow:inset 0 0 4px #eee; margin:0; padding:6px 6px; border-radius:4px; border:1px solid silver; font-size:1.1em;"/>
+    </div>
+-->
+    <div class="row" style="margin-bottom: 10px;">
+      <div calss="col" style="margin-bottom: 10px;">
+        <input type="text" class="form-control" id="bt_treeview_search" placeholder="Search..." value="" />
+      </div>
+      <div calss="col">
+        <button type="button" class="btn btn-primary select-node" id="btn_create" onclick="dataGridCreateExecute();" style="float:">Create</button>
+        <button type="button" class="btn btn-danger expand-node" id="btn_collapse" style="float: right; margin-left: 5px;">Collapse</button>
+        <button type="button" class="btn btn-primary select-node" id="btn_expand" style="float: right;">Expand</button>
+      </div>
+
+    </div>
+    <!--
+
+        <div id="jstree_div">
+
+        </div>
+    -->
+
+
+    <div id="bt_treeview_div" class="treeview">
+
+    </div>
+
     <div class="row g-2 container-fluid">
       <!-- Hidden Field-->
       <div class="visually-hidden">
@@ -110,7 +139,6 @@
         </fieldset>
       </div>
 
-
       <div class="col-6">
         <fieldset>
           <legend>Image</legend>
@@ -118,8 +146,9 @@
             <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
 
           </div>
-      </fieldset>
+        </fieldset>
       </div>
+
         <div class="col-12 mb-3 d-flex justify-content-center">
           <div>
 
@@ -127,8 +156,20 @@
             <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
           </div>
         </div>
+
     </div>
 
+    <!-- JSTree -->
+    <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+    <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Tree -->
+    <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+    <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <script src="/static/layout/js/sidebars.js"></script>
+    <link href="/static/layout/css/sidebars.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <script src="/static/view/sub/plant/js/plantDetail.js"></script>

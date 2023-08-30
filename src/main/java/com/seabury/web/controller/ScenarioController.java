@@ -78,6 +78,30 @@ public class ScenarioController {
         }
     }
 
+    @RequestMapping(value = {"/scenarioDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> scenarioDetailProperties(@RequestParam(value = "id", required = false) String id) {
+
+        // id가 null 이면 생성, null 이 아니면 수정
+        Map<String, Object> result;
+        if (StringUtils.isEmpty(id)){
+            result = new HashMap<>();
+            result.put("editMode", false);
+            result.put("date", LocalDate.now());
+            result.put("lastModified", LocalDate.now());
+            result.put("startTime", LocalDate.now());
+            result.put("endTime", LocalDate.now());
+        } else {
+            result = vrDoseService.getScenario(id);
+            result.put("editMode", true);
+        }
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
+    }
+
     @RequestMapping(value={"/scenarioInsert"}, method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> scenarioInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
         // ReturnParam 작성

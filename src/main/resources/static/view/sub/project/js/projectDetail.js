@@ -4,8 +4,6 @@ $(document).ready(function(){
     // 클릭한 위치 active 적용
     //$("#" + rootName).addClass('active');
 
-
-
     var editMode = $("#txt_editMode").val();
 
     if (editMode == 'true') {
@@ -13,8 +11,6 @@ $(document).ready(function(){
     } else if (editMode == 'false') {
         $('#btn_delete').addClass("visually-hidden")
     }
-
-
         // DataGrid Data load
         loadData();
 

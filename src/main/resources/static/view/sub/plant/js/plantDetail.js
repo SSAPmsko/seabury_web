@@ -1,6 +1,6 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#plant").addClass('active');
+    //$("#plant").addClass('active');
     loadData();
     timestamp();
 $("#parent_picker").attr("disabled", true);
