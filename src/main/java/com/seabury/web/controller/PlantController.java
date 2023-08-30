@@ -1,6 +1,7 @@
 package com.seabury.web.controller;
 
 import com.seabury.web.entity.dose.PlantEntity;
+import com.seabury.web.entity.dose.SiteEntity;
 import com.seabury.web.entity.dose.StructureEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.PlantService;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +54,6 @@ public class PlantController {
         } else {*/
             mav.addObject("editMode", true);
 
-
             mav.addObject("Plant1list", Platn1list);
             mav.setViewName("view/sub/plant/plantDetail");
        /* }*/
@@ -60,6 +61,15 @@ public class PlantController {
         return mav;
     }
 
+    @RequestMapping(value = {"/getPlantList"}, method = RequestMethod.GET)
+    public @ResponseBody Integer getindexplantList(@RequestParam(value = "id", required = false) Integer id) {
+        PlantEntity wherePlant = new PlantEntity();
+
+        List<PlantEntity> qq = plantService.getPlantList(wherePlant);
+        wherePlant = qq.get(qq.size()-1);
+
+        return wherePlant.getID();
+    }
 
     @RequestMapping(value={"/plantList"}, method = RequestMethod.GET)
     public ModelAndView plantList(ModelAndView mav ){

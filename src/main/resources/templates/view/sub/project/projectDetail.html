@@ -72,6 +72,12 @@
 							<label for="txt_justification" class="form-label">Justification</label>
 							<input type="text" class="form-control" id="txt_justification" th:value="${justification}">
 						</div>
+
+						<div class="col-sm-12">
+							<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
+							<a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
+							<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+						</div>
 					</div>
 				</fieldset>
 			</div>
@@ -85,13 +91,14 @@
 						</div>
 					</div>
 				</fieldset>
-			</div>
+				<div class="col-12">
+					<!--<a href="#" class="btn btn-primary" onclick="dataGridCreateExecute();">Create</a>-->
+					<a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Modify</a>
+					<a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
+				</div>
 
-			<div class="col-12 mb-3 d-flex justify-content-center">
-				<div>
-					<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
-					<a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
-					<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+				<div class="col" id="dataGrid">
+
 				</div>
 			</div>
         </div>

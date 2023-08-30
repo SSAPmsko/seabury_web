@@ -1,48 +1,98 @@
+    var detailid;
+    var idurl;
+    var url;
+    var formData = {};
+    var structype;
+    var strucData = {};
+
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
 
-loadData();
+    if($("#type_picker option:checked").val() == "Site"){
+        $("#parent_picker").attr("disabled", true);
+    }
 });
 
 
-$("#type_picker").change(function(){
+    $("#type_picker").change(function(){
+    $('#parent_picker option').remove();
+    var type = $("#type_picker option:checked").val();
 
-                if($("#type_picker option:checked").val() == "Site"){
-                    $("#parent_picker").attr("disabled", true);
-                } else if($("#type_picker option:checked").val() == "Plant"){
-                    $("#parent_picker").attr("disabled", false);
+    pickerLoadData(type);
 
-                } else if($("#type_picker option:checked").val() == "Unit"){
-                    $("#parent_picker").attr("disabled", false);
-
-                }
- });
+    switch(type) {
+        case "Site":
+            $("#parent_picker").attr("disabled", true);
+            break;
+        case "Plant":
+        $("#parent_picker").attr("disabled", false);
+            break;
+        case "Unit":
+            $("#parent_picker").attr("disabled", false);
+            break;
+        default:
+            break;
+    }
+});
 
 function loadData() {
-//structure 리스트
-$.ajax({
-            type: 'GET',
-            url: "/getStructureList",
-            dataType: "json",
-            error: function(request, status, error) {
-                alert(request.status)},
-            success: function(data) {
-                data.forEach(item => {
+    //structure 리스트
+    $.ajax({
+        type: 'GET',
+        url: "/getStructureList",
+        dataType: "json",
+        error: function(request, status, error) {
+            alert(request.status)},
+        success: function(data) {
+            data.forEach(item => {
                 var $parentSelect = $('#parent_picker');
-                	var node = {
-                	type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
-                	};
-                    $parentSelect.append(new Option(node.name ,node.objectid , node.type , true));
-
-                });
-            }})
+                var node = {
+                    type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
+                };
+                $parentSelect.append(new Option(node.name ,node.objectid , node.type , true));
+            });
+    }});
 }
 
-function dataGridSaveExecute(){
-var detailid;
-var url;
-    var formData = {};
+function pickerLoadData(type){
+
+
+
+    switch(type) {
+        case "Site":
+            formData.type = null;
+            break;
+        case "Plant":
+            formData.type = "Site";
+            break;
+        case "Unit":
+            formData.type = "Plant";
+            break;
+        default:
+            break;
+        }
+    //structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function(request, status, error) {
+            alert(request.status)},
+        success: function(data) {
+            data.forEach(item => {
+                var parentSelect = $('#parent_picker');
+
+                parentSelect.append(new Option(item.name ,item.objectID , item.type , true));
+            });
+    }});
+}
+
+function InsertPost()
+{
+
     formData.id = $('#txt_id').val();
     formData.type = $('#type_picker').val();
     formData.description = $('#txt_description').val();
@@ -79,46 +129,56 @@ var url;
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-         var result = data.Result;
-         detailid = data.result.id;
-         alert("중지");
-        /*if (formData.type == "Site")
-            {
-                location.href = "plantList";
-
-            }else if(formData.type == "Unit")
-            {
-                location.href = "plantList";
-
-            }else if(formData.type == "Plant")
-            {
-                location.href = "plantList";
-            }*/
-
+            GetId();
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
-
-    var structype;
-
-    if($("#type_picker option:checked").val() == "Site"){
-
-    } else if($("#type_picker option:checked").val() == "Plant"){
-         structype = "Site";
-    } else if($("#type_picker option:checked").val() == "Unit"){
-         structype = "Plant";
+}
+function GetId()
+{
+    if (formData.type == "Site")
+    {
+        idurl = "/getSiteList";
+    }else if(formData.type == "Unit")
+    {
+        idurl = "/getUnitList";
+    }else if(formData.type == "Plant")
+    {
+        idurl = "/getPlantList";
     }
 
-    var strucData = {};
+    $.ajax({
+            type: 'GET',
+            url: idurl,
+            dataType: "json",
+            error: function(request, status, error) {
+                alert(request.status)},
+            success: function(data) {
+            detailid = data;
+            StructureInsert();
+            }
+        });
+
+}
+function StructureInsert()
+{
+    if($("#type_picker option:checked").val() == "Site"){
+    } else if($("#type_picker option:checked").val() == "Plant"){
+        structype = "Site";
+    } else if($("#type_picker option:checked").val() == "Unit"){
+        structype = "Plant";
+    }
+
 
     strucData.type = $('#type_picker option:checked').text();
-    strucData.parenttype = structype;
+    strucData.parentType = structype;
+
     strucData.name = $('#txt_name').val();
     strucData.description = $('#txt_description').val();
-    strucData.objectid = detailid;
-    strucData.parentid = $('#parent_picker').val();
+    strucData.objectID = detailid;
+    strucData.parentID = $('#parent_picker').val();
     $.ajax({
             url : "/structureInsert",
             type: 'POST',
@@ -135,6 +195,8 @@ var url;
             }
         });
 
-
+}
+function dataGridSaveExecute(){
+    InsertPost();
 }
 

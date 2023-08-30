@@ -44,6 +44,15 @@ public class UnitController {
         return mav;
     }
 
+    @RequestMapping(value = {"/getUnitList"}, method = RequestMethod.GET)
+    public @ResponseBody Integer getindexunitList(@RequestParam(value = "id", required = false) Integer id) {
+        UnitEntity whereUnit = new UnitEntity();
+
+        List<UnitEntity> qq = unitService.getUnitList(whereUnit);
+        whereUnit = qq.get(qq.size()-1);
+
+        return whereUnit.getID();
+    }
     @RequestMapping(value={"/unitDetail"}, method = RequestMethod.POST)
     public void unitDetail(HttpServletRequest request, HttpServletResponse response){
         try {
