@@ -1,11 +1,12 @@
+var rootName = "plant";
+
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     $("#plant").addClass('active');
     loadData();
     timestamp();
-$("#parent_picker").attr("disabled", true);
-$("#type_picker").text
-$("#parent_picker").attr("disabled", true);
+
+    $("#parent_picker").attr("disabled", true);
 
     var editMode = $("#txt_editMode").val();
 
@@ -43,24 +44,6 @@ function historyBack(){
 function loadData() {
 //structure 리스트
 
-$.ajax({
-            type: 'GET',
-            url: "/getStructureList",
-            dataType: "json",
-            error: function(request, status, error) {
-                alert(request.status)},
-            success: function(data) {
-                data.forEach(item => {
-                	var node = {
-                	id: item.id type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
-                	};
-                	var $typeSelect = $('#type_picker');
-                	var $parentSelect = $('#parent_picker');
-                	$typeSelect.append(new Option(node.type ,node.type , true , true));
-                	$parentSelect.append(new Option(node.parenttype ,node.parenttype , true , true));
-                });
-
-            }})
 
 /*//plant 리스트
     $.ajax({
@@ -88,21 +71,7 @@ var strucData = {};
     strucData.id = $('#txt_strucid').val();
     strucData.name = $('#txt_name').val();
     strucData.description = $('#txt_description').val();
-    $.ajax({
-            url : "/structureUpdate",
-            type: 'POST',
-            async: false,
-            data: JSON.stringify(strucData),
-            processData: false,
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success : function(data) {
 
-            },
-            error : function(data) {
-                alert("정상 처리에 실패 하였습니다.");
-            }
-        });
 
     var url;
     var formData = {};
@@ -124,22 +93,7 @@ var strucData = {};
         formData.id = $('#txt_id').val();
 
 
-    $.ajax({
-        url : url,
-        type: 'POST',
-        async: false,
-        data: JSON.stringify(formData),
-        processData: false,
-        dataType: "json",
-        contentType: "application/json;charset=UTF-8",
-        success : function(data) {
-        //location.href = "plantList";
-            location.href = "plantDetail?" + "id=" + formData.id;
-        },
-        error : function(data) {
-            alert("정상 처리에 실패 하였습니다.");
-        }
-    });
+
 }
 
 function dataGridDeleteExecute(){
@@ -148,39 +102,11 @@ function dataGridDeleteExecute(){
     var strucData = {};
 
             strucData.id = $('#txt_strucid').val();
-            $.ajax({
-                    url : "/structureDelete",
-                    type: 'POST',
-                    async: false,
-                    data: JSON.stringify(strucData),
-                    processData: false,
-                    dataType: "json",
-                    contentType: "application/json;charset=UTF-8",
-                    success : function(data) {
 
-                    },
-                    error : function(data) {
-                        alert("정상 처리에 실패 하였습니다.");
-                    }
-                });
 
      var formData = {};
         formData.id = $('#txt_id').val();
 
-        $.ajax({
-            url : "/plantDelete",
-            type: 'DELETE',
-            async: false,
-            data: JSON.stringify(formData),
-            processData: false,
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success : function(data) {
-                location.href = "plantList";
-            },
-            error : function(data) {
-                alert("정상 처리에 실패 하였습니다.");
-            }
-        });
+
     }
 }
