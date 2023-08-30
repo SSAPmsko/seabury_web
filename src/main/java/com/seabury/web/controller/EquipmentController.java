@@ -46,7 +46,12 @@ public class EquipmentController {
 
     @RequestMapping(value = {"/getEquipmentList"}, method = RequestMethod.POST)
     public @ResponseBody List<Map<String, Object>> getEquipmentList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        /*vrDoseService.getAllEquipments(message.get("scenarioId").toString());
+        StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setType(message.get("type").toString());
+        List<StructureEntity> qq = structureService.getStructureList(whereStructure);*/
         return vrDoseService.getAllEquipments("");
+
     }
 
     @RequestMapping(value = {"/equipmentDetail"}, method = RequestMethod.GET)

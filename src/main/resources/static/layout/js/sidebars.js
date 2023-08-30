@@ -22,12 +22,16 @@ $(document).ready(function(){
         const urlParams = new URL(location.href).searchParams;
         if (urlParams.size > 0) {
             var paramId = urlParams.get('id');
+           /* var paramType = urlParams.get('');*/
 
             var i;
             for( i = 0;  i < $('#bt_treeview_div').data('treeview').getEnabled().length; i++){
                 var tagId = $('#bt_treeview_div').data('treeview').getEnabled()[i].tags[0];
-                if(tagId == paramId) {
+                var tagType = $('#bt_treeview_div').data('treeview').getEnabled()[i].type.toLowerCase();
+
+                if(location.pathname + "?id=" + paramId == "/"+ tagType + "Detail?id=" + tagId) {
                     var nodeId = $('#bt_treeview_div').data('treeview').getEnabled()[i].nodeId;
+                    var nodeType = $('#bt_treeview_div').data('treeview').getEnabled()[i].type;
 
                     $('#bt_treeview_div').treeview('selectNode', [ nodeId, { silent: true } ]); // silent : ture = 노드를 선택만 하는 옵션
                 }

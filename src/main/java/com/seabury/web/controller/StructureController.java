@@ -43,6 +43,14 @@ public class StructureController {
         return qq;
     }
 
+    @RequestMapping(value = {"/getStructureList"}, method = RequestMethod.POST)
+    public @ResponseBody List<StructureEntity> getStructureFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+        StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setType(message.get("type").toString());
+        List<StructureEntity> qq = structureService.getStructureList(whereStructure);
+        return qq;
+    }
+
     @RequestMapping(value={"/structureList"}, method = RequestMethod.POST)
     public void structureList(HttpServletRequest request, HttpServletResponse response){
 

@@ -1,24 +1,140 @@
-var rootName = "scenario";
-
 $(document).ready(function(){
-    // 클릭한 위치 active 적용
-    $("#" + rootName).addClass('active');
 
-    var editMode = $("#txt_editMode").val();
-
-    if (editMode == 'true') {
-        $('#btn_delete').removeClass("visually-hidden")
-    } else if (editMode == 'false') {
-        $('#btn_delete').addClass("visually-hidden")
-    }
+    startfunction();
+    sourceloadData();
 });
 
-function historyBack(){
-    //window.history.back();
-    location.href = rootName +"List";
+function startfunction(){
+        var rootName = "scenario";
+        // 클릭한 위치 active 적용
+        $("#" + rootName).addClass('active');
+        // DataGrid Double Click Event
+        $("#dataGrid").on("dblclick ", "table", function(e) {
+           if(rootName != "equipment"){
+           dataGridModifyExecute();
+        }
+        });
+
+        function dataGridCreateExecute(){
+            location.href = rootName + "Detail";
+        }
+
+        function dataGridDeleteExecute(){
+                       if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+                           if(confirm("해당 아이템을 삭제 하시겠습니까?")){
+                               var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+                               //location.href = "write_del_ok.jsp?num=1";
+                               return true;
+                           } else {
+                               return false;
+                           }
+                       }
+                   }
+
+        function dataGridModifyExecute(){
+        if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+                var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+                var scenarioId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].scenarioId;
+                location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+            }
+        }
+
+        document.getElementById("scenariohtml").style.display = "";
+        document.getElementById("dataGrid").style.display = "none";
+
+
+
+        var editMode = $("#txt_editMode").val();
+
+        if (editMode == 'true') {
+            $('#btn_delete').removeClass("visually-hidden")
+        } else if (editMode == 'false') {
+            $('#btn_delete').addClass("visually-hidden")
+        }
 }
 
-function dataGridSaveExecute(){
+$('#myTab').on('click', "a", function(e) {
+
+   init();
+   var rootName = $(this).attr("value");
+   $("#" + rootName).addClass('active');
+
+      // DataGrid Double Click Event
+       $("#dataGrid").on("dblclick ", "table", function(e) {
+       if(rootName != "equipment"){
+          dataGridModifyExecute();
+       }
+      });
+
+      // CheckButton Selected Event
+      //$("#dataGrid tbody").on("click", ".k-checkbox", onSelected);
+
+
+      function dataGridCreateExecute(){
+          location.href = rootName + "Detail";
+      }
+
+      function dataGridDeleteExecute(){
+          if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+              if(confirm("해당 아이템을 삭제 하시겠습니까?")){
+                  var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+                  //location.href = "write_del_ok.jsp?num=1";
+                  return true;
+              } else {
+                  return false;
+              }
+          }
+      }
+
+      function dataGridModifyExecute(){
+          if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+              var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+              var scenarioId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].scenarioId;
+              location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+          }
+      }
+
+
+      function init(){
+         $('#dataGrid').data().kendoGrid.destroy();
+         $('#dataGrid').empty();
+      }
+
+
+
+      switch(rootName) {
+         case "workpack":
+             workpackloadData();
+           break;
+         case "source":
+             sourceloadData();
+           break;
+         case "equipment":
+             equipmentloadData();
+           break;
+         case "shield":
+             shieldloadData();
+           break;
+         case "worker":
+             workerloadData();
+           break;
+
+       default:
+           break;
+      }
+
+
+     if(rootName == "scenario"){
+       document.getElementById("scenariohtml").style.display = "";
+       document.getElementById("dataGrid").style.display = "none";
+     }
+     else{
+      document.getElementById("scenariohtml").style.display = "none";
+      document.getElementById("dataGrid").style.display = "";
+     }
+});
+
+function GridSaveExecute(){
 
     var url;
     var formData = {};
@@ -60,7 +176,7 @@ function dataGridSaveExecute(){
     });
 }
 
-function dataGridDeleteExecute(){
+function GridDeleteExecute(){
     if(confirm("해당 아이템을 삭제 하시겠습니까?")){
 
      var formData = {};
@@ -82,4 +198,329 @@ function dataGridDeleteExecute(){
             }
         });
     }
+}
+
+function workpackloadData() {
+
+    $("#dataGrid").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            { field: "projectId" },
+            { field: "scenarioId" },
+            { field: "name" },
+            { field: "description" },
+            /*{ field: "startDate" },
+            { field: "endDate" },
+            { field: "createdBy" },
+            { field: "justification" },
+            { field: "doseLimit" },
+            { field: "room" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getWorkpackList",
+                        type: 'POST',
+
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        projectId: { type: "string" },
+                        scenarioId: { type: "string" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                        /*startDate: { type: "string" },
+                        endDate: { type: "string" },
+                        createdBy: { type: "string" },
+                        justification: { type: "string" },
+                        doseLimit: { type: "string" },
+                        room: { type: "string" },*/
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
+}
+
+function equipmentloadData() {
+
+               $("#dataGrid").kendoGrid({
+                   columns: [
+                       /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+                       { field: "id" },
+                       { field: "projectId" },
+                       { field: "scenarioId" },
+                       { field: "name" },
+                       { field: "description" },
+                       /*{ field: "startDate" },
+                       { field: "endDate" },
+                       { field: "createdBy" },
+                       { field: "justification" },
+                       { field: "doseLimit" },
+                       { field: "room" },*/
+                   ],
+                   dataSource: {
+                       transport: {
+                           read: function(options){
+                               $.ajax({
+                                   url : "/getEquipmentList",
+                                   type: 'POST',
+                                   async: false,
+                                   processData: false,
+                                   dataType: "json",
+                                   contentType: "application/json;charset=UTF-8",
+                                   success: function(result) {
+                                    options.success(result);
+                                   },
+                                   error: function(result) {
+                                     options.error(result);
+                                   }
+                               });
+                           }
+                       },
+                       schema: {
+                           model: {
+                               fields: {
+                                   id: { type: "string" },
+                                   projectId: { type: "string" },
+                                   scenarioId: { type: "string" },
+                                   name: { type: "string" },
+                                   description: { type: "string" },
+                                   /*startDate: { type: "string" },
+                                   endDate: { type: "string" },
+                                   createdBy: { type: "string" },
+                                   justification: { type: "string" },
+                                   doseLimit: { type: "string" },
+                                   room: { type: "string" },*/
+                               }
+                           }
+                       },
+                       pageSize: 10,
+                   },
+                   selectable: "row",
+                   scrollable: false,
+                   filterable: true,
+                   sortable: false,
+                   resizable: true,
+                   pageable: true
+               });
+           }
+
+function sourceloadData() {
+
+    $("#dataGrid").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            { field: "projectId" },
+            { field: "scenarioId" },
+            { field: "name" },
+            { field: "description" },
+            /*{ field: "startDate" },
+            { field: "endDate" },
+            { field: "createdBy" },
+            { field: "justification" },
+            { field: "doseLimit" },
+            { field: "room" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getSourceList",
+                        type: 'POST',
+
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        projectId: { type: "string" },
+                        scenarioId: { type: "string" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                        /*startDate: { type: "string" },
+                        endDate: { type: "string" },
+                        createdBy: { type: "string" },
+                        justification: { type: "string" },
+                        doseLimit: { type: "string" },
+                        room: { type: "string" },*/
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
+}
+
+function shieldloadData() {
+
+    $("#dataGrid").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            { field: "projectId" },
+            { field: "scenarioId" },
+            { field: "name" },
+            { field: "description" },
+            /*{ field: "startDate" },
+            { field: "endDate" },
+            { field: "createdBy" },
+            { field: "justification" },
+            { field: "doseLimit" },
+            { field: "room" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getShieldList",
+                        type: 'POST',
+
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        projectId: { type: "string" },
+                        scenarioId: { type: "string" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                        /*startDate: { type: "string" },
+                        endDate: { type: "string" },
+                        createdBy: { type: "string" },
+                        justification: { type: "string" },
+                        doseLimit: { type: "string" },
+                        room: { type: "string" },*/
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
+}
+
+function workerloadData() {
+
+    $("#dataGrid").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            /*{ field: "defaultProject" },*/
+            /*{ field: "date" },*/
+            { field: "name" },
+            { field: "description" },
+            /*{ field: "startDate" },
+            { field: "endDate" },
+            { field: "createdBy" },
+            { field: "justification" },
+            { field: "doseLimit" },
+            { field: "room" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getProjectList",
+                        type: 'POST',
+
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        /*defaultProject: { type: "string" },*/
+                        /*date: { type: "string" },*/
+                        name: { type: "string" },
+                        description: { type: "string" },
+                        /*startDate: { type: "string" },
+                        endDate: { type: "string" },
+                        createdBy: { type: "string" },
+                        justification: { type: "string" },
+                        doseLimit: { type: "string" },
+                        room: { type: "string" },*/
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
 }

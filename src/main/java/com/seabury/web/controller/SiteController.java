@@ -28,6 +28,15 @@ public class SiteController {
     @Autowired
     SiteService siteService;
 
+    @RequestMapping(value = {"/getSiteList"}, method = RequestMethod.GET)
+    public @ResponseBody Integer getindexsiteList(@RequestParam(value = "id", required = false) Integer id) {
+        SiteEntity whereSite = new SiteEntity();
+
+        List<SiteEntity> qq = siteService.getSiteList(whereSite);
+        whereSite = qq.get(qq.size()-1);
+
+        return whereSite.getID();
+    }
 
     @RequestMapping(value = {"/siteDetail"}, method = RequestMethod.GET)
     public ModelAndView siteDetail(ModelAndView mav, @RequestParam(value = "id", required = false) Integer id) {
