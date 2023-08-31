@@ -5,8 +5,8 @@
 <th:block>
     <section layout:fragment="content">
         <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
+            <label for="id_source_nd_103_ext">Radiation Source : </label>
+            <select id="id_source_nd_103_ext" style="width:450px;">
                 <option value="nd_103_ext_1">FGR15/ 지표면 두께 1cm 외부피폭 DCF/ 연령군별</option>
                 <option value="nd_103_ext_5">FGR15/ 지표면 두께 5cm 외부피폭 DCF/ 연령군별</option>
                 <option value="nd_103_ext_15">FGR15/ 지표면 두께 15cm 외부피폭 DCF/ 연령군별</option>
@@ -21,7 +21,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#id_source").kendoDropDownList({
+        $("#id_source_nd_103_ext").kendoDropDownList({
             change : onChange
         });
         LoadRadiationSource();
@@ -61,7 +61,7 @@
                             type : "json",
                             async : true,
                             data : JSON.stringify({
-                                tbname : $("#id_source").val()
+                                tbname : $("#id_source_nd_103_ext").val()
                             }),
                             contentType : "application/json",
                             success: function(result) {

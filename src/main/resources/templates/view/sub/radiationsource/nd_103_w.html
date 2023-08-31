@@ -5,8 +5,8 @@
 <th:block>
     <section layout:fragment="content">
         <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
+            <label for="id_source_nd_103_w">Radiation Source : </label>
+            <select id="id_source_nd_103_w" style="width:450px;">
                 <option value="nd_103_inh_w">ICRP103 기준/ 작업자의 호흡 DCF</option>
                 <option value="nd_103_ing_w">ICRP103 기준/ 작업자의 섭취 DCF</option>
             </select>
@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#id_source").kendoDropDownList({
+        $("#id_source_nd_103_w").kendoDropDownList({
             change : onChange
         });
         LoadRadiationSource();
@@ -61,7 +61,7 @@
                             type : "json",
                             async : true,
                             data : JSON.stringify({
-                                tbname : $("#id_source").val()
+                                tbname : $("#id_source_nd_103_w").val()
                             }),
                             contentType : "application/json",
                             success: function(result) {

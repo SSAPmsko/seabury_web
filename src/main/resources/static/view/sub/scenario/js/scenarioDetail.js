@@ -7,7 +7,8 @@ $(document).ready(function(){
 function startfunction(){
         var rootName = "scenario";
         // 클릭한 위치 active 적용
-        $("#" + rootName).addClass('active');
+        //$("#" + rootName).addClass('active');
+
         // DataGrid Double Click Event
         $("#dataGrid").on("dblclick ", "table", function(e) {
            if(rootName != "equipment"){

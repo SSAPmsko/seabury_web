@@ -32,7 +32,24 @@ function dg_workpackModifyExecute(){
     if ($("#dg_workpack").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].scenarioId;
-        location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+        
+        //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+
+        $.ajax({
+            url : "/workpackDetailProperties?scenarioId=" + scenarioId + "&" + "id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('workpackDetail_' + id, 'workpackDetail_' + id, 'workpack/workpackDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
     }
 }
 

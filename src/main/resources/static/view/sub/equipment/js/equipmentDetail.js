@@ -1,8 +1,7 @@
 var rootName = "equipment";
-
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    $("#" + rootName).addClass('active');
+    //$("#" + rootName).addClass('active');
 
     var editMode = $("#txt_editMode").val();
 });

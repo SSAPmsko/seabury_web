@@ -32,7 +32,24 @@ function dg_workerModifyExecute(){
     if ($("#dg_worker").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_worker").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_worker").data("kendoGrid").getSelectedData()[0].scenarioId;
-        location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+        
+        //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+
+        $.ajax({
+            url : "/workerDetailProperties?scenarioId=" + scenarioId + "&" + "id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('workerDetail_' + id, 'workerDetail_' + id, 'worker/workerDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
     }
 }
 

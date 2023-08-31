@@ -5,8 +5,8 @@
 <th:block>
     <section layout:fragment="content">
         <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="sourceList">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
+            <label for="id_source_nd_60_103_ing">Radiation Source : </label>
+            <select id="id_source_nd_60_103_ing" style="width:450px;">
                 <option value="nd_60_ing_in">ICRP72/3개월(Infant) 연령군에 대한 섭취 DCF</option>
                 <option value="nd_60_ing_1">ICRP72/1세 연령군에 대한 섭취 DCF</option>
                 <option value="nd_60_ing_5">ICRP72/5세 연령군에 대한 섭취 DCF</option>
@@ -27,16 +27,15 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#id_source").kendoDropDownList({
+        $("#id_source_nd_60_103_ing").kendoDropDownList({
             change : onChange
         });
         LoadRadiationSource();
     });
 
     function onChange() {
-
          $("#grid_60_103_ing").data("kendoGrid").dataSource.read();
-    };
+    }
 
 	function LoadRadiationSource() {
 		$("#grid_60_103_ing").kendoGrid({
@@ -54,7 +53,7 @@
                             type : "json",
                             async : true,
                             data : JSON.stringify({
-                                tbname : $("#id_source").val()
+                                tbname : $("#id_source_nd_60_103_ing").val()
                             }),
                             contentType : "application/json",
                             success: function(result) {
