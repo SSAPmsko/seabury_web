@@ -3,27 +3,29 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <th:block>
-    <section layout:fragment="content">
-        <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source_nd_60_103_ing">Radiation Source : </label>
-            <select id="id_source_nd_60_103_ing" style="width:450px;">
-                <option value="nd_60_ing_in">ICRP72/3개월(Infant) 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_1">ICRP72/1세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_5">ICRP72/5세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_10">ICRP72/10세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_15">ICRP72/15세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_ad">ICRP72/성인 연령군에 대한 섭취 DCF</option>
-                <option value="nd_60_ing_w">ICRP68/작업자의 섭취 DCF</option>
-                <option value="nd_103_ing_in">ICRP103 기준/3개월(Infant) 연령군에 대한 섭취 DCF</option>
-                <option value="nd_103_ing_1">ICRP103 기준/1세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_103_ing_5">ICRP103 기준/5세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_103_ing_10">ICRP103 기준/10세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_103_ing_15">ICRP103 기준/15세 연령군에 대한 섭취 DCF</option>
-                <option value="nd_103_ing_AD">ICRP103 기준/성인 연령군에 대한 섭취 DCF</option>
-            </select>
-        </div>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="container-fluid">
+            <div id="Source_Dropdown" style="margin-top: 5px;">
+                <label for="id_source_nd_60_103_ing">Radiation Source : </label>
+                <select id="id_source_nd_60_103_ing" style="width:450px;">
+                    <option value="nd_60_ing_in">ICRP72/3개월(Infant) 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_1">ICRP72/1세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_5">ICRP72/5세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_10">ICRP72/10세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_15">ICRP72/15세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_ad">ICRP72/성인 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_60_ing_w">ICRP68/작업자의 섭취 DCF</option>
+                    <option value="nd_103_ing_in">ICRP103 기준/3개월(Infant) 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_103_ing_1">ICRP103 기준/1세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_103_ing_5">ICRP103 기준/5세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_103_ing_10">ICRP103 기준/10세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_103_ing_15">ICRP103 기준/15세 연령군에 대한 섭취 DCF</option>
+                    <option value="nd_103_ing_AD">ICRP103 기준/성인 연령군에 대한 섭취 DCF</option>
+                </select>
+            </div>
 
-        <div id="grid_60_103_ing" style="margin-top:15px;"></div>
+            <div id="grid_60_103_ing" style="margin-top:15px;"></div>
+        </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -74,12 +76,16 @@
                         }
                     }
                 },
-                pageSize: 30
+                pageSize: 100,
+                //serverPaging: true,
+                //serverFiltering: true,
+                //serverSorting: true
             },
-            height : 750,
-            scrollable : true,
+            selectable: "row",
+            scrollable: false,
+            filterable: true,
             sortable: true,
-            resizable:true,
+            resizable: true,
             pageable: true
         });
     }
