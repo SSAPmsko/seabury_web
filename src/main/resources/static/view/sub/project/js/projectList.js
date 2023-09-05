@@ -15,7 +15,23 @@ $(document).ready(function(){
 });
 
 function dg_projectCreateExecute(){
-    location.href = rootName + "Detail";
+    //location.href = rootName + "Detail";
+
+    $.ajax({
+        url : "/projectDetailProperties",
+        method : "GET",
+        type : "json",
+        async : false,
+        contentType : "application/json",
+        success : function(result) {
+            addDockItem('projectDetail_' + 'newItem', 'projectDetail_' + 'newItem', 'project/projectDetail', result);
+        },
+        error : function(result) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    }).done(function(fragment){
+
+    });
 }
 
 function dg_projectDeleteExecute(){
@@ -54,7 +70,7 @@ function dg_projectModifyExecute(){
     }
 }
 
-function dg_projectLoadData() {
+function dg_projectLoadData(page) {
     $("#dg_project").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
@@ -118,4 +134,9 @@ function dg_projectLoadData() {
         resizable: true,
         pageable: true
     });
+}
+
+function dg_projectReloadExecute(){
+    $('#dg_project').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_project').data('kendoGrid').refresh(); <!--  refresh current UI -->
 }

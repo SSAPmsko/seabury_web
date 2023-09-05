@@ -8,6 +8,11 @@
 
 function addDockItem(id, title, path, properties){
 
+    // Navigation Bar 가 상태가 Open 이면, 닫음
+    if ($('#navbars').hasClass('open') == true) {
+        $('#navbars').removeClass('open');
+    }
+
     var findDockItem = myLayout.root.getItemsById(id);
 
     // 해당 아이템이 있으면,
@@ -18,12 +23,14 @@ function addDockItem(id, title, path, properties){
     } else {
         var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
 
-        if (properties != undefined){
+        if (properties !== undefined){
             htmlStr = htmlStr.replace(/th:value/g,'value');
 
             for (const [k, v] of Object.entries(properties.result)){
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);
             }
+            // Empty Value Init
+            htmlStr = htmlStr.replace(/${([^>]+)}/g ,'');
         }
 
         var newItemConfig = {
@@ -39,6 +46,13 @@ function addDockItem(id, title, path, properties){
             myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
         } else {
             myLayout.root.contentItems[0].addChild( newItemConfig );
+        }
+
+        // Unique Id Register
+
+        if ($('section').attr('id') === undefined) {
+            $('section').attr('id', id);
+            $('section').find('[id*=]');
         }
     }
 }

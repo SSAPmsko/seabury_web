@@ -50,6 +50,11 @@ public class ScenarioController {
         return vrDoseService.getAllScenario("");
     }
 
+    @RequestMapping(value = {"/getScenarios"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getScenarios(@RequestParam(required = false) String projectId) {
+        return vrDoseService.getScenarios(projectId);
+    }
+
     @RequestMapping(value = {"/scenarioDetail"}, method = RequestMethod.GET)
     public ModelAndView scenarioDetail(ModelAndView mav, @RequestParam(required = false) String id) {
 

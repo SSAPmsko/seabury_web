@@ -71,6 +71,18 @@ public class ProjectController {
         if (StringUtils.isEmpty(id)){
             result = new HashMap<>();
             result.put("editMode", false);
+
+            // golden Layout의 AddDockItem 기능의 Replace Value 데이터 초기화
+            /*
+            result.put("id", "");
+            result.put("name", "");
+            result.put("description", "");
+            result.put("room", "");
+            result.put("createdBy", "");
+            result.put("justification", "");
+            */
+
+            // Default Values
             result.put("date", LocalDate.now());
             result.put("startDate", LocalDate.now());
             result.put("endDate", LocalDate.now());

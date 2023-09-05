@@ -3,7 +3,8 @@
 }
 
 .lm_content {
-    background: #e1e1e1;
+    /*background: #e1e1e1;*/
+    background: white;
     border: 1px solid #cccccc
 }
 

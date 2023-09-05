@@ -29,7 +29,7 @@ public class IntegratedDoseController {
     }
 
     @PostMapping(value="/getWorkFlowList")
-    public @ResponseBody List<WorkFlowEntity> getWorkFlowList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+    public @ResponseBody List<WorkFlowEntity> getWorkFlowList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return integratedDoseService.getWorkFlowList(new WorkFlowEntity());
     }
 }

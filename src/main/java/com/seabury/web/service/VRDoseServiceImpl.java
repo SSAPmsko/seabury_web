@@ -37,10 +37,10 @@ public class VRDoseServiceImpl implements VRDoseService {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
             result = request.execute().parseAs(result.getClass());
+            castingObjectToString(result);
             convertLongToDate(result, "date");
             convertLongToDate(result, "startDate");
             convertLongToDate(result, "endDate");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
