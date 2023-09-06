@@ -5,15 +5,36 @@
 
 <!-- Begin Page Content -->
 <th:block>
-    <section layout:fragment="content">
-        <div class="row g-2 container-fluid">
+	<form id="projectPropertyForm" name="projectPropertyForm"></form>
+
+	<section class="h-100" style="overflow:auto" layout:fragment="content">
+		<div class="row container-fluid m-0">
 			<!-- Hidden Field-->
 			<div class="visually-hidden">
-				<input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
-				<input type="text" class="form-control" id="txt_id" th:value="${id}">
+				<input type="text" class="form-control" id="txt_editMode" form="projectPropertyForm" th:value="${editMode}">
+				<input type="text" class="form-control" id="txt_projectId" form="projectPropertyForm" th:value="${id}">
 			</div>
 
-			<div class="col-6">
+			<div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
+				<h6 class="h2">Title</h6>
+				<div class="btn-toolbar">
+					<button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="projectPropertyForm" style="height: 30px" id="btn_project_save">
+						<span class="k-button-icon k-icon k-i-save"></span>
+						<span class="k-button-text">Save</span>
+					</button>
+
+					<button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="projectPropertyForm" style="height: 30px" id="btn_project_delete">
+						<span class="k-button-icon k-icon k-i-delete"></span>
+						<span class="k-button-text">Delete</span>
+					</button>
+
+					<!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
+					<!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
+					<!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
+				</div>
+			</div>
+
+			<div class="col-lg-6 p-2">
 				<fieldset>
 					<legend>Properties</legend>
 
@@ -21,85 +42,75 @@
 						<!-- Name -->
 						<div class="col-sm-12">
 							<label for="txt_name" class="form-label">Name</label>
-							<input type="text" class="form-control" id="txt_name" th:value="${name}">
+							<input type="text" class="form-control" id="txt_name" form="projectPropertyForm" th:value="${name}">
 						</div>
 
 						<!-- Description -->
 						<div class="col-sm-12">
 							<label for="txt_description" class="form-label">Description</label>
-							<input type="text" class="form-control" id="txt_description" th:value="${description}">
+							<input type="text" class="form-control" id="txt_description" form="projectPropertyForm" th:value="${description}">
 						</div>
 
 						<!-- Create Date -->
 						<div class="col-sm-6">
 							<label for="dt_date" class="form-label">Create Date</label>
-							<input type="date" class="form-control" id="dt_date" th:value="${date}">
+							<input type="date" class="form-control" id="dt_date" form="projectPropertyForm" th:value="${date}">
 						</div>
 
 						<!-- Creator -->
 						<div class="col-sm-6">
 							<label for="txt_createdBy" class="form-label">Creator</label>
-							<input type="text" class="form-control" id="txt_createdBy" th:value="${createdBy}">
+							<input type="text" class="form-control" id="txt_createdBy" form="projectPropertyForm" th:value="${createdBy}">
 						</div>
 
 						<!-- Room -->
 						<div class="col-sm-6">
 							<label for="txt_room" class="form-label">Room</label>
-							<input type="text" class="form-control" id="txt_room" th:value="${room}">
+							<input type="text" class="form-control" id="txt_room" form="projectPropertyForm" th:value="${room}">
 						</div>
 
 						<!-- Start Date -->
 						<div class="col-sm-6">
 
 							<label for="dt_startDate" class="form-label">Start date</label>
-							<input type="date" id="dt_startDate" class="form-control" th:value="${startDate}">
+							<input type="date" id="dt_startDate" class="form-control" form="projectPropertyForm" th:value="${startDate}">
 						</div>
 
 						<!-- End Date -->
 						<div class="col-sm-6">
 							<label for="dt_endDate" class="form-label">End date</label>
-							<input type="date" id="dt_endDate" class="form-control" th:value="${endDate}">
+							<input type="date" id="dt_endDate" class="form-control" form="projectPropertyForm" th:value="${endDate}">
 						</div>
 
 						<!-- dose Limit -->
 						<div class="col-sm-6">
 							<label for="txt_doseLimit" class="form-label">Dose Limit</label>
-							<input type="number" placeholder="0.0" step="0.01" class="form-control" id="txt_doseLimit" th:value="${doseLimit}">
+							<input type="number" placeholder="0.0" step="0.01" class="form-control" form="projectPropertyForm" id="txt_doseLimit" th:value="${doseLimit}">
 						</div>
 
 						<!-- justification -->
 						<div class="col-sm-12">
 							<label for="txt_justification" class="form-label">Justification</label>
-							<input type="text" class="form-control" id="txt_justification" th:value="${justification}">
-						</div>
-
-						<div class="col-sm-12">
-							<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>
-							<a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
-							<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+							<input type="text" class="form-control" id="txt_justification" form="projectPropertyForm" th:value="${justification}">
 						</div>
 					</div>
 				</fieldset>
 			</div>
 
-			<div class="col-6">
+			<div class="col-lg-6 p-2">
 				<fieldset>
 					<legend>Image</legend>
-					<div class="container-lg">
-						<div class="row">
-							<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
-						</div>
+					<div class="container-lg p-0 text-center bg-light">
+						<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" style="height: 300px;">
 					</div>
 				</fieldset>
-				<div class="col-12">
-					<!--<a href="#" class="btn btn-primary" onclick="dataGridCreateExecute();">Create</a>-->
-					<a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Modify</a>
-					<a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
-				</div>
 
-				<div class="col" id="dataGrid">
+				<fieldset class="pt-3">
+					<legend>Scenario List</legend>
+					<div class="col" id="dg_project_scenario" form="projectPropertyForm">
 
-				</div>
+					</div>
+				</fieldset>
 			</div>
         </div>
 

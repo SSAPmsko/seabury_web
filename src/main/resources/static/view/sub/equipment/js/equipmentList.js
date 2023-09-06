@@ -8,7 +8,7 @@ $(document).ready(function(){
     dg_equipmentLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_equipment").on("dblclick ", "table", function(e) {
+     $("#dg_equipment").on("dblclick", "table", function(e) {
         dg_equipmentModifyExecute();
     });
 });
@@ -32,7 +32,24 @@ function dg_equipmentModifyExecute(){
     if ($("#dg_equipment").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_equipment").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_equipment").data("kendoGrid").getSelectedData()[0].scenarioId;
-        location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+
+        //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
+
+        $.ajax({
+            url : "/equipmentDetailProperties?scenarioId=" + scenarioId + "&" + "id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('equipmentDetail_' + id, 'equipmentDetail_' + id, 'equipment/equipmentDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
     }
 }
 

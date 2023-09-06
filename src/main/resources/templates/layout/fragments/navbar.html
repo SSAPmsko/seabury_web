@@ -8,12 +8,11 @@
             <a href="main">
                 <img width="120" height="32" src="/static/img/logo/seabury_negative.png" href="main"/>
             </a>
-            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
-                    aria-label="Toggle navigation">
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" style="height:40px;"></span><!--넓이 줄었을때, 버튼 높이 고정 -->
             </button>
 
-            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <div class="navbar-collapse offcanvas-collapse" id="navbars">
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item">
                         <a class="nav-link" id="structure" href="#" onclick="addDockItem('structure', 'structureList', 'structure/structureList')">Structure</a>
@@ -44,14 +43,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Reference</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" id="nd_60_103_inh" href="nd_60_103_inh">ICRP 72/103 연령별 호흡
-                                DCF</a></li>
-                            <li><a class="dropdown-item" id="nd_60_103_ing" href="nd_60_103_ing">ICRP 72/103 연령별 섭취
-                                DCF</a></li>
-                            <li><a class="dropdown-item" id="nd_103_w" href="nd_103_w">ICRP 103 작업자 호흡/섭취 DCF</a></li>
-                            <li><a class="dropdown-item" id="nd_60_ext" href="nd_60_ext">FGR13 외부피복 DCF</a></li>
-                            <li><a class="dropdown-item" id="nd_103_ext" href="nd_103_ext">FGR15 외부피복 DCF</a></li>
-                            <li><a class="dropdown-item" id="WorkFlow" href="WorkFlow">ZR-100 Robot System 설치</a></li>
+                            <li><a class="dropdown-item" id="nd_60_103_inh" href="#" onclick="addDockItem('nd_60_103_inh', 'nd_60_103_inh list', 'radiationsource/nd_60_103_inh')">ICRP 72/103 연령별 호흡 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_60_103_ing" href="#" onclick="addDockItem('nd_60_103_ing', 'nd_60_103_ing list', 'radiationsource/nd_60_103_ing')">ICRP 72/103 연령별 섭취 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_103_w" href="#" onclick="addDockItem('nd_103_w', 'nd_103_w list', 'radiationsource/nd_103_w')">ICRP 103 작업자 호흡/섭취 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_60_ext" href="#" onclick="addDockItem('nd_60_ext', 'nd_60_ext list', 'radiationsource/nd_60_ext')">FGR13 외부피복 DCF</a></li>
+                            <li><a class="dropdown-item" id="nd_103_ext" href="#" onclick="addDockItem('nd_103_ext', 'nd_103_ext list', 'radiationsource/nd_103_ext')">FGR15 외부피복 DCF</a></li>
+
+                            <li><a class="dropdown-item" id="WorkFlow" href="#" onclick="addDockItem('WorkFlow', 'WorkFlow list', 'integrated/WorkFlow')">ZR-100 Robot System 설치</a></li>
                         </ul>
                     </li>
 

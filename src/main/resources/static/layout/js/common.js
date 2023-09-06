@@ -12,3 +12,14 @@ function getHtmlTemplate(url){
 
     return html;
 }
+
+function formToJsonObject(formName){
+    var formList = $("[form="+formName+"]");
+
+    var obj = {};
+    for(var i=0;i<formList.length;i++){
+        obj[formList[i].id] = formList[i].value;
+    }
+
+    return obj;
+}

@@ -3,20 +3,22 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <th:block>
-    <section layout:fragment="content">
-        <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
-                <option value="nd_103_inh_w">ICRP103 기준/ 작업자의 호흡 DCF</option>
-                <option value="nd_103_ing_w">ICRP103 기준/ 작업자의 섭취 DCF</option>
-            </select>
-        </div>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="container-fluid">
+            <div id="Source_Dropdown" style="margin-top: 5px;">
+                <label for="id_source_nd_103_w">Radiation Source : </label>
+                <select id="id_source_nd_103_w" style="width:450px;">
+                    <option value="nd_103_inh_w">ICRP103 기준/ 작업자의 호흡 DCF</option>
+                    <option value="nd_103_ing_w">ICRP103 기준/ 작업자의 섭취 DCF</option>
+                </select>
+            </div>
 
-        <div id="grid_103_w" style="margin-top:15px;"></div>
+            <div id="grid_103_w" style="margin-top:15px;"></div>
+        </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#id_source").kendoDropDownList({
+        $("#id_source_nd_103_w").kendoDropDownList({
             change : onChange
         });
         LoadRadiationSource();
@@ -61,7 +63,7 @@
                             type : "json",
                             async : true,
                             data : JSON.stringify({
-                                tbname : $("#id_source").val()
+                                tbname : $("#id_source_nd_103_w").val()
                             }),
                             contentType : "application/json",
                             success: function(result) {
@@ -77,23 +79,27 @@
                     model: {
                         fields: {
                             half_life1: { type: "string" },
-                            half_life2: { type: "float" },
+                            half_life2: { type: "number" },
                             half_life2unit: { type: "string" },
-                            half_life3: { type: "float" },
+                            half_life3: { type: "number" },
                             half_life3unit: { type: "string" },
                             type: { type: "string" }
                         }
                     }
                 },
-                pageSize: 30
+                pageSize: 100,
+                //serverPaging: true,
+                //serverFiltering: true,
+                //serverSorting: true
             },
-            height : 750,
-            scrollable : true,
+            selectable: "row",
+            scrollable: false,
+            filterable: true,
             sortable: true,
-            resizable:true,
+            resizable: true,
             pageable: true
         });
-	}
+    }
 
         </script>
     </section>

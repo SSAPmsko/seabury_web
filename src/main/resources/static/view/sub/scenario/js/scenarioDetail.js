@@ -7,22 +7,23 @@ $(document).ready(function(){
 function startfunction(){
         var rootName = "scenario";
         // 클릭한 위치 active 적용
-        $("#" + rootName).addClass('active');
+        //$("#" + rootName).addClass('active');
+
         // DataGrid Double Click Event
-        $("#dataGrid").on("dblclick ", "table", function(e) {
+        $("#dg_scenario").on("dblclick", "table", function(e) {
            if(rootName != "equipment"){
-           dataGridModifyExecute();
+           dg_scenarioModifyExecute();
         }
         });
 
-        function dataGridCreateExecute(){
+        function dg_scenarioCreateExecute(){
             location.href = rootName + "Detail";
         }
 
-        function dataGridDeleteExecute(){
-                       if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+        function dg_scenarioDeleteExecute(){
+                       if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
                            if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-                               var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+                               var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
                                //location.href = "write_del_ok.jsp?num=1";
                                return true;
                            } else {
@@ -31,16 +32,16 @@ function startfunction(){
                        }
                    }
 
-        function dataGridModifyExecute(){
-        if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-                var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-                var scenarioId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].scenarioId;
+        function dg_scenarioModifyExecute(){
+        if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
+                var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
+                var scenarioId = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].scenarioId;
                 location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
             }
         }
 
         document.getElementById("scenariohtml").style.display = "";
-        document.getElementById("dataGrid").style.display = "none";
+        document.getElementById("dg_scenario").style.display = "none";
 
 
 
@@ -60,24 +61,24 @@ $('#myTab').on('click', "a", function(e) {
    $("#" + rootName).addClass('active');
 
       // DataGrid Double Click Event
-       $("#dataGrid").on("dblclick ", "table", function(e) {
+       $("#dg_scenario").on("dblclick", "table", function(e) {
        if(rootName != "equipment"){
-          dataGridModifyExecute();
+          dg_scenarioModifyExecute();
        }
       });
 
       // CheckButton Selected Event
-      //$("#dataGrid tbody").on("click", ".k-checkbox", onSelected);
+      //$("#dg_scenario tbody").on("click", ".k-checkbox", onSelected);
 
 
-      function dataGridCreateExecute(){
+      function dg_scenarioCreateExecute(){
           location.href = rootName + "Detail";
       }
 
-      function dataGridDeleteExecute(){
-          if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
+      function dg_scenarioDeleteExecute(){
+          if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
               if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-                  var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
+                  var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
                   //location.href = "write_del_ok.jsp?num=1";
                   return true;
               } else {
@@ -86,18 +87,18 @@ $('#myTab').on('click', "a", function(e) {
           }
       }
 
-      function dataGridModifyExecute(){
-          if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-              var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-              var scenarioId = $("#dataGrid").data("kendoGrid").getSelectedData()[0].scenarioId;
+      function dg_scenarioModifyExecute(){
+          if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
+              var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
+              var scenarioId = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].scenarioId;
               location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
           }
       }
 
 
       function init(){
-         $('#dataGrid').data().kendoGrid.destroy();
-         $('#dataGrid').empty();
+         $('#dg_scenario').data().kendoGrid.destroy();
+         $('#dg_scenario').empty();
       }
 
 
@@ -126,11 +127,11 @@ $('#myTab').on('click', "a", function(e) {
 
      if(rootName == "scenario"){
        document.getElementById("scenariohtml").style.display = "";
-       document.getElementById("dataGrid").style.display = "none";
+       document.getElementById("dg_scenario").style.display = "none";
      }
      else{
       document.getElementById("scenariohtml").style.display = "none";
-      document.getElementById("dataGrid").style.display = "";
+      document.getElementById("dg_scenario").style.display = "";
      }
 });
 
@@ -202,7 +203,7 @@ function GridDeleteExecute(){
 
 function workpackloadData() {
 
-    $("#dataGrid").kendoGrid({
+    $("#dg_scenario").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -267,7 +268,7 @@ function workpackloadData() {
 
 function equipmentloadData() {
 
-               $("#dataGrid").kendoGrid({
+               $("#dg_scenario").kendoGrid({
                    columns: [
                        /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
                        { field: "id" },
@@ -331,7 +332,7 @@ function equipmentloadData() {
 
 function sourceloadData() {
 
-    $("#dataGrid").kendoGrid({
+    $("#dg_scenario").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -396,7 +397,7 @@ function sourceloadData() {
 
 function shieldloadData() {
 
-    $("#dataGrid").kendoGrid({
+    $("#dg_scenario").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -462,7 +463,7 @@ function shieldloadData() {
 
 function workerloadData() {
 
-    $("#dataGrid").kendoGrid({
+    $("#dg_scenario").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },

@@ -3,25 +3,27 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <th:block>
-    <section layout:fragment="content">
-        <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
-                <option value="nd_60_ext_1">FGR13 Supplement CD/ 지표면 두께 1cm 외부피폭 DCF</option>
-                <option value="nd_60_ext_5">FGR13 Supplement CD/ 지표면 두께 5cm 외부피폭 DCF</option>
-                <option value="nd_60_ext_15">FGR13 Supplement CD/ 지표면 두께 15cm 외부피폭 DCF</option>
-                <option value="nd_60_ext_sf">FGR13 Supplement CD/ 지표면 외부피폭 DCF</option>
-                <option value="nd_60_ext_in">FGR13 Supplement CD/ 지표면 Infinite 외부피폭 DCF</option>
-                <option value="nd_60_ext_wat">FGR13 Supplement CD/ Water Submersion 외부피폭 DCF</option>
-                <option value="nd_60_ext_air">FGR13 Supplement CD/ Air Submersion 외부피폭 DCF</option>
-            </select>
-        </div>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="container-fluid">
+            <div id="Source_Dropdown" style="margin-top: 5px;">
+                <label for="id_source_nd_60_ext">Radiation Source : </label>
+                <select id="id_source_nd_60_ext" style="width:450px;">
+                    <option value="nd_60_ext_1">FGR13 Supplement CD/ 지표면 두께 1cm 외부피폭 DCF</option>
+                    <option value="nd_60_ext_5">FGR13 Supplement CD/ 지표면 두께 5cm 외부피폭 DCF</option>
+                    <option value="nd_60_ext_15">FGR13 Supplement CD/ 지표면 두께 15cm 외부피폭 DCF</option>
+                    <option value="nd_60_ext_sf">FGR13 Supplement CD/ 지표면 외부피폭 DCF</option>
+                    <option value="nd_60_ext_in">FGR13 Supplement CD/ 지표면 Infinite 외부피폭 DCF</option>
+                    <option value="nd_60_ext_wat">FGR13 Supplement CD/ Water Submersion 외부피폭 DCF</option>
+                    <option value="nd_60_ext_air">FGR13 Supplement CD/ Air Submersion 외부피폭 DCF</option>
+                </select>
+            </div>
 
-        <div id="grid_60_ext" style="margin-top:15px;"></div>
+            <div id="grid_60_ext" style="margin-top:15px;"></div>
+        </div>
 
         <script type="text/javascript">
  $(document).ready(function () {
-			$("#id_source").kendoDropDownList({
+			$("#id_source_nd_60_ext").kendoDropDownList({
 				change : onChange
 			});
 			LoadRadiationSource();
@@ -61,7 +63,7 @@
 	        			type : "json",
 	        			async : true,
 	        			data : JSON.stringify({
-	        				tbname : $("#id_source").val()
+	        				tbname : $("#id_source_nd_60_ext").val()
 	        			}),
 	        			contentType : "application/json",
 	            		success: function(result) {
@@ -76,23 +78,27 @@
 	          schema: {
 	  	        model: {
 	  	            fields: {
-	  	            	adrenals: { type: "float" },
-	                	bladder_wall: { type: "float" },
-	                	bone_surface: { type: "float" },
-	                	brain: { type: "float" },
-	                	breast: { type: "float" }
+	  	            	adrenals: { type: "number" },
+	                	bladder_wall: { type: "number" },
+	                	bone_surface: { type: "number" },
+	                	brain: { type: "number" },
+	                	breast: { type: "number" }
 	  	            }
 	  	        }
 	  	    },
-	  	    pageSize: 30
-		  },
-		  height : 750,
-		  scrollable : true,
-		  sortable: true,
-		  resizable:true,
-	      pageable: true
-		});
-	}
+              pageSize: 100,
+              //serverPaging: true,
+              //serverFiltering: true,
+              //serverSorting: true
+          },
+            selectable: "row",
+            scrollable: false,
+            filterable: true,
+            sortable: true,
+            resizable: true,
+            pageable: true
+        });
+    }
 
         </script>
     </section>

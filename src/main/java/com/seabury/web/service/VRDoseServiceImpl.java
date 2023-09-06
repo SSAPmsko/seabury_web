@@ -37,10 +37,10 @@ public class VRDoseServiceImpl implements VRDoseService {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
             result = request.execute().parseAs(result.getClass());
+            castingObjectToString(result);
             convertLongToDate(result, "date");
             convertLongToDate(result, "startDate");
             convertLongToDate(result, "endDate");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,8 +136,6 @@ public class VRDoseServiceImpl implements VRDoseService {
 
                 map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
 
-
-
                 String bodyStr = getJsonString(map);
 
                 HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
@@ -183,11 +181,7 @@ public class VRDoseServiceImpl implements VRDoseService {
 
             result = request.execute().parseAs(result.getClass());
 
-            castingObjectToString(result);
-            convertLongToDate(result, "date");
-            convertLongToDate(result, "lastModified");
-            convertLongToDate(result, "startTime");
-            convertLongToDate(result, "endTime");
+            castingObjectToStringFromScenario(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -210,25 +204,7 @@ public class VRDoseServiceImpl implements VRDoseService {
             if (result != null){
                 for (Map item : result) {
                     item.put("projectId", projectId);
-                    castingObjectToString(item);
-                    convertLongToDate((ArrayMap)item, "date");
-                    convertLongToDate((ArrayMap)item, "lastModified");
-                    convertLongToDatetime((ArrayMap)item, "startTime");
-                    convertLongToDatetime((ArrayMap)item, "endTime");
-
-                    Object participantInfo = item.get("participantInfo");
-                    if (participantInfo instanceof ArrayList){
-                        if (participantInfo != null && ((ArrayList<?>) participantInfo).size() > 0){
-                            List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
-
-                            for (ArrayMap _item : datalist){
-                                castingObjectToString(_item);
-                                convertStringToFloat(_item,"accumulatedDose");
-                                convertStringToFloat(_item,"minDose");
-                                convertStringToFloat(_item,"maxDose");
-                            }
-                        }
-                    }
+                    castingObjectToStringFromScenario(item);
                 }
             }
         } catch (Exception e) {
@@ -322,6 +298,7 @@ public class VRDoseServiceImpl implements VRDoseService {
                             convertStringToFloat(_item,"accumulatedDose");
                             convertStringToFloat(_item,"minDose");
                             convertStringToFloat(_item,"maxDose");
+                            convertStringToFloat(_item,"workTime");
                         }
                     }
                 }
@@ -726,7 +703,7 @@ public class VRDoseServiceImpl implements VRDoseService {
     @Override
     public Map<String, Object> getWorkStep(String scenarioId, String id) {
 
-        Map<String, Object>  result = new ArrayMap();
+        Map<String, Object> result = new ArrayMap();
 
         List<Map<String, Object>> dataList = getWorkSteps(scenarioId);
         if (dataList.size() > 0){
@@ -811,6 +788,29 @@ public class VRDoseServiceImpl implements VRDoseService {
         return result;
     }
 
+    private void castingObjectToStringFromScenario(Map item){
+        castingObjectToString(item);
+        convertLongToDate((ArrayMap)item, "date");
+        convertLongToDate((ArrayMap)item, "lastModified");
+        convertLongToDatetime((ArrayMap)item, "startTime");
+        convertLongToDatetime((ArrayMap)item, "endTime");
+
+        Object participantInfo = item.get("participantInfo");
+        if (participantInfo instanceof ArrayList){
+            if (participantInfo != null && ((ArrayList<?>) participantInfo).size() > 0){
+                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
+
+                for (ArrayMap _item : datalist){
+                    castingObjectToString(_item);
+                    convertStringToFloat(_item,"accumulatedDose");
+                    convertStringToFloat(_item,"minDose");
+                    convertStringToFloat(_item,"maxDose");
+                    convertStringToFloat(_item,"workTime");
+                }
+            }
+        }
+    }
+
     private String getXmlString(InputStream inputStream) throws Exception{
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -831,3 +831,4 @@ public class VRDoseServiceImpl implements VRDoseService {
         return  objectMapper.readValue(jsonObject.toString(), Object.class);
     }
 }
+

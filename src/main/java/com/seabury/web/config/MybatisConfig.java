@@ -38,7 +38,7 @@ public class MybatisConfig {
 
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
         org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
-        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setMapUnderscoreToCamelCase(false);
 
         return sqlSessionFactory;
     }
@@ -56,7 +56,7 @@ public class MybatisConfig {
 
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
         org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
-        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setMapUnderscoreToCamelCase(false);
 
         return sqlSessionFactory;
     }

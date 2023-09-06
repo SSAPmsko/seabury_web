@@ -3,25 +3,27 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <th:block>
-    <section layout:fragment="content">
-        <div id="Source_Dropdown" style="margin-top: 5px;">
-            <label for="id_source">Radiation Source : </label>
-            <select id="id_source" style="width:450px;">
-                <option value="nd_103_ext_1">FGR15/ 지표면 두께 1cm 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_5">FGR15/ 지표면 두께 5cm 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_15">FGR15/ 지표면 두께 15cm 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_sf">FGR15/ 지표면 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_in">FGR15/ 지표면 Infinite 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_wat">FGR15/ Water Submersion 외부피폭 DCF/ 연령군별</option>
-                <option value="nd_103_ext_air">FGR15/ Air Submersion 외부피폭 DCF/ 연령군별</option>
-            </select>
-        </div>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="container-fluid">
+            <div id="Source_Dropdown" style="margin-top: 5px;">
+                <label for="id_source_nd_103_ext">Radiation Source : </label>
+                <select id="id_source_nd_103_ext" style="width:450px;">
+                    <option value="nd_103_ext_1">FGR15/ 지표면 두께 1cm 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_5">FGR15/ 지표면 두께 5cm 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_15">FGR15/ 지표면 두께 15cm 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_sf">FGR15/ 지표면 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_in">FGR15/ 지표면 Infinite 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_wat">FGR15/ Water Submersion 외부피폭 DCF/ 연령군별</option>
+                    <option value="nd_103_ext_air">FGR15/ Air Submersion 외부피폭 DCF/ 연령군별</option>
+                </select>
+            </div>
 
-        <div id="grid_103_ext" style="margin-top:15px;"></div>
+            <div id="grid_103_ext" style="margin-top:15px;"></div>
+        </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#id_source").kendoDropDownList({
+        $("#id_source_nd_103_ext").kendoDropDownList({
             change : onChange
         });
         LoadRadiationSource();
@@ -61,7 +63,7 @@
                             type : "json",
                             async : true,
                             data : JSON.stringify({
-                                tbname : $("#id_source").val()
+                                tbname : $("#id_source_nd_103_ext").val()
                             }),
                             contentType : "application/json",
                             success: function(result) {
@@ -76,23 +78,27 @@
                 schema: {
                     model: {
                         fields: {
-                            y1_yr_old: { type: "float" },
-                            y5_yr_old: { type: "float" },
-                            y10_yr_old: { type: "float" },
-                            y15_yr_old: { type: "float" },
+                            y1_yr_old: { type: "number" },
+                            y5_yr_old: { type: "number" },
+                            y10_yr_old: { type: "number" },
+                            y15_yr_old: { type: "number" },
                             nuclide: { type: "string" }
                         }
                     }
                 },
-                pageSize: 30
+                pageSize: 100,
+                //serverPaging: true,
+                //serverFiltering: true,
+                //serverSorting: true
             },
-            height : 750,
-            scrollable : true,
+            selectable: "row",
+            scrollable: false,
+            filterable: true,
             sortable: true,
-            resizable:true,
+            resizable: true,
             pageable: true
         });
-	}
+    }
 
         </script>
     </section>

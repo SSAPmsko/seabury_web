@@ -6,11 +6,19 @@
 <!-- Begin Page Content -->
 <th:block>
     <section class="h-100" style="overflow:auto" layout:fragment="content">
-        <div class="row container-fluid g-2">
-            <div class="col-12">
-                <a href="#" class="btn btn-primary" onclick="dg_projectCreateExecute();">Create</a>
-                <a href="#" class="btn btn-primary" onclick="dg_projectModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dg_projectDeleteExecute();">Delete</a>
+        <div class="row container-fluid m-0">
+            <div class="col-12 mt-2 mb-2 p-0">
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_projectCreateExecute()">
+                    <span class="k-button-icon k-icon k-i-plus"></span>
+                    <span class="k-button-text">Add Project</span>
+                </button>
+
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_projectReloadExecute()">
+                    <span class="k-button-icon k-icon k-i-refresh"></span>
+                </button>
+                <!--<a href="#" class="btn btn-primary" onclick="dg_projectCreateExecute();">Create</a>-->
+                <!--<a href="#" class="btn btn-primary" onclick="dg_projectModifyExecute();">Modify</a>-->
+                <!--<a href="#" class="btn btn-danger mx-3" onclick="dg_projectDeleteExecute();">Delete</a>-->
             </div>
 
             <div class="col p-0" id="dg_project">

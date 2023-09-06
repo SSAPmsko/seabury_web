@@ -8,6 +8,11 @@
 
 function addDockItem(id, title, path, properties){
 
+    // Navigation Bar 가 상태가 Open 이면, 닫음
+    if ($('#navbars').hasClass('open') == true) {
+        $('#navbars').removeClass('open');
+    }
+
     var findDockItem = myLayout.root.getItemsById(id);
 
     // 해당 아이템이 있으면,
@@ -16,14 +21,17 @@ function addDockItem(id, title, path, properties){
 
         stackPanel.setActiveContentItem(findDockItem[0]);
     } else {
+
         var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
 
-        if (properties != undefined){
+        if (properties !== undefined){
             htmlStr = htmlStr.replace(/th:value/g,'value');
 
             for (const [k, v] of Object.entries(properties.result)){
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);
             }
+            // Empty Value Init
+            htmlStr = htmlStr.replace(/\${(.*)}/g ,'');
         }
 
         var newItemConfig = {
@@ -40,6 +48,41 @@ function addDockItem(id, title, path, properties){
         } else {
             myLayout.root.contentItems[0].addChild( newItemConfig );
         }
+    }
+}
+
+function replaceFormId(formName, uniqueId) {
+    var form = document.getElementById(formName);
+
+    if (form !== undefined){
+        var formList = $("[form=" + formName + "]");
+
+        for(var i= 0; i <formList.length; i++){
+            formList[i].id = formList[i].id + uniqueId;
+            formList[i].attributes['form'].value = formName + uniqueId;
+        }
+
+        form.id = formName + uniqueId;
+
+        return true;
+    } else{
+        return false;
+    }
+}
+
+function replaceFormNewId(formName, srcId, distId) {
+    var form = document.getElementById(formName + srcId);
+
+    if (form !== undefined){
+        var formList = $("[form="+ formName + srcId+ "]");
+
+        for(var i= 0; i < formList.length; i++){
+            formList[i].id = formList[i].id.replace(srcId, distId);
+            formList[i].attributes['form'].value = formList[i].attributes['form'].value.replace(srcId, distId);
+        }
+
+        form.id = form.id.replace(srcId, distId);
+    } else{
     }
 }
 

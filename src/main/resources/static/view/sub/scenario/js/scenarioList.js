@@ -8,7 +8,7 @@ $(document).ready(function(){
     dg_scenarioLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_scenario").on("dblclick ", "table", function(e) {
+     $("#dg_scenario").on("dblclick", "table", function(e) {
         dg_scenarioModifyExecute();
     });
 });
@@ -31,7 +31,24 @@ function dg_scenarioDeleteExecute(){
 function dg_scenarioModifyExecute(){
     if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
-        location.href = rootName + "Detail?" + "id=" + id;
+
+        //location.href = rootName + "Detail?" + "id=" + id;
+
+        $.ajax({
+            url : "/scenarioDetailProperties?id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('scenarioDetail_' + id, 'scenarioDetail_' + id, 'scenario/scenarioDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
     }
 }
 
