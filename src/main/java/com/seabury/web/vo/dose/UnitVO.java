@@ -19,4 +19,6 @@ public class UnitVO {
     Timestamp DecommissionDate;
     String ThermalCapacity;
     String Status;
+    String Name;
+
 }

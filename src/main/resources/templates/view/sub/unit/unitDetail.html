@@ -1,134 +1,188 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/sideLayout}">
+      layout:decorate="~{layout/Layout}">
 
-<!-- Begin Page Content -->
-
-<!-- Begin Page Content -->
-
-<th:block>
-  <section layout:fragment="content">
-    <div class="row g-2 container-fluid">
-      <div class="visually-hidden">
-        <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
-        <input type="text" class="form-control" id="txt_id" th:value="${Unit1list[0].ID}">
-        <input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">
-      </div>
-      <div class="col-6">
-        <fieldset>
-          <legend>속성</legend>
-
-          <div class="row g-3">
-            <!-- Name -->
-            <div class="col-sm-6">
-              <label  class="form-label">Type</label>
-              <!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
-              <select class="form-select" aria-label="Default select example" id="type_picker" disabled>
-                <option disabled value="Site">Site</option>
-                <option disabled value="Plant">Plant</option>
-                <option selected value="Unit">Unit</option>
-              </select>
+<div class="row">
+    <!-- Side Bar -->
+    <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+        <div class="row" style="margin-bottom: 10px;">
+            <div calss="col" style="margin-bottom: 10px;">
+                <input type="text" class="form-control" id="bt_treeview_search" placeholder="Search..." value=""/>
+            </div>
+            <div calss="col">
+                <button type="button" class="btn btn-primary select-node" id="btn_create"
+                        onclick="dataGridCreateExecute();" style="float">Create
+                </button>
+                <button type="button" class="btn btn-danger expand-node" id="btn_collapse"
+                        style="float: right; margin-left: 5px;">Collapse
+                </button>
+                <button type="button" class="btn btn-primary select-node" id="btn_expand" style="float: right;">Expand
+                </button>
             </div>
 
-            <!-- Description -->
-            <div class="col-sm-6">
-              <label  class="form-label">Parent Type</label>
-              <!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
-              <select class="form-select" aria-label="Default select example" id="parent_picker" disabled>
-                <option disabled value="Site">Site</option>
-                <option selected value="Plant">Plant</option>
-                <option disabled value="null" >null</option>
-              </select>
-            </div>
-
-            <!-- Creator -->
-            <div class="col-sm-6">
-              <label for="txt_name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="txt_name" th:value="${Structurelist[0].Name}">
-            </div>
-
-            <!-- Room -->
-            <div class="col-sm-6">
-              <label for="txt_description" class="form-label">Description</label>
-              <input type="text" class="form-control" id="txt_description" th:value="${Structurelist[0].Description}">
-            </div>
-
-            <legend>Unit Detail</legend>
-            <!-- Operator -->
-            <div class="col-sm-6">
-              <label for="txt_operator" class="form-label">Operator</label>
-              <input type="text" class="form-control" id="txt_operator" th:value="${Unit1list[0].Operator}">
-            </div>
-
-            <!-- Status -->
-            <div class="col-sm-6">
-              <label for="txt_status" class="form-label">Status</label>
-              <input type="text" class="form-control" id="txt_status" th:value="${Unit1list[0].Status}">
-            </div>
-
-            <!-- Reactor type -->
-            <div class="col-sm-6">
-              <label for="txt_reactortype" class="form-label">Reactor type</label>
-              <input type="text" class="form-control" id="txt_reactortype" th:value="${Unit1list[0].ReactorType}">
-            </div>
-
-            <!-- Reactor supplier -->
-            <div class="col-sm-6">
-              <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
-              <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${Unit1list[0].ReactorSupplier}">
-            </div>
-
-            <!-- Construction began -->
-            <div class="col-sm-6">
-              <label for="dt_constructionbegan" class="form-label">Construction began</label>
-              <input type="date" class="form-control" id="dt_constructionbegan" th:value="${Unit1list[0].ConstructionBegan}">
-            </div>
-
-            <!-- Commission date -->
-            <div class="col-sm-6">
-              <label for="dt_commissiondate" class="form-label">Commission date</label>
-              <input type="date" class="form-control" id="dt_commissiondate" th:value="${Unit1list[0].CommissionDate}">
-            </div>
-
-            <!-- Decommission date -->
-            <div class="col-sm-6">
-              <label for="dt_decommissiondate" class="form-label">Decommission date</label>
-              <input type="date" class="form-control" id="dt_decommissiondate" th:value="${Unit1list[0].DecommissionDate}">
-            </div>
-
-            <!-- Thermal capacity -->
-            <div class="col-sm-6">
-              <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
-              <input type="text" class="form-control" id="txt_thermalcapacity" th:value="${Unit1list[0].ThermalCapacity}">
-            </div>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="col-6">
-        <fieldset>
-          <legend>Image</legend>
-          <div class="container-lg">
-            <div class="row">
-              <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
-                   class="img-fluid" alt="...">
-            </div>
-          </div>
-        </fieldset>
-      </div>
-      <div class="col-12 mb-3 d-flex justify-content-center">
-        <div>
-
-          <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
-          <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
         </div>
-      </div>
+        <!--
+
+            <div id="jstree_div">
+
+            </div>
+        -->
+
+
+        <div id="bt_treeview_div" class="treeview">
+
+        </div>
     </div>
 
+    <!-- main fragment -->
+    <div class="col" id="page-body" style="margin-top:15px;">
+        <section layout:fragment="content">
+            <div class="row g-2 container-fluid">
+                <div class="visually-hidden">
+                    <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
+                    <input type="text" class="form-control" id="txt_id" th:value="${Unit1list[0].ID}">
+                    <input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">
+                </div>
+                <div class="col-6">
+                    <fieldset>
+                        <legend>속성</legend>
 
-    <!-- Custom styles for this template -->
-    <script src="/static/view/sub/unit/js/unitDetail.js"></script>
-    </section>
-</th:block>
+                        <div class="row g-3">
+                            <!-- Name -->
+                            <div class="col-sm-6">
+                                <label class="form-label">Type</label>
+                                <!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
+                                <select class="form-select" aria-label="Default select example" id="type_picker"
+                                        disabled>
+                                    <option disabled value="Site">Site</option>
+                                    <option disabled value="Plant">Plant</option>
+                                    <option selected value="Unit">Unit</option>
+                                </select>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-sm-6">
+                                <label class="form-label">Parent Type</label>
+                                <!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
+                                <select class="form-select" aria-label="Default select example" id="parent_picker"
+                                        disabled>
+                                    <option disabled value="Site">Site</option>
+                                    <option selected value="Plant">Plant</option>
+                                    <option disabled value="null">null</option>
+                                </select>
+                            </div>
+
+                            <!-- Creator -->
+                            <div class="col-sm-6">
+                                <label for="txt_name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="txt_name"
+                                       th:value="${Structurelist[0].Name}">
+                            </div>
+
+                            <!-- Room -->
+                            <div class="col-sm-6">
+                                <label for="txt_description" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="txt_description"
+                                       th:value="${Structurelist[0].Description}">
+                            </div>
+
+                            <legend>Unit Detail</legend>
+                            <!-- Operator -->
+                            <div class="col-sm-6">
+                                <label for="txt_operator" class="form-label">Operator</label>
+                                <input type="text" class="form-control" id="txt_operator"
+                                       th:value="${Unit1list[0].Operator}">
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-sm-6">
+                                <label for="txt_status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="txt_status"
+                                       th:value="${Unit1list[0].Status}">
+                            </div>
+
+                            <!-- Reactor type -->
+                            <div class="col-sm-6">
+                                <label for="txt_reactortype" class="form-label">Reactor type</label>
+                                <input type="text" class="form-control" id="txt_reactortype"
+                                       th:value="${Unit1list[0].ReactorType}">
+                            </div>
+
+                            <!-- Reactor supplier -->
+                            <div class="col-sm-6">
+                                <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
+                                <input type="text" class="form-control" id="txt_reactorsupplier"
+                                       th:value="${Unit1list[0].ReactorSupplier}">
+                            </div>
+
+                            <!-- Construction began -->
+                            <div class="col-sm-6">
+                                <label for="dt_constructionbegan" class="form-label">Construction began</label>
+                                <input type="date" class="form-control" id="dt_constructionbegan"
+                                       th:value="${Unit1list[0].ConstructionBegan}">
+                            </div>
+
+                            <!-- Commission date -->
+                            <div class="col-sm-6">
+                                <label for="dt_commissiondate" class="form-label">Commission date</label>
+                                <input type="date" class="form-control" id="dt_commissiondate"
+                                       th:value="${Unit1list[0].CommissionDate}">
+                            </div>
+
+                            <!-- Decommission date -->
+                            <div class="col-sm-6">
+                                <label for="dt_decommissiondate" class="form-label">Decommission date</label>
+                                <input type="date" class="form-control" id="dt_decommissiondate"
+                                       th:value="${Unit1list[0].DecommissionDate}">
+                            </div>
+
+                            <!-- Thermal capacity -->
+                            <div class="col-sm-6">
+                                <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
+                                <input type="text" class="form-control" id="txt_thermalcapacity"
+                                       th:value="${Unit1list[0].ThermalCapacity}">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-6">
+                    <fieldset>
+                        <legend>Image</legend>
+                        <div class="container-lg">
+                            <div class="row">
+                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
+                                     class="img-fluid" alt="...">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-12 mb-3 d-flex justify-content-center">
+                    <div>
+
+                        <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
+                        <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Custom styles for this template -->
+            <script src="/static/view/sub/unit/js/unitDetail.js"></script>
+
+            <!-- JSTree -->
+            <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+            <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
+
+            <!-- Bootstrap Tree -->
+            <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+            <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+            <!-- Custom styles for this template -->
+            <script src="/static/layout/js/sidebars.js"></script>
+            <link href="/static/layout/css/sidebars.css" rel="stylesheet">
+        </section>
+    </div>
+</div>
 </html>

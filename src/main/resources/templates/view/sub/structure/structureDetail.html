@@ -1,56 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout}">
+      layout:decorate="~{layout/layout}">
 <!-- Begin Page Content -->
 <th:block>
     <section layout:fragment="content">
-		<div class="tab_menu">
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
-				<li class="nav-item" role="presentation">
-					<a data-load="false" class="nav-link active" id="scenariotab" data-bs-toggle="tab" data-bs-target="#scenariopanel" type="button" role="tab" aria-controls="scenariopanel" aria-selected="false" href="/scenarioList" value="scenario">Scenario</a>
-				</li>
-				<li class="nav-item" role="presentation" >
-					<a data-load="false" class="nav-link" id="sourcetab" data-bs-toggle="tab" data-bs-target="#sourcepanel" type="button" role="tab" aria-controls="sourcepanel" aria-selected="false" href="/sourceList" value="source" >Source</a>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a data-load="false" class="nav-link" id="workpacktab" data-bs-toggle="tab" data-bs-target="#workpackpanel" type="button" role="tab" aria-controls="workpackpanel" aria-selected="false" href="/workpackList" value="workpack" >Workper</a>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a data-load="false" class="nav-link" id="equipmenttab" data-bs-toggle="tab" data-bs-target="#equipmentpanel" type="button" role="tab" aria-controls="equipmentpanel" aria-selected="false" href="/equipmentList" value="equipment">Equipment</a>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a data-load="false" class="nav-link" id="workertab" data-bs-toggle="tab" data-bs-target="#workerpanel" type="button" role="tab" aria-controls="workerpanel" aria-selected="false" href="/workerList" value="worker">Worker</a>
-				</li>
-				<li class="nav-item" role="presentation">
-					<a data-load="false" class="nav-link" id="shieldtab" data-bs-toggle="tab" data-bs-target="#shieldpanel" type="button" role="tab" aria-controls="shieldpanel" aria-selected="false" href="/shieldList" value="shield">Shield</a>
-				</li>
+		<div class="row g-2 container-fluid">
+			<div class="visually-hidden">
+				<input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
+				<input type="text" class="form-control" id="txt_id" th:value="${Site1list[0].ID}">
+				<input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">
 
-			</ul>
-		<div class="tab-content" id="myTabContent">
-			<!--<div class="row g-2 container-fluid" >
-				<div class="col-12"> </div>
-				<div class="col-12">
-					<a href="#" class="btn btn-primary" onclick="dataGridCreateExecute();">Create</a>
-					<a href="#" class="btn btn-primary" onclick="dataGridModifyExecute();">Modify</a>
-					<a href="#" class="btn btn-danger mx-3" onclick="dataGridDeleteExecute();">Delete</a>
+
+			</div>
+			<div class="col-12">
+				<fieldset>
+					<legend>속성</legend>
+
+
+
+					<div class="row g-3">
+						<!-- Name -->
+						<div class="col-sm-6">
+							<label  class="form-label">Type</label>
+							<!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
+							<select class="form-select" aria-label="Default select example" id="type_picker" disabled>
+								<option selected value="Site">Site</option>
+								<option disabled value="Plant">Plant</option>
+								<option disabled value="Unit">Unit</option>
+							</select>
+						</div>
+
+						<!-- Description -->
+						<div class="col-sm-6">
+							<label  class="form-label">Parent Type</label>
+							<!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
+							<select class="form-select" aria-label="Default select example" id="parent_picker" disabled>
+								<option disabled value="Site">Site</option>
+								<option disabled value="Plant">Plant</option>
+								<option selected value="null" >null</option>
+							</select>
+						</div>
+
+						<!-- Creator -->
+						<div class="col-sm-6">
+							<label for="txt_name" class="form-label">Name</label>
+							<input type="text" class="form-control" id="txt_name" th:value="${name}">
+						</div>
+
+						<!-- Room -->
+						<div class="col-sm-6">
+							<label for="txt_description" class="form-label">Description</label>
+							<input type="text" class="form-control" id="txt_description" th:value="${Description}">
+						</div>
+
+
+						<legend>Site Detail</legend>
+						<!-- Operator -->
+						<div class="col-sm-6">
+							<label for="txt_operator" class="form-label">Operator</label>
+							<input type="text" class="form-control" id="txt_operator" th:value="${Site1list[0].Operator}">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+
+			<div class="col-12 mb-3 d-flex justify-content-center">
+				<div>
+
+					<a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
+					<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
 				</div>
-
-				<div class="col" id="dataGrid">
-
-
-				</div>
-			</div>-->
-			<div href="/scenarioList" data-url="/scenarioList" class="tab-pane" id="scenariopanel" role="tabpanel" aria-labelledby="scenariotab" data-load="false">1</div>
-			<div href="/projectList" data-url="/projectList" class="tab-pane" id="projectpanel" role="tabpanel" aria-labelledby="projecttab" data-load="false">2</div>
-			<div href="/workpackList" data-url="/workpackList" class="tab-pane" id="workpackpanel" role="tabpanel" aria-labelledby="workpacktab" data-load="false">3</div>
-			<div href="/equipmentList" data-url="/equipmentList" class="tab-pane" id="equipmentpanel" role="tabpanel" aria-labelledby="equipmenttab" data-load="false">4</div>
-			<div href="/workerList" data-url="/workerList" class="tab-pane" id="workerpanel" role="tabpanel" aria-labelledby="workertab" data-load="false">5</div>
-			<div href="/shieldList" data-url="/shieldList" class="tab-pane" id="shieldpanel" role="tabpanel" aria-labelledby="shieldtab" data-load="false">6</div>
-		</div>
+			</div>
 		</div>
         <!-- Custom styles for this template -->
-        <script src="/static/view/sub/structure/js/structureDetail.js"></script>
+        <script src="/static/view/sub/structurecreate/js/structurecreateDetail.js"></script>
 
     </section>
 </th:block>

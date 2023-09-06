@@ -47,6 +47,7 @@ public class UnitServiceImpl implements UnitService {
             unitVO.setCommissionDate(unitEntity.getCommissionDate());
             unitVO.setDecommissionDate(unitEntity.getDecommissionDate());
             unitVO.setStatus(unitEntity.getStatus());
+            unitVO.setStatus(unitEntity.getName());
         }
         return unitVO;
     }
@@ -64,6 +65,7 @@ public class UnitServiceImpl implements UnitService {
             unitEntity.setCommissionDate(unitVO.getCommissionDate());
             unitEntity.setDecommissionDate(unitVO.getDecommissionDate());
             unitEntity.setStatus(unitVO.getStatus());
+            unitEntity.setStatus(unitVO.getName());
         }
         return unitEntity;
     }

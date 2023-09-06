@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/sideLayout}">
+      layout:decorate="~{layout/Layout}">
 
-<!-- Begin Page Content -->
+<div class="row">
+  <!-- Side Bar -->
+  <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+    <div class="row" style="margin-bottom: 10px;">
+      <div calss="col" style="margin-bottom: 10px;">
+        <input type="text" class="form-control" id="bt_treeview_search" placeholder="Search..." value="" />
+      </div>
+      <div calss="col">
+        <button type="button" class="btn btn-primary select-node" id="btn_create" onclick="dataGridCreateExecute();" style="float">Create</button>
+        <button type="button" class="btn btn-danger expand-node" id="btn_collapse" style="float: right; margin-left: 5px;">Collapse</button>
+        <button type="button" class="btn btn-primary select-node" id="btn_expand" style="float: right;">Expand</button>
+      </div>
 
-<!-- Begin Page Content -->
+    </div>
+    <!--
 
-<th:block>
+        <div id="jstree_div">
+
+        </div>
+    -->
+
+
+    <div id="bt_treeview_div" class="treeview">
+
+    </div>
+  </div>
+
+  <!-- main fragment -->
+  <div class="col" id="page-body" style="margin-top:15px;">
   <section layout:fragment="content">
     <div class="row g-2 container-fluid">
       <div class="visually-hidden">
@@ -49,13 +73,13 @@
               <!-- Creator -->
               <div class="col-sm-6">
                 <label for="txt_name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="txt_name" th:value="${Structurelist[0].Name}">
+                <input type="text" class="form-control" id="txt_name" th:value="${name}">
               </div>
 
               <!-- Room -->
               <div class="col-sm-6">
                 <label for="txt_description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="txt_description" th:value="${Structurelist[0].Description}">
+                <input type="text" class="form-control" id="txt_description" th:value="${Description}">
               </div>
 
 
@@ -133,6 +157,17 @@
 
     <!-- Custom styles for this template -->
     <script src="/static/view/sub/site/js/siteDetail.js"></script>
+    <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+    <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Tree -->
+    <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+    <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <script src="/static/layout/js/sidebars.js"></script>
+    <link href="/static/layout/css/sidebars.css" rel="stylesheet">
   </section>
-</th:block>
+  </div>
+  </div>
 </html>

@@ -1,16 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout}">
+      layout:decorate="~{layout/layout}">
 
 <!-- Begin Page Content -->
-<th:block>
+<div class="row">
+    <!-- Side Bar -->
+    <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+        <div class="row" style="margin-bottom: 10px;">
+            <div calss="col" style="margin-bottom: 10px;">
+                <input type="text" class="form-control" id="bt_treeview_search" placeholder="Search..." value="" />
+            </div>
+            <div calss="col">
+                <button type="button" class="btn btn-primary select-node" id="btn_create" onclick="dataGridCreateExecute();" style="float">Create</button>
+                <button type="button" class="btn btn-danger expand-node" id="btn_collapse" style="float: right; margin-left: 5px;">Collapse</button>
+                <button type="button" class="btn btn-primary select-node" id="btn_expand" style="float: right;">Expand</button>
+            </div>
+
+        </div>
+        <!--
+
+            <div id="jstree_div">
+
+            </div>
+        -->
+
+
+        <div id="bt_treeview_div" class="treeview">
+
+        </div>
+    </div>
+
+    <!-- main fragment -->
+    <div class="col" id="page-body" style="margin-top:15px;">
     <section class="h-100" layout:fragment="content">
         <div class="row g-2 container-fluid">
             <div class="col-12">
-                <a href="#" class="btn btn-primary" onclick="dg_structureCreateExecute();">Create</a>
+                <!--<a href="#" class="btn btn-primary" onclick="dg_structureCreateExecute();">Create</a>
                 <a href="#" class="btn btn-primary" onclick="dg_structureModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dg_structureDeleteExecute();">Delete</a>
+                <a href="#" class="btn btn-danger mx-3" onclick="dg_structureDeleteExecute();">Delete</a>-->
             </div>
 
             <div class="col" id="dg_structure">
@@ -21,7 +49,17 @@
         <!-- Custom styles for this template -->
         <script src="/static/view/sub/structure/js/structureList.js"></script>
 
+        <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+        <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
 
+        <!-- Bootstrap Tree -->
+        <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+        <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <script src="/static/layout/js/sidebars.js"></script>
+        <link href="/static/layout/css/sidebars.css" rel="stylesheet">
     </section>
-</th:block>
+    </div>
+</div>
 </html>

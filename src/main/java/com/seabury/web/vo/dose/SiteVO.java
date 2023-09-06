@@ -19,4 +19,6 @@ public class SiteVO {
     Timestamp DecommissionDate;
     String ThermalCapacity;
     String Status;
+    String Name;
+
 }

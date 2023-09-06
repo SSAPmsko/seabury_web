@@ -1,6 +1,7 @@
 package com.seabury.web.controller;
 
 import com.seabury.web.entity.dose.StructureEntity;
+import com.seabury.web.entity.dose.UnitEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.StructureService;
 import com.seabury.web.service.VRDoseService;
@@ -40,7 +41,25 @@ public class StructureController {
         List<StructureEntity> qq = structureService.getStructureList(whereStructure);
 
 
+
         return qq;
+    }
+
+    @RequestMapping(value = {"/structureDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> structureDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
+        StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setID(id);
+        List<StructureEntity> Structure1list = structureService.getStructureList(whereStructure);
+
+        List<StructureEntity> result;
+        result = Structure1list;
+
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
     }
 
     @RequestMapping(value = {"/getStructureList"}, method = RequestMethod.POST)

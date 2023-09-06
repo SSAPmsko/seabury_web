@@ -29,6 +29,13 @@ public class PlantController {
     @Autowired
     StructureService structureService;
 
+    @RequestMapping(value = {"/getPlantDetailList"}, method = RequestMethod.POST)
+    public @ResponseBody List<PlantEntity> getPlantList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        PlantEntity wherePlant = new PlantEntity();
+        List<PlantEntity> qq = plantService.getPlantList(wherePlant);
+        return qq;
+    }
+
     @RequestMapping(value={"/plantDetail"}, method = RequestMethod.GET)
     public ModelAndView plantDetail(ModelAndView mav ,@RequestParam(value = "id", required = false) Integer id){
 
@@ -60,6 +67,23 @@ public class PlantController {
         return mav;
     }
 
+    @RequestMapping(value = {"/plantDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> plantDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
+        PlantEntity wherePlant = new PlantEntity();
+        wherePlant.setID(id);
+        List<PlantEntity> Plant1list = plantService.getPlantList(wherePlant);
+
+        List<PlantEntity> result;
+        result = Plant1list;
+
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
+    }
+
     @RequestMapping(value = {"/getPlantList"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexplantList(@RequestParam(value = "id", required = false) Integer id) {
         PlantEntity wherePlant = new PlantEntity();
@@ -69,6 +93,8 @@ public class PlantController {
 
         return wherePlant.getID();
     }
+
+
 
     @RequestMapping(value={"/plantList"}, method = RequestMethod.GET)
     public ModelAndView plantList(ModelAndView mav ){

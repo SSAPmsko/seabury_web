@@ -18,6 +18,26 @@ function dg_plantCreateExecute(){
     location.href = "plantDetail";
 }
 
+$("#plant_picker").change(function () {
+    var type = $("#plant_picker option:checked").val();
+
+    switch (type) {
+        case "Site":
+            addDockItem('site', 'siteList', 'site/siteList')
+            break;
+        case "Plant":
+            addDockItem('plant', 'plantList', 'plant/plantList')
+
+            break;
+        case "Unit":
+            addDockItem('unit', 'unitList', 'unit/unitList')
+
+            break;
+        default:
+            break;
+    }
+});
+
 function dg_plantDeleteExecute(){
     if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
         if(confirm("해당 아이템을 삭제 하시겠습니까?")){
@@ -33,7 +53,25 @@ function dg_plantDeleteExecute(){
 function dg_plantModifyExecute(){
     if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
         var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
-        location.href = "plantDetail?" + "id=" + plantId;
+
+
+        $.ajax({
+            url : "/plantDetailProperties",
+            data : {"id" : plantId},
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('plantDetail_' + plantId, 'plantDetail_' + plantId, 'plant/plantDetail', result);
+                alert("성공")
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
         /*
         $.ajax({
             url : "/plantDetail",
@@ -59,22 +97,21 @@ function dg_plantLoadData() {
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
-            /*{ field: "defaultplant" },*/
-            /*{ field: "date" },*/
             { field: "name" },
-            { field: "description" },
-            /*{ field: "startDate" },
-            { field: "endDate" },
-            { field: "createdBy" },
-            { field: "justification" },
-            { field: "doseLimit" },
-            { field: "room" },*/
+            { field: "operator" },
+            { field: "status" },
+            { field: "reactorType" },
+            { field: "reactorSupplier" },
+            /*{ field: "constructionBegan" },
+            { field: "commissionDate" },
+            { field: "decommissionDate" },
+            { field: "thermalCapacity" },*/
         ],
         dataSource: {
             transport: {
                 read: function(options){
                     $.ajax({
-                        url : "/getPlantList",
+                        url : "/getPlantDetailList",
                         type: 'POST',
                         async: false,
                         processData: false,
@@ -93,16 +130,16 @@ function dg_plantLoadData() {
                 model: {
                     fields: {
                         id: { type: "string" },
-                        /*defaultplant: { type: "string" },*/
-                        /*date: { type: "string" },*/
                         name: { type: "string" },
-                        description: { type: "string" },
-                        /*startDate: { type: "string" },
-                        endDate: { type: "string" },
-                        createdBy: { type: "string" },
-                        justification: { type: "string" },
-                        doseLimit: { type: "string" },
-                        room: { type: "string" },*/
+                        operator: { type: "string" },
+                        status: { type: "string" },
+                        reactorType: { type: "string" },
+                        /*reactorSupplier: { type: "string" },*/
+                        /*constructionBegan: { type: "string" },
+                        commissionDate: { type: "string" },
+                        decommissionDate: { type: "string" },
+                        thermalCapacity: { type: "string" },*/
+
                     }
                 }
             },
@@ -120,17 +157,170 @@ function dg_plantLoadData() {
     });
 }
 
-/*
-function SubMenuClick(_target){
-    $("#page-body").empty();
+function dg_siteLoadData() {
+    $("#dg_plant").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            { field: "name" },
+            { field: "operator" },
+            { field: "status" },
+            { field: "reactorType" },
+            { field: "reactorSupplier" },
+            /*{ field: "constructionBegan" },
+            { field: "commissionDate" },
+            { field: "decommissionDate" },
+            { field: "thermalCapacity" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getSiteDetailList",
+                        type: 'POST',
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                            options.success(result);
+                        },
+                        error: function(result) {
+                            options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        operator: { type: "string" },
+                        status: { type: "string" },
+                        reactorType: { type: "string" },
+                        /*reactorSupplier: { type: "string" },*/
+                        /*constructionBegan: { type: "string" },
+                        commissionDate: { type: "string" },
+                        decommissionDate: { type: "string" },
+                        thermalCapacity: { type: "string" },*/
 
-    $("#page-body").load(_target, function (responseTxt, statusTxt, xhr) {
-        if (statusTxt == "success") {
-            console.log("External content loaded successfully!");
-        }
-        if (statusTxt == "error") {
-            console.log("Error: " + xhr.status + ": " + xhr.statusText);
-        }
+                    }
+                }
+            },
+            pageSize: 10,
+            //serverPaging: true,
+            //serverFiltering: true,
+            //serverSorting: true
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
     });
 }
-*/
+
+function dg_unitLoadData() {
+    $("#dg_plant").kendoGrid({
+        columns: [
+            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
+            { field: "id" },
+            { field: "name" },
+            { field: "operator" },
+            { field: "status" },
+            { field: "reactorType" },
+            { field: "reactorSupplier" },
+            /*{ field: "constructionBegan" },
+            { field: "commissionDate" },
+            { field: "decommissionDate" },
+            { field: "thermalCapacity" },*/
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getUnitDetailList",
+                        type: 'POST',
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                            options.success(result);
+                        },
+                        error: function(result) {
+                            options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        operator: { type: "string" },
+                        status: { type: "string" },
+                        reactorType: { type: "string" },
+                        reactorSupplier: { type: "string" },
+                        /*constructionBegan: { type: "string" },
+                        commissionDate: { type: "string" },
+                        decommissionDate: { type: "string" },
+                        thermalCapacity: { type: "string" },*/
+
+                    }
+                }
+            },
+            pageSize: 10,
+            //serverPaging: true,
+            //serverFiltering: true,
+            //serverSorting: true
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
+}
+
+function addDockItem(id, title, path, properties){
+
+    var findDockItem = myLayout.root.getItemsById(id);
+
+    // 해당 아이템이 있으면,
+    if (findDockItem.length > 0) {
+
+        var stackPanel = findDockItem[0].parent;
+
+        stackPanel.setActiveContentItem(findDockItem[0]);
+    } else {
+        var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
+
+        if (properties != undefined){
+            htmlStr = htmlStr.replace(/th:value/g,'value');
+
+            for (const [k, v] of Object.entries(properties.result)){
+                htmlStr = htmlStr.replace('${' + k + '}' ,v);
+            }
+        }
+
+        var newItemConfig = {
+            id : id,
+            title: title,
+            type: 'component',
+            componentName: 'goldenLayout',
+            componentState: { text: "", htmlStr: htmlStr }
+        };
+
+        // dock panel 이 1개 이상일떄,
+        if (myLayout.root.contentItems[0].contentItems.length > 0){
+            myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
+        } else {
+            myLayout.root.contentItems[0].addChild( newItemConfig );
+        }
+    }
+}

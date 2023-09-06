@@ -19,4 +19,5 @@ public class PlantVO {
     Timestamp DecommissionDate;
     String ThermalCapacity;
     String Status;
+    String Name;
 }

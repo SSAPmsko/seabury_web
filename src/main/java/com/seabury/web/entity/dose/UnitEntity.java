@@ -18,4 +18,5 @@ public class UnitEntity {
     Timestamp DecommissionDate;
     Float ThermalCapacity;
     String Status;
+    String Name;
 }

@@ -36,6 +36,9 @@
             <if test="Status != null and Status != ''">
                 AND "Status" = #{Status}
             </if>
+            <if test="Name != null and Name != ''">
+                AND "Name" = #{Name}
+            </if>
         </where>
     </select>
 
@@ -47,13 +50,13 @@
     -->
     <insert id="insertUnit" parameterType="com.seabury.web.entity.dose.UnitEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Unit"(
-        "Image", "Operator", "ReactorType", "ReactorSupplier", "ConstructionBegan", "CommissionDate", "DecommissionDate", "ThermalCapacity", "Status")
-        VALUES (#{Image}, #{Operator}, #{ReactorType}, #{ReactorSupplier}, #{ConstructionBegan}, #{CommissionDate}, #{DecommissionDate}, #{ThermalCapacity}, #{Status});
+        "Image", "Operator", "ReactorType", "ReactorSupplier", "ConstructionBegan", "CommissionDate", "DecommissionDate", "ThermalCapacity", "Status", "Name")
+        VALUES (#{Image}, #{Operator}, #{ReactorType}, #{ReactorSupplier}, #{ConstructionBegan}, #{CommissionDate}, #{DecommissionDate}, #{ThermalCapacity}, #{Status}, #{Name});
     </insert>
 
     <update id="updateUnit" parameterType="com.seabury.web.entity.dose.UnitEntity">
         UPDATE public."Unit"
-        SET "Image"=#{Image}, "Operator"=#{Operator}, "ReactorType"=#{ReactorType}, "ReactorSupplier"=#{ReactorSupplier}, "ConstructionBegan"=#{ConstructionBegan}, "CommissionDate"=#{CommissionDate}, "DecommissionDate"=#{DecommissionDate}, "ThermalCapacity"=#{ThermalCapacity}, "Status"=#{Status}
+        SET "Image"=#{Image}, "Operator"=#{Operator}, "ReactorType"=#{ReactorType}, "ReactorSupplier"=#{ReactorSupplier}, "ConstructionBegan"=#{ConstructionBegan}, "CommissionDate"=#{CommissionDate}, "DecommissionDate"=#{DecommissionDate}, "ThermalCapacity"=#{ThermalCapacity}, "Status"=#{Status}, "Name"=#{Name}
         WHERE "ID"=#{ID};
     </update>
 

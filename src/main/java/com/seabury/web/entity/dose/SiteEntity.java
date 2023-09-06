@@ -18,4 +18,5 @@ public class SiteEntity {
     Timestamp DecommissionDate;
     Float ThermalCapacity;
     String Status;
+    String Name;
 }

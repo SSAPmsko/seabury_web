@@ -45,6 +45,7 @@ public class PlantServiceImpl implements PlantService {
             plantVO.setCommissionDate(plantEntity.getCommissionDate());
             plantVO.setDecommissionDate(plantEntity.getDecommissionDate());
             plantVO.setStatus(plantEntity.getStatus());
+            plantVO.setStatus(plantEntity.getName());
         }
         return plantVO;
     }
@@ -62,6 +63,8 @@ public class PlantServiceImpl implements PlantService {
             plantEntity.setCommissionDate(plantVO.getCommissionDate());
             plantEntity.setDecommissionDate(plantVO.getDecommissionDate());
             plantEntity.setStatus(plantVO.getStatus());
+            plantEntity.setStatus(plantVO.getName());
+
         }
         return plantEntity;
     }

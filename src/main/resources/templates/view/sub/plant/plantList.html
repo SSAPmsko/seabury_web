@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/sideLayout}">
+      layout:decorate="~{layout/Layout}">
 
 <!-- Begin Page Content -->
-<th:block>
+
   <section class="h-100" layout:fragment="content">
     <div class="row g-2 container-fluid">
       <div class="col-12">
-        <!--<a href="#" class="btn btn-primary" onclick="dg_plantCreateExecute();">Create</a>-->
-        <!--<a href="#" class="btn btn-primary" onclick="dg_plantModifyExecute();">Modify</a>-->
-        <!--<a href="#" class="btn btn-danger mx-3" onclick="dg_plantDeleteExecute();">Delete</a>-->
+        <!--<a href="#" class="btn btn-primary" onclick="dg_plantCreateExecute();">Create</a>
+        <a href="#" class="btn btn-primary" onclick="dg_plantModifyExecute();">Modify</a>
+        <a href="#" class="btn btn-danger mx-3" onclick="dg_plantDeleteExecute();">Delete</a>-->
+        <select class="form-select" aria-label="Default select example" id="plant_picker">
+          <option  value="Site">Site</option>
+          <option selected  value="Plant">Plant</option>
+          <option  value="Unit">Unit</option>
+        </select>
+
       </div>
 
-      <!--
       <div class="col" id="dg_plant">
 
       </div>
-      -->
     </div>
 
     <!-- Custom styles for this template -->
     <script src="/static/view/sub/plant/js/plantList.js"></script>
+    <!-- JSTree -->
+
   </section>
-</th:block>
 </html>
