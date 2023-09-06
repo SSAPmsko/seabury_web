@@ -9,7 +9,7 @@ $(document).ready(function(){
     dg_projectLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_project").on("dblclick ", "table", function(e) {
+     $("#dg_project").on("dblclick", "table", function(e) {
         dg_projectModifyExecute();
     });
 });

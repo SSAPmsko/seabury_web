@@ -8,7 +8,7 @@ $(document).ready(function(){
     dg_workerLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_worker").on("dblclick ", "table", function(e) {
+     $("#dg_worker").on("dblclick", "table", function(e) {
         dg_workerModifyExecute();
     });
 });

@@ -11,7 +11,7 @@ function startfunction(){
            $("#" + rootName).addClass('active');
 
            // DataGrid Double Click Event
-            $("#dataGrid").on("dblclick ", "table", function(e) {
+            $("#dataGrid").on("", "table", function(e) {
             if(rootName != "equipment"){
                dataGridModifyExecute();
             }
@@ -360,7 +360,7 @@ $('#myTab').on('click', "a", function(e) {
            $("#" + rootName).addClass('active');
 
            // DataGrid Double Click Event
-            $("#dataGrid").on("dblclick ", "table", function(e) {
+            $("#dataGrid").on("dblclick", "table", function(e) {
             if(rootName != "equipment"){
                dataGridModifyExecute();
             }

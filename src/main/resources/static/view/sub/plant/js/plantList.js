@@ -6,7 +6,7 @@ $(document).ready(function(){
     dg_plantLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_plant").on("dblclick ", "table", function(e) {
+     $("#dg_plant").on("dblclick", "table", function(e) {
         dg_plantModifyExecute();
     });
 

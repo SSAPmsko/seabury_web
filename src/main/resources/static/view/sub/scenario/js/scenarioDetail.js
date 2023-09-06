@@ -10,7 +10,7 @@ function startfunction(){
         //$("#" + rootName).addClass('active');
 
         // DataGrid Double Click Event
-        $("#dg_scenario").on("dblclick ", "table", function(e) {
+        $("#dg_scenario").on("dblclick", "table", function(e) {
            if(rootName != "equipment"){
            dg_scenarioModifyExecute();
         }
@@ -61,7 +61,7 @@ $('#myTab').on('click', "a", function(e) {
    $("#" + rootName).addClass('active');
 
       // DataGrid Double Click Event
-       $("#dg_scenario").on("dblclick ", "table", function(e) {
+       $("#dg_scenario").on("dblclick", "table", function(e) {
        if(rootName != "equipment"){
           dg_scenarioModifyExecute();
        }
