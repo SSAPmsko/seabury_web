@@ -42,8 +42,13 @@ public class SourceController {
         }
     }
 
-    @RequestMapping(value = {"/getSourceList"}, method = RequestMethod.POST)
-    public @ResponseBody List<Map<String, Object>> getSourceList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    @RequestMapping(value = {"/getSourceList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getSourceList(@RequestParam(required = false) String scenarioId) {
+        return vrDoseService.getSources(scenarioId);
+    }
+
+    @RequestMapping(value = {"/getAllSourceList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getAllSourceList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getAllSources("");
     }
 

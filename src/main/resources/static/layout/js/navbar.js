@@ -9,7 +9,7 @@
 function addDockItem(id, title, path, properties){
 
     // Navigation Bar 가 상태가 Open 이면, 닫음
-    if ($('#navbars').hasClass('open') == true) {
+    if ($('#navbars').hasClass('open') === true) {
         $('#navbars').removeClass('open');
     }
 

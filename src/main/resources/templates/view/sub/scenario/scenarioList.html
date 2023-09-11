@@ -5,21 +5,31 @@
 
 <!-- Begin Page Content -->
 <th:block>
-    <section class="h-100" layout:fragment="content">
-        <div class="row g-2 container-fluid" >
-            <div class="col-12">
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid m-0">
+            <div class="col-12 mt-2 mb-2 p-0">
+                <!-- IFE API 적용후, 추후 개발 -->
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" disabled onclick="dg_scenarioCreateExecute()">
+                    <span class="k-button-icon k-icon k-i-plus"></span>
+                    <span class="k-button-text">Add Scenario</span>
+                </button>
+
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_scenarioReloadExecute()">
+                    <span class="k-button-icon k-icon k-i-refresh"></span>
+                </button>
+
                 <!--<a href="#" class="btn btn-primary" onclick="dg_scenarioCreateExecute();">Create</a>-->
-                <a href="#" class="btn btn-primary" onclick="dg_scenarioModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dg_scenarioDeleteExecute();">Delete</a>
+                <!--<a href="#" class="btn btn-primary" onclick="dg_scenarioModifyExecute();">Modify</a>-->
+                <!--<a href="#" class="btn btn-danger mx-3" onclick="dg_scenarioDeleteExecute();">Delete</a>-->
             </div>
 
-            <div class="col" id="dg_scenario">
+            <div class="col p-0" id="dg_scenario">
 
             </div>
         </div>
 
         <!-- Custom styles for this template -->
-        <script src="/static/view/sub/scenario/js/scenarioList.js"></script>
+        <script src="/static/view/sub/scenario/js/scenarioList.js" type="text/javascript"></script>
     </section>
 </th:block>
 </html>

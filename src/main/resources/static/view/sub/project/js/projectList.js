@@ -108,7 +108,7 @@ function dg_projectLoadData(page) {
             schema: {
                 model: {
                     fields: {
-                        id: { type: "string" },
+                        id: { type: "number" },
                         /*defaultProject: { type: "string" },*/
                         /*date: { type: "string" },*/
                         name: { type: "string" },

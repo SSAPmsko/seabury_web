@@ -29,7 +29,7 @@ function onLoadedProject(){
         }
 
         // Scenario Data load
-        dg_ScenarioLoadData(uniqueId);
+        dg_project_ScenarioLoadData(uniqueId);
 
         /* 프로젝트에서 시나리오 정보 선택시 처리를 할것 인지?
         // dg_project_scenario Double Click Event
@@ -130,7 +130,6 @@ function dg_projectSaveExecute(uniqueId){
 }
 
 function dg_projectDeleteExecute(uniqueId){
-    alert(uniqueId);
     if(confirm("해당 아이템을 삭제 하시겠습니까?")){
 
      var formData = {};
@@ -164,7 +163,7 @@ function dg_projectDeleteExecute(uniqueId){
     }
 }
 
-function dg_ScenarioLoadData(uniqueId) {
+function dg_project_ScenarioLoadData(uniqueId) {
     $("#dg_project_scenario" + uniqueId).kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/

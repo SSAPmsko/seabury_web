@@ -42,8 +42,13 @@ public class ShieldController {
         }
     }
 
-    @RequestMapping(value = {"/getShieldList"}, method = RequestMethod.POST)
-    public @ResponseBody List<Map<String, Object>> getShieldList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    @RequestMapping(value = {"/getShieldList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getShieldList(@RequestParam(required = false) String scenarioId) {
+        return vrDoseService.getShields(scenarioId);
+    }
+
+    @RequestMapping(value = {"/getAllShieldList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getAllShieldList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getAllShields("");
     }
 

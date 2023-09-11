@@ -14,7 +14,23 @@ $(document).ready(function(){
 });
 
 function dg_scenarioCreateExecute(){
-    location.href = rootName + "Detail";
+    //location.href = rootName + "Detail";
+
+    $.ajax({
+        url : "/scenarioDetailProperties",
+        method : "GET",
+        type : "json",
+        async : false,
+        contentType : "application/json",
+        success : function(result) {
+            addDockItem('scenarioDetail_' + 'newItem', 'scenarioDetail_' + 'newItem', 'scenario/scenarioDetail', result);
+        },
+        error : function(result) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    }).done(function(fragment){
+
+    });
 }
 
 function dg_scenarioDeleteExecute(){
@@ -31,11 +47,12 @@ function dg_scenarioDeleteExecute(){
 function dg_scenarioModifyExecute(){
     if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
+        var projectId = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].projectId;
 
         //location.href = rootName + "Detail?" + "id=" + id;
 
         $.ajax({
-            url : "/scenarioDetailProperties?id=" + id,
+            url : "/scenarioDetailProperties?projectId=" + projectId + "&id=" + id,
             method : "GET",
             type : "json",
             async : false,
@@ -55,18 +72,10 @@ function dg_scenarioModifyExecute(){
 function dg_scenarioLoadData() {
     $("#dg_scenario").kendoGrid({
         columns: [
-            /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
             { field: "projectId" },
-            /*{ field: "date" },*/
             { field: "name" },
             { field: "description" },
-            /*{ field: "startDate" },
-            { field: "endDate" },
-            { field: "createdBy" },
-            { field: "justification" },
-            { field: "doseLimit" },
-            { field: "room" },*/
         ],
         dataSource: {
             transport: {
@@ -90,17 +99,10 @@ function dg_scenarioLoadData() {
             schema: {
                 model: {
                     fields: {
-                        id: { type: "string" },
-                        projectId: { type: "string" },
-                        /*date: { type: "string" },*/
+                        id: { type: "number" },
+                        projectId: { type: "number" },
                         name: { type: "string" },
                         description: { type: "string" },
-                        /*startDate: { type: "string" },
-                        endDate: { type: "string" },
-                        createdBy: { type: "string" },
-                        justification: { type: "string" },
-                        doseLimit: { type: "string" },
-                        room: { type: "string" },*/
                     }
                 }
             },
@@ -113,4 +115,9 @@ function dg_scenarioLoadData() {
         resizable: true,
         pageable: true
     });
+}
+
+function dg_scenarioReloadExecute(){
+    $('#dg_scenario').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_scenario').data('kendoGrid').refresh(); <!--  refresh current UI -->
 }

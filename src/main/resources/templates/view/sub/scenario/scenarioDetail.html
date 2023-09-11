@@ -8,131 +8,168 @@
 
 <!-- Begin Page Content -->
 <th:block>
-    <section layout:fragment="content">
-        <div class="tab_menu">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a data-load="false" class="nav-link active" id="scenariotab" data-bs-toggle="tab" data-bs-target="#scenariopanel" type="button" role="tab" aria-controls="scenariopanel" aria-selected="false" href="/scenarioList" value="scenario">Scenario</a>
-                </li>
-                <li class="nav-item" role="presentation" >
-                    <a data-load="false" class="nav-link" id="sourcetab" data-bs-toggle="tab" data-bs-target="#sourcepanel" type="button" role="tab" aria-controls="sourcepanel" aria-selected="false" href="/sourceList" value="source">Source</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a data-load="false" class="nav-link" id="workpacktab" data-bs-toggle="tab" data-bs-target="#workpackpanel" type="button" role="tab" aria-controls="workpackpanel" aria-selected="false" href="/workpackList" value="workpack">Workpack</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a data-load="false" class="nav-link" id="equipmenttab" data-bs-toggle="tab" data-bs-target="#equipmentpanel" type="button" role="tab" aria-controls="equipmentpanel" aria-selected="false" href="/equipmentList" value="equipment">Equipment</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a data-load="false" class="nav-link" id="workertab" data-bs-toggle="tab" data-bs-target="#workerpanel" type="button" role="tab" aria-controls="workerpanel" aria-selected="false" href="/workerList" value="worker">Worker</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a data-load="false" class="nav-link" id="shieldtab" data-bs-toggle="tab" data-bs-target="#shieldpanel" type="button" role="tab" aria-controls="shieldpanel" aria-selected="false" href="/shieldList" value="shield">Shield</a>
-                </li>
+    <form id="scenarioPropertyForm"></form>
+    <form id="scenarioTabForm"></form>
 
-            </ul>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid m-0">
+            <!-- Hidden Field-->
+            <div class="visually-hidden">
+                <input type="text" class="form-control" id="txt_editMode" form="scenarioPropertyForm" th:value="${editMode}">
+                <input type="text" class="form-control" id="txt_projectId" form="scenarioPropertyForm" th:value="${projectId}">
+                <input type="text" class="form-control" id="txt_scenarioId" form="scenarioPropertyForm" th:value="${id}">
+            </div>
 
-        </div>
-        <div class="tab-content" id="myTabContent">
-            <div class="row g-2 container-fluid" id="scenariohtml">
-                <!-- Hidden Field-->
-                <div class="visually-hidden">
-                    <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
-                    <input type="text" class="form-control" id="txt_id" th:value="${id}">
+            <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
+                <h6 class="h2">Title</h6>
+                <div class="btn-toolbar">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="scenarioPropertyForm" style="height: 30px" id="btn_scenario_save" disabled>
+                        <span class="k-button-icon k-icon k-i-save"></span>
+                        <span class="k-button-text">Save</span>
+                    </button>
+
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="scenarioPropertyForm" style="height: 30px" id="btn_scenario_delete" disabled>
+                        <span class="k-button-icon k-icon k-i-delete"></span>
+                        <span class="k-button-text">Delete</span>
+                    </button>
+
+                    <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
+                    <!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
+                    <!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <fieldset>
-                        <legend>Properties</legend>
+            <div class="col-12 mt-2">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link active" id="scenarioTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#scenarioContent" type="button" role="tab" aria-controls="scenarioContent" aria-selected="false">Scenario</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="workpackTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workpackContent" type="button" role="tab" aria-controls="workpackContent" aria-selected="false">Workpack</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="equipmentTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#equipmentContent" type="button" role="tab" aria-controls="equipmentContent" aria-selected="false">Equipment</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="workerTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workerContent" type="button" role="tab" aria-controls="workerContent" aria-selected="false">Worker</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="shieldTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#shieldContent" type="button" role="tab" aria-controls="shieldContent" aria-selected="false">Shield</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="sourceTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#sourceContent" type="button" role="tab" aria-controls="sourceContent" aria-selected="false">Source</a>
+                    </li>
+                </ul>
 
-                        <div class="row g-3">
-                            <!-- Name -->
-                            <div class="col-sm-12">
-                                <label for="txt_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="txt_name" th:value="${name}">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="scenarioContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="scenarioTab">
+                        <div class="row p-0">
+                            <div class="col-lg-6 p-2">
+                                <fieldset>
+                                    <legend>Properties</legend>
+
+                                    <div class="row g-3">
+                                        <!-- Name -->
+                                        <div class="col-sm-12">
+                                            <label for="txt_name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="txt_name" form="scenarioPropertyForm" th:value="${name}">
+                                        </div>
+
+                                        <!-- Description -->
+                                        <div class="col-sm-12">
+                                            <label for="txt_description" class="form-label">Description</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" id="txt_description" th:value="${description}">
+                                        </div>
+
+                                        <!-- Create Date -->
+                                        <div class="col-sm-6">
+                                            <label for="dt_date" class="form-label">Create Date</label>
+                                            <input type="date" class="form-control" form="scenarioPropertyForm" id="dt_date" th:value="${date}">
+                                        </div>
+
+                                        <!-- Creator -->
+                                        <div class="col-sm-6">
+                                            <label for="txt_createdBy" class="form-label">Creator</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" id="txt_createdBy" th:value="${createdBy}">
+                                        </div>
+
+                                        <!-- Modify Date -->
+                                        <div class="col-sm-6">
+                                            <label for="dt_lastModified" class="form-label">Modify Date</label>
+                                            <input type="date" class="form-control" id="dt_lastModified" form="scenarioPropertyForm" th:value="${lastModified}">
+                                        </div>
+
+                                        <!-- Modifier -->
+                                        <div class="col-sm-6">
+                                            <label for="txt_modifiedBy" class="form-label">Modifier</label>
+                                            <input type="text" class="form-control" id="txt_modifiedBy" form="scenarioPropertyForm" th:value="${modifiedBy}">
+                                        </div>
+
+                                        <!-- Status -->
+                                        <div class="col-sm-6">
+                                            <label for="txt_status" class="form-label">Status</label>
+                                            <input type="text" class="form-control" id="txt_status" form="scenarioPropertyForm" th:value="${status}">
+                                        </div>
+
+                                        <!-- Start Date -->
+                                        <div class="col-sm-6">
+
+                                            <label for="dt_startTime" class="form-label">Start time</label>
+                                            <input type="date" id="dt_startTime" class="form-control" form="scenarioPropertyForm" th:value="${startTime}">
+                                        </div>
+
+                                        <!-- End Date -->
+                                        <div class="col-sm-6">
+                                            <label for="dt_endTime" class="form-label">End time</label>
+                                            <input type="date" id="dt_endTime" class="form-control" form="scenarioPropertyForm" th:value="${endTime}">
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
 
-                            <!-- Description -->
-                            <div class="col-sm-12">
-                                <label for="txt_description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="txt_description" th:value="${description}">
-                            </div>
-
-                            <!-- Create Date -->
-                            <div class="col-sm-6">
-                                <label for="dt_date" class="form-label">Create Date</label>
-                                <input type="date" class="form-control" id="dt_date" th:value="${date}">
-                            </div>
-
-                            <!-- Creator -->
-                            <div class="col-sm-6">
-                                <label for="txt_createdBy" class="form-label">Creator</label>
-                                <input type="text" class="form-control" id="txt_createdBy" th:value="${createdBy}">
-                            </div>
-
-                            <!-- Modify Date -->
-                            <div class="col-sm-6">
-                                <label for="dt_lastModified" class="form-label">Modify Date</label>
-                                <input type="date" class="form-control" id="dt_lastModified" th:value="${lastModified}">
-                            </div>
-
-                            <!-- Modifier -->
-                            <div class="col-sm-6">
-                                <label for="txt_modifiedBy" class="form-label">Modifier</label>
-                                <input type="text" class="form-control" id="txt_modifiedBy" th:value="${modifiedBy}">
-                            </div>
-
-                            <!-- Status -->
-                            <div class="col-sm-6">
-                                <label for="txt_status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="txt_status" th:value="${status}">
-                            </div>
-
-                            <!-- Start Date -->
-                            <div class="col-sm-6">
-
-                                <label for="dt_startTime" class="form-label">Start time</label>
-                                <input type="date" id="dt_startTime" class="form-control" th:value="${startTime}">
-                            </div>
-
-                            <!-- End Date -->
-                            <div class="col-sm-6">
-                                <label for="dt_endTime" class="form-label">End time</label>
-                                <input type="date" id="dt_endTime" class="form-control" th:value="${endTime}">
+                            <div class="col-lg-6 p-2">
+                                <fieldset>
+                                    <legend>Image</legend>
+                                    <div class="container-lg p-0 text-center bg-light">
+                                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" style="height: 300px;">
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
-                    </fieldset>
-                </div>
+                    </div>
 
-                <div class="col-6">
-                    <fieldset>
-                        <legend>Image</legend>
-                        <div class="container-lg">
-                            <div class="row">
-                                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
-                            </div>
+                    <div class="tab-pane fade" id="workpackContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workpackTab">
+                        <div class="col" id="dg_scenario_workpack" form="scenarioPropertyForm">
+
                         </div>
-                    </fieldset>
-                </div>
+                    </div>
 
-                <div class="col-12 mb-3 d-flex justify-content-center">
-                    <div>
-                        <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
-                        <a href="#" class="btn btn-primary" onclick="dg_scenarioSaveExecute();">Save</a>
-                        <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_scenarioDeleteExecute();">Delete</a>
+                    <div class="tab-pane fade" id="equipmentContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="equipmentTab">
+                        <div class="col" id="dg_scenario_equipment" form="scenarioPropertyForm">
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="workerContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workerCTab">
+                        <div class="col" id="dg_scenario_worker" form="scenarioPropertyForm">
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="sourceContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="sourceTab">
+                        <div class="col" id="dg_scenario_source" form="scenarioPropertyForm">
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="shieldContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="shieldTab">
+                        <div class="col" id="dg_scenario_shield" form="scenarioPropertyForm">
+
+                        </div>
                     </div>
                 </div>
-                <!--<div href="/scenarioList" data-url="/scenarioList" class="tab-pane" id="scenariopanel" role="tabpanel" aria-labelledby="scenariotab"></div>
-                <div href="/projectList" data-url="/projectList" class="tab-pane" id="projectpanel" role="tabpanel" aria-labelledby="projecttab" ></div>
-                <div href="/workpackList" data-url="/workpackList" class="tab-pane" id="workpackpanel" role="tabpanel" aria-labelledby="workpacktab"></div>
-                <div href="/equipmentList" data-url="/equipmentList" class="tab-pane" id="equipmentpanel" role="tabpanel" aria-labelledby="equipmenttab"></div>-->
-            </div>
-
-            <div class="col" id="dg_scenario">
-
             </div>
         </div>
-
         <!-- Custom styles for this template -->
         <script src="/static/view/sub/scenario/js/scenarioDetail.js"></script>
     </section>

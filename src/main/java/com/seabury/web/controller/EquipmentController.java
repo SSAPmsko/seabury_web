@@ -46,14 +46,14 @@ public class EquipmentController {
         }
     }
 
-    @RequestMapping(value = {"/getEquipmentList"}, method = RequestMethod.POST)
-    public @ResponseBody List<Map<String, Object>> getEquipmentList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
-        /*vrDoseService.getAllEquipments(message.get("scenarioId").toString());
-        StructureEntity whereStructure = new StructureEntity();
-        whereStructure.setType(message.get("type").toString());
-        List<StructureEntity> qq = structureService.getStructureList(whereStructure);*/
-        return vrDoseService.getAllEquipments("");
+    @RequestMapping(value = {"/getEquipmentList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getEquipmentList(@RequestParam(required = false) String scenarioId) {
+        return vrDoseService.getEquipments(scenarioId);
+    }
 
+    @RequestMapping(value = {"/getAllEquipmentList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getAllEquipmentList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        return vrDoseService.getAllEquipments("");
     }
 
     @RequestMapping(value = {"/equipmentDetail"}, method = RequestMethod.GET)

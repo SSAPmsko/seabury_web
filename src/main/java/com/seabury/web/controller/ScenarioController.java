@@ -84,7 +84,7 @@ public class ScenarioController {
     }
 
     @RequestMapping(value = {"/scenarioDetailProperties"}, method = RequestMethod.GET)
-    public @ResponseBody Map<String, Object> scenarioDetailProperties(@RequestParam(value = "id", required = false) String id) {
+    public @ResponseBody Map<String, Object> scenarioDetailProperties(@RequestParam(value = "projectId", required = false) String projectId, @RequestParam(value = "id", required = false) String id) {
 
         // id가 null 이면 생성, null 이 아니면 수정
         Map<String, Object> result;
