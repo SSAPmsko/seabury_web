@@ -47,8 +47,13 @@ public class WorkpackController {
         }
     }
 
-    @RequestMapping(value = {"/getWorkpackList"}, method = RequestMethod.POST)
-    public @ResponseBody List<Map<String, Object>> getWorkpackList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    @RequestMapping(value = {"/getWorkpackList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getWorkpackList(@RequestParam(required = false) String scenarioId) {
+        return vrDoseService.getWorkSteps(scenarioId);
+    }
+
+    @RequestMapping(value = {"/getAllWorkpackList"}, method = RequestMethod.GET)
+    public @ResponseBody List<Map<String, Object>> getAllWorkpackList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getAllWorkSteps("");
     }
 
