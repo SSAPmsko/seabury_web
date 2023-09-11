@@ -87,7 +87,7 @@ function dg_structureLoadData() {
                             options.success(result);
                         },
                         error: function(result) {
-                            options.error(result);
+                          options.error(result);
                         }
                     });
                 }

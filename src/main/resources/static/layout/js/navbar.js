@@ -26,6 +26,7 @@ function addDockItem(id, title, path, properties){
 
         if (properties !== undefined){
             htmlStr = htmlStr.replace(/th:value/g,'value');
+            alert(properties.result);
 
             for (const [k, v] of Object.entries(properties.result)){
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);

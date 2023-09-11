@@ -14,6 +14,7 @@ public class PlantServiceImpl implements PlantService {
     @Autowired
     PlantMapper plantMapper;
 
+
     @Override
     public List<PlantEntity> getPlantList(PlantEntity plantEntity) { return plantMapper.getPlantList(plantEntity); }
 

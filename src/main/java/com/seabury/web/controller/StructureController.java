@@ -49,15 +49,15 @@ public class StructureController {
     public @ResponseBody Map<String, Object> structureDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
         StructureEntity whereStructure = new StructureEntity();
         whereStructure.setID(id);
-        List<StructureEntity> Structure1list = structureService.getStructureList(whereStructure);
 
         List<StructureEntity> result;
-        result = Structure1list;
+        result = structureService.getStructureList(whereStructure);
 
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
-        rp.put("result", result);
+        rp.put("result", result.get(0));
         rp.setSuccess("");
+
 
         return rp;
     }

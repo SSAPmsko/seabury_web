@@ -74,7 +74,7 @@ public class UnitController {
 
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
-        rp.put("result", result);
+        rp.put("result", result.get(0));
         rp.setSuccess("");
 
         return rp;

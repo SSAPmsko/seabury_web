@@ -55,11 +55,13 @@ function addDockItem(id, title, path, properties){
         var stackPanel = findDockItem[0].parent;
 
         stackPanel.setActiveContentItem(findDockItem[0]);
+
     } else {
         var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
 
         if (properties != undefined){
             htmlStr = htmlStr.replace(/th:value/g,'value');
+
 
             for (const [k, v] of Object.entries(properties.result)){
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);

@@ -5,44 +5,25 @@
 
 <!-- Begin Page Content -->
 <div class="row">
-    <!-- Side Bar -->
-    <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
-        <div class="row" style="margin-bottom: 10px;">
-            <div calss="col" style="margin-bottom: 10px;">
-                <input type="text" class="form-control" id="bt_treeview_search" placeholder="Search..." value="" />
-            </div>
-            <div calss="col">
-                <button type="button" class="btn btn-primary select-node" id="btn_create" onclick="dataGridCreateExecute();" style="float">Create</button>
-                <button type="button" class="btn btn-danger expand-node" id="btn_collapse" style="float: right; margin-left: 5px;">Collapse</button>
-                <button type="button" class="btn btn-primary select-node" id="btn_expand" style="float: right;">Expand</button>
-            </div>
-
-        </div>
-        <!--
-
-            <div id="jstree_div">
-
-            </div>
-        -->
-
-
-        <div id="bt_treeview_div" class="treeview">
-
-        </div>
-    </div>
-
     <!-- main fragment -->
     <div class="col" id="page-body" style="margin-top:15px;">
     <section class="h-100" layout:fragment="content">
         <div class="row g-2 container-fluid">
-            <div class="col-12">
-                <!--<a href="#" class="btn btn-primary" onclick="dg_structureCreateExecute();">Create</a>
-                <a href="#" class="btn btn-primary" onclick="dg_structureModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dg_structureDeleteExecute();">Delete</a>-->
+            <div class="col-12 mt-2 mb-2 p-0">
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_projectCreateExecute()">
+                    <span class="k-button-icon k-icon k-i-plus"></span>
+                    <span class="k-button-text">Add Project</span>
+                </button>
+
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_projectReloadExecute()">
+                    <span class="k-button-icon k-icon k-i-refresh"></span>
+                </button>
             </div>
-
-            <div class="col" id="dg_structure">
-
+            <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+                <div id="bt_treeview_div" class="treeview">
+                </div>
+            </div>
+            <div class="col-lg-8" id="dg_structure">
             </div>
         </div>
 

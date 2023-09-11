@@ -14,7 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,13 +75,13 @@ public class PlantController {
         PlantEntity wherePlant = new PlantEntity();
         wherePlant.setID(id);
         List<PlantEntity> Plant1list = plantService.getPlantList(wherePlant);
+        Plant1list.add(0, wherePlant);
 
-        List<PlantEntity> result;
-        result = Plant1list;
+
 
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
-        rp.put("result", result);
+        rp.put("result", Plant1list.get(0));
         rp.setSuccess("");
 
         return rp;

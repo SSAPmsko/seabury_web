@@ -14,10 +14,6 @@ $(document).ready(function(){
     //$("#dg_plant tbody").on("click", ".k-checkbox", onSelected);
 });
 
-function dg_plantCreateExecute(){
-    location.href = "plantDetail";
-}
-
 $("#plant_picker").change(function () {
     var type = $("#plant_picker option:checked").val();
 
@@ -38,16 +34,25 @@ $("#plant_picker").change(function () {
     }
 });
 
-function dg_plantDeleteExecute(){
-    if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
-        if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-            var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
-            //location.href = "write_del_ok.jsp?num=1";
-            return true;
-        } else {
-            return false;
+
+function dg_plantCreateExecute(){
+    //location.href = rootName + "Detail";
+
+    $.ajax({
+        url : "/createDetailProperties",
+        method : "GET",
+        type : "json",
+        async : false,
+        contentType : "application/json",
+        success : function(result) {
+            addDockItem('createDetail_' + 'newItem', 'createDetail_' + 'newItem', 'create/createDetail');
+        },
+        error : function(result) {
+            alert("정상 처리에 실패 하였습니다.");
         }
-    }
+    }).done(function(fragment){
+
+    });
 }
 
 function dg_plantModifyExecute(){
