@@ -1,465 +1,205 @@
+var detailid;
+var idurl;
+var url;
+var formData = {};
+var structype;
+var strucData = {};
 
-$(document).ready(function(){
+$(document).ready(function () {
+    // 클릭한 위치 active 적용
+    $("#create").addClass('active');
+    /*$("#type_picker option:checked").val() = rp.value.type*/
 
-    scenarioloadData();
-    startfunction();
-
+    if ($("#type_picker option:checked").val() == "Site") {
+        $("#parent_picker").attr("disabled", true);
+    }
 });
-function startfunction(){
-            var rootName = "scenario";
-// 클릭한 위치 active 적용
-           $("#" + rootName).addClass('active');
-
-           // DataGrid Double Click Event
-            $("#dataGrid").on("", "table", function(e) {
-            if(rootName != "equipment"){
-               dataGridModifyExecute();
-            }
-           });
-
-           // CheckButton Selected Event
-           //$("#dataGrid tbody").on("click", ".k-checkbox", onSelected);
 
 
-           function dataGridCreateExecute(){
-               location.href = rootName + "Detail";
-           }
+$("#type_picker").change(function () {
+    $('#parent_picker option').remove();
+    var type = $("#type_picker option:checked").val();
 
-           function dataGridDeleteExecute(){
-               if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-                   if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-                       var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-                       //location.href = "write_del_ok.jsp?num=1";
-                       return true;
-                   } else {
-                       return false;
-                   }
-               }
-           }
+    pickerLoadData(type);
 
-           function dataGridModifyExecute(){
-               if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-                   var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-                                   location.href = rootName + "Detail?" + "id=" + id;
-                   /*
-                   $.ajax({
-                       url : "/projectDetail",
-                       method : "POST",
-                       type : "json",
-                       async : false,
-                       contentType : "application/json",
-                       success : function(result) {
+    switch (type) {
+        case "Site":
+            $("#parent_picker").attr("disabled", true);
+            break;
+        case "Plant":
+            $("#parent_picker").attr("disabled", false);
+            break;
+        case "Unit":
+            $("#parent_picker").attr("disabled", false);
+            break;
+        default:
+            break;
+    }
+});
 
-                       },
-                       error : function(result) {
-                           alert("정상 처리에 실패 하였습니다.");
-                       }
-                   }).done(function(fragment){
+function loadData() {
+    //structure 리스트
+    $.ajax({
+        type: 'GET',
+        url: "/getStructureList",
+        dataType: "json",
+        error: function (request, status, error) {
+            alert(request.status)
+        },
+        success: function (data) {
+            data.forEach(item => {
+                var $parentSelect = $('#parent_picker');
+                var node = {
+                    type: item.type,
+                    name: item.name,
+                    objectid: item.objectID,
+                    parenttype: item.parentType,
+                    parentid: item.parentID
+                };
+                $parentSelect.append(new Option(node.name, node.objectid, node.type, true));
+            });
+        }
+    });
+}
 
-                   });
-                   */
-               }
-           }
+function pickerLoadData(type) {
 
-           /*
-           function onSelected(e) {
-               var grid = $("#dataGrid").data("kendoGrid");
-               var row = $(e.target).closest("tr");
 
-               if(row.hasClass("k-selected")){
-                   setTimeout(function(e) {
-                       var grid = $("#dataGrid").data("kendoGrid");
-                       grid.clearSelection();
-                   })
-               } else {
-                   grid.clearSelection();
-               };
-           };
+    switch (type) {
+        case "Site":
+            formData.type = null;
+            break;
+        case "Plant":
+            formData.type = "Site";
+            break;
+        case "Unit":
+            formData.type = "Plant";
+            break;
+        default:
+            break;
+    }
+    //structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
 
-           var gridElement = $("#dataGrid");
+        },
+        success: function (data) {
+            data.forEach(item => {
+                var parentSelect = $('#parent_picker');
 
-           function resizeGrid() {
-               gridElement.data("kendoGrid").resize();
-           }
+                parentSelect.append(new Option(item.name, item.objectID, item.type, true));
+            });
+        }
+    });
+}
 
-           $(window).resize(function(){
-               resizeGrid();
-           });
-           */
+function InsertPost() {
+
+    formData.id = $('#txt_id').val();
+    formData.type = $('#type_picker').val();
+    formData.description = $('#txt_description').val();
+    formData.operator = $('#txt_operator').val();
+    formData.status = $('#txt_status').val();
+    formData.reactorType = $('#txt_reactortype').val();
+    formData.reactorSupplier = $('#txt_reactorsupplier').val();
+    formData.constructionBegan = $('#dt_constructionbegan').val();
+    formData.commissionDate = $('#dt_commissiondate').val();
+    formData.decommissionDate = $('#dt_decommissiondate').val();
+    formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
+    formData.editMode = $('#txt_editMode').val();
+    // Update
+    if (formData.type == "Site") {
+        url = "/siteInsert";
+
+    } else if (formData.type == "Unit") {
+        url = "/unitInsert";
+
+    } else if (formData.type == "Plant") {
+        url = "/plantInsert";
+    }
+
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        async: false,
+        data: JSON.stringify(formData),
+        processData: false,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (data) {
+            GetId();
+        },
+        error: function (data) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    });
+}
+
+function GetId() {
+    if (formData.type == "Site") {
+        idurl = "/getSiteListId";
+    } else if (formData.type == "Unit") {
+        idurl = "/getUnitListId";
+    } else if (formData.type == "Plant") {
+        idurl = "/getPlantList";
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: idurl,
+        dataType: "json",
+        error: function (request, status, error) {
+            alert(request.status)
+        },
+        success: function (data) {
+            detailid = data;
+            StructureInsert();
+        }
+    });
 
 }
 
-function scenarioloadData() {
-               $("#dataGrid").kendoGrid({
-                   columns: [
-                       /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
-                       { field: "id" },
-                       { field: "projectId" },
-                       /*{ field: "date" },*/
-                       { field: "name" },
-                       { field: "description" },
-                       /*{ field: "startDate" },
-                       { field: "endDate" },
-                       { field: "createdBy" },
-                       { field: "justification" },
-                       { field: "doseLimit" },
-                       { field: "room" },*/
-                   ],
-                   dataSource: {
-                       transport: {
-                           read: function(options){
-                               $.ajax({
-                                   url : "/getScenarioList",
-                                   type: 'POST',
-                                   async: false,
-                                   processData: false,
-                                   dataType: "json",
-                                   contentType: "application/json;charset=UTF-8",
-                                   success: function(result) {
-                                     options.success(result);
-                                   },
-                                   error: function(result) {
-                                     options.error(result);
-                                   }
-                               });
-                           }
-                       },
-                       schema: {
-                           model: {
-                               fields: {
-                                   id: { type: "string" },
-                                   projectId: { type: "string" },
-                                   /*date: { type: "string" },*/
-                                   name: { type: "string" },
-                                   description: { type: "string" },
-                                   /*startDate: { type: "string" },
-                                   endDate: { type: "string" },
-                                   createdBy: { type: "string" },
-                                   justification: { type: "string" },
-                                   doseLimit: { type: "string" },
-                                   room: { type: "string" },*/
-                               }
-                           }
-                       },
-                       pageSize: 10,
-                   },
-                   selectable: "row",
-                   scrollable: false,
-                   filterable: true,
-                   sortable: false,
-                   resizable: true,
-                   pageable: true
-               });
-           }
-
-function workpackloadData() {
-    var formData = {};
-fo
-               $("#dataGrid").kendoGrid({
-                   columns: [
-                       /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
-                       { field: "id" },
-                       { field: "projectId" },
-                       { field: "scenarioId" },
-                       { field: "name" },
-                       { field: "description" },
-                       /*{ field: "startDate" },
-                       { field: "endDate" },
-                       { field: "createdBy" },
-                       { field: "justification" },
-                       { field: "doseLimit" },
-                       { field: "room" },*/
-                   ],
-                   dataSource: {
-                       transport: {
-                           read: function(options){
-                               $.ajax({
-                                   url : "/getWorkpackList",
-                                   type: 'POST',
-                                   async: false,
-                                   processData: false,
-                                   dataType: "json",
-                                   contentType: "application/json;charset=UTF-8",
-                                   success: function(result) {
-                                     options.success(result);
-                                   },
-                                   error: function(result) {
-                                     options.error(result);
-                                   }
-                               });
-                           }
-                       },
-                       schema: {
-                           model: {
-                               fields: {
-                                   id: { type: "string" },
-                                   projectId: { type: "string" },
-                                   scenarioId: { type: "string" },
-                                   name: { type: "string" },
-                                   description: { type: "string" },
-                                   /*startDate: { type: "string" },
-                                   endDate: { type: "string" },
-                                   createdBy: { type: "string" },
-                                   justification: { type: "string" },
-                                   doseLimit: { type: "string" },
-                                   room: { type: "string" },*/
-                               }
-                           }
-                       },
-                       pageSize: 10,
-                   },
-                   selectable: "row",
-                   scrollable: false,
-                   filterable: true,
-                   sortable: false,
-                   resizable: true,
-                   pageable: true
-               });
-           }
-
-function projectloadData() {
-               $("#dataGrid").kendoGrid({
-                   columns: [
-                       /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
-                       { field: "id" },
-                       /*{ field: "defaultProject" },*/
-                       /*{ field: "date" },*/
-                       { field: "name" },
-                       { field: "description" },
-                       /*{ field: "startDate" },
-                       { field: "endDate" },
-                       { field: "createdBy" },
-                       { field: "justification" },
-                       { field: "doseLimit" },
-                       { field: "room" },*/
-                   ],
-                   dataSource: {
-                       transport: {
-                           read: function(options){
-                               $.ajax({
-                                   url : "/getProjectList",
-                                   type: 'POST',
-                                   async: false,
-                                   processData: false,
-                                   dataType: "json",
-                                   contentType: "application/json;charset=UTF-8",
-                                   success: function(result) {
-                                     options.success(result);
-                                   },
-                                   error: function(result) {
-                                     options.error(result);
-                                   }
-                               });
-                           }
-                       },
-                       schema: {
-                           model: {
-                               fields: {
-                                   id: { type: "string" },
-                                   /*defaultProject: { type: "string" },*/
-                                   /*date: { type: "string" },*/
-                                   name: { type: "string" },
-                                   description: { type: "string" },
-                                   /*startDate: { type: "string" },
-                                   endDate: { type: "string" },
-                                   createdBy: { type: "string" },
-                                   justification: { type: "string" },
-                                   doseLimit: { type: "string" },
-                                   room: { type: "string" },*/
-                               }
-                           }
-                       },
-                       pageSize: 10,
-                       //serverPaging: true,
-                       //serverFiltering: true,
-                       //serverSorting: true
-                   },
-                   selectable: "row",
-                   scrollable: false,
-                   filterable: true,
-                   sortable: false,
-                   resizable: true,
-                   pageable: true
-               });
-           }
-
-function equipmentloadData() {
-               $("#dataGrid").kendoGrid({
-                   columns: [
-                       /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
-                       { field: "id" },
-                       { field: "projectId" },
-                       { field: "scenarioId" },
-                       { field: "name" },
-                       { field: "description" },
-                       /*{ field: "startDate" },
-                       { field: "endDate" },
-                       { field: "createdBy" },
-                       { field: "justification" },
-                       { field: "doseLimit" },
-                       { field: "room" },*/
-                   ],
-                   dataSource: {
-                       transport: {
-                           read: function(options){
-                               $.ajax({
-                                   url : "/getEquipmentList",
-                                   type: 'POST',
-                                   async: false,
-                                   processData: false,
-                                   dataType: "json",
-                                   contentType: "application/json;charset=UTF-8",
-                                   success: function(result) {
-                                     options.success(result);
-                                   },
-                                   error: function(result) {
-                                     options.error(result);
-                                   }
-                               });
-                           }
-                       },
-                       schema: {
-                           model: {
-                               fields: {
-                                   id: { type: "string" },
-                                   projectId: { type: "string" },
-                                   scenarioId: { type: "string" },
-                                   name: { type: "string" },
-                                   description: { type: "string" },
-                                   /*startDate: { type: "string" },
-                                   endDate: { type: "string" },
-                                   createdBy: { type: "string" },
-                                   justification: { type: "string" },
-                                   doseLimit: { type: "string" },
-                                   room: { type: "string" },*/
-                               }
-                           }
-                       },
-                       pageSize: 10,
-                   },
-                   selectable: "row",
-                   scrollable: false,
-                   filterable: true,
-                   sortable: false,
-                   resizable: true,
-                   pageable: true
-               });
-           }
-
-//탭 클릭 이벤트
-(() => {
-
-$('#myTab').on('click', "a", function(e) {
-/*if($('#dataGrid').data('kendoGrid').columns != null)
-{
-
-}*/
-           init();
-           var rootName = $(this).attr("value");
-           // 클릭한 위치 active 적용
-           $("#" + rootName).addClass('active');
-
-           // DataGrid Double Click Event
-            $("#dataGrid").on("dblclick", "table", function(e) {
-            if(rootName != "equipment"){
-               dataGridModifyExecute();
-            }
-           });
-
-           // CheckButton Selected Event
-           //$("#dataGrid tbody").on("click", ".k-checkbox", onSelected);
+function StructureInsert() {
+    if ($("#type_picker option:checked").val() == "Site") {
+    } else if ($("#type_picker option:checked").val() == "Plant") {
+        structype = "Site";
+    } else if ($("#type_picker option:checked").val() == "Unit") {
+        structype = "Plant";
+    }
 
 
-           function dataGridCreateExecute(){
-               location.href = rootName + "Detail";
-           }
+    strucData.type = $('#type_picker option:checked').text();
+    strucData.parentType = structype;
 
-           function dataGridDeleteExecute(){
-               if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-                   if(confirm("해당 아이템을 삭제 하시겠습니까?")){
-                       var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-                       //location.href = "write_del_ok.jsp?num=1";
-                       return true;
-                   } else {
-                       return false;
-                   }
-               }
-           }
+    strucData.name = $('#txt_name').val();
+    strucData.description = $('#txt_description').val();
+    strucData.objectID = detailid;
+    strucData.parentID = $('#parent_picker').val();
+    $.ajax({
+        url: "/structureInsert",
+        type: 'POST',
+        async: false,
+        data: JSON.stringify(strucData),
+        processData: false,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (data) {
 
-           function dataGridModifyExecute(){
-               if ($("#dataGrid").data("kendoGrid").getSelectedData().length > 0){
-                   var id = $("#dataGrid").data("kendoGrid").getSelectedData()[0].id;
-                   location.href = rootName + "Detail?" + "id=" + id;
-                   /*
-                   $.ajax({
-                       url : "/projectDetail",
-                       method : "POST",
-                       type : "json",
-                       async : false,
-                       contentType : "application/json",
-                       success : function(result) {
+        },
+        error: function (data) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    });
 
-                       },
-                       error : function(result) {
-                           alert("정상 처리에 실패 하였습니다.");
-                       }
-                   }).done(function(fragment){
+}
 
-                   });
-                   */
-               }
-           }
-
-           /*
-           function onSelected(e) {
-               var grid = $("#dataGrid").data("kendoGrid");
-               var row = $(e.target).closest("tr");
-
-               if(row.hasClass("k-selected")){
-                   setTimeout(function(e) {
-                       var grid = $("#dataGrid").data("kendoGrid");
-                       grid.clearSelection();
-                   })
-               } else {
-                   grid.clearSelection();
-               };
-           };
-
-           var gridElement = $("#dataGrid");
-
-           function resizeGrid() {
-               gridElement.data("kendoGrid").resize();
-           }
-
-           $(window).resize(function(){
-               resizeGrid();
-           });
-           */
-
-           function init(){
-              $('#dataGrid').data().kendoGrid.destroy();
-              $('#dataGrid').empty();
-           }
-
-
-
-           switch(rootName) {
-              case "scenario":
-                  scenarioloadData();
-                break;
-              case "workpack":
-                  workpackloadData();
-                break;
-              case "project":
-                  projectloadData();
-                break;
-              case "equipment":
-                  equipmentloadData();
-                break;
-            default:
-                break;
-           }
-
-    })
-})()
+function dataGridSaveExecute() {
+    InsertPost();
+}
 

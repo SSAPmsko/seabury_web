@@ -14,6 +14,7 @@ public class SiteServiceImpl implements SiteService {
     @Autowired
     SiteMapper siteMapper;
 
+
     @Override
     public List<SiteEntity> getSiteList(SiteEntity siteEntity) {
         return siteMapper.getSiteList(siteEntity);
@@ -47,6 +48,7 @@ public class SiteServiceImpl implements SiteService {
             siteVO.setCommissionDate(siteEntity.getCommissionDate());
             siteVO.setDecommissionDate(siteEntity.getDecommissionDate());
             siteVO.setStatus(siteEntity.getStatus());
+            siteVO.setStatus(siteEntity.getName());
         }
         return siteVO;
     }
@@ -64,6 +66,7 @@ public class SiteServiceImpl implements SiteService {
             siteEntity.setCommissionDate(siteVO.getCommissionDate());
             siteEntity.setDecommissionDate(siteVO.getDecommissionDate());
             siteEntity.setStatus(siteVO.getStatus());
+            siteEntity.setStatus(siteVO.getName());
         }
         return siteEntity;
     }

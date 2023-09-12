@@ -29,43 +29,61 @@ function historyBack(){
     //window.history.back();
     location.href = "unitList";
 }
-function loadData() {
-//structure 리스트
-$.ajax({
-            type: 'GET',
-            url: "/getStructureList",
-            dataType: "json",
-            error: function(request, status, error) {
-                alert(request.status)},
-            success: function(data) {
-                data.forEach(item => {
-                	var node = {
-                	type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
-                	};
-                	var $typeSelect = $('#type_picker');
-                	var $parentSelect = $('#parent_picker');
-                	$typeSelect.append(new Option(node.type ,node.type , true , true));
-                	$parentSelect.append(new Option(node.parenttype ,node.parenttype , true , true));
-                });
+/*function loadData() {
+    var resultList = new Array();
 
-            }})
-
-/*//unit
     $.ajax({
-                            url : "/getUnitList",
-                            type: 'POST',
-                            async: false,
-                            processData: false,
-                            dataType: "json",
-                            contentType: "application/json;charset=UTF-8",
-                            success: function(result) {
+        type: 'GET',
+        url: "/getStructureList",
+        dataType: "json",
+        async: false,
+        error: function(request, status, error) {
 
-                            },
-                            error: function(result) {
-                              options.error(result);
+        },
+        success: function(data) {
+            var tempList = new Array();
+            data.forEach(item => {
+                var node = { tags : [item.objectID, item.parentID], text : item.name , href : typeToHref(item.type), type : item.type };
+                tempList.push(node);
+            });
+
+            // Sorting Node - Site
+            tempList.filter(n => n.type == 'Site').forEach(item => {
+                resultList.push(item);
+            });
+            // Sorting Node - Plant
+            tempList.filter(n => n.type == 'Plant').forEach(item => {
+                var parentNode = resultList.find(n => n.tags[0] == item.tags[1]);
+
+                if (parentNode != null) {
+                    if (parentNode.nodes == null) {
+                        parentNode.nodes = new Array();
+                    }
+                    parentNode.nodes.push(item);
+                }
+            });
+            // Sorting Node - Unit
+            tempList.filter(n => n.type == 'Unit').forEach(item => {
+                resultList.forEach(parentItem => {
+                    if (parentItem.nodes != null) {
+                        var parentNode = parentItem.nodes.find(m => m.type == 'Plant' && m.tags[0] == item.tags[1]);
+
+                        if (parentNode != null) {
+                            if (parentNode.nodes == null) {
+                                parentNode.nodes = new Array();
                             }
-                        });*/
-}
+                            parentNode.nodes.push(item);
+                        }
+                    }
+                });
+            });
+            // Sorting Node - Project (추후 구현)
+        }
+    });
+
+    return JSON.stringify(resultList);
+}*/
+
 
 function dataGridSaveExecute(){
 

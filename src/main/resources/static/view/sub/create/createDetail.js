@@ -1,32 +1,32 @@
-    var detailid;
-    var idurl;
-    var url;
-    var formData = {};
-    var structype;
-    var strucData = {};
+var detailid;
+var idurl;
+var url;
+var formData = {};
+var structype;
+var strucData = {};
 
-$(document).ready(function(){
+$(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
 
-    if($("#type_picker option:checked").val() == "Site"){
+    if ($("#type_picker option:checked").val() == "Site") {
         $("#parent_picker").attr("disabled", true);
     }
 });
 
 
-    $("#type_picker").change(function(){
+$("#type_picker").change(function () {
     $('#parent_picker option').remove();
     var type = $("#type_picker option:checked").val();
 
     pickerLoadData(type);
 
-    switch(type) {
+    switch (type) {
         case "Site":
             $("#parent_picker").attr("disabled", true);
             break;
         case "Plant":
-        $("#parent_picker").attr("disabled", false);
+            $("#parent_picker").attr("disabled", false);
             break;
         case "Unit":
             $("#parent_picker").attr("disabled", false);
@@ -42,24 +42,29 @@ function loadData() {
         type: 'GET',
         url: "/getStructureList",
         dataType: "json",
-        error: function(request, status, error) {
-            alert(request.status)},
-        success: function(data) {
+        error: function (request, status, error) {
+            alert(request.status)
+        },
+        success: function (data) {
             data.forEach(item => {
                 var $parentSelect = $('#parent_picker');
                 var node = {
-                    type : item.type, name : item.name ,objectid : item.objectID, parenttype : item.parentType ,parentid : item.parentID
+                    type: item.type,
+                    name: item.name,
+                    objectid: item.objectID,
+                    parenttype: item.parentType,
+                    parentid: item.parentID
                 };
-                $parentSelect.append(new Option(node.name ,node.objectid , node.type , true));
+                $parentSelect.append(new Option(node.name, node.objectid, node.type, true));
             });
-    }});
+        }
+    });
 }
 
-function pickerLoadData(type){
+function pickerLoadData(type) {
 
 
-
-    switch(type) {
+    switch (type) {
         case "Site":
             formData.type = null;
             break;
@@ -71,7 +76,7 @@ function pickerLoadData(type){
             break;
         default:
             break;
-        }
+    }
     //structure 리스트
     $.ajax({
         type: 'POST',
@@ -79,19 +84,20 @@ function pickerLoadData(type){
         data: JSON.stringify(formData),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        error: function(request, status, error) {
-            alert(request.status)},
-        success: function(data) {
+        error: function (request, status, error) {
+            alert(request.status)
+        },
+        success: function (data) {
             data.forEach(item => {
                 var parentSelect = $('#parent_picker');
 
-                parentSelect.append(new Option(item.name ,item.objectID , item.type , true));
+                parentSelect.append(new Option(item.name, item.objectID, item.type, true));
             });
-    }});
+        }
+    });
 }
 
-function InsertPost()
-{
+function InsertPost() {
 
     formData.id = $('#txt_id').val();
     formData.type = $('#type_picker').val();
@@ -106,68 +112,63 @@ function InsertPost()
     formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
     formData.editMode = $('#txt_editMode').val();
     // Update
-    if (formData.type == "Site")
-    {
+    if (formData.type == "Site") {
         url = "/siteInsert";
 
-    }else if(formData.type == "Unit")
-    {
+    } else if (formData.type == "Unit") {
         url = "/unitInsert";
 
-    }else if(formData.type == "Plant")
-    {
+    } else if (formData.type == "Plant") {
         url = "/plantInsert";
     }
 
 
     $.ajax({
-        url : url,
+        url: url,
         type: 'POST',
         async: false,
         data: JSON.stringify(formData),
         processData: false,
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        success : function(data) {
+        success: function (data) {
             GetId();
         },
-        error : function(data) {
+        error: function (data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
 }
-function GetId()
-{
-    if (formData.type == "Site")
-    {
-        idurl = "/getSiteList";
-    }else if(formData.type == "Unit")
-    {
-        idurl = "/getUnitList";
-    }else if(formData.type == "Plant")
-    {
+
+function GetId() {
+    if (formData.type == "Site") {
+        idurl = "/getSiteListId";
+    } else if (formData.type == "Unit") {
+        idurl = "/getUnitListId";
+    } else if (formData.type == "Plant") {
         idurl = "/getPlantList";
     }
 
     $.ajax({
-            type: 'GET',
-            url: idurl,
-            dataType: "json",
-            error: function(request, status, error) {
-                alert(request.status)},
-            success: function(data) {
+        type: 'GET',
+        url: idurl,
+        dataType: "json",
+        error: function (request, status, error) {
+            alert(request.status)
+        },
+        success: function (data) {
             detailid = data;
             StructureInsert();
-            }
-        });
+        }
+    });
 
 }
-function StructureInsert()
-{
-    if($("#type_picker option:checked").val() == "Site"){
-    } else if($("#type_picker option:checked").val() == "Plant"){
+
+function StructureInsert() {
+    if ($("#type_picker option:checked").val() == "Site") {
+    } else if ($("#type_picker option:checked").val() == "Plant") {
         structype = "Site";
-    } else if($("#type_picker option:checked").val() == "Unit"){
+    } else if ($("#type_picker option:checked").val() == "Unit") {
         structype = "Plant";
     }
 
@@ -180,23 +181,24 @@ function StructureInsert()
     strucData.objectID = detailid;
     strucData.parentID = $('#parent_picker').val();
     $.ajax({
-            url : "/structureInsert",
-            type: 'POST',
-            async: false,
-            data: JSON.stringify(strucData),
-            processData: false,
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success : function(data) {
+        url: "/structureInsert",
+        type: 'POST',
+        async: false,
+        data: JSON.stringify(strucData),
+        processData: false,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (data) {
 
-            },
-            error : function(data) {
-                alert("정상 처리에 실패 하였습니다.");
-            }
-        });
+        },
+        error: function (data) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    });
 
 }
-function dataGridSaveExecute(){
+
+function dataGridSaveExecute() {
     InsertPost();
 }
 

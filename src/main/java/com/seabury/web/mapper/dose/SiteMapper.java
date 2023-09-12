@@ -12,6 +12,7 @@ mybatis 최신 버전에서는 @Mapper 사용해야함
 
 @Mapper
 public interface SiteMapper {
+
     List<SiteEntity> getSiteList(SiteEntity SiteEntity);
 
     int insertSite(SiteEntity SiteEntity);

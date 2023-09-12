@@ -1,21 +1,21 @@
 $(document).ready(function(){
     // 클릭한 위치 active 적용
-    //$("#plant").addClass('active');
+    //$("#site").addClass('active');
 
     // DataGrid Data load
-    dg_plantLoadData();
+    dg_siteLoadData();
 
     // DataGrid Double Click Event
-     $("#dg_plant").on("dblclick", "table", function(e) {
-        dg_plantModifyExecute();
+    $("#dg_site").on("dblclick", "table", function(e) {
+        dg_siteModifyExecute();
     });
 
     // CheckButton Selected Event
-    //$("#dg_plant tbody").on("click", ".k-checkbox", onSelected);
+    //$("#dg_site tbody").on("click", ".k-checkbox", onSelected);
 });
 
-$("#plant_picker").change(function () {
-    var type = $("#plant_picker option:checked").val();
+$("#site_picker").change(function () {
+    var type = $("#site_picker option:checked").val();
 
     switch (type) {
         case "Site":
@@ -35,7 +35,7 @@ $("#plant_picker").change(function () {
 });
 
 
-function dg_plantCreateExecute(){
+function dg_siteCreateExecute(){
     //location.href = rootName + "Detail";
 
     $.ajax({
@@ -55,20 +55,20 @@ function dg_plantCreateExecute(){
     });
 }
 
-function dg_plantModifyExecute(){
-    if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
-        var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
+function dg_siteModifyExecute(){
+    if ($("#dg_site").data("kendoGrid").getSelectedData().length > 0){
+        var siteId = $("#dg_site").data("kendoGrid").getSelectedData()[0].id;
 
 
         $.ajax({
-            url : "/plantDetailProperties",
-            data : {"id" : plantId},
+            url : "/siteDetailProperties",
+            data : {"id" : siteId},
             method : "GET",
             type : "json",
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('plantDetail_' + plantId, 'plantDetail_' + plantId, 'plant/plantDetail', result);
+                addDockItem('siteDetail_' + siteId, 'siteDetail_' + siteId, 'site/siteDetail', result);
                 alert("성공")
             },
             error : function(result) {
@@ -79,7 +79,7 @@ function dg_plantModifyExecute(){
         });
         /*
         $.ajax({
-            url : "/plantDetail",
+            url : "/siteDetail",
             method : "POST",
             type : "json",
             async : false,
@@ -97,8 +97,8 @@ function dg_plantModifyExecute(){
     }
 }
 
-function dg_plantLoadData() {
-    $("#dg_plant").kendoGrid({
+function dg_siteLoadData() {
+    $("#dg_site").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -116,17 +116,17 @@ function dg_plantLoadData() {
             transport: {
                 read: function(options){
                     $.ajax({
-                        url : "/getPlantDetailList",
+                        url : "/getSiteDetailList",
                         type: 'POST',
                         async: false,
                         processData: false,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function(result) {
-                          options.success(result);
+                            options.success(result);
                         },
                         error: function(result) {
-                          options.error(result);
+                            options.error(result);
                         }
                     });
                 }
@@ -163,7 +163,7 @@ function dg_plantLoadData() {
 }
 
 function dg_siteLoadData() {
-    $("#dg_plant").kendoGrid({
+    $("#dg_site").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -228,7 +228,7 @@ function dg_siteLoadData() {
 }
 
 function dg_unitLoadData() {
-    $("#dg_plant").kendoGrid({
+    $("#dg_unit").kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },

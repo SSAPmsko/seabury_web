@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +31,13 @@ public class SiteController {
     @Autowired
     SiteService siteService;
 
+
+    @RequestMapping(value = {"/getSiteDetailList"}, method = RequestMethod.POST)
+    public @ResponseBody List<SiteEntity> getSiteList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        SiteEntity whereSite = new SiteEntity();
+        List<SiteEntity> qq = siteService.getSiteList(whereSite);
+        return qq;
+    }
     @RequestMapping(value = {"/getSiteList"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexsiteList(@RequestParam(value = "id", required = false) Integer id) {
         SiteEntity whereSite = new SiteEntity();
@@ -58,6 +68,23 @@ public class SiteController {
         mav.setViewName("view/sub/site/siteDetail");
         return mav;
 
+    }
+
+    @RequestMapping(value = {"/siteDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> siteDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
+        SiteEntity whereSite = new SiteEntity();
+        whereSite.setID(id);
+        List<SiteEntity> Site1list = siteService.getSiteList(whereSite);
+
+        List<SiteEntity> result;
+        result = Site1list;
+
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result.get(0));
+        rp.setSuccess("");
+
+        return rp;
     }
 
     @RequestMapping(value = {"/siteDetail"}, method = RequestMethod.POST)

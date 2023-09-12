@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout}">
+      layout:decorate="~{layout/layout}">
 
 <!-- Begin Page Content -->
-<th:block>
+<div class="row">
+    <!-- main fragment -->
+    <div class="col" id="page-body" style="margin-top:15px;">
     <section class="h-100" layout:fragment="content">
         <div class="row g-2 container-fluid">
-            <div class="col-12">
-                <a href="#" class="btn btn-primary" onclick="dg_structureCreateExecute();">Create</a>
-                <a href="#" class="btn btn-primary" onclick="dg_structureModifyExecute();">Modify</a>
-                <a href="#" class="btn btn-danger mx-3" onclick="dg_structureDeleteExecute();">Delete</a>
+            <div class="col-12 mt-2 mb-2 p-0">
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_projectCreateExecute()">
+                    <span class="k-button-icon k-icon k-i-plus"></span>
+                    <span class="k-button-text">Add Project</span>
+                </button>
+
+                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_projectReloadExecute()">
+                    <span class="k-button-icon k-icon k-i-refresh"></span>
+                </button>
             </div>
-
-            <div class="col" id="dg_structure">
-
+            <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
+                <div id="bt_treeview_div" class="treeview">
+                </div>
+            </div>
+            <div class="col-lg-8" id="dg_structure">
             </div>
         </div>
 
         <!-- Custom styles for this template -->
         <script src="/static/view/sub/structure/js/structureList.js"></script>
 
+        <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+        <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
 
+        <!-- Bootstrap Tree -->
+        <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+        <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <script src="/static/layout/js/sidebars.js"></script>
+        <link href="/static/layout/css/sidebars.css" rel="stylesheet">
     </section>
-</th:block>
+    </div>
+</div>
 </html>

@@ -18,4 +18,5 @@ public class PlantEntity {
     Timestamp DecommissionDate;
     Float ThermalCapacity;
     String Status;
+    String Name;
 }

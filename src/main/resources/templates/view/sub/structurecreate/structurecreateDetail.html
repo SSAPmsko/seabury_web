@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/Layout}">
+
+<!-- Begin Page Content -->
+
+<!-- Begin Page Content -->
+
+<th:block>
+    <section layout:fragment="content">
+        <div class="row g-2 container-fluid">
+            <div class="visually-hidden">
+                <input type="text" class="form-control" id="txt_editMode">
+                <input type="text" class="form-control" id="txt_id">
+            </div>
+            <div class="col-12">
+                <fieldset>
+                    <legend>속성</legend>
+
+                    <div class="row g-3">
+
+                        <!-- Name -->
+                        <div class="col-sm-6">
+                            <label  class="form-label">Type</label>
+                            <!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
+                            <select class="form-select" aria-label="Default select example" id="type_picker">
+                                <option  value="Site">Site</option>
+                                <option  value="Plant">Plant</option>
+                                <option  value="Unit">Unit</option>
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-sm-6">
+                            <label  class="form-label">Parent Name</label>
+                            <!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
+                            <select class="form-select" aria-label="Default select example" id="parent_picker">
+
+                            </select>
+                        </div>
+                        <!-- Name -->
+                        <!--<div class="col-sm-6">
+                            <label  class="form-label">Type</label>
+                            &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
+                            <select class="form-select" aria-label="Default select example" id="type_picker">
+
+
+                            </select>
+                        </div>
+
+                        &lt;!&ndash; Description &ndash;&gt;
+                        <div class="col-sm-6">
+                            <label  class="form-label">Parent Type</label>
+                            &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
+                            <select class="form-select" aria-label="Default select example" id="parent_picker">
+                            </select>
+                        </div>-->
+
+                        <!-- Creator -->
+                        <div class="col-sm-6">
+                            <label for="txt_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_name" >
+                        </div>
+
+                        <!-- Room -->
+                        <div class="col-sm-6">
+                            <label for="txt_description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="txt_description" >
+                        </div>
+
+                        <legend>Detail</legend>
+                        <!-- Operator -->
+                        <div class="col-sm-6">
+                            <label for="txt_operator" class="form-label">Operator</label>
+                            <input type="text" class="form-control" id="txt_operator" >
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-sm-6">
+                            <label for="txt_status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="txt_status" >
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="col-12 mb-3 d-flex justify-content-center">
+                <div>
+
+                    <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Create</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/structurecreate/structurecreateDetail.js"></script>
+    </section>
+</th:block>
+</html>

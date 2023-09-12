@@ -1,5 +1,7 @@
 package com.seabury.web.controller;
 
+import com.seabury.web.entity.dose.PlantEntity;
+import com.seabury.web.entity.dose.SiteEntity;
 import com.seabury.web.entity.dose.StructureEntity;
 import com.seabury.web.entity.dose.UnitEntity;
 import com.seabury.web.service.*;
@@ -24,6 +26,14 @@ public class UnitController {
     StructureService structureService;
     @Autowired
     UnitService unitService;
+
+
+    @RequestMapping(value = {"/getUnitDetailList"}, method = RequestMethod.POST)
+    public @ResponseBody List<UnitEntity> getUnitList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        UnitEntity whereUnit = new UnitEntity();
+        List<UnitEntity> qq = unitService.getUnitList(whereUnit);
+        return qq;
+    }
 
     @RequestMapping(value={"/unitDetail"}, method = RequestMethod.GET)
     public ModelAndView unitDetail(ModelAndView mav, @RequestParam(value = "id", required = false) Integer id){
@@ -52,6 +62,22 @@ public class UnitController {
         whereUnit = qq.get(qq.size()-1);
 
         return whereUnit.getID();
+    }
+    @RequestMapping(value = {"/unitDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> unitDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
+        UnitEntity whereUnit = new UnitEntity();
+        whereUnit.setID(id);
+        List<UnitEntity> Unit1list = unitService.getUnitList(whereUnit);
+
+        List<UnitEntity> result;
+        result = Unit1list;
+
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result.get(0));
+        rp.setSuccess("");
+
+        return rp;
     }
     @RequestMapping(value={"/unitDetail"}, method = RequestMethod.POST)
     public void unitDetail(HttpServletRequest request, HttpServletResponse response){
