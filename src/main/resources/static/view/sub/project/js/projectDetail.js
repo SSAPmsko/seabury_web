@@ -31,12 +31,10 @@ function onLoadedProject(){
         // Scenario Data load
         dg_project_ScenarioLoadData(uniqueId);
 
-        /* 프로젝트에서 시나리오 정보 선택시 처리를 할것 인지?
         // dg_project_scenario Double Click Event
         $("#dg_project_scenario" + uniqueId).on("dblclick", "table", function(e) {
-            dg_scenarioModifyExecute();
+            dg_project_ScenarioModifyExecute(uniqueId);
         });
-        */
 
         // button event
         $("#btn_project_save" + uniqueId).on("click", function(e) {
@@ -223,4 +221,27 @@ function dg_project_ScenarioLoadData(uniqueId) {
         resizable: true,
         pageable: true
     });
+}
+
+function dg_project_ScenarioModifyExecute(uniqueId){
+    if ($("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
+        var id = $("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData()[0].id;
+        var projectId = $("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData()[0].projectId;
+
+        $.ajax({
+            url : "/scenarioDetailProperties?projectId=" + projectId + "&id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('scenarioDetail_' + id, 'scenarioDetail_' + id, 'scenario/scenarioDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
+    }
 }
