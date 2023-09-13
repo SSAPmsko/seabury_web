@@ -103,6 +103,7 @@ public class VRDoseServiceImpl implements VRDoseService {
             convertStringToFloat(map, "doseLimit");
 
             map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
+
             String bodyStr = getJsonString(map);
 
             HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
@@ -135,6 +136,13 @@ public class VRDoseServiceImpl implements VRDoseService {
                 convertStringToFloat(map, "doseLimit");
 
                 map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
+
+                /* 사용자 정의 속성을 properties 에 정의 하였으나, VRDose API 내에서 get 메서드 수행시, 수행한 시간이 덮어 씌어짐
+                ArrayMap properties = new ArrayMap();
+                properties.put("StructureID", 48);
+                //properties.put("StructureID", map.get("StructureID"));
+                map.put("properties", getJsonString(properties).replaceAll("\"", ""));
+                */
 
                 String bodyStr = getJsonString(map);
 

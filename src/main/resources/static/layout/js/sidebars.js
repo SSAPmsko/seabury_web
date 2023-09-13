@@ -104,12 +104,10 @@ function initBootstrapTree(treeData){
                 async : false,
                 contentType : "application/json",
                 success : function(result) {
-                    alert(result)
                     addDockItem(node.type +'Detail_' + node.tags[0], node.type +'Detail_' + node.tags[0], node.type+ '/'+ node.type +'Detail', result);
                 },
                 error : function(result) {
                     alert("정상 처리에 실패 하였습니다.");
-                    alert(node.type);
                 }
             }).done(function(fragment){
 
@@ -176,12 +174,12 @@ function loadTreeData() {
             });
 
             // Sorting Node - Site
-            tempList.filter(n => n.type == 'Site').forEach(item => {
+            tempList.filter(n => n.type === 'Site').forEach(item => {
                 resultList.push(item);
             });
             // Sorting Node - Plant
-            tempList.filter(n => n.type == 'Plant').forEach(item => {
-                var parentNode = resultList.find(n => n.tags[0] == item.tags[1]);
+            tempList.filter(n => n.type === 'Plant').forEach(item => {
+                var parentNode = resultList.find(n => n.tags[0] === item.tags[1]);
 
                 if (parentNode != null) {
                     if (parentNode.nodes == null) {
@@ -191,10 +189,10 @@ function loadTreeData() {
                 }
             });
             // Sorting Node - Unit
-            tempList.filter(n => n.type == 'Unit').forEach(item => {
+            tempList.filter(n => n.type === 'Unit').forEach(item => {
                 resultList.forEach(parentItem => {
                     if (parentItem.nodes != null) {
-                        var parentNode = parentItem.nodes.find(m => m.type == 'Plant' && m.tags[0] == item.tags[1]);
+                        var parentNode = parentItem.nodes.find(m => m.type === 'Plant' && m.tags[0] === item.tags[1]);
 
                         if (parentNode != null) {
                             if (parentNode.nodes == null) {
@@ -205,12 +203,64 @@ function loadTreeData() {
                     }
                 });
             });
-            // Sorting Node - Project (추후 구현)
         }
     });
 
+    // Sorting Node - Project (추후 구현)
+    ////////////////// 23.09.13 Demo 용도 //////////////////
+    $.ajax({
+        type: 'POST',
+        url: "/getProjectList",
+        dataType: "json",
+        async: false,
+        error: function (request, status, error) {
+            alert(status);
+        },
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            // Sorting Node - Project Sample
+            if (data.length > 3){
+                var project1 = data[0];
+                var project2= data[1];
+                var project3 = data[2];
+                var item1 = sampleProject(project1, 1);
+                var item2 = sampleProject(project2, 2);
+                var item3 = sampleProject(project3, 3);
+
+                setParentNode(item1, resultList, "Unit");
+                setParentNode(item2, resultList, "Unit");
+                setParentNode(item3, resultList, "Unit");
+            }
+        }
+    });
+    ////////////////// 23.09.13 Demo 용도 //////////////////
+
     return JSON.stringify(resultList);
 }
+
+function sampleProject(data, parentId){
+    return {tags: [data.id, parentId], text: data.name, href: typeToHref("Project"), type: "project"};
+}
+
+function setParentNode (item, resultList, type){
+    resultList.forEach(parentItem => {
+        if (parentItem.nodes != null) {
+            var plantNodes = parentItem.nodes.filter(n => n.type === 'Plant');
+            plantNodes.forEach(plantItem => {
+                if (plantItem.nodes != null){
+                    var unitNode = plantItem.nodes.find(m => m.type === type && m.tags[0] === item.tags[1]);
+                    if (unitNode != null) {
+                        if (unitNode.nodes == null){
+                            unitNode.nodes = new Array();
+                        }
+                        unitNode.nodes.push(item);
+                    }
+                }
+            });
+        }
+    });
+}
+
 
 function typeToHref(type){
     switch (type){
