@@ -64,6 +64,9 @@ function addDockItem(id, title, path, properties){
 
 
             for (const [k, v] of Object.entries(properties.result)){
+           /*     alert(k);
+                alert(v);*/
+
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);
             }
         }

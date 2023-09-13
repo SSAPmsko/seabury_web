@@ -75,7 +75,7 @@ public class PlantController {
         PlantEntity wherePlant = new PlantEntity();
         wherePlant.setID(id);
         List<PlantEntity> Plant1list = plantService.getPlantList(wherePlant);
-        Plant1list.add(0, wherePlant);
+
 
 
 

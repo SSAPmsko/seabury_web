@@ -7,14 +7,6 @@ $(document).ready(function () {
     timestamp();
 
     $("#parent_picker").attr("disabled", true);
-
-    var editMode = $("#txt_editMode").val();
-
-    if (editMode == 'true') {
-        $('#btn_delete').removeClass("visually-hidden")
-    } else if (editMode == 'false') {
-        $('#btn_delete').addClass("visually-hidden")
-    }
 });
 
 function onLoadedPlant(){
@@ -34,12 +26,6 @@ function onLoadedPlant(){
     var isFirst = replaceFormId('plantPropertyForm', uniqueId);
 
     if (isFirst === true){
-        var editMode = $("#txt_editMode" + uniqueId).val();
-        if (editMode === 'true') {
-            $('#btn_plant_delete' + uniqueId).removeClass("visually-hidden");
-        } else {
-            $('#btn_plant_delete' + uniqueId).addClass("visually-hidden");
-        }
 
 
         // button event
@@ -57,25 +43,18 @@ function dg_plantSaveExecute(uniqueId){
     var url;
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
-    formData.date = $('#dt_date' + uniqueId).val();
-    formData.description = $('#txt_description' + uniqueId).val();
-    formData.startDate = $('#dt_startDate' + uniqueId).val();
-    formData.endDate = $('#dt_endDate' + uniqueId).val();
-    formData.createdBy = $('#txt_createdBy' + uniqueId).val();
-    formData.justification = $('#txt_justification' + uniqueId).val();
-    formData.doseLimit = $('#txt_doseLimit' + uniqueId).val();
-    formData.room = $('#txt_room' + uniqueId).val();
-
-    formData.editMode = $('#txt_editMode' + uniqueId).val();
+    formData.operator = $('#txt_operator' + uniqueId).val();
+    formData.status = $('#txt_status' + uniqueId).val();
+    formData.reactorType = $('#txt_reactortype' + uniqueId).val();
+    formData.reactorSupplier = $('#txt_reactorsupplier' + uniqueId).val();
+    formData.constructionBegan = $('#dt_constructionbegan' + uniqueId).val();
+    formData.commissionDate = $('#dt_commissiondate' + uniqueId).val();
+    formData.decommissionDate = $('#dt_decommissiondate' + uniqueId).val();
+    formData.thermalCapacity = $('#txt_thermalcapacity' + uniqueId).val();
     // Update
-    if (formData.editMode === 'true'){
-        url = "/plantUpdate";
         formData.id = $('#txt_plantId' + uniqueId).val();
-    }
     // Insert
-    else {
-        url = "/plantInsert";
-    }
+        url = "/plantUpdate";
 
     $.ajax({
         url : url,
@@ -97,7 +76,6 @@ function dg_plantSaveExecute(uniqueId){
             if (newPlantContainer !== undefined) {
                 var oldId = "_newItem";
 
-                $('#txt_editMode' + oldId).val(true);
                 $('#btn_plant_save' + oldId).off("click");
                 $('#btn_plant_delete' + oldId).off("click");
                 $('#btn_plant_delete' + oldId).removeClass("visually-hidden");
@@ -130,7 +108,7 @@ function dg_plantSaveExecute(uniqueId){
 
 function dg_plantDeleteExecute(uniqueId){
     var formData = {};
-    formData.id = $('#txt_plantd' + uniqueId).val();
+    formData.id = $('#txt_plantId' + uniqueId).val();
 
     $.ajax({
         url : "/plantDelete",
@@ -185,14 +163,6 @@ function historyBack() {
 }
 
 function dataGridSaveExecute() {
-
-    var strucData = {};
-
-    strucData.id = $('#txt_strucid').val();
-    strucData.name = $('#txt_name').val();
-    strucData.description = $('#txt_description').val();
-
-
     var url;
     var formData = {};
     //formData.type = $('#txt_type1').val();
@@ -208,7 +178,6 @@ function dataGridSaveExecute() {
     formData.decommissionDate = $('#dt_decommissiondate').val();
     formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
     formData.name = $('#dt_decommissiondate').val();
-    formData.editMode = $('#txt_editMode').val();
     url = "/plantUpdate";
     formData.id = $('#txt_id').val();
 

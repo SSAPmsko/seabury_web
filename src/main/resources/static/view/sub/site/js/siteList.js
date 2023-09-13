@@ -1,3 +1,5 @@
+var rootName = "Site";
+
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     //$("#site").addClass('active');
@@ -41,11 +43,12 @@ function dg_siteCreateExecute(){
     $.ajax({
         url : "/createDetailProperties",
         method : "GET",
+        data:  {"type" : "Site"},
         type : "json",
         async : false,
         contentType : "application/json",
         success : function(result) {
-            addDockItem('createDetail_' + 'newItem', 'createDetail_' + 'newItem', 'create/createDetail');
+            addDockItem('createDetail_' + 'newItem', 'createDetail_' + 'newItem', 'create/createDetail', result);
         },
         error : function(result) {
             alert("정상 처리에 실패 하였습니다.");

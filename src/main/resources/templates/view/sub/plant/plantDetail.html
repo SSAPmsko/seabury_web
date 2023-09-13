@@ -41,13 +41,13 @@
                 </div>
                 <div class="col-6">
                     <fieldset>
-                        <legend>속성</legend>
+
 
                         <div class="row g-3">
                             <!-- Name -->
-                            <div class="col-sm-6">
+                            <!--<div class="col-sm-6">
                                 <label class="form-label">Type</label>
-                                <!-- <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;-->
+                                &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
                                 <select class="form-select" aria-label="Default select example" form="plantPropertyForm" id="type_picker"
                                         disabled>
                                     <option disabled value="Site">Site</option>
@@ -56,17 +56,28 @@
                                 </select>
                             </div>
 
-                            <!-- Description -->
+                            &lt;!&ndash; Description &ndash;&gt;
                             <div class="col-sm-6">
                                 <label class="form-label">Parent Type</label>
-                                <!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
+                                &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
                                 <select class="form-select" aria-label="Default select example" form="plantPropertyForm" id="parent_picker"
                                         disabled>
                                     <option selected value="Site">Site</option>
                                     <option disabled value="Plant">Plant</option>
                                     <option disabled value="null">null</option>
                                 </select>
-                            </div>
+                            </div>-->
+
+
+
+                            <!-- Room -->
+                            <!--<div class="col-sm-6">
+                                <label for="txt_description" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="txt_description" form="plantPropertyForm"
+                                       th:value="${description}">
+                            </div>-->
+
+                            <legend>Plant Detail</legend>
 
                             <!-- Creator -->
                             <div class="col-sm-6">
@@ -74,15 +85,6 @@
                                 <input type="text" class="form-control" id="txt_name" form="plantPropertyForm"
                                        th:value="${name}">
                             </div>
-
-                            <!-- Room -->
-                            <div class="col-sm-6">
-                                <label for="txt_description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="txt_description" form="plantPropertyForm"
-                                       th:value="${description}">
-                            </div>
-
-                            <legend>Plant Detail</legend>
 
                             <!-- Operator -->
                             <div class="col-sm-6">

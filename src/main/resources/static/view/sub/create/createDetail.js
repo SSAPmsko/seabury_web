@@ -9,13 +9,11 @@ $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
 
-    if ($("#type_picker option:checked").val() == "Site") {
-        $("#parent_picker").attr("disabled", true);
-    }
+
 });
 
 
-$("#type_picker").change(function () {
+/*$("#type_picker").change(function () {
     $('#parent_picker option').remove();
     var type = $("#type_picker option:checked").val();
 
@@ -34,7 +32,7 @@ $("#type_picker").change(function () {
         default:
             break;
     }
-});
+});*/
 
 function loadData() {
     //structure 리스트
@@ -61,7 +59,7 @@ function loadData() {
     });
 }
 
-function pickerLoadData(type) {
+/*function pickerLoadData(type) {
 
 
     switch (type) {
@@ -95,13 +93,11 @@ function pickerLoadData(type) {
             });
         }
     });
-}
+}*/
 
 function InsertPost() {
 
-    formData.id = $('#txt_id').val();
-    formData.type = $('#type_picker').val();
-    formData.description = $('#txt_description').val();
+    var createtype = $('#txt_createtype').val();
     formData.operator = $('#txt_operator').val();
     formData.status = $('#txt_status').val();
     formData.reactorType = $('#txt_reactortype').val();
@@ -110,15 +106,14 @@ function InsertPost() {
     formData.commissionDate = $('#dt_commissiondate').val();
     formData.decommissionDate = $('#dt_decommissiondate').val();
     formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
-    formData.editMode = $('#txt_editMode').val();
     // Update
-    if (formData.type == "Site") {
+    if (createtype == "Site") {
         url = "/siteInsert";
 
-    } else if (formData.type == "Unit") {
+    } else if (createtype == "Unit") {
         url = "/unitInsert";
 
-    } else if (formData.type == "Plant") {
+    } else if (createtype == "Plant") {
         url = "/plantInsert";
     }
 
@@ -132,14 +127,22 @@ function InsertPost() {
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
-            GetId();
+
+            alert('저장이 완료 되었습니다.');
+
+            // 리스트 리로드
+            dg_siteReloadExecute();
+            dg_plantReloadExecute();
+            dg_unitReloadExecute();
+
+
         },
-        error: function (data) {
+        error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
 }
-
+/*
 function GetId() {
     if (formData.type == "Site") {
         idurl = "/getSiteListId";
@@ -163,7 +166,8 @@ function GetId() {
     });
 
 }
-
+*/
+/*
 function StructureInsert() {
     if ($("#type_picker option:checked").val() == "Site") {
     } else if ($("#type_picker option:checked").val() == "Plant") {
@@ -196,7 +200,7 @@ function StructureInsert() {
         }
     });
 
-}
+}*/
 
 function dataGridSaveExecute() {
     InsertPost();

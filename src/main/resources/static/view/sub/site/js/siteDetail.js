@@ -8,13 +8,6 @@ $(document).ready(function () {
 
     $("#parent_picker").attr("disabled", true);
 
-    var editMode = $("#txt_editMode").val();
-
-    if (editMode == 'true') {
-        $('#btn_delete').removeClass("visually-hidden")
-    } else if (editMode == 'false') {
-        $('#btn_delete').addClass("visually-hidden")
-    }
 });
 
 function onLoadedSite(){
@@ -57,25 +50,17 @@ function dg_siteSaveExecute(uniqueId){
     var url;
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
-    formData.date = $('#dt_date' + uniqueId).val();
-    formData.description = $('#txt_description' + uniqueId).val();
-    formData.startDate = $('#dt_startDate' + uniqueId).val();
-    formData.endDate = $('#dt_endDate' + uniqueId).val();
-    formData.createdBy = $('#txt_createdBy' + uniqueId).val();
-    formData.justification = $('#txt_justification' + uniqueId).val();
-    formData.doseLimit = $('#txt_doseLimit' + uniqueId).val();
-    formData.room = $('#txt_room' + uniqueId).val();
+    formData.operator = $('#txt_operator' + uniqueId).val();
+    formData.status = $('#txt_status' + uniqueId).val();
+    formData.reactorType = $('#txt_reactortype' + uniqueId).val();
+    formData.reactorSupplier = $('#txt_reactorsupplier' + uniqueId).val();
+    formData.constructionBegan = $('#dt_constructionbegan' + uniqueId).val();
+    formData.commissionDate = $('#dt_commissiondate' + uniqueId).val();
+    formData.decommissionDate = $('#dt_decommissiondate' + uniqueId).val();
+    formData.thermalCapacity = $('#txt_thermalcapacity' + uniqueId).val();
+    formData.id = $('#txt_siteId' + uniqueId).val();
 
-    formData.editMode = $('#txt_editMode' + uniqueId).val();
-    // Update
-    if (formData.editMode === 'true'){
         url = "/siteUpdate";
-        formData.id = $('#txt_siteId' + uniqueId).val();
-    }
-    // Insert
-    else {
-        url = "/siteInsert";
-    }
 
     $.ajax({
         url : url,
@@ -97,7 +82,6 @@ function dg_siteSaveExecute(uniqueId){
             if (newSiteContainer !== undefined) {
                 var oldId = "_newItem";
 
-                $('#txt_editMode' + oldId).val(true);
                 $('#btn_site_save' + oldId).off("click");
                 $('#btn_site_delete' + oldId).off("click");
                 $('#btn_site_delete' + oldId).removeClass("visually-hidden");
@@ -130,7 +114,7 @@ function dg_siteSaveExecute(uniqueId){
 
 function dg_siteDeleteExecute(uniqueId){
     var formData = {};
-    formData.id = $('#txt_sited' + uniqueId).val();
+    formData.id = $('#txt_siteId' + uniqueId).val();
 
     $.ajax({
         url : "/siteDelete",
@@ -208,7 +192,6 @@ function dataGridSaveExecute() {
     formData.decommissionDate = $('#dt_decommissiondate').val();
     formData.thermalCapacity = $('#txt_thermalcapacity').val();//적용안됌
     formData.name = $('#dt_decommissiondate').val();
-    formData.editMode = $('#txt_editMode').val();
     url = "/siteUpdate";
     formData.id = $('#txt_id').val();
 
