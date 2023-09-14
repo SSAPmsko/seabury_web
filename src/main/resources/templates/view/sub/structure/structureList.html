@@ -4,26 +4,44 @@
       layout:decorate="~{layout/layout}">
 
 <!-- Begin Page Content -->
-<div class="row">
-    <!-- main fragment -->
-    <div class="col" id="page-body" style="margin-top:15px;">
-    <section class="h-100" layout:fragment="content">
-        <div class="row g-2 container-fluid">
-            <div class="col-12 mt-2 mb-2 p-0">
-                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_strucCreateExecute()">
-                    <span class="k-button-icon k-icon k-i-plus"></span>
-                    <span class="k-button-text">Add Project</span>
-                </button>
+<th:block>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid m-0">
+            <div class="col-lg-4 p-0 m-0 row pe-2">
+                <div class="col-12 mt-2 mb-2 p-0">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" style="height: 30px" id="btn_expand">
+                        <span class="k-button-icon k-icon k-i-arrow-end-up"></span>
+                        <span class="k-button-text">Collapse</span>
+                    </button>
 
-                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_strucReloadExecute()">
-                    <span class="k-button-icon k-icon k-i-refresh"></span>
-                </button>
-            </div>
-            <div class="col-lg-5 bd-sidebar border-end my-3" style="width:25rem;">
-                <div id="bt_treeview_div" class="treeview">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" style="height: 30px" id="btn_collapse">
+                        <span class="k-button-icon k-icon k-i-arrow-end-down"></span>
+                        <span class="k-button-text">Expand</span>
+                    </button>
+                </div>
+
+                <div class="col-12 bd-sidebar p-0 h-100">
+                    <div id="bt_treeview_div" class="treeview">
+
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-8" id="dg_structure">
+
+            <div class="col-lg-8 p-0 m-0 row">
+                <div class="col-12 mt-2 mb-2 p-0">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_strucCreateExecute()">
+                        <span class="k-button-icon k-icon k-i-plus"></span>
+                        <span class="k-button-text">Add Structure</span>
+                    </button>
+
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_strucReloadExecute()">
+                        <span class="k-button-icon k-icon k-i-refresh"></span>
+                    </button>
+                </div>
+
+                <div class="col-12 p-0" id="dg_structure">
+
+                </div>
             </div>
         </div>
 
@@ -41,6 +59,5 @@
         <script src="/static/layout/js/sidebars.js"></script>
         <link href="/static/layout/css/sidebars.css" rel="stylesheet">
     </section>
-    </div>
-</div>
+</th:block>
 </html>
