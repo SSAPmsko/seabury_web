@@ -29,10 +29,9 @@ public class StructureServiceImpl implements StructureService {
     }
 
     @Override
-    public int insertStructure(StructureEntity structureEntity) {
-        return sqlSession.insert(STRUCTUREMAPPER_PATH + ".insertStructure", structureEntity);
-
-        //return structureMapper.insertStructure(structureEntity);
+    public int insertStructure(StructureEntity structureEntity) {/*
+        return sqlSession.insert(STRUCTUREMAPPER_PATH + ".insertStructure", structureEntity);*/
+        return structureMapper.insertStructure(structureEntity);
     }
 
     @Override

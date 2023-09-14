@@ -17,13 +17,13 @@ function dg_strucCreateExecute(){
     //location.href = rootName + "Detail";
 
     $.ajax({
-        url : "/createDetailProperties",
+        url : "/structurecreateDetailProperties",
         method : "GET",
         type : "json",
         async : false,
         contentType : "application/json",
         success : function(result) {
-            addDockItem('createDetail_' + 'newItem', 'createDetail_' + 'newItem', 'create/createDetail');
+            addDockItem('structurecreateDetail_' + 'newItem', 'structurecreateDetail_' + 'newItem', 'create/structurecreateDetail');
         },
         error : function(result) {
             alert("정상 처리에 실패 하였습니다.");
@@ -47,9 +47,6 @@ function dg_structureModifyExecute() {
     if ($("#dg_structure").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_structure").data("kendoGrid").getSelectedData()[0].id;
 
-        //location.href = rootName + "Detail?" + "id=" + id;
-        alert("확인")
-
         $.ajax({
             url : "/structureDetailProperties",
             data : {"id" : id},
@@ -59,7 +56,6 @@ function dg_structureModifyExecute() {
             contentType : "application/json",
             success : function(result) {
                 addDockItem('structureDetail_' + id, 'structureDetail_' + id, 'structure/structureDetail', result);
-                alert(result.name);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");
@@ -136,41 +132,3 @@ function dg_structureLoadData() {
     });
 }
 
-function addDockItem(id, title, path, properties){
-
-    var findDockItem = myLayout.root.getItemsById(id);
-
-    // 해당 아이템이 있으면,
-    if (findDockItem.length > 0) {
-
-        var stackPanel = findDockItem[0].parent;
-
-        stackPanel.setActiveContentItem(findDockItem[0]);
-    } else {
-        var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
-
-        if (properties != undefined){
-            htmlStr = htmlStr.replace(/th:value/g,'value');
-
-            for (const [k, v] of Object.entries(properties.result)){
-
-                htmlStr = htmlStr.replace('${' + k + '}' ,v);
-            }
-        }
-
-        var newItemConfig = {
-            id : id,
-            title: title,
-            type: 'component',
-            componentName: 'goldenLayout',
-            componentState: { text: "", htmlStr: htmlStr }
-        };
-
-        // dock panel 이 1개 이상일떄,
-        if (myLayout.root.contentItems[0].contentItems.length > 0){
-            myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
-        } else {
-            myLayout.root.contentItems[0].addChild( newItemConfig );
-        }
-    }
-}
