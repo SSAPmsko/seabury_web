@@ -9,13 +9,14 @@ function onLoadedScenario(){
     //$("#" + rootName).addClass('active');
 
     // 최초 로드시 scenarioId 추출, unique ID 생성
+    var formName = "scenarioPropertyForm";
     var scenarioId = $("#txt_scenarioId").val();
     var uniqueId;
     if (scenarioId !== "" && scenarioId !== "${id}" && scenarioId !== undefined) {
-        uniqueId = "_" + scenarioId;
+        uniqueId = "_" + formName + "_" + scenarioId;
     } else if (scenarioId === "") {
         // create 인 경우
-        uniqueId = "_newItem";
+        uniqueId = "_" + formName + "_newItem";
     }
     // form 의 Id를 Unique 한 Id 변경, 데이터 로드 및 이벤트 처리가 여러번 발생 되지 않도록 제어
     var isFirst = replaceFormId('scenarioPropertyForm', uniqueId);
@@ -97,7 +98,8 @@ function dg_scenarioSaveExecute(uniqueId){
             var newScenarioContainer = myLayout.root.getItemsById('scenarioDetail_newItem');
 
             if (newScenarioContainer !== undefined) {
-                var oldId = "_newItem";
+                var formName = "scenarioPropertyForm";
+                var oldId = "_" + formName + "_newItem";
 
                 $('#txt_editMode' + oldId).val(true);
                 $('#btn_scenario_save' + oldId).off("click");
@@ -108,7 +110,7 @@ function dg_scenarioSaveExecute(uniqueId){
                 newScenarioContainer[0].setTitle('scenarioDetail_' + scenarioId);
                 newScenarioContainer[0].config.id = 'scenarioDetail_' + scenarioId;
 
-                var newId = "_" + scenarioId;
+                var newId = "_" + formName + "_" + scenarioId;
 
                 $('#txt_scenarioId' + oldId).val(scenarioId);
 
