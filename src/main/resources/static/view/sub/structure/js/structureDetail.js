@@ -15,7 +15,6 @@ $(document).ready(function () {
         $("#parent_picker").attr("disabled", true);
     }*/
     var type = $("#type_picker option:checked").val();
-
     pickerLoadData(type);
 
 });

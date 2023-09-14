@@ -10,18 +10,108 @@ $(document).ready(function () {
     $("#create").addClass('active');
 
 });
+$("#type_picker").change(function () {
+    alert("성공")
+    $('#parent_picker option').remove();
+    var type = $("#type_picker option:checked").val();
+
+    pickerLoadData(type);
+
+    /*switch (type) {
+        case "Site":
+            $("#parent_picker").attr("disabled", true);
+            break;
+        case "Plant":
+            $("#parent_picker").attr("disabled", false);
+            break;
+        case "Unit":
+            $("#parent_picker").attr("disabled", false);
+            break;
+        default:
+            break;
+    }*/
+});
+
+function pickerLoadData(type) {
+
+
+    switch (type) {
+        case "Site":
+            formData.type = null;
+            break;
+        case "Plant":
+            formData.type = "Site";
+            break;
+        case "Unit":
+            formData.type = "Plant";
+            break;
+        default:
+            break;
+    }
+    if (formData.type != null)
+    {
+        $.ajax({
+            type: 'POST',
+            url: "/getStructureList",
+            data: JSON.stringify(formData),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            error: function (request, status, error) {
+
+            },
+            success: function (data) {
+                data.forEach(item => {
+                    var parentSelect = $('#parent_picker');
+
+                    parentSelect.append(new Option(item.name, item.objectID, item.type, true));
+                });
+            }
+        });
+
+
+    }
+    //structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/get"+ type +"DetailList",
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+
+                var nameSelect = $('#name_picker');
+                nameSelect.append(new Option(item.name, item.id, item.type, true));
+            });
+        }
+    });
+}
 
 function InsertPost() {
 
-    formData.reactorSupplier = $('#txt_name').val();
-    formData.constructionBegan = $('#txt_description').val();
-    formData.commissionDate = $('#type_picker').val();
-    formData.decommissionDate = $('#parent_picker').val();
-    formData.thermalCapacity = $('#name_picker').val();//적용안됌
-    // Update
-        url = "/structureInsert";
 
-
+    formData.name = $('#txt_name').val();
+    formData.description = $('#txt_description').val();
+    formData.type = $('#type_picker').val();
+    switch (formData.type)
+    {
+        case "Site":
+            formData.parentType = null;
+            break;
+        case "Plant":
+            formData.parentType = "Site";
+            break;
+        case "Unit":
+            formData.parentType = "Plant";
+            break;
+        default:
+            break;
+    }
+    formData.objectID = $('#name_picker').val();
+    formData.parentID = $('#parent_picker').val();
+    url = "/structureInsert";
 
     $.ajax({
         url: url,

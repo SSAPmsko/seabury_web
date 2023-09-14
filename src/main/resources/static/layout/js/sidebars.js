@@ -45,48 +45,7 @@ $(document).ready(function(){
 function dataGridCreateExecute(){
     addDockItem('create','create', 'create/createDetail');
 }
-function addDockItem(id, title, path, properties){
 
-    var findDockItem = myLayout.root.getItemsById(id);
-
-    // 해당 아이템이 있으면,
-    if (findDockItem.length > 0) {
-
-        var stackPanel = findDockItem[0].parent;
-
-        stackPanel.setActiveContentItem(findDockItem[0]);
-
-    } else {
-        var htmlStr = getHtmlTemplate("/templates/view/sub/" + path + ".html");
-
-        if (properties != undefined){
-            htmlStr = htmlStr.replace(/th:value/g,'value');
-
-
-            for (const [k, v] of Object.entries(properties.result)){
-           /*     alert(k);
-                alert(v);*/
-
-                htmlStr = htmlStr.replace('${' + k + '}' ,v);
-            }
-        }
-
-        var newItemConfig = {
-            id : id,
-            title: title,
-            type: 'component',
-            componentName: 'goldenLayout',
-            componentState: { text: "", htmlStr: htmlStr }
-        };
-
-        // dock panel 이 1개 이상일떄,
-        if (myLayout.root.contentItems[0].contentItems.length > 0){
-            myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
-        } else {
-            myLayout.root.contentItems[0].addChild( newItemConfig );
-        }
-    }
-}
 function initBootstrapTree(treeData){
     // Bootstrap Tree init
     $('#bt_treeview_div').treeview({

@@ -6,22 +6,23 @@
 <div class="row">
     <!-- main fragment -->
     <div class="col" id="page-body" style="margin-top:15px;">
+        <form id="unitPropertyForm" name="unitPropertyForm"></form>
         <section layout:fragment="content">
             <div class="row g-2 container-fluid">
                 <div class="visually-hidden">
-                    <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
-                    <input type="text" class="form-control" id="txt_unitId" th:value="${id}">
+                    <input type="text" class="form-control" form="unitPropertyForm" id="txt_editMode" th:value="${editMode}">
+                    <input type="text" class="form-control" form="unitPropertyForm" id="txt_unitId" th:value="${id}">
                     <!--<input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">-->
                 </div>
                 <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
                     <h6 class="h2">Unit</h6>
                     <div class="btn-toolbar">
-                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button"  style="height: 30px" id="btn_project_save">
+                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_save">
                             <span class="k-button-icon k-icon k-i-save"></span>
                             <span class="k-button-text">Save</span>
                         </button>
 
-                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button"  style="height: 30px" id="btn_project_delete">
+                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_delete">
                             <span class="k-button-icon k-icon k-i-delete"></span>
                             <span class="k-button-text">Delete</span>
                         </button>
@@ -73,62 +74,62 @@
                             <!-- Creator -->
                             <div class="col-sm-6">
                                 <label for="txt_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="txt_name"
+                                <input type="text" class="form-control" id="txt_name" form="unitPropertyForm"
                                        th:value="${name}">
                             </div>
                             <!-- Operator -->
                             <div class="col-sm-6">
                                 <label for="txt_operator" class="form-label">Operator</label>
-                                <input type="text" class="form-control" id="txt_operator"
+                                <input type="text" class="form-control" id="txt_operator" form="unitPropertyForm"
                                        th:value="${operator}">
                             </div>
 
                             <!-- Status -->
                             <div class="col-sm-6">
                                 <label for="txt_status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="txt_status"
+                                <input type="text" class="form-control" id="txt_status" form="unitPropertyForm"
                                        th:value="${status}">
                             </div>
 
                             <!-- Reactor type -->
                             <div class="col-sm-6">
                                 <label for="txt_reactortype" class="form-label">Reactor type</label>
-                                <input type="text" class="form-control" id="txt_reactortype"
+                                <input type="text" class="form-control" id="txt_reactortype" form="unitPropertyForm"
                                        th:value="${reactorType}">
                             </div>
 
                             <!-- Reactor supplier -->
                             <div class="col-sm-6">
                                 <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
-                                <input type="text" class="form-control" id="txt_reactorsupplier"
+                                <input type="text" class="form-control" id="txt_reactorsupplier" form="unitPropertyForm"
                                        th:value="${reactorSupplier}">
                             </div>
 
                             <!-- Construction began -->
                             <div class="col-sm-6">
                                 <label for="dt_constructionbegan" class="form-label">Construction began</label>
-                                <input type="date" class="form-control" id="dt_constructionbegan"
+                                <input type="date" class="form-control" id="dt_constructionbegan" form="unitPropertyForm"
                                        th:value="${constructionBegan}">
                             </div>
 
                             <!-- Commission date -->
                             <div class="col-sm-6">
                                 <label for="dt_commissiondate" class="form-label">Commission date</label>
-                                <input type="date" class="form-control" id="dt_commissiondate"
+                                <input type="date" class="form-control" id="dt_commissiondate" form="unitPropertyForm"
                                        th:value="${commissionDate}">
                             </div>
 
                             <!-- Decommission date -->
                             <div class="col-sm-6">
                                 <label for="dt_decommissiondate" class="form-label">Decommission date</label>
-                                <input type="date" class="form-control" id="dt_decommissiondate"
+                                <input type="date" class="form-control" id="dt_decommissiondate" form="unitPropertyForm"
                                        th:value="${decommissionDate}">
                             </div>
 
                             <!-- Thermal capacity -->
                             <div class="col-sm-6">
                                 <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
-                                <input type="text" class="form-control" id="txt_thermalcapacity"
+                                <input type="text" class="form-control" id="txt_thermalcapacity" form="unitPropertyForm"
                                        th:value="${thermalCapacity}">
                             </div>
                         </div>

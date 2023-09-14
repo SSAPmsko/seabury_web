@@ -40,13 +40,21 @@ public class CreateController {
     }
 
     @RequestMapping(value = {"/createDetailProperties"}, method = RequestMethod.GET)
-    public @ResponseBody Map<String, Object> plantDetailProperties(@RequestParam(value = "type", required = false) String type) {
+    public @ResponseBody Map<String, Object> createDetailProperties(@RequestParam(value = "type", required = false) String type) {
         Map<String, Object> result;
         result = new HashMap<>();
         result.put("createtype", type);
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
+    }
+    @RequestMapping(value = {"/structurecreateDetailProperties"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> structurecreateDetailProperties(@RequestParam(value = "id", required = false) Integer id) {
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
 
         return rp;
