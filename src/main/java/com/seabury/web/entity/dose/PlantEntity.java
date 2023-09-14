@@ -3,6 +3,7 @@ package com.seabury.web.entity.dose;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -13,9 +14,9 @@ public class PlantEntity {
     String Operator;
     String ReactorType;
     String ReactorSupplier;
-    Timestamp ConstructionBegan;
-    Timestamp CommissionDate;
-    Timestamp DecommissionDate;
+    Date ConstructionBegan;
+    Date CommissionDate;
+    Date DecommissionDate;
     Float ThermalCapacity;
     String Status;
     String Name;

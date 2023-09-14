@@ -8,14 +8,14 @@ var strucData = {};
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
+
     onLoadedStruc();
+
     /*$("#type_picker option:checked").val() = rp.value.type*/
 
     /*if ($("#type_picker option:checked").val() == "Site") {
         $("#parent_picker").attr("disabled", true);
     }*/
-    var type = $("#type_picker option:checked").val();
-    pickerLoadData(type);
 
 });
 
@@ -36,14 +36,6 @@ function onLoadedStruc(){
     var isFirst = replaceFormId('strucPropertyForm', uniqueId);
 
     if (isFirst === true){
-        var editMode = $("#txt_editMode" + uniqueId).val();
-        if (editMode === 'true') {
-            $('#btn_struc_delete' + uniqueId).removeClass("visually-hidden");
-        } else {
-            $('#btn_struc_delete' + uniqueId).addClass("visually-hidden");
-        }
-
-
         // button event
         $("#btn_struc_save" + uniqueId).on("click", function(e) {
             dg_strucSaveExecute(uniqueId);
@@ -52,30 +44,9 @@ function onLoadedStruc(){
         $("#btn_struc_delete" + uniqueId).on("click", function(e) {
             dg_strucDeleteExecute(uniqueId);
         });
+        pickerLoadData(uniqueId);
     }
 }
-
-$("#type_picker").change(function () {
-    alert("성공")
-    $('#parent_picker option' + uniqueId).remove();
-    var type = $("#type_picker option:checked" + uniqueId).val();
-
-    pickerLoadData(type);
-
-    /*switch (type) {
-        case "Site":
-            $("#parent_picker").attr("disabled", true);
-            break;
-        case "Plant":
-            $("#parent_picker").attr("disabled", false);
-            break;
-        case "Unit":
-            $("#parent_picker").attr("disabled", false);
-            break;
-        default:
-            break;
-    }*/
-});
 
 function loadData() {
     //structure 리스트
@@ -102,9 +73,8 @@ function loadData() {
     });
 }
 
-function pickerLoadData(type) {
-
-
+function pickerLoadData(uniqueId) {
+    var type = $('#txt_type' + uniqueId).val();
     switch (type) {
         case "Site":
             formData.type = null;
@@ -118,6 +88,7 @@ function pickerLoadData(type) {
         default:
             break;
     }
+
     //structure 리스트
     $.ajax({
         type: 'POST',
@@ -126,13 +97,13 @@ function pickerLoadData(type) {
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         error: function (request, status, error) {
-
         },
         success: function (data) {
-            data.forEach(item => {
-                var parentSelect = $('#parent_picker' + uniqueId);
+            var parentSelect = $('#parent_picker' + uniqueId);
 
-                parentSelect.append(new Option(item.name, item.objectID, item.type, true));
+            data.forEach(item => {
+
+                parentSelect.append(new Option(item.name, item.objectID, true, true));
             });
         }
     });
