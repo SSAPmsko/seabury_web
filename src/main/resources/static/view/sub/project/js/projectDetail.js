@@ -9,13 +9,14 @@ function onLoadedProject(){
     //$("#" + rootName).addClass('active');
 
     // 최초 로드시 projectId 추출, unique ID 생성
+    var formName = "projectPropertyForm";
     var projectId = $("#txt_projectId").val();
     var uniqueId;
     if (projectId !== "" && projectId !== "${id}" && projectId !== undefined) {
-        uniqueId = "_" + projectId;
+        uniqueId = "_" + formName + "_" + projectId;
     } else if (projectId === "") {
         // create 인 경우
-        uniqueId = "_newItem";
+        uniqueId = "_" + formName + "_newItem";
     }
     // form 의 Id를 Unique 한 Id 변경, 데이터 로드 및 이벤트 처리가 여러번 발생 되지 않도록 제어
     var isFirst = replaceFormId('projectPropertyForm', uniqueId);
@@ -94,7 +95,8 @@ function dg_projectSaveExecute(uniqueId){
             var newProjectContainer = myLayout.root.getItemsById('projectDetail_newItem');
 
             if (newProjectContainer !== undefined) {
-                var oldId = "_newItem";
+                var formName = "projectPropertyForm";
+                var oldId = "_" + formName + "_newItem";
 
                 $('#txt_editMode' + oldId).val(true);
                 $('#btn_project_save' + oldId).off("click");
@@ -105,7 +107,7 @@ function dg_projectSaveExecute(uniqueId){
                 newProjectContainer[0].setTitle('projectDetail_' + projectId);
                 newProjectContainer[0].config.id = 'projectDetail_' + projectId;
 
-                var newId = "_" + projectId;
+                var newId = "_" + formName + "_" + projectId;
 
                 $('#txt_projectId' + oldId).val(projectId);
 
