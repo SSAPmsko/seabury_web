@@ -8,29 +8,24 @@ var strucData = {};
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
+    startpicker();
 
+    $("#type_picker").on("click", function(e) {
+        $('#parent_picker option').remove();
+        var type = $("#type_picker option:checked").val();
+
+        pickerLoadData(type);
+    });
+    $("#btn_structure_create").on("click", function(e) {
+        InsertPost();
+    });
 });
-$("#type_picker").change(function () {
-    alert("성공")
+function startpicker(){
     $('#parent_picker option').remove();
-    var type = $("#type_picker option:checked").val();
+    var type = "Site";
 
     pickerLoadData(type);
-
-    /*switch (type) {
-        case "Site":
-            $("#parent_picker").attr("disabled", true);
-            break;
-        case "Plant":
-            $("#parent_picker").attr("disabled", false);
-            break;
-        case "Unit":
-            $("#parent_picker").attr("disabled", false);
-            break;
-        default:
-            break;
-    }*/
-});
+}
 
 function pickerLoadData(type) {
 
@@ -65,6 +60,7 @@ function pickerLoadData(type) {
 
                     parentSelect.append(new Option(item.name, item.objectID, item.type, true));
                 });
+
             }
         });
 
@@ -80,6 +76,7 @@ function pickerLoadData(type) {
 
         },
         success: function (data) {
+            $('#name_picker option').remove();
             data.forEach(item => {
 
                 var nameSelect = $('#name_picker');
@@ -195,7 +192,5 @@ function StructureInsert() {
 
 }*/
 
-function dataGridSaveExecute() {
-    InsertPost();
-}
+
 

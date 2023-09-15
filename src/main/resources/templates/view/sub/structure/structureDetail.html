@@ -51,15 +51,7 @@
 							<input type="text" class="form-control" id="txt_description" form="strucPropertyForm" th:value="${description}">
 						</div>
 
-						<!--<div class="col-sm-6">
-							<label  class="form-label">Type</label>
-							&lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
-							<select class="form-select" aria-label="Default select example" id="type_picker" form="strucPropertyForm" th:value="${type}">
-								<option  value="Site">Site</option>
-								<option  value="Plant">Plant</option>
-								<option  value="Unit">Unit</option>
-							</select>
-						</div>-->
+						<!-- Type -->
 						<div class="col-sm-6">
 							<label for="txt_type" class="form-label">Type</label>
 							<input type="text" class="form-control" id="txt_type" form="strucPropertyForm" th:value="${type}" disabled>
@@ -69,7 +61,7 @@
 						<div class="col-sm-6">
 							<label  class="form-label">Parent Name</label>
 							<!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
-							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="parent_picker" >
+							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="parent_picker" th:value="${parentID}">
 
 							</select>
 						</div>
@@ -78,7 +70,7 @@
 						<legend>Structure Detail</legend>
 						<!-- Operator -->
 						<div class="col-sm-6">
-							<label  class="form-label">Parent Name</label>
+							<label  class="form-label">Object Name</label>
 							<!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
 							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="name_picker" >
 

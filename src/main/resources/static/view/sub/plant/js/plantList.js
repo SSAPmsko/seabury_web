@@ -72,7 +72,6 @@ function dg_plantModifyExecute(){
             contentType : "application/json",
             success : function(result) {
                 addDockItem('plantDetail_' + plantId, 'plantDetail_' + plantId, 'plant/plantDetail', result);
-                alert("성공")
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

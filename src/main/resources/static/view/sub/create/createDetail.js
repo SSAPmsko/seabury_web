@@ -8,7 +8,9 @@ var strucData = {};
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
-
+    $("#btn_create").on("click", function(e) {
+        InsertPost();
+    });
 
 });
 
@@ -202,7 +204,4 @@ function StructureInsert() {
 
 }*/
 
-function dataGridSaveExecute() {
-    InsertPost();
-}
 
