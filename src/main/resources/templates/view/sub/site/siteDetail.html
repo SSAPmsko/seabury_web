@@ -108,13 +108,13 @@
             <!-- Commission date -->
             <div class="col-sm-6">
               <label for="dt_commissiondate" class="form-label">Commission date</label>
-              <input type="date" class="form-control" id="dt_commissiondate" th:value="${commissionDate}" form="sitePropertyForm">
+              <input type="date" class="form-control" required pattern="\d{4}-\d{2}-\d{2}" id="dt_commissiondate" th:value="${commissionDate}" form="sitePropertyForm">
             </div>
 
             <!-- Decommission date -->
             <div class="col-sm-6">
               <label for="dt_decommissiondate" class="form-label">Decommission date</label>
-              <input type="date" class="form-control" id="dt_decommissiondate" th:value="${decommissionDate}" form="sitePropertyForm">
+              <input type="datetime-local" class="form-control" id="dt_decommissiondate" th:value="${decommissionDate}" form="sitePropertyForm">
             </div>
 
             <!-- Thermal capacity -->
