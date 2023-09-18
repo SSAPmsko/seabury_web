@@ -10,6 +10,8 @@
 			<div class="visually-hidden">
 				<input type="text" class="form-control" id="txt_editMode" form="strucPropertyForm" th:value="${editMode}">
 				<input type="text" class="form-control" id="txt_strucId" form="strucPropertyForm" th:value="${id}">
+				<input type="text" class="form-control" id="txt_parentId" form="strucPropertyForm" th:value="${parentID}">
+				<input type="text" class="form-control" id="txt_objectId" form="strucPropertyForm" th:value="${objectID}">
 
 
 			</div>
@@ -61,7 +63,7 @@
 						<div class="col-sm-6">
 							<label  class="form-label">Parent Name</label>
 							<!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
-							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="parent_picker" th:value="${parentID}">
+							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="parent_picker">
 
 							</select>
 						</div>
@@ -72,7 +74,7 @@
 						<div class="col-sm-6">
 							<label  class="form-label">Object Name</label>
 							<!--<input type="text" class="form-control" id="txt_parent" th:value="${parent}">-->
-							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="name_picker" >
+							<select class="form-select" aria-label="Default select example" form="strucPropertyForm" id="name_picker">
 
 							</select>
 						</div>
