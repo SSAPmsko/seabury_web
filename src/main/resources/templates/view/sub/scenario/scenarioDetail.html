@@ -140,39 +140,158 @@
                     </div>
 
                     <div class="tab-pane fade" id="workpackContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workpackTab">
-                        <div class="col" id="dg_scenario_workpack" form="scenarioPropertyForm">
 
+                        <div class="" id="dg_scenario_workpack" form="scenarioPropertyForm">
+
+                        </div>
+
+                        <div class="mt-3 row">
+                            <div class="col-12">
+                                <h3>Accumulated Collective Dose</h3>
+                                <canvas id="chart_line_01" form="scenarioPropertyForm">
+
+                                </canvas>
+                            </div>
+
+
+                            <div class="col-12">
+                                <h3>Accumulated Collective Dose Step</h3>
+                                <canvas id="chart_bar_01" form="scenarioPropertyForm">
+
+                                </canvas>
+                            </div>
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="equipmentContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="equipmentTab">
-                        <div class="col" id="dg_scenario_equipment" form="scenarioPropertyForm">
+                        <div id="dg_scenario_equipment" form="scenarioPropertyForm">
 
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="workerContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workerCTab">
-                        <div class="col" id="dg_scenario_worker" form="scenarioPropertyForm">
+                        <div id="dg_scenario_worker" form="scenarioPropertyForm">
 
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="sourceContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="sourceTab">
-                        <div class="col" id="dg_scenario_source" form="scenarioPropertyForm">
+                        <div id="dg_scenario_source" form="scenarioPropertyForm">
 
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="shieldContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="shieldTab">
-                        <div class="col" id="dg_scenario_shield" form="scenarioPropertyForm">
+                        <div id="dg_scenario_shield" form="scenarioPropertyForm">
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Sample Chart Data -->
+        <script>
+            const sample_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+
+            const labels_01 = ['16:41:00', '16:41:30', '16:42:00', '16:42:30', '16:43:00', '16:43:30', '16:44:00', '16:44:30', '16:45:00', '16:45:30', '16:46:00', '16:46:30', '16:47:00',];
+            const dataPoints_01_01 = [0, 0, 0, 0.004, 0.009, 0.019, 0.033, 0.0505, 0.0705, 0.0905, 0.1105, 0.1305, 0.1505,];
+            const dataPoints_01_02 = [0, 0.2, 0.25, 0.26, 0.274, 0.2925, 0.3125, 0.337, 0.364, 0.394, 0.427, 0.461, 0.495,];
+            const dataPoints_01_03 = [0, 0, 0.003, 0.007, 0.012, 0.022, 0.036, 0.0535, 0.0735, 0.0935, 0.1135, 0.1335, 0.1535,];
+            const dataPoints_01_04 = [0, 0, 0, 0.002, 0.004, 0.006, 0.012, 0.018, 0.024, 0.03, 0.036, 0.042, 0.048];
+
+            const labels_02 =['Remove reactor lid', 'Remove hot piece 1', 'Remove hot piece 2', 'Place container lid', 'Place container on trolley', 'Remove trolley','Close reactor lid', ];
+            const dataPoints_02_01 = [0, 0.008, 0.003, 0.001, 0, 0, 0];
+
+            // Graphs
+            const div_chart_line_01 = document.getElementById('chart_line_01');
+
+            // eslint-disable-next-line no-unused-vars
+            const sample_chart_line_01 = new Chart(div_chart_line_01, {
+                type: 'line',
+                data: {
+                    labels: labels_01,
+                    datasets: [
+                        {
+                            label: 'Supervisor1_AccumulatedDose',
+                            data: dataPoints_01_01,
+                            borderColor: sample_colors[0],
+                            backgroundColor: sample_colors[0],
+                            fill: false,
+                            pointBorderColor: 'rgba(0, 0, 0, 0)',
+                            /*cubicInterpolationMode: 'monotone',*/
+                            tension: 0.2,
+                        },
+                        {
+                            label: 'Supervisor2_AccumulatedDose',
+                            data: dataPoints_01_02,
+                            borderColor: sample_colors[1],
+                            backgroundColor: sample_colors[1],
+                            fill: false,
+                            pointBorderColor: 'rgba(0, 0, 0, 0)',
+                            /*cubicInterpolationMode: 'monotone',*/
+                            tension: 0.2,
+                        },
+                        {
+                            label: 'Worker1_AccumulatedDose',
+                            data: dataPoints_01_03,
+                            borderColor: sample_colors[2],
+                            backgroundColor: sample_colors[2],
+                            fill: false,
+                            pointBorderColor: 'rgba(0, 0, 0, 0)',
+                            /*cubicInterpolationMode: 'monotone',*/
+                            tension: 0.2,
+                        },
+                        {
+                            label: 'Worker2_AccumulatedDose',
+                            data: dataPoints_01_04,
+                            borderColor: sample_colors[3],
+                            backgroundColor: sample_colors[3],
+                            fill: false,
+                            pointBorderColor: 'rgba(0, 0, 0, 0)',
+                            /*cubicInterpolationMode: 'monotone',*/
+                            tension: 0.2,
+                        }
+                    ]
+                }
+            })
+
+            // Graphs
+            const div_chart_bar_01 = document.getElementById('chart_bar_01');
+
+            const sample_chart_bar_01 = new Chart(div_chart_bar_01, {
+                type: 'bar',
+                data: {
+                    labels: labels_02,
+                    datasets: [{
+                            label: 'Accumulated collective dose per step',
+                            data: dataPoints_02_01,
+                            backgroundColor: '#E34234'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                        }
+                    }
+                },
+            })
+
+        </script>
+
         <!-- Custom styles for this template -->
         <script src="/static/view/sub/scenario/js/scenarioDetail.js"></script>
+
+        <!-- Chart -->
+        <!--
+        <script src="/plugin/c3js-0.7.20/js/c3.min.js"></script>
+        <link href="/plugin/c3js-0.7.20/css/c3.min.css" rel="stylesheet">
+        -->
     </section>
 </th:block>
 </html>
