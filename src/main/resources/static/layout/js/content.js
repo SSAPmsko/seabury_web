@@ -16,14 +16,14 @@ var config = {
         isClosable: false,
         content: [
             {
-                title: 'Structure',
+                title: '목록',
                 type:'component',
                 width: 35,
                 componentName: 'goldenLayout',
                 componentState: { text: 'root', htmlStr: getHtmlTemplate("/templates/view/sub/structure/structureList.html")}
             },
             {
-                title: 'main',
+                title: 'Dashboard',
                 type:'component',
                 componentName: 'goldenLayout',
                 componentState: { text: "", htmlStr: getHtmlTemplate("/templates/view/main/index.html")}
