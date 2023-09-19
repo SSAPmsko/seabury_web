@@ -87,7 +87,7 @@ function dg_siteSaveExecute(uniqueId){
                 $('#btn_site_delete' + oldId).removeClass("visually-hidden");
 
                 var siteId = data.result.id;
-                newSiteContainer[0].setTitle('siteDetail_' + siteId);
+                newSiteContainer[0].setTitle(formData.name);
                 newSiteContainer[0].config.id = 'siteDetail_' + siteId;
 
                 var newId = "_" + siteId;

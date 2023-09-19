@@ -82,7 +82,7 @@ function dg_unitSaveExecute(uniqueId){
                 $('#btn_unit_delete' + oldId).removeClass("visually-hidden");
 
                 var unitId = data.result.id;
-                newUnitContainer[0].setTitle('unitDetail_' + unitId);
+                newUnitContainer[0].setTitle(formData.name);
                 newUnitContainer[0].config.id = 'unitDetail_' + unitId;
 
                 var newId = "_" + unitId;
