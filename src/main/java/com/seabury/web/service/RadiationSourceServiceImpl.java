@@ -48,4 +48,9 @@ public class RadiationSourceServiceImpl implements RadiationSourceService {
 	public List<ND_103_W_Entity> getND103_W_List(Map<String, String> ParamSelect) {
 		return integratedSqlSession.selectList(INTEGRATED_RADIATIONSOURCEMAPPER_PATH + ".GetND103_W_List", ParamSelect);
 	}
+
+	@Override
+	public List<NuclearEntity> getNuclearDataList() {
+		return integratedSqlSession.selectList(INTEGRATED_RADIATIONSOURCEMAPPER_PATH + ".GetNuclearDataList");
+	}
 }
