@@ -32,6 +32,7 @@ function dg_workpackModifyExecute(){
     if ($("#dg_workpack").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].scenarioId;
+        var workpackName = $("#dg_workpack").data("kendoGrid").getSelectedData()[0].name;
         
         //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
 
@@ -42,7 +43,7 @@ function dg_workpackModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('workpackDetail_' + id, 'workpackDetail_' + id, 'workpack/workpackDetail', result);
+                addDockItem('workpackDetail_' + id, workpackName, 'workpack/workpackDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

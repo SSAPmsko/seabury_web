@@ -63,7 +63,7 @@ function initBootstrapTree(treeData){
                 async : false,
                 contentType : "application/json",
                 success : function(result) {
-                    addDockItem(node.type +'Detail_' + node.tags[0], node.type +'Detail_' + node.tags[0], node.type+ '/'+ node.type +'Detail', result);
+                    addDockItem(node.type +'Detail_' + node.tags[0], node.text, node.type+ '/'+ node.type +'Detail', result);
                 },
                 error : function(result) {
                     alert("정상 처리에 실패 하였습니다.");

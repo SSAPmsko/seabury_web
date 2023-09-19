@@ -32,6 +32,7 @@ function dg_sourceModifyExecute(){
     if ($("#dg_source").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_source").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_source").data("kendoGrid").getSelectedData()[0].scenarioId;
+        var sourceName = $("#dg_source").data("kendoGrid").getSelectedData()[0].name;
         //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
 
         $.ajax({
@@ -41,7 +42,7 @@ function dg_sourceModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('sourceDetail_' + id, 'sourceDetail_' + id, 'source/sourceDetail', result);
+                addDockItem('sourceDetail_' + id, sourceName, 'source/sourceDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");
