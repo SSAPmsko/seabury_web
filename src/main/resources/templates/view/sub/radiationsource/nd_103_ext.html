@@ -36,7 +36,13 @@
 
 	function LoadRadiationSource() {
 		$("#grid_103_ext").kendoGrid({
-            columns: [{
+            columns: [
+                {
+                    field: "nuclide",
+                    title: "Nuclide",
+                    width: 240
+                },
+                {
                 field: "y1_yr_old",
                 title: "y1 yr old",
                 width: 240
@@ -49,11 +55,7 @@
             }, {
                 field: "y15_yr_old",
                 title: "y15 yr old",
-            }, {
-                field: "nuclide",
-                title: "Nuclide",
-                width: 150
-	        }],
+            }],
             dataSource: {
                 transport: {
                     read: function(options){
@@ -78,11 +80,11 @@
                 schema: {
                     model: {
                         fields: {
+                            nuclide: { type: "string" },
                             y1_yr_old: { type: "number" },
                             y5_yr_old: { type: "number" },
                             y10_yr_old: { type: "number" },
-                            y15_yr_old: { type: "number" },
-                            nuclide: { type: "string" }
+                            y15_yr_old: { type: "number" }
                         }
                     }
                 },

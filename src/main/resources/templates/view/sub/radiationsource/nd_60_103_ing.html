@@ -42,6 +42,7 @@
 	function LoadRadiationSource() {
 		$("#grid_60_103_ing").kendoGrid({
             columns: [
+                { field: "nuclide" },
                 { field: "half_life1" },
                 { field: "half_life2" },
                 { field: "half_life2unit" }
@@ -70,6 +71,7 @@
                 schema: {
                     model: {
                         fields: {
+                            nuclide: { type: "string" },
                             half_life1: { type: "string" },
                             half_life2: { type: "number" },
                             half_life2unit: { type: "string" }

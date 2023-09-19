@@ -37,6 +37,11 @@
 	function LoadRadiationSource() {
 		$("#grid_60_ext").kendoGrid({
 		   columns: [{
+               field: "nuclide",
+               title: "Nuclide",
+               width: 240
+           },
+               {
 	            field: "adrenals",
 	            title: "adrenals",
 	            width: 240
@@ -78,6 +83,7 @@
 	          schema: {
 	  	        model: {
 	  	            fields: {
+                        nuclide: { type: "string" },
 	  	            	adrenals: { type: "number" },
 	                	bladder_wall: { type: "number" },
 	                	bone_surface: { type: "number" },
