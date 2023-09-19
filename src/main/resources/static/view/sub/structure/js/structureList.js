@@ -46,6 +46,7 @@ function dg_structureDeleteExecute(){
 function dg_structureModifyExecute() {
     if ($("#dg_structure").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_structure").data("kendoGrid").getSelectedData()[0].id;
+        var structureName = $("#dg_structure").data("kendoGrid").getSelectedData()[0].name;
 
         $.ajax({
             url : "/structureDetailProperties",
@@ -55,7 +56,7 @@ function dg_structureModifyExecute() {
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('structureDetail_' + id, 'structureDetail_' + id, 'structure/structureDetail', result);
+                addDockItem('structureDetail_' + id, structureName, 'structure/structureDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

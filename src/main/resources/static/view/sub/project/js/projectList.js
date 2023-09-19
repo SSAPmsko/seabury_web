@@ -49,6 +49,7 @@ function dg_projectDeleteExecute(){
 function dg_projectModifyExecute(){
     if ($("#dg_project").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_project").data("kendoGrid").getSelectedData()[0].id;
+        var projectName = $("#dg_project").data("kendoGrid").getSelectedData()[0].name;
 
         //location.href = rootName + "Detail?" + "id=" + id;
 
@@ -59,7 +60,7 @@ function dg_projectModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('projectDetail_' + id, 'projectDetail_' + id, 'project/projectDetail', result);
+                addDockItem('projectDetail_' + id, projectName, 'project/projectDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

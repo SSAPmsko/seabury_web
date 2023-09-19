@@ -21,14 +21,14 @@ $("#plant_picker").change(function () {
 
     switch (type) {
         case "Site":
-            addDockItem('site', 'siteList', 'site/siteList')
+            addDockItem('site', '사이트 목록', 'site/siteList')
             break;
         case "Plant":
-            addDockItem('plant', 'plantList', 'plant/plantList')
+            addDockItem('plant', '플랜트 목록', 'plant/plantList')
 
             break;
         case "Unit":
-            addDockItem('unit', 'unitList', 'unit/unitList')
+            addDockItem('unit', '유닛 목록', 'unit/unitList')
 
             break;
         default:
@@ -61,6 +61,7 @@ function dg_plantCreateExecute(){
 function dg_plantModifyExecute(){
     if ($("#dg_plant").data("kendoGrid").getSelectedData().length > 0){
         var plantId = $("#dg_plant").data("kendoGrid").getSelectedData()[0].id;
+        var plantName = $("#dg_plant").data("kendoGrid").getSelectedData()[0].name;
 
 
         $.ajax({
@@ -71,7 +72,7 @@ function dg_plantModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('plantDetail_' + plantId, 'plantDetail_' + plantId, 'plant/plantDetail', result);
+                addDockItem('plantDetail_' + plantId, plantName, 'plant/plantDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");
