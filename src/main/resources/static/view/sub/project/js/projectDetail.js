@@ -104,7 +104,7 @@ function dg_projectSaveExecute(uniqueId){
                 $('#btn_project_delete' + oldId).removeClass("visually-hidden");
 
                 var projectId = data.result.id;
-                newProjectContainer[0].setTitle('projectDetail_' + projectId);
+                newProjectContainer[0].setTitle($('#txt_name' + uniqueId).val());
                 newProjectContainer[0].config.id = 'projectDetail_' + projectId;
 
                 var newId = "_" + formName + "_" + projectId;
