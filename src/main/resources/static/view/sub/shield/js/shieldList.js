@@ -32,6 +32,7 @@ function dg_shieldModifyExecute(){
     if ($("#dg_shield").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_shield").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_shield").data("kendoGrid").getSelectedData()[0].scenarioId;
+        var shieldName = $("#dg_shield").data("kendoGrid").getSelectedData()[0].name;
 
         //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
 
@@ -42,7 +43,7 @@ function dg_shieldModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('shieldDetail_' + id, 'shieldDetail_' + id, 'shield/shieldDetail', result);
+                addDockItem('shieldDetail_' + id, shieldName, 'shield/shieldDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

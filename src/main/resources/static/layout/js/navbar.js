@@ -44,8 +44,15 @@ function addDockItem(id, title, path, properties){
         };
 
         // dock panel 이 1개 이상일떄,
-        if (myLayout.root.contentItems[0].contentItems.length > 0){
-            myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
+        var dockPanelCount = myLayout.root.contentItems[0].contentItems.length;
+        if(dockPanelCount === 1){
+        }
+
+        if (dockPanelCount > 1){
+            //alert(dockPanelCount);
+            // 기존 코드 첫번째 dockPanel에 넣음
+            //myLayout.root.contentItems[0].contentItems[0].addChild( newItemConfig );
+            myLayout.root.contentItems[0].contentItems[dockPanelCount - 1].addChild( newItemConfig );
         } else {
             myLayout.root.contentItems[0].addChild( newItemConfig );
         }

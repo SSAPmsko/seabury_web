@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block>
+  <section class="h-100" style="overflow:auto" layout:fragment="content">
+    <div class="container-fluid">
+      <div id="dg_NuclearData" style="margin-top:15px;"></div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        LoadNuclearData();
+      });
+
+      function LoadNuclearData() {
+        $("#dg_NuclearData").kendoGrid({
+          columns: [
+            { field: "element_name" },
+            { field: "nuclide" },
+            { field: "weight_or_level_energy" },
+            { field: "spin_and_parity" },
+            { field: "abundance" },
+            { field: "half_life" },
+            { field: "sig_J32" },
+            { field: "sig_J33" },
+            { field: "sig_J40" }
+          ],
+          dataSource: {
+            transport: {
+              read: function(options){
+                $.ajax({
+                  url : "/getNuclearDataList",
+                  method : "GET",
+                  type : "json",
+                  async : false,
+                  contentType : "application/json",
+                  success: function(result) {
+                    options.success(result);
+                  },
+                  error: function(result) {
+                    options.error(result);
+                  }
+                });
+              }
+            },
+            schema: {
+              model: {
+                fields: {
+                  element_name: { type: "string" },
+                  nuclide: { type: "string" },
+                  weight_or_level_energy: { type: "string" },
+                  spin_and_parity: { type: "string" },
+                  abundance: { type: "string" },
+                  half_life: { type: "string" },
+                  sig_J32: { type: "string" },
+                  sig_J33: { type: "string" },
+                  sig_J40: { type: "string" }
+                }
+              }
+            },
+            pageSize: 100,
+            //serverPaging: true,
+            //serverFiltering: true,
+            //serverSorting: true
+          },
+          selectable: "row",
+          scrollable: false,
+          filterable: true,
+          sortable: true,
+          resizable: true,
+          pageable: true
+        });
+      }
+    </script>
+  </section>
+</th:block>
+</html>

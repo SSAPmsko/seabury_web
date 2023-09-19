@@ -144,4 +144,11 @@ public class RadiationSourceController {
 
 		return ND_103_EXT_List;
 	}
+
+	@GetMapping(value="/getNuclearDataList")
+	public @ResponseBody List<NuclearEntity> getNuclearDataList(HttpServletRequest request, HttpServletResponse response) {
+		List<NuclearEntity> NuclearDataList = radiationsourceService.getNuclearDataList();
+
+		return NuclearDataList;
+	}
 }

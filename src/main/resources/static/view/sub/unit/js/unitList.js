@@ -20,14 +20,14 @@ $("#unit_picker").change(function () {
 
     switch (type) {
         case "Site":
-            addDockItem('site', 'siteList', 'site/siteList')
+            addDockItem('site', '사이트 목록', 'site/siteList')
             break;
         case "Plant":
-            addDockItem('plant', 'plantList', 'plant/plantList')
+            addDockItem('plant', '플랜트 목록', 'plant/plantList')
 
             break;
         case "Unit":
-            addDockItem('unit', 'unitList', 'unit/unitList')
+            addDockItem('unit', '유닛 목록', 'unit/unitList')
 
             break;
         default:
@@ -60,7 +60,7 @@ function dg_unitCreateExecute(){
 function dg_unitModifyExecute(){
     if ($("#dg_unit").data("kendoGrid").getSelectedData().length > 0){
         var unitId = $("#dg_unit").data("kendoGrid").getSelectedData()[0].id;
-
+        var unitName = $("#dg_unit").data("kendoGrid").getSelectedData()[0].name;
 
         $.ajax({
             url : "/unitDetailProperties",
@@ -70,7 +70,7 @@ function dg_unitModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('unitDetail_' + unitId, 'unitDetail_' + unitId, 'unit/unitDetail', result);
+                addDockItem('unitDetail_' + unitId, unitName, 'unit/unitDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

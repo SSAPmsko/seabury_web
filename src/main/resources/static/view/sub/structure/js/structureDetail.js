@@ -100,10 +100,17 @@ function pickerLoadData(uniqueId) {
         },
         success: function (data) {
             var parentSelect = $('#parent_picker' + uniqueId);
-
             data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
 
-                parentSelect.append(new Option(item.name, item.objectID, true, true));
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
             });
         }
     });
@@ -118,8 +125,15 @@ function pickerLoadData(uniqueId) {
         success: function (data) {
             data.forEach(item => {
                 var nameSelect = $('#name_picker' + uniqueId);
+                var objectid = $("#txt_objectId"+ uniqueId).val();
 
-                nameSelect.append(new Option(item.name, item.id, true, true));
+                if (objectid == item.id)
+                {
+                    nameSelect.append(new Option(item.name, item.id, true, true));
+                }
+                else{
+                    nameSelect.append(new Option(item.name, item.id, false, false));
+                }
             });
         }
     });

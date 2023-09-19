@@ -4,43 +4,51 @@
       layout:decorate="~{layout/Layout}">
 
 <!-- Begin Page Content -->
-<div class="row">
-  <!-- main fragment -->
-  <div class="col" id="page-body" style="margin-top:15px;">
-  <section class="h-100" layout:fragment="content">
-    <div class="row g-2 container-fluid">
-      <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center  pb-2 border-bottom">
+<th:block>
+    <!-- main fragment -->
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row m-0 container-fluid">
+            <div class="col-lg-12 p-0 m-0">
+                <div class="col-12 mt-2 mb-2 p-0 row">
+                    <div class="col-6">
+                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" style="height: 30px"
+                                onclick="dg_plantCreateExecute()">
+                            <span class="k-button-icon k-icon k-i-plus"></span>
+                            <span class="k-button-text">Add Plant</span>
+                        </button>
+
+                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3"
+                                type="button" style="height: 30px" onclick="dg_plantReloadExecute()">
+                            <span class="k-button-icon k-icon k-i-refresh"></span>
+                        </button>
+                        </div>
 
 
-      <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" onclick="dg_plantCreateExecute()">
-          <span class="k-button-icon k-icon k-i-plus"></span>
-          <span class="k-button-text">Add Plant</span>
-        </button>
+                    <div class="col-6 ms-auto">
+                        <select class="form-select pb-0 pt-0 ms-4" aria-label="Default select example" id="plant_picker" style="height: 30px">
+                            <option value="Site">Site</option>
+                            <option selected value="Plant">Plant</option>
+                            <option value="Unit">Unit</option>
+                        </select>
+                    </div>
 
-        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" style="height: 30px" onclick="dg_plantReloadExecute()">
-          <span class="k-button-icon k-icon k-i-refresh"></span>
-        </button>
-        <!--<a href="#" class="btn btn-primary" onclick="dg_plantCreateExecute();">Create</a>
-        <a href="#" class="btn btn-primary" onclick="dg_plantModifyExecute();">Modify</a>
-        <a href="#" class="btn btn-danger mx-3" onclick="dg_plantDeleteExecute();">Delete</a>-->
-        <select class="form-select" aria-label="Default select example" id="plant_picker">
-          <option  value="Site">Site</option>
-          <option selected  value="Plant">Plant</option>
-          <option  value="Unit">Unit</option>
-        </select>
+                    <!--<a href="#" class="btn btn-primary" onclick="dg_plantCreateExecute();">Create</a>
+                    <a href="#" class="btn btn-primary" onclick="dg_plantModifyExecute();">Modify</a>
+                    <a href="#" class="btn btn-danger mx-3" onclick="dg_plantDeleteExecute();">Delete</a>-->
 
-      </div>
 
-      <div class="col" id="dg_plant">
+                </div>
+            </div>
 
-      </div>
-    </div>
+            <div class="col p-0" id="dg_plant">
 
-    <!-- Custom styles for this template -->
-    <script src="/static/view/sub/plant/js/plantList.js"></script>
-    <!-- JSTree -->
+            </div>
+        </div>
 
-  </section>
-  </div>
-</div>
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/plant/js/plantList.js"></script>
+        <!-- JSTree -->
+
+    </section>
+</th:block>
 </html>

@@ -32,6 +32,7 @@ function dg_workerModifyExecute(){
     if ($("#dg_worker").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_worker").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_worker").data("kendoGrid").getSelectedData()[0].scenarioId;
+        var workerName = $("#dg_worker").data("kendoGrid").getSelectedData()[0].name;
         
         //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
 
@@ -42,7 +43,7 @@ function dg_workerModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('workerDetail_' + id, 'workerDetail_' + id, 'worker/workerDetail', result);
+                addDockItem('workerDetail_' + id, workerName, 'worker/workerDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

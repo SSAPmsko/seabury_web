@@ -34,4 +34,10 @@
 		FROM ${table_name}
 	</select>
 
+	<select id="GetNuclearDataList" resultType="com.seabury.web.entity.integrated.NuclearEntity">
+		SELECT * FROM public."NuclearData"
+	</select>
+
+
+
 </mapper>

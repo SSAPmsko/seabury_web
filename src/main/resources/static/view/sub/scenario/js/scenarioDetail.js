@@ -32,6 +32,7 @@ function onLoadedScenario(){
             $('#btn_scenario_delete' + uniqueId).addClass("visually-hidden");
         }
 
+
         // Scenario Detail Data load
         dg_scenario_workpackLoadData(uniqueId);
         dg_scenario_equipmentLoadData(uniqueId);
@@ -46,6 +47,9 @@ function onLoadedScenario(){
 
         $("#btn_scenario_delete" + uniqueId).on("click", function(e) {
             dg_scenarioDeleteExecute(uniqueId);
+        });
+        $("#btn_planner_open" + uniqueId).on("click", function(e) {
+            dg_pullscreenplanner(uniqueId);
         });
     }
 }
@@ -165,6 +169,9 @@ function dg_scenarioDeleteExecute(uniqueId){
             }
         });
     }
+}
+function dg_pullscreenplanner(uniqueId){
+    addDockItem('' + uniqueId, "플래너 스크린", 'planner/plannerindex');
 }
 
 function dg_scenario_workpackLoadData(uniqueId) {

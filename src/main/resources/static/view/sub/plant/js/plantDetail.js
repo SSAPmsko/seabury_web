@@ -81,7 +81,7 @@ function dg_plantSaveExecute(uniqueId){
                 $('#btn_plant_delete' + oldId).removeClass("visually-hidden");
 
                 var plantId = data.result.id;
-                newPlantContainer[0].setTitle('plantDetail_' + plantId);
+                newPlantContainer[0].setTitle(formData.name);
                 newPlantContainer[0].config.id = 'plantDetail_' + plantId;
 
                 var newId = "_" + plantId;

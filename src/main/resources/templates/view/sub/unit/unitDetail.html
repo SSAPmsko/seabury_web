@@ -3,169 +3,169 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/Layout}">
 
-<div class="row">
-    <!-- main fragment -->
-    <div class="col" id="page-body" style="margin-top:15px;">
-        <form id="unitPropertyForm" name="unitPropertyForm"></form>
-        <section layout:fragment="content">
-            <div class="row g-2 container-fluid">
-                <div class="visually-hidden">
-                    <input type="text" class="form-control" form="unitPropertyForm" id="txt_editMode" th:value="${editMode}">
-                    <input type="text" class="form-control" form="unitPropertyForm" id="txt_unitId" th:value="${id}">
-                    <!--<input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">-->
-                </div>
-                <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
-                    <h6 class="h2">Unit</h6>
-                    <div class="btn-toolbar">
-                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_save">
-                            <span class="k-button-icon k-icon k-i-save"></span>
-                            <span class="k-button-text">Save</span>
-                        </button>
+<th:block>
+    <form id="unitPropertyForm" name="unitPropertyForm"></form>
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid m-0">
+            <div class="visually-hidden">
+                <input type="text" class="form-control" form="unitPropertyForm" id="txt_editMode"
+                       th:value="${editMode}">
+                <input type="text" class="form-control" form="unitPropertyForm" id="txt_unitId" th:value="${id}">
+                <!--<input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">-->
+            </div>
+            <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
+                <h6 class="h2">Unit Detail</h6>
+                <div class="btn-toolbar">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3"
+                            type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_save">
+                        <span class="k-button-icon k-icon k-i-save"></span>
+                        <span class="k-button-text">Save</span>
+                    </button>
 
-                        <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_delete">
-                            <span class="k-button-icon k-icon k-i-delete"></span>
-                            <span class="k-button-text">Delete</span>
-                        </button>
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3"
+                            type="button" form="unitPropertyForm" style="height: 30px" id="btn_unit_delete">
+                        <span class="k-button-icon k-icon k-i-delete"></span>
+                        <span class="k-button-text">Delete</span>
+                    </button>
 
-                        <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
-                        <!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
-                        <!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
-                    </div>
-                </div>
-                <div class="col-6">
-                    <fieldset>
-
-                        <div class="row g-3">
-                            <!-- Name -->
-                            <!--<div class="col-sm-6">
-                                <label class="form-label">Type</label>
-                                &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
-                                <select class="form-select" aria-label="Default select example" id="type_picker"
-                                        disabled>
-                                    <option disabled value="Site">Site</option>
-                                    <option disabled value="Plant">Plant</option>
-                                    <option selected value="Unit">Unit</option>
-                                </select>
-                            </div>
-
-                            &lt;!&ndash; Description &ndash;&gt;
-                            <div class="col-sm-6">
-                                <label class="form-label">Parent Type</label>
-                                &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
-                                <select class="form-select" aria-label="Default select example" id="parent_picker"
-                                        disabled>
-                                    <option disabled value="Site">Site</option>
-                                    <option selected value="Plant">Plant</option>
-                                    <option disabled value="null">null</option>
-                                </select>
-                            </div>-->
-
-
-<!--
-                            &lt;!&ndash; Room &ndash;&gt;
-                            <div class="col-sm-6">
-                                <label for="txt_description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="txt_description"
-                                       th:value="${description}">
-                            </div>-->
-
-                            <legend>Unit Detail</legend>
-
-                            <!-- Creator -->
-                            <div class="col-sm-6">
-                                <label for="txt_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="txt_name" form="unitPropertyForm"
-                                       th:value="${name}">
-                            </div>
-                            <!-- Operator -->
-                            <div class="col-sm-6">
-                                <label for="txt_operator" class="form-label">Operator</label>
-                                <input type="text" class="form-control" id="txt_operator" form="unitPropertyForm"
-                                       th:value="${operator}">
-                            </div>
-
-                            <!-- Status -->
-                            <div class="col-sm-6">
-                                <label for="txt_status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="txt_status" form="unitPropertyForm"
-                                       th:value="${status}">
-                            </div>
-
-                            <!-- Reactor type -->
-                            <div class="col-sm-6">
-                                <label for="txt_reactortype" class="form-label">Reactor type</label>
-                                <input type="text" class="form-control" id="txt_reactortype" form="unitPropertyForm"
-                                       th:value="${reactorType}">
-                            </div>
-
-                            <!-- Reactor supplier -->
-                            <div class="col-sm-6">
-                                <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
-                                <input type="text" class="form-control" id="txt_reactorsupplier" form="unitPropertyForm"
-                                       th:value="${reactorSupplier}">
-                            </div>
-
-                            <!-- Construction began -->
-                            <div class="col-sm-6">
-                                <label for="dt_constructionbegan" class="form-label">Construction began</label>
-                                <input type="date" class="form-control" id="dt_constructionbegan" form="unitPropertyForm"
-                                       th:value="${constructionBegan}">
-                            </div>
-
-                            <!-- Commission date -->
-                            <div class="col-sm-6">
-                                <label for="dt_commissiondate" class="form-label">Commission date</label>
-                                <input type="date" class="form-control" id="dt_commissiondate" form="unitPropertyForm"
-                                       th:value="${commissionDate}">
-                            </div>
-
-                            <!-- Decommission date -->
-                            <div class="col-sm-6">
-                                <label for="dt_decommissiondate" class="form-label">Decommission date</label>
-                                <input type="date" class="form-control" id="dt_decommissiondate" form="unitPropertyForm"
-                                       th:value="${decommissionDate}">
-                            </div>
-
-                            <!-- Thermal capacity -->
-                            <div class="col-sm-6">
-                                <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
-                                <input type="text" class="form-control" id="txt_thermalcapacity" form="unitPropertyForm"
-                                       th:value="${thermalCapacity}">
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-
-                <div class="col-6">
-                    <fieldset>
-                        <legend>Image</legend>
-                        <div class="container-lg">
-                            <div class="row">
-                                <!--<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
-                                     class="img-fluid" alt="...">-->
-                                <img src="/static/img/sample/01.png" class="img-fluid" style="height: 300px;">
-                            </div>
-                        </div>
-                    </fieldset>
+                    <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
+                    <!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
+                    <!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
                 </div>
             </div>
+            <div class="col-lg-6 p-2">
+                <fieldset>
+                    <legend>Properties</legend>
+
+                    <div class="row g-3">
+                        <!-- Name -->
+                        <!--<div class="col-sm-6">
+                            <label class="form-label">Type</label>
+                            &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
+                            <select class="form-select" aria-label="Default select example" id="type_picker"
+                                    disabled>
+                                <option disabled value="Site">Site</option>
+                                <option disabled value="Plant">Plant</option>
+                                <option selected value="Unit">Unit</option>
+                            </select>
+                        </div>
+
+                        &lt;!&ndash; Description &ndash;&gt;
+                        <div class="col-sm-6">
+                            <label class="form-label">Parent Type</label>
+                            &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
+                            <select class="form-select" aria-label="Default select example" id="parent_picker"
+                                    disabled>
+                                <option disabled value="Site">Site</option>
+                                <option selected value="Plant">Plant</option>
+                                <option disabled value="null">null</option>
+                            </select>
+                        </div>-->
 
 
-            <!-- Custom styles for this template -->
-            <script src="/static/view/sub/unit/js/unitDetail.js"></script>
+                        <!--
+                                                    &lt;!&ndash; Room &ndash;&gt;
+                                                    <div class="col-sm-6">
+                                                        <label for="txt_description" class="form-label">Description</label>
+                                                        <input type="text" class="form-control" id="txt_description"
+                                                               th:value="${description}">
+                                                    </div>-->
 
-            <!-- JSTree -->
-            <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
-            <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
 
-            <!-- Bootstrap Tree -->
-            <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
-            <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+                        <!-- Creator -->
+                        <div class="col-sm-6">
+                            <label for="txt_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_name" form="unitPropertyForm"
+                                   th:value="${name}">
+                        </div>
+                        <!-- Operator -->
+                        <div class="col-sm-6">
+                            <label for="txt_operator" class="form-label">Operator</label>
+                            <input type="text" class="form-control" id="txt_operator" form="unitPropertyForm"
+                                   th:value="${operator}">
+                        </div>
 
-            <!-- Custom styles for this template -->
-            <script src="/static/layout/js/sidebars.js"></script>
-            <link href="/static/layout/css/sidebars.css" rel="stylesheet">
-        </section>
-    </div>
-</div>
+                        <!-- Status -->
+                        <div class="col-sm-6">
+                            <label for="txt_status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="txt_status" form="unitPropertyForm"
+                                   th:value="${status}">
+                        </div>
+
+                        <!-- Reactor type -->
+                        <div class="col-sm-6">
+                            <label for="txt_reactortype" class="form-label">Reactor type</label>
+                            <input type="text" class="form-control" id="txt_reactortype" form="unitPropertyForm"
+                                   th:value="${reactorType}">
+                        </div>
+
+                        <!-- Reactor supplier -->
+                        <div class="col-sm-6">
+                            <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
+                            <input type="text" class="form-control" id="txt_reactorsupplier" form="unitPropertyForm"
+                                   th:value="${reactorSupplier}">
+                        </div>
+
+                        <!-- Construction began -->
+                        <div class="col-sm-6">
+                            <label for="dt_constructionbegan" class="form-label">Construction began</label>
+                            <input type="date" class="form-control" id="dt_constructionbegan" form="unitPropertyForm"
+                                   th:value="${constructionBegan}">
+                        </div>
+
+                        <!-- Commission date -->
+                        <div class="col-sm-6">
+                            <label for="dt_commissiondate" class="form-label">Commission date</label>
+                            <input type="date" class="form-control" id="dt_commissiondate" form="unitPropertyForm"
+                                   th:value="${commissionDate}">
+                        </div>
+
+                        <!-- Decommission date -->
+                        <div class="col-sm-6">
+                            <label for="dt_decommissiondate" class="form-label">Decommission date</label>
+                            <input type="date" class="form-control" id="dt_decommissiondate" form="unitPropertyForm"
+                                   th:value="${decommissionDate}">
+                        </div>
+
+                        <!-- Thermal capacity -->
+                        <div class="col-sm-6">
+                            <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
+                            <input type="text" class="form-control" id="txt_thermalcapacity" form="unitPropertyForm"
+                                   th:value="${thermalCapacity}">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-lg-6 p-2">
+                <fieldset>
+                    <legend>Image</legend>
+                    <div class="container-lg">
+                        <div class="row">
+                            <!--<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
+                                 class="img-fluid" alt="...">-->
+                            <img src="/static/img/sample/01.png" class="img-fluid" style="height: 300px;">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <!-- Custom styles for this template -->
+        <script src="/static/view/sub/unit/js/unitDetail.js"></script>
+
+        <!-- JSTree -->
+        <script src="/static/plugin/vakata-jstree-3.3.15-dist/jstree.min.js"></script>
+        <link href="/static/plugin/vakata-jstree-3.3.15-dist/themes/default/style.min.css" rel="stylesheet">
+
+        <!-- Bootstrap Tree -->
+        <script src="/static/plugin/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+        <link href="/static/plugin/bootstrap-treeview/css/glyphicons.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <script src="/static/layout/js/sidebars.js"></script>
+        <link href="/static/layout/css/sidebars.css" rel="stylesheet">
+    </section>
+</th:block>
 </html>

@@ -104,7 +104,7 @@ function dg_projectSaveExecute(uniqueId){
                 $('#btn_project_delete' + oldId).removeClass("visually-hidden");
 
                 var projectId = data.result.id;
-                newProjectContainer[0].setTitle('projectDetail_' + projectId);
+                newProjectContainer[0].setTitle($('#txt_name' + uniqueId).val());
                 newProjectContainer[0].config.id = 'projectDetail_' + projectId;
 
                 var newId = "_" + formName + "_" + projectId;
@@ -229,6 +229,7 @@ function dg_project_ScenarioModifyExecute(uniqueId){
     if ($("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData()[0].id;
         var projectId = $("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData()[0].projectId;
+        var scenarioName = $("#dg_project_scenario" + uniqueId).data("kendoGrid").getSelectedData()[0].name;
 
         $.ajax({
             url : "/scenarioDetailProperties?projectId=" + projectId + "&id=" + id,
@@ -237,7 +238,7 @@ function dg_project_ScenarioModifyExecute(uniqueId){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('scenarioDetail_' + id, 'scenarioDetail_' + id, 'scenario/scenarioDetail', result);
+                addDockItem('scenarioDetail_' + id, scenarioName, 'scenario/scenarioDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");

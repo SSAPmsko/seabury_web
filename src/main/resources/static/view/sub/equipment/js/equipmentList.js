@@ -32,6 +32,7 @@ function dg_equipmentModifyExecute(){
     if ($("#dg_equipment").data("kendoGrid").getSelectedData().length > 0){
         var id = $("#dg_equipment").data("kendoGrid").getSelectedData()[0].id;
         var scenarioId = $("#dg_equipment").data("kendoGrid").getSelectedData()[0].scenarioId;
+        var equipmentName = $("#dg_equipment").data("kendoGrid").getSelectedData()[0].name;
 
         //location.href = rootName + "Detail?" + "scenarioId=" + scenarioId + "&" + "id=" + id;
 
@@ -42,7 +43,7 @@ function dg_equipmentModifyExecute(){
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('equipmentDetail_' + id, 'equipmentDetail_' + id, 'equipment/equipmentDetail', result);
+                addDockItem('equipmentDetail_' + id, equipmentName, 'equipment/equipmentDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");
