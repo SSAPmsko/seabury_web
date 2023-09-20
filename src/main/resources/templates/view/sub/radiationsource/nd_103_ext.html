@@ -42,6 +42,11 @@
                     title: "Nuclide",
                     width: 240
                 },
+                 {
+                    field: "new_born",
+                    title: "New Born",
+                    width: 240
+                },
                 {
                 field: "y1_yr_old",
                 title: "y1 yr old",
@@ -55,6 +60,9 @@
             }, {
                 field: "y15_yr_old",
                 title: "y15 yr old",
+            },{
+                field: "adult",
+                title: "Adult",
             }],
             dataSource: {
                 transport: {
@@ -81,10 +89,12 @@
                     model: {
                         fields: {
                             nuclide: { type: "string" },
+                            new_born: { type: "number" },
                             y1_yr_old: { type: "number" },
                             y5_yr_old: { type: "number" },
                             y10_yr_old: { type: "number" },
-                            y15_yr_old: { type: "number" }
+                            y15_yr_old: { type: "number" },
+                            adult: { type: "number" }
                         }
                     }
                 },
