@@ -32,34 +32,45 @@
 	function LoadRadiationSource() {
 		$("#grid_103_w").kendoGrid({
             columns: [
-            {
-                field: "nuclide",
-                title: "Nuclide",
-                width: 240
-            },
-               {
-	            field: "half_life1",
-	            title: "Half Life1",
-	            width: 240
-	        }, {
-	            field: "half_life2",
-	            title: "Half Life2"
-	        }, {
-	            field: "half_life2unit",
-	            title: "Unit"
-	        }, {
-	            field: "half_life3",
-	            title: "Half Life3",
-	            width: 150
-	        }, {
-	            field: "half_life3unit",
-	            title: "Unit",
-	            width: 150
-	        }, {
-	            field: "type",
-	            title: "Type",
-	            width: 150
-	        }],
+                {
+                    field: "nuclide",
+                    title: "Nuclide",
+                    width: 240
+                },
+                   {
+                    field: "half_life1",
+                    title: "Half Life1",
+                    width: 240
+                }, {
+                    field: "half_life2",
+                    title: "Half Life2"
+                }, {
+                    field: "half_life2unit",
+                    title: "Unit"
+                }, {
+                    field: "half_life3",
+                    title: "Half Life3",
+                    width: 150
+                }, {
+                    field: "half_life3unit",
+                    title: "Unit",
+                    width: 150
+                }, {
+                    field: "material",
+                    title: "material",
+                    width: 150
+                }
+                , {
+                    field: "amtd_amad",
+                    title: "amtd_amad",
+                    width: 150
+                }
+                , {
+                    field: "effective",
+                    title: "effective",
+                    width: 150
+                }
+            ],
             dataSource: {
                 transport: {
                     read: function(options){
@@ -90,7 +101,9 @@
                             half_life2unit: { type: "string" },
                             half_life3: { type: "number" },
                             half_life3unit: { type: "string" },
-                            type: { type: "string" }
+                            material: { type: "string" },
+                            amtd_amad: { type: "string" },
+                            effective: { type: "number" }
                         }
                     }
                 },

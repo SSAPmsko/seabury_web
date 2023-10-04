@@ -43,16 +43,146 @@
 	function LoadRadiationSource() {
 		$("#grid_60_103_inh").kendoGrid({
 		  columns: [
-                { field: "nuclide" },
-                { field: "half_life1" },
-                { field: "half_life2" },
-                { field: "half_life2unit" },
-                { field: "half_life3" },
-                { field: "half_life3unit" },
-                { field: "kidneys" },
-                { field: "liver" },
-                { field: "lower_large_intestine" },
-                { field: "lungs" }
+              {
+                  field: "nuclide",
+                  title: "Nuclide"
+              },
+              {
+                  field: "half_life1",
+                  title: "half_life1"
+              },
+              {
+                  field: "half_life2",
+                  title: "half_life2"
+              },
+              {
+                  field: "half_life2unit",
+                  title: "half_life2unit"
+              },
+              {
+                  field: "half_life3",
+                  title: "half_life3"
+              },
+              {
+                  field: "half_life3unit",
+                  title: "half_life3unit"
+              },
+              {
+                  field: "type",
+                  title: "type"
+              },
+              {
+                  field: "f1",
+                  title: "f1"
+              },
+              {
+                  field: "adrenals",
+                  title: "adrenals"
+              },
+              {
+                  field: "urinary_bladder",
+                  title: "urinary_bladder"
+              },
+              {
+                  field: "bone_surface",
+                  title: "bone_surface"
+              },
+              {
+                  field: "brain",
+                  title: "brain"
+              },
+              {
+                  field: "breast",
+                  title: "breast"
+              },
+              {
+                  field: "esophagus",
+                  title: "esophagus"
+              },
+              {
+                  field: "stomach",
+                  title: "stomach"
+              },
+              {
+                  field: "small_intestine",
+                  title: "small_intestine"
+              },
+              {
+                  field: "upper_large_intestine",
+                  title: "upper_large_intestine"
+              },
+              {
+                  field: "lower_large_intestine",
+                  title: "lower_large_intestine"
+              },
+              {
+                  field: "colon",
+                  title: "colon"
+              },
+              {
+                  field: "kidneys",
+                  title: "kidneys"
+              },
+              {
+                  field: "liver",
+                  title: "liver"
+              },
+              {
+                  field: "muscle",
+                  title: "muscle"
+              },
+              {
+                  field: "ovaries",
+                  title: "ovaries"
+              },
+              {
+                  field: "pancreas",
+                  title: "pancreas"
+              },
+              {
+                  field: "red_marrow",
+                  title: "red_marrow"
+              },
+              {
+                  field: "extratrachial_airways",
+                  title: "extratrachial_airways"
+              },
+              {
+                  field: "lungs",
+                  title: "lungs"
+              },
+              {
+                  field: "skin",
+                  title: "skin"
+              },
+              {
+                  field: "spleen",
+                  title: "spleen"
+              },
+              {
+                  field: "testes",
+                  title: "testes"
+              },
+              {
+                  field: "thymus",
+                  title: "thymus"
+              },
+              {
+                  field: "thyroid",
+                  title: "thyroid"
+              },
+              {
+                  field: "uterus",
+                  title: "uterus"
+              },
+              {
+                  field: "remainder",
+                  title: "remainder"
+              },
+              {
+                  field: "e",
+                  title: "e"
+              }
 		  ],
 		  dataSource: {
 	          transport: {
@@ -78,16 +208,41 @@
 	          schema: {
 	  	        model: {
                         fields: {
-                        nuclide: { type: "string" },
-                        half_life1: { type: "string" },
-                        half_life2: { type: "number" },
-                        half_life2unit: { type: "string" },
-                        half_life3: { type: "number" },
-                        half_life3unit: { type: "string" },
-	  	            	kidneys: { type: "number" },
-	  	            	liver: { type: "number" },
-	  	            	lower_large_intestine: { type: "number" },
-	  	            	lungs: { type: "number" }
+                            nuclide: { type: "string" },
+                            half_life1: { type: "string" },
+                            half_life2: { type: "number" },
+                            half_life2unit: { type: "string" },
+                            half_life3: { type: "number" },
+                            half_life3unit: { type: "string" },
+                            type: { type: "string" },
+                            f1: { type: "string" },
+                            adrenals: { type: "number" },
+                            urinary_bladder: { type: "number" },
+                            bone_surface: { type: "number" },
+                            brain: { type: "number" },
+                            breast: { type: "number" },
+                            esophagus: { type: "number" },
+                            stomach: { type: "number" },
+                            small_intestine: { type: "number" },
+                            upper_large_intestine: { type: "number" },
+                            lower_large_intestine: { type: "number" },
+                            colon: { type: "number" },
+                            kidneys: { type: "number" },
+                            liver: { type: "number" },
+                            muscle: { type: "number" },
+                            ovaries: { type: "number" },
+                            pancreas: { type: "number" },
+                            red_marrow: { type: "number" },
+                            extratrachial_airways: { type: "number" },
+                            lungs: { type: "number" },
+                            skin: { type: "number" },
+                            spleen: { type: "number" },
+                            testes: { type: "number" },
+                            thymus: { type: "number" },
+                            thyroid: { type: "number" },
+                            uterus: { type: "number" },
+                            remainder: { type: "number" },
+                            e: { type: "number" }
 	  	            }
 	  	        }
 	  	    },
