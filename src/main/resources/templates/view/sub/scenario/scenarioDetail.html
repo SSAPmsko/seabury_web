@@ -59,6 +59,12 @@
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="sourceTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#sourceContent" type="button" role="tab" aria-controls="sourceContent" aria-selected="false">Source</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="workPlanTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workPlanContent" type="button" role="tab" aria-controls="workPlanContent" aria-selected="false">Work Plan</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="checkListTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#checkListContent" type="button" role="tab" aria-controls="checkListContent" aria-selected="false">Check List</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -181,15 +187,461 @@
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="shieldContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="shieldTab">
+                        <div id="dg_scenario_shield" form="scenarioPropertyForm">
+
+                        </div>
+                    </div>
+
                     <div class="tab-pane fade" id="sourceContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="sourceTab">
                         <div id="dg_scenario_source" form="scenarioPropertyForm">
 
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="shieldContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="shieldTab">
-                        <div id="dg_scenario_shield" form="scenarioPropertyForm">
+                    <div class="tab-pane fade" id="workPlanContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workPlanTab">
+                        <div class="row p-0">
+                            <div class="col-lg-12 p-2">
+                                <fieldset>
+                                    <legend>방사선작업계획서</legend>
 
+                                    <div class="row g-3">
+                                        <!-- 작업명 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작업명</label>
+                                            <input type="text" class="form-control" value="고리2호기 #36 BMI HNR(ICI Room Work Platform 설치)">
+                                        </div>
+
+                                        <!-- 작업장소 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작업장소</label>
+                                            <input type="text" class="form-control" value="ICI Room">
+                                        </div>
+
+                                        <!-- 예상작업기간 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">예상작업기간</label>
+                                            <input type="date" class="form-control" value="2020-06-05">
+                                        </div>
+
+                                        <!-- 관련계통기기 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">관련계통기기</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered">
+                                        <thead>
+                                            <tr style="vertical-align:middle; text-align: center;">
+                                                <th scope="col" rowspan="2">일련번호</th>
+                                                <th scope="col" rowspan="2">작업세부사항</th>
+                                                <th scope="col" rowspan="2">예상작업시간<br>(hr)</th>
+                                                <th scope="col" rowspan="2">작업인원<br>(명)</th>
+                                                <th scope="col" colspan="3">작업장 방사선(능) 준위</th>
+                                                <th scope="col" rowspan="2">예상 피폭선량<br>(man-mSv)</th>
+                                            </tr>
+                                            <tr style="vertical-align:middle; text-align: center;">
+                                                <th scope="col">방사선선량률<br>(mSv/hr)</th>
+                                                <th scope="col">공기오염도<br>(DAC)</th>
+                                                <th scope="col">H-3농도<br>(DAC)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td style="text-align: center;">1</td>
+                                            <td>Work Platform 자재 이동</td>
+                                            <td style="text-align: center;">0.4</td>
+                                            <td style="text-align: center;">4</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">2</td>
+                                            <td>Profile(Work Platform 틀) 설치</td>
+                                            <td style="text-align: center;">0.4</td>
+                                            <td style="text-align: center;">6</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">3</td>
+                                            <td>Work Platform 상판 설치</td>
+                                            <td style="text-align: center;">0.4</td>
+                                            <td style="text-align: center;">6</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">4</td>
+                                            <td>Work Way 설치</td>
+                                            <td style="text-align: center;">0.5</td>
+                                            <td style="text-align: center;">4</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">5</td>
+                                            <td>최종 점검</td>
+                                            <td style="text-align: center;">0.4</td>
+                                            <td style="text-align: center;">2</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <fieldset>
+                                    <div class="row g-3">
+                                        <!-- 총 예상피폭선량 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">총 예상피폭선량</label>
+                                            <input type="text" class="form-control" value="man-mSv">
+                                        </div>
+
+                                        <!-- 1인 평균 피폭선량 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">1인 평균 피폭선량</label>
+                                            <input type="text" class="form-control" value="mSv">
+                                        </div>
+
+                                        <!-- 작업인원 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작업인원</label>
+                                            <input type="text" class="form-control" value="명">
+                                        </div>
+
+                                        <!-- 총 소요인시 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">총 소요인시</label>
+                                            <input type="text" class="form-control" value="man-hr">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <fieldset>
+                                    <div class="row g-3">
+                                        <!-- 작성자 (작업책임자) -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작성자 (작업책임자)</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+
+                                        <!-- 서명 일자 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">서명 일자</label>
+                                            <input type="date" class="form-control" value="">
+                                        </div>
+
+                                        <!-- 검토자 (작업부서장) -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">검토자 (작업부서장)</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+
+                                        <!-- 서명 일자 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">서명 일자</label>
+                                            <input type="date" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="checkListContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="checkListTab">
+                        <div class="row p-0">
+                            <div class="col-lg-12 p-2">
+                                <fieldset>
+                                    <legend>피폭최소하(ALRA) 점검표</legend>
+
+                                    <div class="row g-3">
+                                        <!-- 작업명 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작업명</label>
+                                            <input type="text" class="form-control" value="고리2호기 #36 BMI HZR (ICI Room Walk-down)">
+                                        </div>
+
+                                        <!-- 작업장소 -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">작업장소</label>
+                                            <input type="text" class="form-control" value="ICI Room">
+                                        </div>
+
+                                        <!-- 예상 방사선준위 -->
+                                        <div class="col-sm-4">
+                                            <label class="form-label">예상 방사선준위</label>
+                                            <input type="date" class="form-control" value="2020-06-05">
+                                        </div>
+
+                                        <!-- 표면오염도 -->
+                                        <div class="col-sm-4">
+                                            <label class="form-label">표면오염도</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+
+                                        <!-- 공기오염도 -->
+                                        <div class="col-sm-4">
+                                            <label class="form-label">공기오염도</label>
+                                            <input type="text" class="form-control" value="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered caption-top">
+                                        <caption>Ⅰ. 작업절차서 관련 사항</caption>
+                                        <thead>
+                                            <tr style="vertical-align:middle; text-align: center;">
+                                                <th scope="col">점 검 항 목</th>
+                                                <th scope="col">예</th>
+                                                <th scope="col">아니오</th>
+                                                <th scope="col">비고</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1. 작업 절차는 수립되었는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2. 불필요한 작업은 없는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3. 작업공구 및 장비는 적절한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4. 안전사고의 위험은 없는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5. 기기를 선량이 낮은 지역으로 운반 가능한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6. 다른 장소에서 예비작업이 가능한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered caption-top">
+                                        <caption>Ⅱ. 작업준비</caption>
+                                        <thead>
+                                        <tr style="vertical-align:middle; text-align: center;">
+                                            <th scope="col">점 검 항 목</th>
+                                            <th scope="col">예</th>
+                                            <th scope="col">아니오</th>
+                                            <th scope="col">비고</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1. 작업구역의 통로는 적절한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2. 임시 공기공급 Line이 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3. 통신설비가 필요한가?</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4. 전기, 조명의 임시설비가 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5. 예비 작업구역의 설치가 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered caption-top">
+                                        <caption>Ⅲ. 방사선관리</caption>
+                                        <thead>
+                                        <tr style="vertical-align:middle; text-align: center;">
+                                            <th scope="col">점 검 항 목</th>
+                                            <th scope="col">예</th>
+                                            <th scope="col">아니오</th>
+                                            <th scope="col">비고</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1. 임시 공기조화 설비는 필요한가?</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2. 복수 TLD 를 착용해야 하는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3. 텐트 설치가 필요한가?</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4. 임시 차폐가 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5. 고방사선지점 및 방사선(능) 조건의 부착이 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6. 오염확산 방지가 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>7. 방사선 방호 장구류 선택이 적절한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered caption-top">
+                                        <caption>Ⅳ. 작업자 준비</caption>
+                                        <thead>
+                                        <tr style="vertical-align:middle; text-align: center;">
+                                            <th scope="col">점 검 항 목</th>
+                                            <th scope="col">예</th>
+                                            <th scope="col">아니오</th>
+                                            <th scope="col">비고</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1. 작업자 선정은 적절한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2. 특별한 주의 사항이 있는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3. 모의훈련이 필요한가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4. 투입인력 감소 가능성이 있는가?</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5. 작업개요를 설명했는가?</td>
+                                            <td style="text-align: center;">O</td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm table-bordered caption-top">
+                                        <caption>Ⅴ. 기타사항</caption>
+                                        <thead>
+                                        <tr style="vertical-align:middle; text-align: center;">
+                                            <th scope="col">점 검 항 목</th>
+                                            <th scope="col">예</th>
+                                            <th scope="col">아니오</th>
+                                            <th scope="col">비고</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr style="height: 200px;">
+                                            <td></td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
