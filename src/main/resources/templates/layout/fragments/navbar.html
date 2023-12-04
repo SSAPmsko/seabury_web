@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="navbarFragment">
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" aria-label="Main navigation">
         <div class="container-fluid">
             <!--<a class="navbar-brand" href="#">Home</a>-->
             <a href="main">
-                <img width="120" height="32" src="/static/img/logo/seabury_negative.png" href="main"/>
+                <img class="mainlogo" width="132px" src="/static/img/logo/seabury_positive.png" href="main"/>
             </a>
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" style="height:40px;"></span><!--넓이 줄었을때, 버튼 높이 고정 -->
@@ -56,12 +56,9 @@
                             <!--<li><a class="dropdown-item" id="WorkFlow" href="#" onclick="addDockItem('WorkFlow', 'WorkFlow list', 'integrated/WorkFlow')">ZR-100 Robot System 설치</a></li>-->
                         </ul>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout">Logout</a>
-                    </li>
                 </ul>
             </div>
+            <a class="nav-link logout" href="logout"><img src="/static/img/logo/SignOut.png" href="main"/>Logout</a>
         </div>
     </nav>
 

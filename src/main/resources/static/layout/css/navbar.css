@@ -1,11 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+* {
+  font-family: 'Roboto','Noto Sans KR', sans-serif;
+}
+
 html,
 body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
+  /* Prevent scroll on narrow devices */
+  min-width: 1024px;
 }
 
 body {
-  padding-top: 56px;
+  padding-top: 72px; 
+  overflow-x: auto;
 }
+
+.navbar {
+  height: 72px;
+  background: #F6F6FB; 
+  padding: 0 20px;
+}
+.container-fluid {padding: 0;}
 
 @media (max-width: 991.98px) {
   .offcanvas-collapse {
@@ -31,11 +46,13 @@ body {
   color: rgba(255, 255, 255, .75);
 }
 
-.nav-scroller .nav-link {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: .875rem;
-  color: #6c757d;
+.navbar-expand-lg .navbar-nav .nav-link {
+  display: flex; 
+  align-items: center;
+  padding: 0 20px;
+  color: #000;
+  font-size: 16px; 
+  font-weight: 500;
 }
 
 .nav-scroller .nav-link:hover {
@@ -47,6 +64,37 @@ body {
   color: #343a40;
 }
 
-.bg-purple {
-  background-color: #6f42c1;
+.logout {
+  color: #000;
+  font-size: 15px; 
+  font-weight: 400;
 }
+.logout img {margin-right: 7px;}
+
+.dropdown-toggle::after {
+  margin-left: 7px;
+  border-top: 0.4em solid;
+  border-right: 0.35em solid transparent;
+  border-left: 0.35em solid transparent;
+}
+
+.mainContent {padding: 20px; height: calc(100vh - 72px); overflow: hidden;}
+
+/* .container-fluid {padding: 0 15px;} */
+#Source_Dropdown {display: flex; align-items: center; height: 40px; margin-bottom: 15px;}
+#Source_Dropdown label {color: #000; font-size: 15px;  font-weight: 400;}
+#Source_Dropdown .k-picker-solid { width: 351px !important; height: 40px; margin-left: 15px; border-radius: 5px; border: 1px solid #B7C3D1; background-color: #fff;}
+#Source_Dropdown span.k-input-inner {padding: 0 5px 0 12px;}
+#Source_Dropdown .k-input-value-text {color: #687484; font-size: 15px; font-weight: 400;}
+#Source_Dropdown .k-picker .k-input-button {padding: 0 16px 0 0;}
+#Source_Dropdown .k-i-arrow-s::before {content: ""; display: block;  width: 10px; height: 8px; background: url(../../img/logo/select.png) no-repeat center;}
+
+
+
+
+
+
+
+
+
+

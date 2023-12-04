@@ -46,7 +46,7 @@
 		borderColor: undefined, // '#dddddd',
 		onhoverColor: '#F5F5F5',
 		selectedColor: '#FFFFFF',
-		selectedBackColor: '#428bca',
+		selectedBackColor: '#FF7A00', // by DUBOO default 428bca
 		searchResultColor: '#D9534F',
 		searchResultBackColor: undefined, //'#FFFFFF',
 
@@ -1245,5 +1245,4 @@
 
 		return result || this;
 	};
-
 })(jQuery, window, document);
