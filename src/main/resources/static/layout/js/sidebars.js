@@ -116,7 +116,6 @@ function initBootstrapTree(treeData){
 
 function loadTreeData() {
     var resultList = new Array();
-
     $.ajax({
         type: 'GET',
         url: "/getStructureList",
@@ -162,6 +161,20 @@ function loadTreeData() {
                     }
                 });
             });
+            tempList.filter(n => n.type === 'Room').forEach(item => {
+                resultList.forEach(parentItem => {
+                    if (parentItem.nodes != null) {
+                        var parentNode = parentItem.nodes.find(m => m.type === 'Unit' && m.tags[0] === item.tags[1]);
+                        if (parentNode != null) {
+                            if (parentNode.nodes == null) {
+                                parentNode.nodes = new Array();
+                            }
+                            parentNode.nodes.push(item);
+                        }
+                    }
+
+                });
+            });
         }
     });
 
@@ -186,9 +199,9 @@ function loadTreeData() {
                 var item2 = sampleProject(project2, 2);
                 var item3 = sampleProject(project3, 3);
 
-                setParentNode(item1, resultList, "Unit");
-                setParentNode(item2, resultList, "Unit");
-                setParentNode(item3, resultList, "Unit");
+                setParentNode(item1, resultList, "Room");
+                setParentNode(item2, resultList, "Room");
+                setParentNode(item3, resultList, "Room");
             }
         }
     });
@@ -231,6 +244,9 @@ function typeToHref(type){
 
         case "Unit":
         return "../unitDetail";
+
+        case "Room":
+        return  "../roomDetail";
 
         case "Project":
         return "../projectDetail";
