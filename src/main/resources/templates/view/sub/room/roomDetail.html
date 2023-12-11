@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block>
+    <form id="roomPropertyForm" name="roomPropertyForm"></form>
+
+    <section class="h-100" style="overflow:auto" layout:fragment="content">
+        <div class="row container-fluid m-0">
+            <div class="visually-hidden">
+                <input type="text" class="form-control" id="txt_editMode" form="roomPropertyForm" th:value="${editMode}">
+                <input type="text" class="form-control" id="txt_roomId" form="roomPropertyForm" th:value="${id}">
+            </div>
+            <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
+                <h6 class="h2">Room Detail</h6>
+                <div class="btn-toolbar">
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="roomPropertyForm" style="height: 30px" id="btn_room_save">
+                        <span class="k-button-icon k-icon k-i-save"></span>
+                        <span class="k-button-text">Save</span>
+                    </button>
+
+                    <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="roomPropertyForm" style="height: 30px" id="btn_room_delete">
+                        <span class="k-button-icon k-icon k-i-delete"></span>
+                        <span class="k-button-text">Delete</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-6 p-2">
+                <fieldset>
+                    <div class="row g-3">
+                    <legend>속성</legend>
+
+                        <div class="col-sm-6">
+                            <label for="txt_namevalue" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="txt_namevalue" th:value="${name}" form="roomPropertyForm">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <script src="/static/view/sub/room/js/roomDetail.js"></script>
+    </section>
+</th:block>
+</html>
