@@ -1,11 +1,10 @@
 package com.seabury.web.controller;
 
 import com.seabury.web.entity.dose.StructureEntity;
-import com.seabury.web.entity.dose.UnitEntity;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.StructureService;
 import com.seabury.web.service.VRDoseService;
-import com.seabury.web.vo.dose.ReturnParam;
+import com.seabury.web.vo.dose.project.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

@@ -76,6 +76,7 @@ function dg_scenarioLoadData() {
             { field: "id" },
             { field: "projectId" },
             { field: "name" },
+            { field: "status"},
             { field: "description" },
         ],
         dataSource: {
@@ -103,6 +104,7 @@ function dg_scenarioLoadData() {
                         id: { type: "number" },
                         projectId: { type: "number" },
                         name: { type: "string" },
+                        status: { type: "string" },
                         description: { type: "string" },
                     }
                 }

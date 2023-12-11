@@ -1,17 +1,17 @@
-package com.seabury.web.vo.dose;
+package com.seabury.web.vo.dose.project;
 
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-
 @Getter
 @Setter
-public class EquipmentVO {
+public class WorkersVO {
     Integer ID;
     Integer ProjectID;
     Integer ScenarioID;
     String Name;
-    String Description;
+    String Role;
+    String Protection;
+    Integer PersonnelID;
 }

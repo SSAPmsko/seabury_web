@@ -59,7 +59,7 @@
     background-color: transparent;
 }
 .lm_splitter.lm_horizontal .lm_drag_handle {
-    width: 1px;
+    width: 5px; /* 23.12.04 modify by kms, default: 1px*/
     height: 100%;
     position: absolute;
     left: 50%;

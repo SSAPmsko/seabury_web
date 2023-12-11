@@ -1,4 +1,4 @@
-package com.seabury.web.vo.dose;
+package com.seabury.web.vo.dose.project;
 
 
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class RadiologicalConditionVO {
+public class ScenarioVO {
     Integer ID;
     Byte[] Image;
     String Operator;

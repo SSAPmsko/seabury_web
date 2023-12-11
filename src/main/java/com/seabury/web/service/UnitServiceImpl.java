@@ -2,7 +2,7 @@ package com.seabury.web.service;
 
 import com.seabury.web.entity.dose.UnitEntity;
 import com.seabury.web.mapper.dose.UnitMapper;
-import com.seabury.web.vo.dose.UnitVO;
+import com.seabury.web.vo.dose.project.UnitVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

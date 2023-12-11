@@ -1,4 +1,4 @@
-package com.seabury.web.vo.dose;
+package com.seabury.web.vo.dose.project;
 
 import java.util.HashMap;
 

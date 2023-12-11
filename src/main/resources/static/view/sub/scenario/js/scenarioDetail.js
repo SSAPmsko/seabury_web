@@ -178,8 +178,8 @@ function dg_scenario_workpackLoadData(uniqueId) {
     $("#dg_scenario_workpack" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            { field: "projectId" },
-            { field: "scenarioId" },
+            /*{ field: "projectId" },*/
+            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" }
         ],
@@ -204,9 +204,9 @@ function dg_scenario_workpackLoadData(uniqueId) {
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
-                        projectId: { type: "number" },
-                        scenarioId: { type: "number" },
+                        id: { type: "string" },
+                        /*projectId: { type: "number" },*/
+                        /*scenarioId: { type: "number" },*/
                         name: { type: "string" },
                         description: { type: "string" },
                     }
@@ -227,8 +227,8 @@ function dg_scenario_equipmentLoadData(uniqueId) {
     $("#dg_scenario_equipment" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            { field: "projectId" },
-            { field: "scenarioId" },
+            /*{ field: "projectId" },*/
+            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" },
         ],
@@ -254,8 +254,8 @@ function dg_scenario_equipmentLoadData(uniqueId) {
                 model: {
                     fields: {
                         id: { type: "number" },
-                        projectId: { type: "number" },
-                        scenarioId: { type: "number" },
+                        /*projectId: { type: "number" },*/
+                        /*scenarioId: { type: "number" },*/
                         name: { type: "string" },
                         description: { type: "string" },
                     }
@@ -276,8 +276,8 @@ function dg_scenario_sourceLoadData(uniqueId) {
     $("#dg_scenario_source" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            { field: "projectId" },
-            { field: "scenarioId" },
+            /*{ field: "projectId" },*/
+            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" },
         ],
@@ -303,8 +303,8 @@ function dg_scenario_sourceLoadData(uniqueId) {
                 model: {
                     fields: {
                         id: { type: "number" },
-                        projectId: { type: "number" },
-                        scenarioId: { type: "number" },
+                        /*projectId: { type: "number" },*/
+                        /*scenarioId: { type: "number" },*/
                         name: { type: "string" },
                         description: { type: "string" },
                     }
@@ -325,8 +325,8 @@ function dg_scenario_shieldLoadData(uniqueId) {
     $("#dg_scenario_shield" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            { field: "projectId" },
-            { field: "scenarioId" },
+            /*{ field: "projectId" },*/
+            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" },
         ],
@@ -353,8 +353,8 @@ function dg_scenario_shieldLoadData(uniqueId) {
                 model: {
                     fields: {
                         id: { type: "number" },
-                        projectId: { type: "number" },
-                        scenarioId: { type: "number" },
+                        /*projectId: { type: "number" },*/
+                        /*scenarioId: { type: "number" },*/
                         name: { type: "string" },
                         description: { type: "string" },
                     }

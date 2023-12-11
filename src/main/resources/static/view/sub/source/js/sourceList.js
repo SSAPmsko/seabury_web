@@ -58,8 +58,8 @@ function loadData() {
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
-            { field: "projectId" },
-            { field: "scenarioId" },
+            /*{ field: "projectId" },*/
+            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" },
             /*{ field: "startDate" },
@@ -92,8 +92,8 @@ function loadData() {
                 model: {
                     fields: {
                         id: { type: "string" },
-                        projectId: { type: "string" },
-                        scenarioId: { type: "string" },
+                        /*projectId: { type: "string" },*/
+                        /*scenarioId: { type: "string" },*/
                         name: { type: "string" },
                         description: { type: "string" },
                         /*startDate: { type: "string" },

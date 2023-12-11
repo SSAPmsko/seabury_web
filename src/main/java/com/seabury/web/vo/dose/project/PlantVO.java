@@ -1,4 +1,4 @@
-package com.seabury.web.vo.dose;
+package com.seabury.web.vo.dose.project;
 
 
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class SiteVO {
+public class PlantVO {
     Integer ID;
     Byte[] Image;
     String Operator;
@@ -21,5 +21,4 @@ public class SiteVO {
     String ThermalCapacity;
     String Status;
     String Name;
-
 }

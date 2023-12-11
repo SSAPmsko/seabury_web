@@ -1,9 +1,10 @@
 package com.seabury.web.controller;
 
+import com.google.api.client.util.ArrayMap;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.VRDoseService;
 import com.seabury.web.service.WorkersService;
-import com.seabury.web.vo.dose.ReturnParam;
+import com.seabury.web.vo.dose.project.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +13,8 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,12 +36,12 @@ public class WorkersController {
     }
 
     @RequestMapping(value = {"/getWorkerList"}, method = RequestMethod.GET)
-    public @ResponseBody List<Map<String, Object>> getWorkerList(@RequestParam(required = false) String scenarioId) {
+    public @ResponseBody ArrayList<ArrayMap<String, Object>> getWorkerList(@RequestParam(required = false) String scenarioId) {
         return vrDoseService.getWorkers(scenarioId);
     }
 
     @RequestMapping(value = {"/getAllWorkerList"}, method = RequestMethod.GET)
-    public @ResponseBody List<Map<String, Object>> getAllWorkerList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    public @ResponseBody  ArrayList<ArrayMap<String, Object>> getAllWorkerList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getAllWorkers("");
     }
 

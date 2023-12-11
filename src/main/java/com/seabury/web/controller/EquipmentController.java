@@ -4,7 +4,7 @@ import com.google.api.client.util.ArrayMap;
 import com.seabury.web.service.CommonService;
 import com.seabury.web.service.EquipmentService;
 import com.seabury.web.service.VRDoseService;
-import com.seabury.web.vo.dose.ReturnParam;
+import com.seabury.web.vo.dose.project.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,8 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -47,12 +46,12 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = {"/getEquipmentList"}, method = RequestMethod.GET)
-    public @ResponseBody List<Map<String, Object>> getEquipmentList(@RequestParam(required = false) String scenarioId) {
+    public @ResponseBody ArrayList<ArrayMap<String, Object>> getEquipmentList(@RequestParam(required = false) String scenarioId) {
         return vrDoseService.getEquipments(scenarioId);
     }
 
     @RequestMapping(value = {"/getAllEquipmentList"}, method = RequestMethod.GET)
-    public @ResponseBody List<Map<String, Object>> getAllEquipmentList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    public @ResponseBody  ArrayList<ArrayMap<String, Object>> getAllEquipmentList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
         return vrDoseService.getAllEquipments("");
     }
 

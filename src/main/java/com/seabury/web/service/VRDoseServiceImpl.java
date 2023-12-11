@@ -8,8 +8,10 @@ import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.google.api.client.http.*;
@@ -28,11 +30,11 @@ public class VRDoseServiceImpl implements VRDoseService {
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
     @Override
-    public ArrayMap getProject(String id) {
+    public ArrayMap<String, Object> getProject(String id) {
 
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() +  "/plannerdbapplication/resources/projectdb/projects/" + id);
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
@@ -48,13 +50,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayList getProjects(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getProjects(String roomId) {
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects");
         if (!StringUtils.isEmpty(roomId)){
             gUrl.set("roomId", roomId);
         }
 
-        ArrayList result = new ArrayList();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
@@ -75,28 +77,12 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayMap insertProject(HashMap<String,Object> map) {
+    public ArrayMap<String, Object> insertProject(HashMap<String,Object> map) {
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/projects");
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap<>();
 
         try {
-            /* Sample Data
-            {
-                "defaultProject": true,
-                "date": "2023-06-29T02:18:35.608Z",
-                "name": "My Project",
-                "description": "string",
-                "startDate": "2023-06-29T02:18:35.608Z",
-                "endDate": "2023-06-29T02:18:35.608Z",
-                "createdBy": "string",
-                "justification": "string",
-                "doseLimit": 0,
-                "room": "Rooms/ground",
-                "properties": "propertyName:propertyValue"
-            }
-            */
-
             convertDateToISO8601(map, "date");
             convertDateToISO8601(map, "startDate");
             convertDateToISO8601(map, "endDate");
@@ -119,9 +105,9 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayMap updateProject(HashMap<String,Object> map) {
+    public ArrayMap<String, Object> updateProject(HashMap<String,Object> map) {
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap<>();
 
         Object obj = map.get("id");
         if (!StringUtils.isEmpty(obj)) {
@@ -136,13 +122,6 @@ public class VRDoseServiceImpl implements VRDoseService {
                 convertStringToFloat(map, "doseLimit");
 
                 map.remove("editMode"); // View 에서 생성/수정을 확인하기 위한 필드이므로 삭제
-
-                /* 사용자 정의 속성을 properties 에 정의 하였으나, VRDose API 내에서 get 메서드 수행시, 수행한 시간이 덮어 씌어짐
-                ArrayMap properties = new ArrayMap();
-                properties.put("StructureID", 48);
-                //properties.put("StructureID", map.get("StructureID"));
-                map.put("properties", getJsonString(properties).replaceAll("\"", ""));
-                */
 
                 String bodyStr = getJsonString(map);
 
@@ -180,10 +159,10 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayMap getScenario(String id) {
+    public ArrayMap<String, Object> getScenario(String id) {
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + id);
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
@@ -197,21 +176,20 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getScenarios(String projectId){
+    public ArrayList<ArrayMap<String, Object>> getScenarios(String projectId){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata");
         if (!StringUtils.isEmpty(projectId)){
             gUrl.set("projectId", projectId);
         }
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
             result = request.execute().parseAs(result.getClass());
 
             if (result != null){
-                for (Map item : result) {
-                    item.put("projectId", projectId);
+                for (ArrayMap<String, Object> item : result) {
                     castingObjectToStringFromScenario(item);
                 }
             }
@@ -222,15 +200,15 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllScenario(String roomId){
+    public ArrayList<ArrayMap<String, Object>> getAllScenario(String roomId){
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0) {
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects) {
+            for (ArrayMap project : allProjects) {
                 String projectId = project.get("id").toString();
-                List<Map<String, Object>> scenarios = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> scenarios = getScenarios(projectId);
                 if (scenarios != null && scenarios.size() > 0){
                     result.addAll(scenarios);
                 }
@@ -240,10 +218,10 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayMap insertScenario(HashMap<String,Object> map){
+    public ArrayMap<String, Object> insertScenario(HashMap<String,Object> map){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata");
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap();
 
         try {
             convertDateToISO8601(map, "date");
@@ -268,15 +246,15 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public ArrayMap updateScenario(HashMap<String,Object> map) {
+    public ArrayMap<String, Object> updateScenario(HashMap<String,Object> map) {
 
-        ArrayMap result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap();
 
         Object obj = map.get("id");
         if (!StringUtils.isEmpty(obj)) {
             String id = obj.toString();
 
-            ArrayMap updateData = getScenario(id);
+            ArrayMap<String, Object> updateData = getScenario(id);
 
             GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + id);
 
@@ -301,7 +279,7 @@ public class VRDoseServiceImpl implements VRDoseService {
                     if (participantInfo != null && ((ArrayList<?>) participantInfo).size() > 0){
                         List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
 
-                        for (ArrayMap _item : datalist){
+                        for (ArrayMap<String, Object> _item : datalist){
                             castingObjectToString(_item);
                             convertStringToFloat(_item,"accumulatedDose");
                             convertStringToFloat(_item,"minDose");
@@ -352,19 +330,18 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getEquipments(String scenarioId){
+    public ArrayList<ArrayMap<String, Object>> getEquipments(String scenarioId){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
-            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+            ArrayMap<String, Object> scenarioData = request.execute().parseAs(ArrayMap.class);
 
             Object participantInfo = scenarioData.get("participantInfo");
             if(participantInfo instanceof ArrayList){
-                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
-                result = datalist.stream().filter(n -> n.get("type").equals("OBJECT")).collect(Collectors.toList());
+                result = (ArrayList<ArrayMap<String, Object>>)participantInfo;
                 result.forEach((item -> item.forEach((k, v) -> {
                     if (v.getClass().getSimpleName().equals("Object")){
                         castingObjectToString(item);
@@ -378,19 +355,18 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getWorkers(String scenarioId){
+    public ArrayList<ArrayMap<String, Object>> getWorkers(String scenarioId){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
-            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+            ArrayMap<String, Object> scenarioData = request.execute().parseAs(ArrayMap.class);
 
             Object participantInfo = scenarioData.get("participantInfo");
             if(participantInfo instanceof ArrayList){
-                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
-                result = datalist.stream().filter(n -> n.get("type").equals("MANIKIN")).collect(Collectors.toList());
+                result = (ArrayList<ArrayMap<String, Object>>)participantInfo;
                 result.forEach((item -> item.forEach((k, v) -> {
                     if (v.getClass().getSimpleName().equals("Object")){
                         castingObjectToString(item);
@@ -404,19 +380,18 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getSources(String scenarioId){
+    public ArrayList<ArrayMap<String, Object>> getSources(String scenarioId){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
-            ArrayMap scenarioData = request.execute().parseAs(ArrayMap.class);
+            ArrayMap<String, Object> scenarioData = request.execute().parseAs(ArrayMap.class);
 
             Object participantInfo = scenarioData.get("participantInfo");
             if(participantInfo instanceof ArrayList){
-                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
-                result = datalist.stream().filter(n -> n.get("type").equals("SOURCE")).collect(Collectors.toList());
+                result = (ArrayList<ArrayMap<String, Object>>)participantInfo;
                 result.forEach((item -> item.forEach((k, v) -> {
                     if (v.getClass().getSimpleName().equals("Object")){
                         castingObjectToString(item);
@@ -430,10 +405,10 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getShields(String scenarioId){
+    public ArrayList<ArrayMap<String, Object>> getShields(String scenarioId){
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId);
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
@@ -441,8 +416,7 @@ public class VRDoseServiceImpl implements VRDoseService {
 
             Object participantInfo = scenarioData.get("participantInfo");
             if(participantInfo instanceof ArrayList){
-                List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
-                result = datalist.stream().filter(n -> n.get("type").equals("SHIELD")).collect(Collectors.toList());
+                result = (ArrayList<ArrayMap<String, Object>>)participantInfo;
                 result.forEach((item -> item.forEach((k, v) -> {
                     if (v.getClass().getSimpleName().equals("Object")){
                         castingObjectToString(item);
@@ -456,11 +430,11 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getWorkSteps(String scenarioId){
+    public ArrayList<ArrayMap<String, Object>> getWorkSteps(String scenarioId){
 
         GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() + "/plannerdbapplication/resources/projectdb/scenariodata/" + scenarioId + "/workplan");
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
@@ -473,17 +447,22 @@ public class VRDoseServiceImpl implements VRDoseService {
             if (elementWorkPlan != null){
                 LinkedHashMap castingWorkPlan = (LinkedHashMap)elementWorkPlan;
                 if (castingWorkPlan != null && castingWorkPlan.size() > 0){
-                    LinkedHashMap castingWorkPlanData = (LinkedHashMap)castingWorkPlan.get("WorkPlan");
+                    LinkedHashMap<String, Object> castingWorkPlanData = (LinkedHashMap)castingWorkPlan.get("WorkPlan");
 
                     if (castingWorkPlanData != null && castingWorkPlanData.size() > 0){
-                        Object stepsObject = castingWorkPlanData.get("steps");
-
-                        if (!StringUtils.isEmpty(stepsObject)){
-                            LinkedHashMap castingSteps = (LinkedHashMap)castingWorkPlanData.get("steps");
-
-                            if (castingSteps != null && castingSteps.size() > 0){
-                                result = (ArrayList)castingSteps.get("WorkStep");
-                            }
+                        LinkedHashMap stepsObject = (LinkedHashMap)castingWorkPlanData.get("steps");
+                        if (!stepsObject.isEmpty()){
+                            List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>)stepsObject.get("WorkStep");
+                            list.forEach(item -> {
+                                ArrayMap<String, Object> resultItem = new ArrayMap<String, Object>();
+                                item.forEach((k, v) -> {
+                                    if (!k.equals("actions")){
+                                        resultItem.add(k, v);
+                                    }
+                                });
+                                result.add(resultItem);
+                            });
+                            //result = (ArrayList)stepsObject.get("WorkStep");// WorkStep
                         }
                     }
                 }
@@ -495,22 +474,22 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllEquipments(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getAllEquipments(String roomId) {
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0){
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects){
+            for (ArrayMap<String, Object> project : allProjects){
                 String projectId = project.get("id").toString();
 
-                List<Map<String, Object>> allScenario = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> allScenario = getScenarios(projectId);
                 if (allScenario != null && allScenario.size() > 0){
-                    for (Map scenario : allScenario){
+                    for (ArrayMap<String, Object> scenario : allScenario){
                         String scenarioId = scenario.get("id").toString();
 
-                        List<Map<String, Object>> equipments = getEquipments(scenarioId);
-                        for (Map<String, Object> equipment : equipments){
+                        ArrayList<ArrayMap<String, Object>> equipments = getEquipments(scenarioId);
+                        for (ArrayMap<String, Object> equipment : equipments){
                             equipment.put("projectId", projectId);
                             equipment.put("scenarioId", scenarioId);
                         }
@@ -524,22 +503,22 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllWorkers(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getAllWorkers(String roomId) {
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0){
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects){
+            for (ArrayMap<String, Object> project : allProjects){
                 String projectId = project.get("id").toString();
 
-                List<Map<String, Object>> allScenario = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> allScenario = getScenarios(projectId);
                 if (allScenario != null && allScenario.size() > 0){
-                    for (Map scenario : allScenario){
+                    for (ArrayMap<String, Object> scenario : allScenario){
                         String scenarioId = scenario.get("id").toString();
 
-                        List<Map<String, Object>> workers = getWorkers(scenarioId);
-                        for (Map<String, Object> worker : workers){
+                        ArrayList<ArrayMap<String, Object>> workers = getWorkers(scenarioId);
+                        for (ArrayMap<String, Object> worker : workers){
                             worker.put("projectId", projectId);
                             worker.put("scenarioId", scenarioId);
                         }
@@ -553,23 +532,23 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllSources(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getAllSources(String roomId) {
 
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0){
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects){
+            for (ArrayMap<String, Object> project : allProjects){
                 String projectId = project.get("id").toString();
 
-                List<Map<String, Object>> allScenario = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> allScenario = getScenarios(projectId);
                 if (allScenario != null && allScenario.size() > 0){
-                    for (Map scenario : allScenario){
+                    for (ArrayMap<String, Object> scenario : allScenario){
                         String scenarioId = scenario.get("id").toString();
 
-                        List<Map<String, Object>> sources = getSources(scenarioId);
-                        for (Map<String, Object> source : sources){
+                        ArrayList<ArrayMap<String, Object>> sources = getSources(scenarioId);
+                        for (ArrayMap<String, Object> source : sources){
                             source.put("projectId", projectId);
                             source.put("scenarioId", scenarioId);
                         }
@@ -583,22 +562,22 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllShields(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getAllShields(String roomId) {
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0){
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects){
+            for (ArrayMap<String, Object> project : allProjects){
                 String projectId = project.get("id").toString();
 
-                List<Map<String, Object>> allScenario = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> allScenario = getScenarios(projectId);
                 if (allScenario != null && allScenario.size() > 0){
-                    for (Map scenario : allScenario){
+                    for (ArrayMap<String, Object> scenario : allScenario){
                         String scenarioId = scenario.get("id").toString();
 
-                        List<Map<String, Object>> shields = getShields(scenarioId);
-                        for (Map<String, Object> shield : shields){
+                        ArrayList<ArrayMap<String, Object>> shields = getShields(scenarioId);
+                        for (ArrayMap<String, Object> shield : shields){
                             shield.put("projectId", projectId);
                             shield.put("scenarioId", scenarioId);
                         }
@@ -612,22 +591,22 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllWorkSteps(String roomId) {
+    public ArrayList<ArrayMap<String, Object>> getAllWorkSteps(String roomId) {
 
-        List<Map<String, Object>> result = new ArrayList<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
 
-        ArrayList allProjects =  getProjects(roomId);
+        ArrayList<ArrayMap<String, Object>> allProjects =  getProjects(roomId);
         if (allProjects != null && allProjects.size() > 0){
-            for (ArrayMap project : (List<ArrayMap<String, Map>>) allProjects){
+            for (ArrayMap<String, Object> project : allProjects){
                 String projectId = project.get("id").toString();
 
-                List<Map<String, Object>> allScenario = getScenarios(projectId);
+                ArrayList<ArrayMap<String, Object>> allScenario = getScenarios(projectId);
                 if (allScenario != null && allScenario.size() > 0){
-                    for (Map scenario : allScenario){
+                    for (ArrayMap<String, Object> scenario : allScenario){
                         String scenarioId = scenario.get("id").toString();
 
-                        List<Map<String, Object>> workSteps = getWorkSteps(scenarioId);
-                        for (Map<String, Object> workStep : workSteps){
+                        ArrayList<ArrayMap<String, Object>> workSteps = getWorkSteps(scenarioId);
+                        for (ArrayMap<String, Object> workStep : workSteps){
                             workStep.put("projectId", projectId);
                             workStep.put("scenarioId", scenarioId);
                         }
@@ -641,13 +620,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object> getEquipment(String scenarioId, String id) {
+    public ArrayMap<String, Object> getEquipment(String scenarioId, String id) {
 
-        Map<String, Object>  result = new ArrayMap();
+        ArrayMap<String, Object>  result = new ArrayMap();
 
-        List<Map<String, Object>> dataList = getEquipments(scenarioId);
+        ArrayList<ArrayMap<String, Object>> dataList = getEquipments(scenarioId);
         if (dataList.size() > 0){
-            for (Map<String, Object> item : dataList){
+            for (ArrayMap<String, Object> item : dataList){
                 if (item.get("id").toString().equals(id)){
                     result = item;
                     break;
@@ -658,13 +637,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object> getWorker(String scenarioId, String id) {
+    public ArrayMap<String, Object> getWorker(String scenarioId, String id) {
 
-        Map<String, Object>  result = new ArrayMap();
+        ArrayMap<String, Object>  result = new ArrayMap<>();
 
-        List<Map<String, Object>> dataList = getWorkers(scenarioId);
-        if (dataList.size() > 0){
-            for (Map<String, Object> item : dataList){
+        ArrayList<ArrayMap<String, Object>> dataList = getWorkers(scenarioId);
+        if (!dataList.isEmpty()){
+            for (ArrayMap<String, Object> item : dataList){
                 if (item.get("id").toString().equals(id)){
                     result = item;
                     break;
@@ -675,13 +654,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object> getSource(String scenarioId, String id) {
+    public ArrayMap<String, Object> getSource(String scenarioId, String id) {
 
-        Map<String, Object>  result = new ArrayMap();
+        ArrayMap<String, Object>  result = new ArrayMap<>();
 
-        List<Map<String, Object>> dataList = getSources(scenarioId);
-        if (dataList.size() > 0){
-            for (Map<String, Object> item : dataList){
+        ArrayList<ArrayMap<String, Object>> dataList = getSources(scenarioId);
+        if (!dataList.isEmpty()){
+            for (ArrayMap<String, Object> item : dataList){
                 if (item.get("id").toString().equals(id)){
                     result = item;
                     break;
@@ -692,13 +671,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object> getShield(String scenarioId, String id) {
+    public ArrayMap<String, Object> getShield(String scenarioId, String id) {
 
-        Map<String, Object>  result = new ArrayMap();
+        ArrayMap<String, Object>  result = new ArrayMap<>();
 
-        List<Map<String, Object>> dataList = getShields(scenarioId);
-        if (dataList.size() > 0){
-            for (Map<String, Object> item : dataList){
+        ArrayList<ArrayMap<String, Object>> dataList = getShields(scenarioId);
+        if (!dataList.isEmpty()){
+            for (ArrayMap<String, Object> item : dataList){
                 if (item.get("id").toString().equals(id)){
                     result = item;
                     break;
@@ -709,13 +688,13 @@ public class VRDoseServiceImpl implements VRDoseService {
     }
 
     @Override
-    public Map<String, Object> getWorkStep(String scenarioId, String id) {
+    public ArrayMap<String, Object> getWorkStep(String scenarioId, String id) {
 
-        Map<String, Object> result = new ArrayMap();
+        ArrayMap<String, Object> result = new ArrayMap<>();
 
-        List<Map<String, Object>> dataList = getWorkSteps(scenarioId);
-        if (dataList.size() > 0){
-            for (Map<String, Object> item : dataList){
+        ArrayList<ArrayMap<String, Object>> dataList = getWorkSteps(scenarioId);
+        if (!dataList.isEmpty()){
+            for (ArrayMap<String, Object> item : dataList){
                 if (item.get("id").toString().equals(id)){
                     result = item;
                     break;
@@ -739,13 +718,13 @@ public class VRDoseServiceImpl implements VRDoseService {
         return this.requestFactory;
     }
 
-    private void convertLongToDate(ArrayMap map, String key){
+    private void convertLongToDate(ArrayMap<String, Object> map, String key){
         if (map.get(key) != null && !StringUtils.isEmpty(map.get(key).toString())){
             map.put(key, new SimpleDateFormat("yyyy-MM-dd").format(new Date(Long.parseLong(map.get(key).toString()))));
         }
     }
 
-    private void convertLongToDatetime(ArrayMap map, String key){
+    private void convertLongToDatetime(ArrayMap<String, Object> map, String key){
         if (map.get(key) != null && !StringUtils.isEmpty(map.get(key).toString())){
             map.put(key, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(Long.parseLong(map.get(key).toString()))));
         }
@@ -796,19 +775,19 @@ public class VRDoseServiceImpl implements VRDoseService {
         return result;
     }
 
-    private void castingObjectToStringFromScenario(Map item){
+    private void castingObjectToStringFromScenario(ArrayMap<String, Object> item){
         castingObjectToString(item);
-        convertLongToDate((ArrayMap)item, "date");
-        convertLongToDate((ArrayMap)item, "lastModified");
-        convertLongToDatetime((ArrayMap)item, "startTime");
-        convertLongToDatetime((ArrayMap)item, "endTime");
+        convertLongToDate(item, "date");
+        convertLongToDate(item, "lastModified");
+        convertLongToDatetime(item, "startTime");
+        convertLongToDatetime(item, "endTime");
 
         Object participantInfo = item.get("participantInfo");
         if (participantInfo instanceof ArrayList){
             if (participantInfo != null && ((ArrayList<?>) participantInfo).size() > 0){
                 List<ArrayMap<String, Object>> datalist = (List<ArrayMap<String, Object>>)participantInfo;
 
-                for (ArrayMap _item : datalist){
+                for (ArrayMap<String, Object> _item : datalist){
                     castingObjectToString(_item);
                     convertStringToFloat(_item,"accumulatedDose");
                     convertStringToFloat(_item,"minDose");
@@ -816,6 +795,11 @@ public class VRDoseServiceImpl implements VRDoseService {
                     convertStringToFloat(_item,"workTime");
                 }
             }
+        }
+
+        Object projectInfo = item.get("project");
+        if (projectInfo instanceof ArrayMap){
+            castingObjectToString(projectInfo);
         }
     }
 

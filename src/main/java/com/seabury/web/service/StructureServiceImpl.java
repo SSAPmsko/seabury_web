@@ -1,9 +1,8 @@
 package com.seabury.web.service;
 
-import com.seabury.web.entity.dose.SourceEntity;
 import com.seabury.web.entity.dose.StructureEntity;
 import com.seabury.web.mapper.dose.StructureMapper;
-import com.seabury.web.vo.dose.StructureVO;
+import com.seabury.web.vo.dose.project.StructureVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

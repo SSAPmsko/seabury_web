@@ -1,9 +1,9 @@
 package com.seabury.web.controller;
 
-import com.seabury.web.service.CommonService;
-import com.seabury.web.service.ScenarioService;
-import com.seabury.web.service.VRDoseService;
-import com.seabury.web.vo.dose.ReturnParam;
+import com.google.api.client.util.ArrayMap;
+import com.seabury.web.service.*;
+import com.seabury.web.vo.alfresco.AlfrescoPropertiesVO;
+import com.seabury.web.vo.dose.project.ReturnParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,8 @@ import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,6 +28,15 @@ public class ScenarioController {
 
     @Autowired
     VRDoseService vrDoseService;
+
+    @Autowired
+    AlfrescoService alfrescoService;
+
+    @Autowired
+    VRDoseReportService vrDoseReportService;
+
+    @Autowired
+    private AlfrescoPropertiesVO alfrescoPropertiesVO;
 
     @RequestMapping(value={"/scenarioList"}, method = RequestMethod.GET)
     public ModelAndView scenarioList(ModelAndView mav){
@@ -46,12 +55,16 @@ public class ScenarioController {
     }
 
     @RequestMapping(value = {"/getScenarioList"}, method = RequestMethod.POST)
-    public @ResponseBody List<Map<String, Object>> getScenarioList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+    public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarioList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
+        ArrayMap<String, Object> q = vrDoseReportService.getReport("1");
+        ArrayList<ArrayMap<String, Object>> qq = vrDoseReportService.getReports();
+
         return vrDoseService.getAllScenario("");
     }
 
     @RequestMapping(value = {"/getScenarios"}, method = RequestMethod.GET)
-    public @ResponseBody List<Map<String, Object>> getScenarios(@RequestParam(required = false) String projectId) {
+    public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarios(@RequestParam(required = false) String projectId) {
+        ArrayList<ArrayMap<String, Object>> qq =vrDoseService.getScenarios(projectId);
         return vrDoseService.getScenarios(projectId);
     }
 
