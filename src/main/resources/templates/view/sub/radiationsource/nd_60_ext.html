@@ -36,29 +36,112 @@
 	};
 	function LoadRadiationSource() {
 		$("#grid_60_ext").kendoGrid({
-		   columns: [{
-               field: "nuclide",
-               title: "Nuclide",
-               width: 240
-           },
+		   columns: [
                {
-	            field: "adrenals",
-	            title: "adrenals",
-	            width: 240
-	        }, {
-	        	field: "bladder_wall",
-	            title: "bladder_wall",
-	        }, {
-	        	field: "bone_surface",
-	            title: "bone_surface",
-	        }, {
-	        	field: "brain",
-	            title: "brain",
-	        }, {
-	            field: "breast",
-	            title: "breast",
-	            width: 150
-	        }],
+                   field: "nuclide",
+                   title: "Nuclide"
+               },
+               {
+                   field: "adrenals",
+                   title: "adrenals"
+               },
+               {
+                   field: "bladder_wall",
+                   title: "bladder_wall"
+               },
+               {
+                   field: "bone_surface",
+                   title: "bone_surface"
+               },
+               {
+                   field: "brain",
+                   title: "brain"
+               },
+               {
+                   field: "breast",
+                   title: "breast"
+               },
+               {
+                   field: "esophagus",
+                   title: "esophagus"
+               },
+               {
+                   field: "stomach_wall",
+                   title: "stomach_wall"
+               },
+               {
+                   field: "small_intestine_wall",
+                   title: "small_intestine_wall"
+               },
+               {
+                   field: "upper_large_intestine_wall",
+                   title: "upper_large_intestine_wall"
+               },
+               {
+                   field: "lower_large_intestine_wall",
+                   title: "lower_large_intestine_wall"
+               },
+               {
+                   field: "kidneys",
+                   title: "kidneys"
+               },
+               {
+                   field: "liver",
+                   title: "liver"
+               },
+               {
+                   field: "lungs",
+                   title: "lungs"
+               },
+               {
+                   field: "muscle",
+                   title: "muscle"
+               },
+               {
+                   field: "ovaries",
+                   title: "ovaries"
+               },
+               {
+                   field: "pancreas",
+                   title: "pancreas"
+               },
+               {
+                   field: "red_marrow",
+                   title: "red_marrow"
+               },
+               {
+                   field: "skin",
+                   title: "skin"
+               },
+               {
+                   field: "spleen",
+                   title: "spleen"
+               },
+               {
+                   field: "testes",
+                   title: "testes"
+               },
+               {
+                   field: "thymus",
+                   title: "thymus"
+               },
+               {
+                   field: "thyroid",
+                   title: "thyroid"
+               },
+               {
+                   field: "uterus",
+                   title: "uterus"
+               },
+               {
+                   field: "he",
+                   title: "he"
+               },
+               {
+                   field: "e",
+                   title: "e"
+               }
+            ],
 		  dataSource: {
 	          transport: {
 	              read: function(options){
@@ -88,7 +171,27 @@
 	                	bladder_wall: { type: "number" },
 	                	bone_surface: { type: "number" },
 	                	brain: { type: "number" },
-	                	breast: { type: "number" }
+	                	breast: { type: "number" },
+                        esophagus: { type: "number" },
+                        stomach_wall: { type: "number" },
+                        small_intestine_wall: { type: "number" },
+                        upper_large_intestine_wall: { type: "number" },
+                        lower_large_intestine_wall: { type: "number" },
+                        kidneys: { type: "number" },
+                        liver: { type: "number" },
+                        lungs: { type: "number" },
+                        muscle: { type: "number" },
+                        ovaries: { type: "number" },
+                        pancreas: { type: "number" },
+                        red_marrow: { type: "number" },
+                        skin: { type: "number" },
+                        spleen: { type: "number" },
+                        testes: { type: "number" },
+                        thymus: { type: "number" },
+                        thyroid: { type: "number" },
+                        uterus: { type: "number" },
+                        he: { type: "number" },
+                        e: { type: "number" }
 	  	            }
 	  	        }
 	  	    },
