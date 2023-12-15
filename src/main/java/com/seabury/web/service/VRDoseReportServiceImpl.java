@@ -30,17 +30,23 @@ public class VRDoseReportServiceImpl implements VRDoseReportService{
 
     @Override
     public ArrayMap<String, Object> getReport(String id) {
-        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() +  "/plannerdbapplication/resources/reportdb/reports/" + id);
+        GenericUrl gUrl = new GenericUrl(vrDose_propertiesEntity.getUrl() + ":" + vrDose_propertiesEntity.getPort() +  "/plannerdbapplication/resources/reportdb/reports?scenarioDataId=" + id);
 
-        ArrayMap<String, Object> result = new ArrayMap<>();
+        ArrayList<ArrayMap<String, Object>> result = new ArrayList<>();
         try {
             HttpRequest request = getRequestFactory().buildGetRequest(gUrl);
 
             result = request.execute().parseAs(result.getClass());
+
+            if (!result.isEmpty()) {
+                result.forEach(item ->{
+                    castingObjectToString(item);
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        return result.get(result.size() - 1);
     }
 
     @Override
@@ -61,6 +67,7 @@ public class VRDoseReportServiceImpl implements VRDoseReportService{
         return result;
     }
 
+    @Override
     public XML_Report DeserializeReport (String xmlString) {
         ObjectMapper xmlMapper = new XmlMapper();
         XML_Report result = new XML_Report();
@@ -88,5 +95,19 @@ public class VRDoseReportServiceImpl implements VRDoseReportService{
             });
         }
         return this.requestFactory;
+    }
+
+    private ArrayMap<String, Object> castingObjectToString(Object item){
+        ArrayMap<String, Object> result = new ArrayMap<>();
+        if (item instanceof ArrayMap){
+            ArrayMap<String, Object> castingItem = (ArrayMap<String, Object>)item;
+            castingItem.forEach((k, v)-> {
+                if (v.getClass().getSimpleName().equals("Object")) {
+                    castingItem.put(k, "");
+                }
+            });
+            result = castingItem;
+        }
+        return result;
     }
 }

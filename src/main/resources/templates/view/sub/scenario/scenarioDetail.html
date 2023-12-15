@@ -18,6 +18,8 @@
                 <input type="text" class="form-control" id="txt_editMode" form="scenarioPropertyForm" th:value="${editMode}">
                 <input type="text" class="form-control" id="txt_projectId" form="scenarioPropertyForm" th:value="${projectId}">
                 <input type="text" class="form-control" id="txt_scenarioId" form="scenarioPropertyForm" th:value="${id}">
+                <input type="text" class="form-control" id="txt_dosimeterInfo" form="scenarioPropertyForm" th:value="${dosimeterInfo}">
+                <input type="text" class="form-control" id="txt_workPlanInfo" form="scenarioPropertyForm" th:value="${report.scenarioDetails.workPlanInfo}">
             </div>
 
             <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
@@ -59,8 +61,13 @@
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="sourceTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#sourceContent" type="button" role="tab" aria-controls="sourceContent" aria-selected="false">Source</a>
                     </li>
+                    <!--
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="workPlanTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workPlanContent" type="button" role="tab" aria-controls="workPlanContent" aria-selected="false">Report</a>
+                    </li>
+                    -->
+                    <li class="nav-item" role="presentation">
+                        <a data-load="false" class="nav-link" id="reportTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#reportContent" type="button" role="tab" aria-controls="reportContent" aria-selected="false">Report</a>
                     </li>
                 </ul>
 
@@ -153,23 +160,6 @@
                         <div class="" id="dg_scenario_workpack" form="scenarioPropertyForm">
 
                         </div>
-
-                        <div class="mt-3 row">
-                            <div class="col-12">
-                                <h3>Accumulated Collective Dose</h3>
-                                <canvas id="chart_line_01" form="scenarioPropertyForm">
-
-                                </canvas>
-                            </div>
-
-
-                            <div class="col-12">
-                                <h3>Accumulated Collective Dose Step</h3>
-                                <canvas id="chart_bar_01" form="scenarioPropertyForm">
-
-                                </canvas>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="equipmentContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="equipmentTab">
@@ -196,400 +186,258 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="workPlanContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workPlanTab">
+                    <div class="tab-pane fade" id="reportContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="reportTab">
                         <div class="row p-0">
                             <div class="col-lg-12 p-2">
                                 <fieldset>
-                                    <legend>방사선작업계획서</legend>
+                                    <legend>Pre-job plan
+                                        <br><span class="subtitle">Report Header</span>
+                                    </legend>
 
                                     <div class="row g-3">
-                                        <!-- 작업명 -->
+                                        <!-- Report type -->
                                         <div class="col-sm-6">
-                                            <label class="form-label">작업명</label>
-                                            <input type="text" class="form-control" value="고리원자력발전소 2호기(Room Work Platform 설치)">
+                                            <label class="form-label">Report type:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.reportType}">
                                         </div>
 
-                                        <!-- 작업장소 -->
+                                        <!-- Project -->
                                         <div class="col-sm-6">
-                                            <label class="form-label">작업장소</label>
-                                            <input type="text" class="form-control" value="Room">
+                                            <label class="form-label">Project:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.project}">
                                         </div>
 
-                                        <!-- 예상작업기간 -->
+                                        <!-- Scenario -->
                                         <div class="col-sm-6">
-                                            <label class="form-label">예상작업기간</label>
-                                            <input type="date" class="form-control" value="2020-06-05">
+                                            <label class="form-label">Scenario:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.scenario}">
                                         </div>
 
-                                        <!-- 관련계통기기 -->
+                                        <!-- Status -->
                                         <div class="col-sm-6">
-                                            <label class="form-label">관련계통기기</label>
+                                            <label class="form-label">Status:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.scenarioStatus}">
+                                        </div>
+
+                                        <!-- Start date -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Start date:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.projectStartDate}">
+                                        </div>
+
+                                        <!-- End date -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">End date:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.projectEndDate}">
+                                        </div>
+
+                                        <!-- Radiation Calculator -->
+                                        <div class="col-sm-12">
+                                            <label class="form-label">Radiation Calculator:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.reportHeader.calculatorInfo}">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12 p-2">
+                                <fieldset>
+                                    <legend>Job Scope
+                                        <br><span class="subtitle">Project Summary</span>
+                                    </legend>
+
+                                    <div class="row g-3">
+                                        <!-- Description -->
+                                        <div class="col-sm-12">
+                                            <label class="form-label">Description:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.projectSummary.description}">
+                                        </div>
+
+                                        <!-- Justification -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Justification:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.projectSummary.justification}">
+                                        </div>
+
+                                        <!-- Dose limit -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Dose limit:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.projectSummary.doseLimit}">
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="subtitle">Scenario Summary</span>
+                                    </legend>
+
+                                    <div class="row g-3">
+                                        <!-- Location -->
+                                        <!--
+                                        <div class="col-sm-12">
+                                            <label class="form-label">Location:</label>
                                             <input type="text" class="form-control" value="">
                                         </div>
+                                        -->
+
+                                        <!-- Start time -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Start time:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.scenarioSummary.startTime}">
+                                        </div>
+
+                                        <!-- End time -->
+                                        <!-- Report Mapping 데이터가 존재 하지 않음. -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">End time:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" value="">
+                                        </div>
+
+                                        <!-- Duration -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Duration:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.scenarioSummary.duration}">
+                                        </div>
+
+                                        <!-- Risk value -->
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Risk value:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.scenarioSummary.riskValue}">
+                                        </div>
+
+                                        <!-- Description -->
+                                        <div class="col-sm-12">
+                                            <label class="form-label">Description:</label>
+                                            <input type="text" class="form-control" form="scenarioPropertyForm" th:value="${report.scenarioSummary.description}">
+                                        </div>
                                     </div>
                                 </fieldset>
                             </div>
 
                             <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered">
-                                        <thead>
-                                            <tr style="vertical-align:middle; text-align: center;">
-                                                <th scope="col" rowspan="2">일련번호</th>
-                                                <th scope="col" rowspan="2">작업세부사항</th>
-                                                <th scope="col" rowspan="2">예상작업시간<br>(hr)</th>
-                                                <th scope="col" rowspan="2">작업인원<br>(명)</th>
-                                                <th scope="col" colspan="3">작업장 방사선(능) 준위</th>
-                                                <th scope="col" rowspan="2">예상 피폭선량<br>(man-mSv)</th>
-                                            </tr>
-                                            <tr style="vertical-align:middle; text-align: center;">
-                                                <th scope="col">방사선선량률<br>(mSv/hr)</th>
-                                                <th scope="col">공기오염도<br>(DAC)</th>
-                                                <th scope="col">H-3농도<br>(DAC)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td style="text-align: center;">1</td>
-                                            <td>Work Platform 자재 이동</td>
-                                            <td style="text-align: center;">0.4</td>
-                                            <td style="text-align: center;">4</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">2</td>
-                                            <td>Profile(Work Platform 틀) 설치</td>
-                                            <td style="text-align: center;">0.4</td>
-                                            <td style="text-align: center;">6</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">3</td>
-                                            <td>Work Platform 상판 설치</td>
-                                            <td style="text-align: center;">0.4</td>
-                                            <td style="text-align: center;">6</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">4</td>
-                                            <td>Work Way 설치</td>
-                                            <td style="text-align: center;">0.5</td>
-                                            <td style="text-align: center;">4</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">5</td>
-                                            <td>최종 점검</td>
-                                            <td style="text-align: center;">0.4</td>
-                                            <td style="text-align: center;">2</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <fieldset>
+                                    <legend>Work Plan
+                                        <br><span class="subtitle">Workers</span>
+                                    </legend>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="subtitle">Equipment</span>
+                                    </legend>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="subtitle">Work Steps</span>
+                                    </legend>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="subtitle">Work Steps Details</span>
+                                    </legend>
+                                </fieldset>
                             </div>
 
                             <div class="col-lg-12 p-2">
                                 <fieldset>
-                                    <div class="row g-3">
-                                        <!-- 총 예상피폭선량 -->
-                                        <div class="col-sm-6">
-                                            <label class="form-label">총 예상피폭선량</label>
-                                            <input type="text" class="form-control" value="man-mSv">
-                                        </div>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_accumulated_collective_dose" form="scenarioPropertyForm">
 
-                                        <!-- 1인 평균 피폭선량 -->
-                                        <div class="col-sm-6">
-                                            <label class="form-label">1인 평균 피폭선량</label>
-                                            <input type="text" class="form-control" value="mSv">
-                                        </div>
+                                        </canvas>
+                                    </div>
+                                </fieldset>
 
-                                        <!-- 작업인원 -->
-                                        <div class="col-sm-6">
-                                            <label class="form-label">작업인원</label>
-                                            <input type="text" class="form-control" value="명">
-                                        </div>
+                                <fieldset>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_workers_dose_rate" form="scenarioPropertyForm">
 
-                                        <!-- 총 소요인시 -->
-                                        <div class="col-sm-6">
-                                            <label class="form-label">총 소요인시</label>
-                                            <input type="text" class="form-control" value="man-hr">
-                                        </div>
+                                        </canvas>
+                                    </div>
+                                </fieldset>
 
-                                        <!-- 예상 방사선준위 -->
-                                        <div class="col-sm-4">
-                                            <label class="form-label">예상 방사선준위</label>
-                                            <input type="text" class="form-control" value="mSv/hr">
-                                        </div>
+                                <fieldset>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_workers_accumulated_dose" form="scenarioPropertyForm">
 
-                                        <!-- 표면오염도 -->
-                                        <div class="col-sm-4">
-                                            <label class="form-label">표면오염도</label>
-                                            <input type="text" class="form-control" value="Bq/100㎠">
-                                        </div>
+                                        </canvas>
+                                    </div>
+                                </fieldset>
 
-                                        <!-- 공기오염도 -->
-                                        <div class="col-sm-4">
-                                            <label class="form-label">공기오염도</label>
-                                            <input type="text" class="form-control" value="DAC">
-                                        </div>
+                                <fieldset>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_maximum_individual_dose_rate" form="scenarioPropertyForm">
+
+                                        </canvas>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_minimum_individual_dose_rate" form="scenarioPropertyForm">
+
+                                        </canvas>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div class="col-sm-12">
+                                        <canvas id="chart_accumulated_collective_dose_per_step" form="scenarioPropertyForm">
+
+                                        </canvas>
                                     </div>
                                 </fieldset>
                             </div>
 
-                            <div class="col-lg-12 p-2 mt-3">
+                            <div class="col-lg-12 p-2">
                                 <fieldset>
-                                    <legend>피폭최소화(ALARA) 점검표</legend>
+                                    <legend>Radiological Conditions
+                                        <br><span class="subtitle">Scenario Start</span>
+                                    </legend>
                                 </fieldset>
-                            </div>
 
-                            <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered caption-top">
-                                        <caption>Ⅰ. 작업절차서 관련 사항</caption>
-                                        <thead>
-                                        <tr style="vertical-align:middle; text-align: center;">
-                                            <th scope="col" style="width: 60%">점 검 항 목</th>
-                                            <th scope="col" style="width: 10%">예</th>
-                                            <th scope="col" style="width: 10%">아니오</th>
-                                            <th scope="col" style="width: 20%">비고</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1. 작업 절차는 수립되었는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2. 불필요한 작업은 없는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3. 작업공구 및 장비는 적절한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4. 안전사고의 위험은 없는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5. 기기를 선량이 낮은 지역으로 운반 가능한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6. 다른 장소에서 예비작업이 가능한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Sources</span>
+                                    </legend>
+                                </fieldset>
 
-                            <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered caption-top">
-                                        <caption>Ⅱ. 작업준비</caption>
-                                        <thead>
-                                        <tr style="vertical-align:middle; text-align: center;">
-                                            <th scope="col" style="width: 60%">점 검 항 목</th>
-                                            <th scope="col" style="width: 10%">예</th>
-                                            <th scope="col" style="width: 10%">아니오</th>
-                                            <th scope="col" style="width: 20%">비고</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1. 작업구역의 통로는 적절한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2. 임시 공기공급 Line이 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3. 통신설비가 필요한가?</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4. 전기, 조명의 임시설비가 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5. 예비 작업구역의 설치가 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Shields</span>
+                                    </legend>
+                                </fieldset>
 
-                            <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered caption-top">
-                                        <caption>Ⅲ. 방사선관리</caption>
-                                        <thead>
-                                        <tr style="vertical-align:middle; text-align: center;">
-                                            <th scope="col" style="width: 60%">점 검 항 목</th>
-                                            <th scope="col" style="width: 10%">예</th>
-                                            <th scope="col" style="width: 10%">아니오</th>
-                                            <th scope="col" style="width: 20%">비고</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1. 임시 공기조화 설비는 필요한가?</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2. 복수 TLD 를 착용해야 하는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3. 텐트 설치가 필요한가?</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4. 임시 차폐가 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5. 고방사선지점 및 방사선(능) 조건의 부착이 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6. 오염확산 방지가 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7. 방사선 방호 장구류 선택이 적절한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Dose map</span>
+                                    </legend>
+                                </fieldset>
 
-                            <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered caption-top">
-                                        <caption>Ⅳ. 작업자 준비</caption>
-                                        <thead>
-                                        <tr style="vertical-align:middle; text-align: center;">
-                                            <th scope="col" style="width: 60%">점 검 항 목</th>
-                                            <th scope="col" style="width: 10%">예</th>
-                                            <th scope="col" style="width: 10%">아니오</th>
-                                            <th scope="col" style="width: 20%">비고</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1. 작업자 선정은 적절한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2. 특별한 주의 사항이 있는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3. 모의훈련이 필요한가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4. 투입인력 감소 가능성이 있는가?</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5. 작업개요를 설명했는가?</td>
-                                            <td style="text-align: center;">O</td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                <fieldset>
+                                    <legend><span class="subtitle">End Start</span>
+                                    </legend>
+                                </fieldset>
 
-                            <div class="col-lg-12 p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-sm table-bordered caption-top">
-                                        <caption>Ⅴ. 기타사항</caption>
-                                        <thead>
-                                        <tr style="vertical-align:middle; text-align: center;">
-                                            <th scope="col" style="width: 60%">점 검 항 목</th>
-                                            <th scope="col" style="width: 10%">예</th>
-                                            <th scope="col" style="width: 10%">아니오</th>
-                                            <th scope="col" style="width: 20%">비고</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr style="height: 200px;">
-                                            <td></td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Sources</span>
+                                    </legend>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Shields</span>
+                                    </legend>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        <span class="detailtitle">Dose map</span>
+                                    </legend>
+                                </fieldset>
                             </div>
                         </div>
                     </div>
@@ -597,102 +445,9 @@
             </div>
         </div>
 
-        <!-- Sample Chart Data -->
-        <script>
-            const sample_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
-
-            const labels_01 = ['16:41:00', '16:41:30', '16:42:00', '16:42:30', '16:43:00', '16:43:30', '16:44:00', '16:44:30', '16:45:00', '16:45:30', '16:46:00', '16:46:30', '16:47:00',];
-            const dataPoints_01_01 = [0, 0, 0, 0.004, 0.009, 0.019, 0.033, 0.0505, 0.0705, 0.0905, 0.1105, 0.1305, 0.1505,];
-            const dataPoints_01_02 = [0, 0.2, 0.25, 0.26, 0.274, 0.2925, 0.3125, 0.337, 0.364, 0.394, 0.427, 0.461, 0.495,];
-            const dataPoints_01_03 = [0, 0, 0.003, 0.007, 0.012, 0.022, 0.036, 0.0535, 0.0735, 0.0935, 0.1135, 0.1335, 0.1535,];
-            const dataPoints_01_04 = [0, 0, 0, 0.002, 0.004, 0.006, 0.012, 0.018, 0.024, 0.03, 0.036, 0.042, 0.048];
-
-            const labels_02 =['Remove reactor lid', 'Remove hot piece 1', 'Remove hot piece 2', 'Place container lid', 'Place container on trolley', 'Remove trolley','Close reactor lid', ];
-            const dataPoints_02_01 = [0, 0.008, 0.003, 0.001, 0, 0, 0];
-
-            // Graphs
-            const div_chart_line_01 = document.getElementById('chart_line_01');
-
-            // eslint-disable-next-line no-unused-vars
-            const sample_chart_line_01 = new Chart(div_chart_line_01, {
-                type: 'line',
-                data: {
-                    labels: labels_01,
-                    datasets: [
-                        {
-                            label: 'Supervisor1_AccumulatedDose',
-                            data: dataPoints_01_01,
-                            borderColor: sample_colors[0],
-                            backgroundColor: sample_colors[0],
-                            fill: false,
-                            pointBorderColor: 'rgba(0, 0, 0, 0)',
-                            /*cubicInterpolationMode: 'monotone',*/
-                            tension: 0.2,
-                        },
-                        {
-                            label: 'Supervisor2_AccumulatedDose',
-                            data: dataPoints_01_02,
-                            borderColor: sample_colors[1],
-                            backgroundColor: sample_colors[1],
-                            fill: false,
-                            pointBorderColor: 'rgba(0, 0, 0, 0)',
-                            /*cubicInterpolationMode: 'monotone',*/
-                            tension: 0.2,
-                        },
-                        {
-                            label: 'Worker1_AccumulatedDose',
-                            data: dataPoints_01_03,
-                            borderColor: sample_colors[2],
-                            backgroundColor: sample_colors[2],
-                            fill: false,
-                            pointBorderColor: 'rgba(0, 0, 0, 0)',
-                            /*cubicInterpolationMode: 'monotone',*/
-                            tension: 0.2,
-                        },
-                        {
-                            label: 'Worker2_AccumulatedDose',
-                            data: dataPoints_01_04,
-                            borderColor: sample_colors[3],
-                            backgroundColor: sample_colors[3],
-                            fill: false,
-                            pointBorderColor: 'rgba(0, 0, 0, 0)',
-                            /*cubicInterpolationMode: 'monotone',*/
-                            tension: 0.2,
-                        }
-                    ]
-                }
-            })
-
-            // Graphs
-            const div_chart_bar_01 = document.getElementById('chart_bar_01');
-
-            const sample_chart_bar_01 = new Chart(div_chart_bar_01, {
-                type: 'bar',
-                data: {
-                    labels: labels_02,
-                    datasets: [{
-                            label: 'Accumulated collective dose per step',
-                            data: dataPoints_02_01,
-                            backgroundColor: '#E34234'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: false,
-                        }
-                    }
-                },
-            })
-
-        </script>
-
         <!-- Custom styles for this template -->
         <script src="/static/view/sub/scenario/js/scenarioDetail.js"></script>
+        <link href="/static/view/sub/scenario/css/scenarioDetail.css" rel="stylesheet">
 
         <!-- Chart -->
         <!--
