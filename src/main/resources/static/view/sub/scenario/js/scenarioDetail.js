@@ -1,5 +1,10 @@
 var rootName = "scenario";
 
+var sample_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+
+var dosimeterInfo;
+var workPlanInfo;
+
 $(document).ready(function(){
     onLoadedScenario();
 });
@@ -32,6 +37,12 @@ function onLoadedScenario(){
             $('#btn_scenario_delete' + uniqueId).addClass("visually-hidden");
         }
 
+        var dosimeterInfoStr = $("#txt_dosimeterInfo" + uniqueId).val();
+        dosimeterInfo = JSON.parse(dosimeterInfoStr.replace(/'/g, '"'));
+
+        var workPlanInfoStr = $("#txt_workPlanInfo" + uniqueId).val();
+        workPlanInfo = JSON.parse(workPlanInfoStr.replace(/'/g, '"'));
+
 
         // Scenario Detail Data load
         dg_scenario_workpackLoadData(uniqueId);
@@ -39,6 +50,14 @@ function onLoadedScenario(){
         dg_scenario_workerLoadData(uniqueId);
         dg_scenario_sourceLoadData(uniqueId);
         dg_scenario_shieldLoadData(uniqueId);
+        //dg_scenario_reportLoadData(uniqueId);
+
+        chart_accumulated_collective_doseLoadData(uniqueId);
+        chart_workers_dose_rateLoadData(uniqueId);
+        chart_workers_accumulated_doseLoadData(uniqueId);
+        chart_maximum_individual_dose_rateLoadData(uniqueId);
+        chart_minimum_individual_dose_rateLoadData(uniqueId);
+        chart_accumulated_collective_dose_per_stepLoadData(uniqueId);
 
         // button event
         $("#btn_scenario_save" + uniqueId).on("click", function(e) {
@@ -105,10 +124,10 @@ function dg_scenarioSaveExecute(uniqueId){
                 var formName = "scenarioPropertyForm";
                 var oldId = "_" + formName + "_newItem";
 
-                $('#txt_editMode' + oldId).val(true);
-                $('#btn_scenario_save' + oldId).off("click");
-                $('#btn_scenario_delete' + oldId).off("click");
-                $('#btn_scenario_delete' + oldId).removeClass("visually-hidden");
+                $("#txt_editMode" + oldId).val(true);
+                $("#btn_scenario_save" + oldId).off("click");
+                $("#btn_scenario_delete" + oldId).off("click");
+                $("#btn_scenario_delete" + oldId).removeClass("visually-hidden");
 
                 var scenarioId = data.result.id;
                 newScenarioContainer[0].setTitle('scenarioDetail_' + scenarioId);
@@ -116,7 +135,7 @@ function dg_scenarioSaveExecute(uniqueId){
 
                 var newId = "_" + formName + "_" + scenarioId;
 
-                $('#txt_scenarioId' + oldId).val(scenarioId);
+                $("#txt_scenarioId" + oldId).val(scenarioId);
 
                 replaceFormNewId('scenarioPropertyForm', oldId, newId);
                 replaceTabFormNewId('scenarioTabForm', oldId, newId);
@@ -416,6 +435,450 @@ function dg_scenario_workerLoadData(uniqueId) {
     });
 }
 
+function dg_scenario_reportLoadData(uniqueId){
+    $.ajax({
+        url : "/getReport?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function(result) {
+            alert(JSON.stringify(result));
+        },
+        error: function(result) {
+
+        }
+    });
+}
+
+function chart_accumulated_collective_doseLoadData(uniqueId){
+    const labels = [];
+    const datasets = [];
+
+    if (dosimeterInfo !== undefined && dosimeterInfo.length > 0){
+        const item = dosimeterInfo[0];
+
+        let dataArray = [];
+        let totalSumData = 0.0;
+        for (let i in item.times) {
+            if (i == 0){
+                for (let j in item.times) {
+                    labels.push(item.times[j]);
+                }
+            }
+
+            let sumData = 0.0;
+            for (let j in dosimeterInfo){
+                const data = dosimeterInfo[j].doseRates[i];
+                sumData += data;
+            }
+            totalSumData += sumData;
+            dataArray.push(totalSumData);
+        }
+
+        const dataset = {
+            label: "Collective accumulated dose",
+            data: dataArray,
+            borderColor: sample_colors[i],
+            fill: false,
+            borderWidth: 1,
+            pointRadius: 0,
+            pointHitRadius:10,
+        };
+        datasets.push(dataset);
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_accumulated_collective_dose" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Accumulated collective dose'
+            },
+            legend: {
+                display: true,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv',
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation : 0,
+                    }
+                }],
+                xAxes: [{
+                    type: "time",
+                    distribution: 'series',
+                    time: {
+                        unit: 'second',
+                        displayFormats: {
+                            second: 'HH:mm:ss'
+                        }
+                    },
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    })
+}
+
+function chart_workers_dose_rateLoadData(uniqueId){
+    const labels = [];
+    const datasets = [];
+
+    if (dosimeterInfo !== undefined){
+        for (let i in dosimeterInfo){
+            const item = dosimeterInfo[i];
+            if (i == 0){
+                for (let j in item.times) {
+                    labels.push(item.times[j]);
+                }
+            }
+
+            const dataset = {
+                label: item.dosimeterName,
+                data: item.doseRates,
+                borderColor: sample_colors[i],
+                fill: false,
+                borderWidth: 1,
+                pointRadius: 0,
+                pointHitRadius:10,
+            };
+            datasets.push(dataset);
+        }
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_workers_dose_rate" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Workers dose-rate'
+            },
+            legend: {
+                display: true,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv/h',
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation : 0,
+                    }
+                }],
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        unit: 'second',
+                        displayFormats: {
+                            second: 'HH:mm:ss'
+                        }
+                    },
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    });
+}
+
+function chart_workers_accumulated_doseLoadData(uniqueId){
+    const labels = [];
+    const datasets = [];
+
+    if (dosimeterInfo !== undefined){
+        for (let i in dosimeterInfo){
+            const item = dosimeterInfo[i];
+            if (i == 0){
+                for (let j in item.times) {
+                    // labels.push(moment.unix(item.times[j]));
+                    labels.push(item.times[j]);
+                }
+            }
+            const dataArray = [];
+            let sumData = 0.0;
+            let prevTime = item.times[0];
+            let prevValue = item.doseRates[0];
+            for (let j in item.doseRates){
+                if (j>0) {
+                    const data = (prevValue + item.doseRates[j]) * (item.times[j] - prevTime) / 2;
+                    sumData += data;
+                    dataArray.push(sumData);
+                    //
+                    prevTime = item.times[j];
+                    prevValue = item.doseRates[j];
+                } else {
+                    dataArray.push(0.0);
+                }
+            }
+
+            const dataset = {
+                label: item.dosimeterName,
+                data: dataArray,
+                borderColor: sample_colors[i],
+                fill: false,
+                borderWidth: 1,
+                pointRadius: 0,
+                pointHitRadius:10,
+            };
+            datasets.push(dataset);
+        }
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_workers_accumulated_dose" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Workers accumulated dose'
+            },
+            legend: {
+                display: true,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv',
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation : 0,
+                    }
+                }],
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        unit: 'second',
+                        displayFormats: {
+                            second: 'HH:mm:ss'
+                        }
+                    },
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    });
+}
+
+function chart_maximum_individual_dose_rateLoadData(uniqueId){
+    let labels = [];
+    const dataArray = [];
+    const datasets = [];
+    if (dosimeterInfo !== undefined){
+        for (let i in dosimeterInfo){
+            const item = dosimeterInfo[i];
+
+            labels.push(item.dosimeterName);
+            dataArray.push(Math.max(...item.doseRates));
+        }
+
+        const dataset = {
+            //label: item.dosimeterName,
+            data: dataArray,
+            backgroundColor: sample_colors[0],
+            fill: true,
+        };
+        datasets.push(dataset);
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_maximum_individual_dose_rate" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Maximum individual dose-rate'
+            },
+            legend: {
+                display: false,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv/h',
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        beginAtZero: true,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    });
+}
+
+function chart_minimum_individual_dose_rateLoadData(uniqueId){
+    let labels = [];
+    const dataArray = [];
+    const datasets = [];
+    if (dosimeterInfo !== undefined){
+        for (let i in dosimeterInfo){
+            const item = dosimeterInfo[i];
+
+            labels.push(item.dosimeterName);
+            dataArray.push(Math.min(...item.doseRates));
+        }
+
+        const dataset = {
+            //label: item.dosimeterName,
+            data: dataArray,
+            backgroundColor: sample_colors[0],
+            fill: true,
+        };
+        datasets.push(dataset);
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_minimum_individual_dose_rate" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Minimum individual dose-rate'
+            },
+            legend: {
+                display: false,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv/h',
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        beginAtZero: true,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    });
+}
+
+function chart_accumulated_collective_dose_per_stepLoadData(uniqueId){
+    let labels = [];
+    const dataArray = [];
+    const datasets = [];
+    if (workPlanInfo !== undefined && workPlanInfo.WorkStepInfo !== undefined ){
+        for (let i in workPlanInfo.WorkStepInfo){
+            const item = workPlanInfo.WorkStepInfo[i];
+
+            labels.push(item.name);
+            dataArray.push(item.accumulatedCollectiveDose.replace(" mSv", ""));
+        }
+
+        const dataset = {
+            //label: item.dosimeterName,
+            data: dataArray,
+            backgroundColor: sample_colors[0],
+            fill: true,
+        };
+        datasets.push(dataset);
+    }
+
+    // Graphs
+    var div_chart = document.getElementById("chart_accumulated_collective_dose_per_step" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Accumulated collective dose per step'
+            },
+            legend: {
+                display: false,
+                position: 'bottom',
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString : 'mSv/h',
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 0,
+                        beginAtZero: true,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkipPadding: 10,
+                        maxRotation: 0,
+                    },
+                }],
+            }
+        }
+    });
+}
+
 function replaceTabFormId(formName, uniqueId) {
     var form = document.getElementById(formName);
 
@@ -461,3 +924,4 @@ function replaceTabFormNewId(formName, srcId, distId) {
     } else{
     }
 }
+

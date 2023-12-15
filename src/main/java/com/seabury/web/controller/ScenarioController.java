@@ -4,6 +4,10 @@ import com.google.api.client.util.ArrayMap;
 import com.seabury.web.service.*;
 import com.seabury.web.vo.alfresco.AlfrescoPropertiesVO;
 import com.seabury.web.vo.dose.project.ReturnParam;
+import com.seabury.web.vo.dose.report.XML_Report;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,15 +60,11 @@ public class ScenarioController {
 
     @RequestMapping(value = {"/getScenarioList"}, method = RequestMethod.POST)
     public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarioList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
-        ArrayMap<String, Object> q = vrDoseReportService.getReport("1");
-        ArrayList<ArrayMap<String, Object>> qq = vrDoseReportService.getReports();
-
         return vrDoseService.getAllScenario("");
     }
 
     @RequestMapping(value = {"/getScenarios"}, method = RequestMethod.GET)
     public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarios(@RequestParam(required = false) String projectId) {
-        ArrayList<ArrayMap<String, Object>> qq =vrDoseService.getScenarios(projectId);
         return vrDoseService.getScenarios(projectId);
     }
 
@@ -111,6 +111,20 @@ public class ScenarioController {
         } else {
             result = vrDoseService.getScenario(id);
             result.put("editMode", true);
+
+            ArrayMap<String, Object> report = vrDoseReportService.getReport(id);
+            if (!report.isEmpty()){
+                JSONObject reportJson = XML.toJSONObject(report.get("reportXml").toString());
+
+                Map<String, Object> reportMap = reportJson.toMap();
+                result.put("report", reportMap);
+
+                ArrayList<ArrayMap<String, Object>> list = (ArrayList<ArrayMap<String, Object>>)report.get("dosimeterInfo");
+                JSONArray array = new JSONArray(list);
+
+                String dosimeterInfo = array.toString().replace("\"", "'");
+                result.put("dosimeterInfo", dosimeterInfo);
+            }
         }
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
