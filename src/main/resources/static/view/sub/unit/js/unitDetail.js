@@ -1,5 +1,6 @@
 var rootName = "unit";
-
+var parentformData = {};
+parentformData.type = "Plant";
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     //$("#unit").addClass('active');
@@ -27,19 +28,45 @@ function onLoadedUnit(){
     var isFirst = replaceFormId('unitPropertyForm', uniqueId);
 
     if (isFirst === true){
-
+        LoadUnitParent(uniqueId);
 
         // button event
         $("#btn_unit_save" + uniqueId).on("click", function(e) {
             dg_unitSaveExecute(uniqueId);
-        });
+        })
 
         $("#btn_unit_delete" + uniqueId).on("click", function(e) {
             dg_unitDeleteExecute(uniqueId);
         });
     }
 }
+function LoadUnitParent(uniqueId) {
+//structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(parentformData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+        },
+        success: function (data) {
+            var parentSelect = $('#unit_parent' + uniqueId);
+            data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
 
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
+            });
+        }
+    });
+}
 function dg_unitSaveExecute(uniqueId){
     var url;
     var formData = {};

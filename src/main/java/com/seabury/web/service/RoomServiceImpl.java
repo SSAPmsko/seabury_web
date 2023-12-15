@@ -38,6 +38,8 @@ public class RoomServiceImpl implements RoomService {
         if (roomEntity != null) {
             roomVO.setID(roomEntity.getID());
             roomVO.setName(roomEntity.getName());
+            roomVO.setOperator(roomEntity.getOperator());
+            roomVO.setDescription(roomEntity.getDescription());
 
         }
         return roomVO;
@@ -49,6 +51,8 @@ public class RoomServiceImpl implements RoomService {
         if (roomVO != null){
             roomEntity.setID(roomVO.getID());
             roomEntity.setName(roomVO.getName());
+            roomEntity.setOperator(roomVO.getOperator());
+            roomEntity.setDescription(roomVO.getDescription());
 
         }
         return roomEntity;

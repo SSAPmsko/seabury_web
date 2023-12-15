@@ -2,16 +2,22 @@ var detailid;
 var idurl;
 var url;
 var formData = {};
+var RoomformData = {};
 var structype;
 var strucData = {};
+var createtype = $('#txt_createtype').val();
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
     $("#btn_create").on("click", function(e) {
-        InsertPost();
+        if (createtype = "Room"){
+            RoomInsertPost();
+        }
+        else {
+            InsertPost();
+        }
     });
-
 });
 
 
@@ -96,10 +102,16 @@ function loadData() {
         }
     });
 }*/
+function RoomInsertPost() {
+    RoomformData.name =$('#txt_name').val();
+
+
+}
+
 
 function InsertPost() {
 
-    var createtype = $('#txt_createtype').val();
+    formData.name =$('#txt_name').val();
     formData.operator = $('#txt_operator').val();
     formData.status = $('#txt_status').val();
     formData.reactorType = $('#txt_reactortype').val();
