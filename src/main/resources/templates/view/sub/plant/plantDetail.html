@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="{layout/Layout}">
+      layout:decorate="~{layout/layout}">
 
 <!-- 최신 SpringBoot 에서는 layout:decorate="~{layout/layout}" 으로 사용 -->
 <!-- 이전 버전 layout:decorator="~{layout/layout}"> -->
@@ -15,8 +15,7 @@
                 <div class="visually-hidden">
                     <input type="text" class="form-control" id="txt_editMode" form="plantPropertyForm" th:value="${editMode}">
                     <input type="text" class="form-control" id="txt_plantId" form="plantPropertyForm" th:value="${id}">
-                    <!--<input type="text" class="form-control" id="txt_strucid" th:value="${ID}">-->
-                </div>
+            </div>
                 <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
                     <h6 class="h2">Plant Detail</h6>
                     <div class="btn-toolbar">
@@ -31,49 +30,11 @@
                             <span class="k-button-icon k-icon k-i-delete"></span>
                             <span class="k-button-text">Delete</span>
                         </button>
-
-                        <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
-                        <!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
-                        <!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
-                    </div>
+            </div>
                 </div>
                 <div class="col-lg-6 p-2">
                     <fieldset>
-
-
                         <div class="row g-3">
-                            <!-- Name -->
-                            <!--<div class="col-sm-6">
-                                <label class="form-label">Type</label>
-                                &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
-                                <select class="form-select" aria-label="Default select example" form="plantPropertyForm" id="type_picker"
-                                        disabled>
-                                    <option disabled value="Site">Site</option>
-                                    <option selected value="Plant">Plant</option>
-                                    <option disabled value="Unit">Unit</option>
-                                </select>
-                            </div>
-
-                            &lt;!&ndash; Description &ndash;&gt;
-                            <div class="col-sm-6">
-                                <label class="form-label">Parent Type</label>
-                                &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
-                                <select class="form-select" aria-label="Default select example" form="plantPropertyForm" id="parent_picker"
-                                        disabled>
-                                    <option selected value="Site">Site</option>
-                                    <option disabled value="Plant">Plant</option>
-                                    <option disabled value="null">null</option>
-                                </select>
-                            </div>-->
-
-
-
-                            <!-- Room -->
-                            <!--<div class="col-sm-6">
-                                <label for="txt_description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="txt_description" form="plantPropertyForm"
-                                       th:value="${description}">
-                            </div>-->
 
                             <legend>Properties</legend>
 
@@ -139,8 +100,11 @@
                                 <input type="text" class="form-control" id="txt_thermalcapacity" form="plantPropertyForm"
                                        th:value="${thermalCapacity}">
                             </div>
-
-
+                            <div class="col-sm-6">
+                                <label  class="form-label">Parent Name</label>
+                                <select class="form-select" aria-label="Default select example" form="plantPropertyForm" id="plant_parent">
+                                </select>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -150,8 +114,6 @@
                     <fieldset>
                         <legend>Image</legend>
                         <div class="row g-3">
-<!--                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215"
-                                 class="img-fluid" alt="...">-->
                             <img src="/static/img/sample/plant_01.jpg" class="img-fluid" style="height: 300px;">
 
                         </div>
@@ -178,135 +140,4 @@
 
         </section>
     </th:block>
-
-
-<!--
-
-<th:block>
-  <section layout:fragment="content">
-    <div class="row g-2 container-fluid">
-      &lt;!&ndash; Hidden Field&ndash;&gt;
-      <div class="visually-hidden">
-        <input type="text" class="form-control" id="txt_editMode" th:value="${editMode}">
-        <input type="text" class="form-control" id="txt_id" th:value="${Plant1list[0].ID}">
-        <input type="text" class="form-control" id="txt_strucid" th:value="${Structurelist[0].ID}">
-      </div>
-      <div class="col-6">
-        <fieldset>
-          <legend>속성</legend>
-
-          <div class="row g-3">
-            &lt;!&ndash; Name &ndash;&gt;
-            <div class="col-sm-6">
-              <label  class="form-label">Type</label>
-              &lt;!&ndash; <input type="text" class="form-control" id="txt_type" th:value="${type}">&ndash;&gt;&ndash;&gt;
-              <select class="form-select" aria-label="Default select example" id="type_picker" disabled>
-                <option disabled value="Site">Site</option>
-                <option selected value="Plant">Plant</option>
-                <option disabled value="Unit">Unit</option>
-              </select>
-            </div>
-
-            &lt;!&ndash; Description &ndash;&gt;
-            <div class="col-sm-6">
-              <label  class="form-label">Parent Type</label>
-              &lt;!&ndash;<input type="text" class="form-control" id="txt_parent" th:value="${parent}">&ndash;&gt;
-              <select class="form-select" aria-label="Default select example" id="parent_picker" disabled>
-                <option selected value="Site">Site</option>
-                <option disabled value="Plant">Plant</option>
-                <option disabled value="null" >null</option>
-              </select>
-            </div>
-
-            &lt;!&ndash; Creator &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="txt_name" th:value="${Structurelist[0].Name}">
-            </div>
-
-            &lt;!&ndash; Room &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_description" class="form-label">Description</label>
-              <input type="text" class="form-control" id="txt_description" th:value="${Structurelist[0].Description}">
-            </div>
-
-            <legend>Plant Detail</legend>
-
-            &lt;!&ndash; Operator &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_operator" class="form-label">Operator</label>
-              <input type="text" class="form-control" id="txt_operator" th:value="${Plant1list[0].Operator}">
-            </div>
-
-            &lt;!&ndash; Status &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_status" class="form-label">Status</label>
-              <input type="text" class="form-control" id="txt_status" th:value="${Plant1list[0].Status}">
-            </div>
-
-            &lt;!&ndash; Reactor type &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_reactortype" class="form-label">Reactor type</label>
-              <input type="text" class="form-control" id="txt_reactortype" th:value="${Plant1list[0].ReactorType}">
-            </div>
-
-            &lt;!&ndash; Reactor supplier &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_reactorsupplier" class="form-label">Reactor supplier</label>
-              <input type="text" class="form-control" id="txt_reactorsupplier" th:value="${Plant1list[0].ReactorSupplier}">
-            </div>
-
-            &lt;!&ndash; Construction began &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="dt_constructionbegan" class="form-label">Construction began</label>
-              <input type="date" class="form-control" id="dt_constructionbegan" th:value="${Plant1list[0].ConstructionBegan}">
-            </div>
-
-            &lt;!&ndash; Commission date &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="dt_commissiondate" class="form-label">Commission date</label>
-              <input type="date" class="form-control" id="dt_commissiondate" th:value="${Plant1list[0].CommissionDate}">
-            </div>
-
-            &lt;!&ndash; Decommission date &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="dt_decommissiondate" class="form-label">Decommission date</label>
-              <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="dt_decommissiondate" th:value="${Plant1list[0].DecommissionDate}">
-            </div>
-
-            &lt;!&ndash; Thermal capacity &ndash;&gt;
-            <div class="col-sm-6">
-              <label for="txt_thermalcapacity" class="form-label">Thermal capacity</label>
-              <input type="text" class="form-control" id="txt_thermalcapacity" th:value="${Plant1list[0].ThermalCapacity}">
-            </div>
-
-
-          </div>
-        </fieldset>
-      </div>
-
-
-      <div class="col-6">
-        <fieldset>
-          <legend>Image</legend>
-          <div class="row g-3">
-            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9956823F5BD48B4215" class="img-fluid" alt="...">
-
-          </div>
-      </fieldset>
-      </div>
-        <div class="col-12 mb-3 d-flex justify-content-center">
-          <div>
-
-            <a href="#" class="btn btn-primary" onclick="dataGridSaveExecute();">Save</a>
-            <a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dataGridDeleteExecute();">Delete</a>
-          </div>
-        </div>
-    </div>
-
-
-    &lt;!&ndash; Custom styles for this template &ndash;&gt;
-    <script src="/static/view/sub/plant/js/plantDetail.js"></script>
-  </section>
-</th:block>-->
 </html>

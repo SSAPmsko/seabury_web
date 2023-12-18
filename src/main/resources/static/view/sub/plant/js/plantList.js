@@ -31,6 +31,10 @@ $("#plant_picker").change(function () {
             addDockItem('unit', '유닛 목록', 'unit/unitList')
 
             break;
+        case "Room":
+            addDockItem('room', '룸 목록', 'room/roomList')
+
+            break;
         default:
             break;
     }

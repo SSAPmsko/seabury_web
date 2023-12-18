@@ -1,4 +1,6 @@
 var rootName = "plant";
+var parentformData = {};
+parentformData.type = "Site";
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -26,6 +28,7 @@ function onLoadedPlant(){
     var isFirst = replaceFormId('plantPropertyForm', uniqueId);
 
     if (isFirst === true){
+        LoadPlantParent(uniqueId);
 
 
         // button event
@@ -38,7 +41,33 @@ function onLoadedPlant(){
         });
     }
 }
+function LoadPlantParent(uniqueId) {
+//structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(parentformData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+        },
+        success: function (data) {
+            var parentSelect = $('#plant_parent' + uniqueId);
+            data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
 
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
+            });
+        }
+    });
+}
 function dg_plantSaveExecute(uniqueId){
     var url;
     var formData = {};

@@ -121,10 +121,8 @@ function InsertPost() {
         success: function (data) {
 
             alert('저장이 완료 되었습니다.');
-
             // 리스트 리로드
             dg_strucReloadExecute();
-
 
         },
         error : function(data) {

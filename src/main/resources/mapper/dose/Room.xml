@@ -12,6 +12,12 @@
             <if test="Name != null and Name != ''">
                 AND "Name" = #{Name}
             </if>
+            <if test="Operator != null and Operator != ''">
+                AND "Operator" = #{Operator}
+            </if>
+            <if test="Description != null and Description != ''">
+                AND "Description" = #{Description}
+            </if>
         </where>
     </select>
 
@@ -23,13 +29,13 @@
     -->
     <insert id="insertRoom" parameterType="com.seabury.web.entity.dose.RoomEntity" useGeneratedKeys="true" keyProperty="ID" keyColumn="ID">
         INSERT INTO public."Room"(
-            "Name")
-        VALUES (#{Name});
+            "Name", "Operator","Description")
+        VALUES (#{Name}, #{Operator}, #{Description});
     </insert>
 
     <update id="updateRoom" parameterType="com.seabury.web.entity.dose.RoomEntity">
         UPDATE public."Room"
-        SET "Name"=#{Name}
+        SET "Name"=#{Name}, "Operator"=#{Operator}, "Description"=#{Description}
         WHERE "ID"=#{ID};
     </update>
 

@@ -1,4 +1,7 @@
 var rootName = "room";
+var parentformData = {};
+parentformData.type = "Unit";
+var idformData = {};
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -13,6 +16,7 @@ function onLoadedRoom(){
 
     // 최초 로드시 projectId 추출, unique ID 생성
     var roomId = $("#txt_roomId").val();
+
     var uniqueId;
     if (roomId !== "" && roomId !== "${id}" && roomId !== undefined) {
         uniqueId = "_" + roomId;
@@ -24,7 +28,7 @@ function onLoadedRoom(){
     var isFirst = replaceFormId('roomPropertyForm', uniqueId);
 
     if (isFirst === true){
-        var editMode = $("#txt_editMode" + uniqueId).val();
+        LoadRoomParent(uniqueId);
 
         // button event
         $("#btn_room_save" + uniqueId).on("click", function(e) {
@@ -36,17 +40,74 @@ function onLoadedRoom(){
         });
     }
 }
+function LoadRoomId(uniqueId) {
+//structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(idformData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+        },
+        success: function (data) {
+            var parentSelect = $('#room_parent' + uniqueId);
+            data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
+
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
+            });
+        }
+    });
+}
+function LoadRoomParent(uniqueId) {
+//structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureList",
+        data: JSON.stringify(parentformData),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+        },
+        success: function (data) {
+            var parentSelect = $('#room_parent' + uniqueId);
+            data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
+
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
+            });
+        }
+    });
+}
 
 function dg_roomSaveExecute(uniqueId){
-    var url;
+    var structureform = {};
+/*    structureform.id =
+    structureform.parentID =*/
     var formData = {};
-    formData.name = $('#txt_namevalue' + uniqueId).val();
+    formData.name = $('#txt_name' + uniqueId).val();
     formData.id = $('#txt_roomId' + uniqueId).val();
+    formData.operator = $('#txt_operator' + uniqueId).val();
+    formData.description = $('#txt_description' + uniqueId).val();
 
-    url = "/roomUpdate";
 
     $.ajax({
-        url : url,
+        url : "/roomUpdate",
         type: 'POST',
         async: false,
         data: JSON.stringify(formData),
@@ -143,12 +204,13 @@ function dataGridSaveExecute() {
 
     strucData.id = $('#txt_strucid').val();
     strucData.name = $('#txt_name').val();
+    strucData.operator = $('#txt_operator').val();
     strucData.description = $('#txt_description').val();
 
 
     var url;
     var formData = {};
-    formData.name = $('#txt_namevalue').val();
+    formData.name = $('#txt_name').val();
     url = "/roomUpdate";
     formData.id = $('#txt_id').val();
 
