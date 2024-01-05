@@ -95,6 +95,15 @@ public class RoomController {
         return whereRoom.getID();
     }
 
+    @RequestMapping(value = {"/getRoomIDList"}, method = RequestMethod.GET)
+    public @ResponseBody List<RoomEntity> getroomList (HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) RoomEntity message) {
+        RoomEntity whereRoom = new RoomEntity();
+
+        List<RoomEntity> qq = roomService.getRoomList(whereRoom);
+
+        return qq;
+    }
+
 
     @RequestMapping(value = {"/roomList"}, method = RequestMethod.GET)
     public ModelAndView roomList(ModelAndView mav) {

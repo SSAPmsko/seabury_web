@@ -52,7 +52,7 @@ public class UnitController {
         return mav;
     }
 
-    @RequestMapping(value = {"/getUnitList"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/getUnitListId"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexunitList(@RequestParam(value = "id", required = false) Integer id) {
         UnitEntity whereUnit = new UnitEntity();
 

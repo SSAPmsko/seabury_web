@@ -64,6 +64,7 @@ function initBootstrapTree(treeData){
                 contentType : "application/json",
                 success : function(result) {
                     addDockItem(node.type.toLowerCase() +'Detail_' + node.tags[0], node.text, node.type+ '/'+ node.type +'Detail', result);
+
                 },
                 error : function(result) {
                     alert("정상 처리에 실패 하였습니다.");
@@ -72,6 +73,7 @@ function initBootstrapTree(treeData){
 
             });
         },
+
         onNodeUnSelected: function (event, node) {
             //alert("text:" + node.text + ", tags:" + node.tags[0]);
         },
@@ -91,6 +93,7 @@ function initBootstrapTree(treeData){
         onNodeExpanded: function (event, node) {
 
         }
+
     });
 
     // Search Tree
@@ -115,7 +118,7 @@ function initBootstrapTree(treeData){
 }
 
 function loadTreeData() {
-    var resultList = new Array();
+    const resultList = [];
     $.ajax({
         type: 'GET',
         url: "/getStructureList",
@@ -125,23 +128,24 @@ function loadTreeData() {
             alert(status);
         },
         success: function(data) {
-            var tempList = new Array();
+            const tempList = [];
             data.forEach(item => {
-                var node = { tags : [item.objectID, item.parentID], text : item.name , href : typeToHref(item.type), type : item.type };
+                const node = { tags : [item.objectID, item.parentID], text : item.name , href : typeToHref(item.type), type : item.type };
                 tempList.push(node);
             });
 
             // Sorting Node - Site
             tempList.filter(n => n.type === 'Site').forEach(item => {
                 resultList.push(item);
+
             });
             // Sorting Node - Plant
             tempList.filter(n => n.type === 'Plant').forEach(item => {
-                var parentNode = resultList.find(n => n.tags[0] === item.tags[1]);
+                const parentNode = resultList.find(n => n.tags[0] === item.tags[1]);
 
-                if (parentNode != null) {
-                    if (parentNode.nodes == null) {
-                        parentNode.nodes = new Array();
+                if (parentNode !== undefined) {
+                    if (parentNode.nodes === undefined) {
+                        parentNode.nodes = [];
                     }
                     parentNode.nodes.push(item);
                 }
@@ -149,35 +153,74 @@ function loadTreeData() {
             // Sorting Node - Unit
             tempList.filter(n => n.type === 'Unit').forEach(item => {
                 resultList.forEach(parentItem => {
-                    if (parentItem.nodes != null) {
-                        var parentNode = parentItem.nodes.find(m => m.type === 'Plant' && m.tags[0] === item.tags[1]);
+                    if (parentItem.nodes !== undefined) {
+                        const parentNode = parentItem.nodes.find(m => m.type === 'Plant' && m.tags[0] === item.tags[1]);
 
-                        if (parentNode != null) {
-                            if (parentNode.nodes == null) {
-                                parentNode.nodes = new Array();
+                        if (parentNode !== undefined) {
+                            if (parentNode.nodes === undefined) {
+                                parentNode.nodes = [];
                             }
                             parentNode.nodes.push(item);
                         }
                     }
                 });
             });
+            // Sorting Node - Room
             tempList.filter(n => n.type === 'Room').forEach(item => {
                 resultList.forEach(parentItem => {
-                    if (parentItem.nodes != null) {
-                        var parentNode = parentItem.nodes.find(m => m.type === 'Unit' && m.tags[0] === item.tags[1]);
-                        if (parentNode != null) {
-                            if (parentNode.nodes == null) {
-                                parentNode.nodes = new Array();
+                    if (parentItem.nodes !== undefined) {
+                        parentItem.nodes.forEach(plantItem => {
+                            if (plantItem.nodes !== undefined) {
+                                const parentNode = plantItem.nodes.find(m => m.type === 'Unit' && m.tags[0] === item.tags[1]);
+                                if (parentNode != null) {
+                                    if (parentNode.nodes === undefined) {
+                                        parentNode.nodes = [];
+                                    }
+                                    parentNode.nodes.push(item);
+                                }
                             }
-                            parentNode.nodes.push(item);
-                        }
+                        });
                     }
-
+                });
+            });
+            // Sorting Node - Project
+            tempList.filter(n => n.type === 'Project').forEach(item => {
+                resultList.forEach(parentItem => {
+                    if (parentItem.nodes !== undefined) {
+                        parentItem.nodes.forEach(plantItem => {
+                            if (plantItem.nodes !== undefined) {
+                                plantItem.nodes.forEach(unitItem => {
+                                    if (unitItem.nodes !== undefined){
+                                        const parentNode = unitItem.nodes.find(m => m.type === 'Room' && m.tags[0] === item.tags[1]);
+                                        if (parentNode != null) {
+                                            if (parentNode.nodes === undefined) {
+                                                parentNode.nodes = [];
+                                            }
+                                            parentNode.nodes.push(item);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
                 });
             });
         }
     });
+/*
 
+    $.ajax({
+        type: 'GET',
+        url: "/getRoomIDList",
+        dataType: "json",
+        async: false,
+        error: function (request, status, error) {
+            alert(status);
+        },
+        success: function (data) {
+            roomidList = data;
+        }
+    });
     // Sorting Node - Project (추후 구현)
     ////////////////// 23.09.13 Demo 용도 //////////////////
     $.ajax({
@@ -191,48 +234,55 @@ function loadTreeData() {
         success: function (data) {
             //alert(JSON.stringify(data));
             // Sorting Node - Project Sample
-            if (data.length > 3){
-                var project1 = data[0];
-                var project2= data[1];
-                var project3 = data[2];
-                var item1 = sampleProject(project1, 1);
-                var item2 = sampleProject(project2, 2);
-                var item3 = sampleProject(project3, 3);
+            var projectList = new Array();
 
-                setParentNode(item1, resultList, "Room");
-                setParentNode(item2, resultList, "Room");
-                setParentNode(item3, resultList, "Room");
-            }
+            roomidList.forEach(item =>{
+                var node = { tags: [item.projectID, item.id], text: item.name, href: typeToHref("Project"), type: "project" };
+                projectList.push(node);
+            })
+            console.log(projectList)
+
+
+            /!*setParentNode(projectList, resultList);*!/
+
+
         }
     });
     ////////////////// 23.09.13 Demo 용도 //////////////////
+*/
 
     return JSON.stringify(resultList);
+}
+function dg_sideloadExecute()
+{
+    loadTreeData();
 }
 
 function sampleProject(data, parentId){
     return {tags: [data.id, parentId], text: data.name, href: typeToHref("Project"), type: "project"};
 }
 
-function setParentNode (item, resultList, type){
-    resultList.forEach(parentItem => {
-        if (parentItem.nodes != null) {
-            var plantNodes = parentItem.nodes.filter(n => n.type === 'Plant');
-            plantNodes.forEach(plantItem => {
-                if (plantItem.nodes != null){
-                    var unitNode = plantItem.nodes.find(m => m.type === type && m.tags[0] === item.tags[1]);
-                    if (unitNode != null) {
-                        if (unitNode.nodes == null){
-                            unitNode.nodes = new Array();
+function setParentNode (projectList, resultList){
+    /*tempList.filter(n => n.type === 'Room').forEach(item => {
+        resultList.forEach(parentItem => {
+            if (parentItem.nodes != null) {
+                parentItem.nodes.forEach(unitItem => {
+                    var parentNode = unitItem.nodes.find(m => m.type === 'Unit' && m.tags[0] === item.tags[1]);
+                    if (parentNode != null) {
+                        if (parentNode.nodes == null) {
+                            parentNode.nodes = new Array();
                         }
-                        unitNode.nodes.push(item);
                     }
-                }
-            });
-        }
-    });
-}
 
+                })
+            }
+        });
+    });*/
+}
+/*function dg_unitReloadExecute(){
+    $('#bt_treeview_div').data(' ').dataSource.read(); <!--  first reload data source -->
+    $('#bt_treeview_div').data('kendoGrid').refresh(); <!--  refresh current UI -->
+}*/
 
 function typeToHref(type){
     switch (type){

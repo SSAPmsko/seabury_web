@@ -11,12 +11,7 @@ $(document).ready(function () {
     // 클릭한 위치 active 적용
     $("#create").addClass('active');
     $("#btn_create").on("click", function(e) {
-        if (createtype = "Room"){
-            RoomInsertPost();
-        }
-        else {
             InsertPost();
-        }
     });
 });
 
@@ -142,28 +137,30 @@ function InsertPost() {
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
 
-            alert('저장이 완료 되었습니다.');
+            GetId()
 
             // 리스트 리로드
-            dg_siteReloadExecute();
-            dg_plantReloadExecute();
-            dg_unitReloadExecute();
+            if (createtype == "Site") {
+                dg_siteReloadExecute();
+            } else if (createtype == "Unit") {
+                dg_plantReloadExecute();
 
-
+            } else if (createtype == "Plant") {
+                dg_unitReloadExecute();
+            }
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
 }
-/*
 function GetId() {
-    if (formData.type == "Site") {
+    if (createtype == "Site") {
         idurl = "/getSiteListId";
-    } else if (formData.type == "Unit") {
+    } else if (createtype == "Unit") {
         idurl = "/getUnitListId";
-    } else if (formData.type == "Plant") {
-        idurl = "/getPlantList";
+    } else if (createtype == "Plant") {
+        idurl = "/getPlantListId";
     }
 
     $.ajax({
@@ -180,18 +177,16 @@ function GetId() {
     });
 
 }
-*/
-/*
 function StructureInsert() {
-    if ($("#type_picker option:checked").val() == "Site") {
-    } else if ($("#type_picker option:checked").val() == "Plant") {
+    if (createtype == "Site") {
+    } else if (createtype == "Plant") {
         structype = "Site";
-    } else if ($("#type_picker option:checked").val() == "Unit") {
+    } else if (createtype == "Unit") {
         structype = "Plant";
     }
 
 
-    strucData.type = $('#type_picker option:checked').text();
+    strucData.type = createtype;
     strucData.parentType = structype;
 
     strucData.name = $('#txt_name').val();
@@ -207,13 +202,15 @@ function StructureInsert() {
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {
-
+            alert("생성 완료 되었습니다.")
+            // 해당 패널 닫기
+            var DetailContainer = myLayout.root.getItemsById('createDetail_newItem');
+            if (DetailContainer !== undefined) {
+                DetailContainer[0].close();
+            }
         },
         error: function (data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
-
-}*/
-
-
+}

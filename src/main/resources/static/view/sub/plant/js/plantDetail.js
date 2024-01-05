@@ -1,6 +1,9 @@
 var rootName = "plant";
-var parentformData = {};
-parentformData.type = "Site";
+var parentformPlant = {};
+parentformPlant.type = "Site";
+var IDformPlant = {};
+IDformPlant.type = "Plant";
+var strucPlantID;
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -29,6 +32,7 @@ function onLoadedPlant(){
 
     if (isFirst === true){
         LoadPlantParent(uniqueId);
+        LoadPlantID(uniqueId)
 
 
         // button event
@@ -41,12 +45,38 @@ function onLoadedPlant(){
         });
     }
 }
+
+function LoadPlantID(uniqueId) {
+
+    var plantIntId = $('#txt_plantId'+ uniqueId).val();
+
+    IDformPlant.objectID =  parseInt(plantIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureID",
+        data: JSON.stringify(IDformPlant),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucPlantID = item.id;
+            });
+        }
+    }).done(function (fragment) {
+
+    });
+}
+
 function LoadPlantParent(uniqueId) {
 //structure 리스트
     $.ajax({
         type: 'POST',
-        url: "/getStructureList",
-        data: JSON.stringify(parentformData),
+        url: "/getStructureType",
+        data: JSON.stringify(parentformPlant),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         error: function (request, status, error) {
@@ -69,7 +99,14 @@ function LoadPlantParent(uniqueId) {
     });
 }
 function dg_plantSaveExecute(uniqueId){
-    var url;
+
+    var structureform = {};
+    structureform.id = strucPlantID;
+    structureform.name = $('#txt_name' + uniqueId).val();
+    structureform.objectID = $('#txt_plantId' + uniqueId).val();
+    structureform.parentID = $("#plant_parent"+ uniqueId).val();
+    structureform.description = $('#txt_description' + uniqueId).val();
+
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
     formData.operator = $('#txt_operator' + uniqueId).val();
@@ -82,88 +119,88 @@ function dg_plantSaveExecute(uniqueId){
     formData.thermalCapacity = $('#txt_thermalcapacity' + uniqueId).val();
     // Update
         formData.id = $('#txt_plantId' + uniqueId).val();
-    // Insert
-        url = "/plantUpdate";
 
     $.ajax({
-        url : url,
+        url : "/structureUpdate",
         type: 'POST',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            //location.href = "plantDetail?" + "id=" + data.result.id;
-            alert('저장이 완료 되었습니다.');
+            $.ajax({
+                url : "/plantUpdate",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify(formData),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "plantDetail?" + "id=" + data.result.id;
+                    alert('저장이 완료 되었습니다.');
 
-            // 리스트 리로드
-            dg_plantReloadExecute();
-
-            // 저장된 데이터가 신규 인 경우
-            var newPlantContainer = myLayout.root.getItemsById('plantDetail_newItem');
-
-            if (newPlantContainer !== undefined) {
-                var oldId = "_newItem";
-
-                $('#btn_plant_save' + oldId).off("click");
-                $('#btn_plant_delete' + oldId).off("click");
-                $('#btn_plant_delete' + oldId).removeClass("visually-hidden");
-
-                var plantId = data.result.id;
-                newPlantContainer[0].setTitle(formData.name);
-                newPlantContainer[0].config.id = 'plantDetail_' + plantId;
-
-                var newId = "_" + plantId;
-
-                $('#txt_plantId' + oldId).val(plantId);
-
-                replaceFormNewId('plantPropertyForm', oldId, newId);
-
-                // button event
-                $("#btn_plant_save" + newId).on("click", function(e) {
-                    dg_plantSaveExecute(newId);
-                });
-
-                $("#btn_plant_delete" + newId).on("click", function(e) {
-                    dg_plantDeleteExecute(newId);
-                });
-            }
+                    // 리스트 리로드
+                    dg_plantReloadExecute();
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
+
 }
 
 function dg_plantDeleteExecute(uniqueId){
+    var structureform = {};
+    structureform.id = strucPlantID;
+
+
     var formData = {};
     formData.id = $('#txt_plantId' + uniqueId).val();
-
     $.ajax({
-        url : "/plantDelete",
+        url : "/structureDelete",
         type: 'DELETE',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         processData: false,
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            //location.href = "plantList";
-            alert('삭제가 완료 되었습니다.');
+            $.ajax({
+                url : "/plantDelete",
+                type: 'DELETE',
+                async: false,
+                data: JSON.stringify(formData),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "plantList";
+                    alert('삭제가 완료 되었습니다.');
 
-            // 해당 패널 닫기
-            var plantDetailContainer = myLayout.root.getItemsById('plantDetail_' + $('#txt_plantId' + uniqueId).val());
-            if (plantDetailContainer !== undefined) {
-                plantDetailContainer[0].close();
-            }
+                    // 해당 패널 닫기
+                    var plantDetailContainer = myLayout.root.getItemsById('plantDetail_' + $('#txt_plantId' + uniqueId).val());
+                    if (plantDetailContainer !== undefined) {
+                        plantDetailContainer[0].close();
+                    }
 
-            // 리스트 리로드
-            dg_plantReloadExecute();
+                    // 리스트 리로드
+                    dg_plantReloadExecute();
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
     });
+
 }
 
 $("#type_picker").change(function () {
@@ -228,7 +265,3 @@ function dataGridDeleteExecute() {
     }
 }
 
-function dg_plantReloadExecute(){
-    $('#dg_plant').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
-    $('#dg_plant').data('kendoGrid').refresh(); <!--  refresh current UI -->
-}

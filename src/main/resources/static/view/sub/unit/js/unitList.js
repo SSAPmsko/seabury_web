@@ -297,4 +297,7 @@ function dg_unitLoadData() {
         pageable: true
     });
 }
-
+function dg_unitReloadExecute(){
+    $('#dg_unit').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_unit').data('kendoGrid').refresh(); <!--  refresh current UI -->
+}
