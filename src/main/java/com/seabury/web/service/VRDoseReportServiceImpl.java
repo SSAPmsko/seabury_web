@@ -46,7 +46,7 @@ public class VRDoseReportServiceImpl implements VRDoseReportService{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result.get(result.size() - 1);
+        return !result.isEmpty() ? result.get(result.size() - 1) : new ArrayMap<>();
     }
 
     @Override
