@@ -49,7 +49,7 @@
 
     <update id="updateStructure" parameterType="com.seabury.web.entity.dose.StructureEntity">
         UPDATE public."Structure"
-        SET "Name"=#{Name}, "Description"=#{Description}
+        SET "Name"=#{Name}, "Description"=#{Description}, "ParentID"=#{ParentID}, "ObjectID"=#{ObjectID}
         WHERE "ID"=#{ID};
     </update>
 

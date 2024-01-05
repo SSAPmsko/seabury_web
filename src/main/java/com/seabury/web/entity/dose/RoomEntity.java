@@ -10,4 +10,6 @@ public class RoomEntity {
     String Name;
     String Operator;
     String Description;
+    Integer ProjectID;
+    String ProjectName;
 }

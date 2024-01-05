@@ -11,4 +11,6 @@ public class RoomVO {
     String Name;
     String Operator;
     String Description;
+    Integer ProjectID;
+    String ProjectName;
 }

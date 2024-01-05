@@ -7,9 +7,9 @@
 <th:block>
     <!-- main fragment -->
     <section class="h-100" style="overflow:auto" layout:fragment="content">
-        <div class="row m-0 container-fluid">
+        <div class="row container-fluid m-0">
             <div class="col-lg-12 p-0 m-0">
-                <div class="col-12 mt-2 mb-2 p-0 row">
+                <div class="col-12 topIcons p-0 row">
                     <div class="col-6">
                         <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base" type="button" style="height: 30px"
                                 onclick="dg_roomCreateExecute()">
@@ -24,21 +24,18 @@
 
                     </div>
                     <div class="col-6 ms-auto">
-
                         <select class="form-select pb-0 pt-0 ms-4" aria-label="Default select example" id="room_picker"
                                 style="height: 30px">
                             <option value="Site">Site</option>
                             <option value="Plant">Plant</option>
-                            <option value="Unit">Unit</option>
+                            <option value="Unit">Unit</option>`
                             <option selected value="Room">Room</option>
                         </select>
                     </div>
                 </div>
                 </div>
             </div>
-
             <div class="col p-0" id="dg_room">
-
             </div>
         </div>
 

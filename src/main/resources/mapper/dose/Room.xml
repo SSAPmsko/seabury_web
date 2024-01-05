@@ -18,6 +18,12 @@
             <if test="Description != null and Description != ''">
                 AND "Description" = #{Description}
             </if>
+            <if test="ProjectID != null and ProjectID != ''">
+                AND "ProjectID" = #{ProjectID}
+            </if>
+            <if test="ProjectName != null and ProjectName != ''">
+                AND "ProjectName" = #{ProjectName}
+            </if>
         </where>
     </select>
 
@@ -35,7 +41,7 @@
 
     <update id="updateRoom" parameterType="com.seabury.web.entity.dose.RoomEntity">
         UPDATE public."Room"
-        SET "Name"=#{Name}, "Operator"=#{Operator}, "Description"=#{Description}
+        SET "Name"=#{Name}, "Operator"=#{Operator}, "Description"=#{Description}, "ProjectID"=#{ProjectID}, "ProjectName"=#{ProjectName}
         WHERE "ID"=#{ID};
     </update>
 

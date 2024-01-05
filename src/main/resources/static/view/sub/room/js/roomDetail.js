@@ -1,7 +1,10 @@
 var rootName = "room";
-var parentformData = {};
-parentformData.type = "Unit";
-var idformData = {};
+var parentformRoom = {};
+parentformRoom.type = "Unit";
+var IDformRoom = {};
+
+var strucRoomID;
+var strucProjectID;
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -24,23 +27,27 @@ function onLoadedRoom(){
         // create 인 경우
         uniqueId = "_newItem";
     }
-    // form 의 Id를 Unique 한 Id 변경, 데이터 로드 및 이벤트 처리가 여러번 발생 되지 않도록 제어
+    // form 의 Id를 Unique 한 Id 변경,   데이터 로드 및 이벤트 처리가 여러번 발생 되지 않도록 제어
     var isFirst = replaceFormId('roomPropertyForm', uniqueId);
 
     if (isFirst === true){
         LoadRoomParent(uniqueId);
+        LoadRoomID(uniqueId);
+        LoadProjectID(uniqueId)
+        dg_projectLoadData(uniqueId);
+
 
         // button event
         $("#btn_room_save" + uniqueId).on("click", function(e) {
             dg_roomSaveExecute(uniqueId);
         });
 
-        $("#btn_room_delete" + uniqueId).on("click", function(e) {
-            dg_roomDeleteExecute(uniqueId);
+        $("#btn_room_import" + uniqueId).on("click", function(e) {
+            dg_roomImportExecute(uniqueId);
         });
     }
 }
-function LoadRoomId(uniqueId) {
+/*function LoadRoomId(uniqueId) {
 //structure 리스트
     $.ajax({
         type: 'POST',
@@ -66,13 +73,68 @@ function LoadRoomId(uniqueId) {
             });
         }
     });
+}*/
+function LoadRoomID(uniqueId) {
+
+    var roomIntId = $('#txt_roomId'+ uniqueId).val();
+
+    IDformRoom.objectID =  parseInt(roomIntId);
+    IDformRoom.type = "Room";
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureID",
+        data: JSON.stringify(IDformRoom),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucRoomID = item.id;
+            });
+
+        }
+    }).done(function (fragment) {
+
+    });
+}
+
+function LoadProjectID(uniqueId) {
+
+    var projectIntId = $('#txt_projectId'+ uniqueId).val();
+
+    IDformRoom.objectID =  parseInt(projectIntId);
+    IDformRoom.type = "Project";
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureID",
+        data: JSON.stringify(IDformRoom),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucProjectID = item.id;
+                console.log(strucProjectID)
+            });
+
+
+        }
+    }).done(function (fragment) {
+
+    });
 }
 function LoadRoomParent(uniqueId) {
 //structure 리스트
     $.ajax({
         type: 'POST',
-        url: "/getStructureList",
-        data: JSON.stringify(parentformData),
+        url: "/getStructureType",
+        data: JSON.stringify(parentformRoom),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         error: function (request, status, error) {
@@ -97,13 +159,94 @@ function LoadRoomParent(uniqueId) {
 
 function dg_roomSaveExecute(uniqueId){
     var structureform = {};
-/*    structureform.id =
-    structureform.parentID =*/
+    structureform.id = strucRoomID;
+    structureform.name = $('#txt_name' + uniqueId).val();
+    structureform.objectID = $('#txt_roomId' + uniqueId).val();
+    structureform.parentID = $("#room_parent"+ uniqueId).val();
+    structureform.description = $('#txt_description' + uniqueId).val();
+
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
     formData.id = $('#txt_roomId' + uniqueId).val();
     formData.operator = $('#txt_operator' + uniqueId).val();
     formData.description = $('#txt_description' + uniqueId).val();
+    formData.projectID = $('#room_project' + uniqueId).val();
+    formData.projectName = $("#room_project"+ uniqueId +" option:checked").text().trim();
+
+
+    $.ajax({
+        url : "/structureUpdate",
+        type: 'POST',
+        async: false,
+        data: JSON.stringify(structureform),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success : function(data) {
+            projcetstrucSave(uniqueId)
+            $.ajax({
+                url : "/roomUpdate",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify(formData),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "roomDetail?" + "id=" + data.result.id;
+                    alert('저장이 완료 되었습니다.');
+                    // 리스트 리로드
+                    dg_roomReloadExecute();
+
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
+        },
+        error : function(data) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    });
+}
+
+function projcetstrucSave(uniqueId){
+    var structureform = {};
+    structureform.id = strucProjectID;
+    structureform.name =$("#room_project"+ uniqueId +" option:checked").text().trim();
+    structureform.parentID = $('#txt_roomId'+ uniqueId).val();
+    structureform.objectID = $("#room_project"+ uniqueId).val();
+
+    $.ajax({
+        url : "/structureUpdate",
+        type: 'POST',
+        async: false,
+        data: JSON.stringify(structureform),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success : function(data) {
+            if (strucProjectID == null)
+            {
+                alert("project id오류");
+                LoadProjectID(uniqueId);
+
+            }
+            else
+            {
+                alert("성공")
+            }
+        },
+        error : function(data) {
+            alert("정상 처리에 실패 하였습니다.");
+        }
+    });
+}
+
+function dg_roomImportExecute(uniqueId){
+    var formData = {};
+    formData.name = $('#txt_name' + uniqueId).val();
+    formData.id = $('#txt_roomId' + uniqueId).val();
+    formData.operator = $('#txt_operator' + uniqueId).val();
+    formData.description = $('#txt_description' + uniqueId).val();
+    formData.projectID = $('#room_project' + uniqueId).val();
 
 
     $.ajax({
@@ -116,38 +259,9 @@ function dg_roomSaveExecute(uniqueId){
         success : function(data) {
             //location.href = "roomDetail?" + "id=" + data.result.id;
             alert('저장이 완료 되었습니다.');
-
             // 리스트 리로드
             dg_roomReloadExecute();
 
-            // 저장된 데이터가 신규 인 경우
-            var newRoomContainer = myLayout.root.getItemsById('roomDetail_newItem');
-
-            if (newRoomContainer !== undefined) {
-                var oldId = "_newItem";
-
-                $('#btn_room_save' + oldId).off("click");
-                $('#btn_room_delete' + oldId).off("click");
-
-                var roomId = data.result.id;
-                newRoomContainer[0].setTitle(formData.name);
-                newRoomContainer[0].config.id = 'roomDetail_' + roomId;
-
-                var newId = "_" + roomId;
-
-                $('#txt_roomId' + oldId).val(roomId);
-
-                replaceFormNewId('roomPropertyForm', oldId, newId);
-
-                // button event
-                $("#btn_room_save" + newId).on("click", function(e) {
-                    dg_roomSaveExecute(newId);
-                });
-
-                $("#btn_room_delete" + newId).on("click", function(e) {
-                    dg_roomDeleteExecute(newId);
-                });
-            }
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
@@ -156,34 +270,50 @@ function dg_roomSaveExecute(uniqueId){
 }
 
 function dg_roomDeleteExecute(uniqueId){
+    /* var structureform = {};
+    structureform.id = strucRoomID;
+
     var formData = {};
     formData.id = $('#txt_roomId' + uniqueId).val();
-
     $.ajax({
-        url : "/roomDelete",
+        url : "/structureDelete",
         type: 'DELETE',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         processData: false,
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         success : function(data) {
-            //location.href = "roomList";
-            alert('삭제가 완료 되었습니다.');
+            $.ajax({
+                url : "/roomDelete",
+                type: 'DELETE',
+                async: false,
+                data: JSON.stringify(formData),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "roomList";
+                    alert('삭제가 완료 되었습니다.');
 
-            // 해당 패널 닫기
-            var roomDetailContainer = myLayout.root.getItemsById('roomDetail_' + $('#txt_roomId' + uniqueId).val());
-            if (roomDetailContainer !== undefined) {
-                roomDetailContainer[0].close();
-            }
+                    // 해당 패널 닫기
+                    var roomDetailContainer = myLayout.root.getItemsById('roomDetail_' + $('#txt_roomId' + uniqueId).val());
+                    if (roomDetailContainer !== undefined) {
+                        roomDetailContainer[0].close();
+                    }
 
-            // 리스트 리로드
-            dg_roomReloadExecute();
+                    // 리스트 리로드
+                    dg_roomReloadExecute();
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         },
         error : function(data) {
             alert("정상 처리에 실패 하였습니다.");
         }
-    });
+    });*/
 }
 
 
@@ -198,41 +328,34 @@ function historyBack() {
     location.href = "roomList";
 }
 
-function dataGridSaveExecute() {
-
-    var strucData = {};
-
-    strucData.id = $('#txt_strucid').val();
-    strucData.name = $('#txt_name').val();
-    strucData.operator = $('#txt_operator').val();
-    strucData.description = $('#txt_description').val();
 
 
-    var url;
-    var formData = {};
-    formData.name = $('#txt_name').val();
-    url = "/roomUpdate";
-    formData.id = $('#txt_id').val();
 
+function dg_projectLoadData(uniqueId) {
+    $.ajax({
+        url : "/getProjectList",
+        type: 'POST',
+        async: false,
+        processData: false,
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function(result) {
+            var projectSelect = $('#room_project' + uniqueId);
+            result.forEach(item => {
+                var projectid = $("#txt_projectId"+ uniqueId).val();
 
-}
+                if (projectid == item.id)
+                {
+                    $("#room_project option[value=projectid]").remove();
+                }
+                else{
+                    projectSelect.append(new Option(item.name, item.id, false, false));
+                }
 
-function dataGridDeleteExecute() {
-    if (confirm("해당 아이템을 삭제 하시겠습니까?")) {
-
-        var strucData = {};
-
-        strucData.id = $('#txt_strucid').val();
-
-
-        var formData = {};
-        formData.id = $('#txt_id').val();
-
-
-    }
-}
-
-function dg_roomReloadExecute(){
-    $('#dg_room').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
-    $('#dg_room').data('kendoGrid').refresh(); <!--  refresh current UI -->
+            });
+        },
+        error: function(result) {
+            options.error(result);
+        }
+    });
 }

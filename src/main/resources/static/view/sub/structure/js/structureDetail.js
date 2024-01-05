@@ -21,7 +21,6 @@ $(document).ready(function () {
 
 $("#txt_type").change(function () {
     var type = $('#txt_type option:checked').val();
-    alert("f");
 
     switch (type) {
         case "Site":

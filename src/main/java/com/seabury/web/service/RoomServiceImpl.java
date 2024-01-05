@@ -40,6 +40,8 @@ public class RoomServiceImpl implements RoomService {
             roomVO.setName(roomEntity.getName());
             roomVO.setOperator(roomEntity.getOperator());
             roomVO.setDescription(roomEntity.getDescription());
+            roomVO.setProjectID(roomEntity.getProjectID());
+            roomVO.setProjectName(roomEntity.getProjectName());
 
         }
         return roomVO;
@@ -53,6 +55,8 @@ public class RoomServiceImpl implements RoomService {
             roomEntity.setName(roomVO.getName());
             roomEntity.setOperator(roomVO.getOperator());
             roomEntity.setDescription(roomVO.getDescription());
+            roomEntity.setProjectID(roomVO.getProjectID());
+            roomEntity.setProjectName(roomVO.getProjectName());
 
         }
         return roomEntity;

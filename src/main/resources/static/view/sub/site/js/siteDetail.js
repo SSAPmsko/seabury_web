@@ -1,4 +1,7 @@
 var rootName = "site";
+var IDformSite = {};
+IDformSite.type = "Site";
+var strucSiteID;
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -27,13 +30,7 @@ function onLoadedSite(){
     var isFirst = replaceFormId('sitePropertyForm', uniqueId);
 
     if (isFirst === true){
-        var editMode = $("#txt_editMode" + uniqueId).val();
-        if (editMode === 'true') {
-            $('#btn_site_delete' + uniqueId).removeClass("visually-hidden");
-        } else {
-            $('#btn_site_delete' + uniqueId).addClass("visually-hidden");
-        }
-
+        LoadPlantID(uniqueId)
 
         // button event
         $("#btn_site_save" + uniqueId).on("click", function(e) {
@@ -46,8 +43,38 @@ function onLoadedSite(){
     }
 }
 
+function LoadSiteID(uniqueId) {
+
+    var siteIntId = $('#txt_siteId'+ uniqueId).val();
+
+    IDformSite.objectID =  parseInt(siteIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureID",
+        data: JSON.stringify(IDformSite),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucPlantID = item.id;
+            });
+        }
+    }).done(function (fragment) {
+
+    });
+}
+
 function dg_siteSaveExecute(uniqueId){
-    var url;
+    var structureform = {};
+    structureform.id = strucSiteID;
+    structureform.name = $('#txt_name' + uniqueId).val();
+    structureform.objectID = $('#txt_siteId' + uniqueId).val();
+    structureform.description = $('#txt_description' + uniqueId).val();
+
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
     formData.operator = $('#txt_operator' + uniqueId).val();
@@ -60,84 +87,80 @@ function dg_siteSaveExecute(uniqueId){
     formData.thermalCapacity = $('#txt_thermalcapacity' + uniqueId).val();
     formData.id = $('#txt_siteId' + uniqueId).val();
 
-        url = "/siteUpdate";
-
     $.ajax({
-        url : url,
+        url: "/structureUpdate",
         type: 'POST',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        success : function(data) {
-            //location.href = "siteDetail?" + "id=" + data.result.id;
-            alert('저장이 완료 되었습니다.');
+        success: function (data) {
+           $.ajax({
+               url : "/siteUpdate",
+               type: 'POST',
+               async: false,
+               data: JSON.stringify(formData),
+              dataType: "json",
+              contentType: "application/json;charset=UTF-8",
+               success : function(data) {
+                 //location.href = "siteDetail?" + "id=" + data.result.id;
+                 alert('저장이 완료 되었습니다.');
 
-            // 리스트 리로드
-            dg_siteReloadExecute();
+                    // 리스트 리로드
+                    dg_siteReloadExecute();
 
-            // 저장된 데이터가 신규 인 경우
-            var newSiteContainer = myLayout.root.getItemsById('siteDetail_newItem');
 
-            if (newSiteContainer !== undefined) {
-                var oldId = "_newItem";
-
-                $('#btn_site_save' + oldId).off("click");
-                $('#btn_site_delete' + oldId).off("click");
-
-                var siteId = data.result.id;
-                newSiteContainer[0].setTitle(formData.name);
-                newSiteContainer[0].config.id = 'siteDetail_' + siteId;
-
-                var newId = "_" + siteId;
-
-                $('#txt_siteId' + oldId).val(siteId);
-
-                replaceFormNewId('sitePropertyForm', oldId, newId);
-
-                // button event
-                $("#btn_site_save" + newId).on("click", function(e) {
-                    dg_siteSaveExecute(newId);
-                });
-
-                $("#btn_site_delete" + newId).on("click", function(e) {
-                    dg_siteDeleteExecute(newId);
-                });
-            }
-        },
-        error : function(data) {
-            alert("정상 처리에 실패 하였습니다.");
+               },
+               error : function(data) {
+                  alert("정상 처리에 실패 하였습니다.");
+              }
+            });
         }
     });
 }
 
 function dg_siteDeleteExecute(uniqueId){
+    var structureform = {};
+    structureform.id = strucSiteID;
+
     var formData = {};
     formData.id = $('#txt_siteId' + uniqueId).val();
 
+
     $.ajax({
-        url : "/siteDelete",
+        url: "/structureDelete",
         type: 'DELETE',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         processData: false,
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        success : function(data) {
-            //location.href = "siteList";
-            alert('삭제가 완료 되었습니다.');
+        success: function (data) {
+            $.ajax({
+                url : "/siteDelete",
+                type: 'DELETE',
+                async: false,
+                data: JSON.stringify(formData),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "unitList";
+                    alert('삭제가 완료 되었습니다.');
 
-            // 해당 패널 닫기
-            var siteDetailContainer = myLayout.root.getItemsById('siteDetail_' + $('#txt_siteId' + uniqueId).val());
-            if (siteDetailContainer !== undefined) {
-                siteDetailContainer[0].close();
-            }
+                    // 해당 패널 닫기
+                    var unitDetailContainer = myLayout.root.getItemsById('unitDetail_' + $('#txt_unitId' + uniqueId).val());
+                    if (unitDetailContainer !== undefined) {
+                        unitDetailContainer[0].close();
+                    }
 
-            // 리스트 리로드
-            dg_siteReloadExecute();
-        },
-        error : function(data) {
-            alert("정상 처리에 실패 하였습니다.");
+                    // 리스트 리로드
+                    dg_siteReloadExecute();
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         }
     });
 }
@@ -212,7 +235,3 @@ function dataGridDeleteExecute() {
     }
 }
 
-function dg_siteReloadExecute(){
-    $('#dg_site').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
-    $('#dg_site').data('kendoGrid').refresh(); <!--  refresh current UI -->
-}
