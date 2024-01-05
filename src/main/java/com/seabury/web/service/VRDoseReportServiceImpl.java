@@ -12,7 +12,7 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ArrayMap;
 import com.seabury.web.entity.dose.VRDose_PropertiesEntity;
-import com.seabury.web.vo.dose.report.XML_Report;
+import com.seabury.web.vo.dose.report.*;
 import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,11 +78,6 @@ public class VRDoseReportServiceImpl implements VRDoseReportService{
         }
         return result;
     }
-
-/*    public ArrayList<ArrayMap<String, Object>> convertDosimeterInfo(ArrayMap<String, Object> dosimeterInfo){
-
-
-    }*/
 
     private HttpRequestFactory getRequestFactory() {
         if (this.requestFactory == null) {

@@ -43,7 +43,6 @@ function onLoadedScenario(){
         var workPlanInfoStr = $("#txt_workPlanInfo" + uniqueId).val();
         workPlanInfo = JSON.parse(workPlanInfoStr.replace(/'/g, '"'));
 
-
         // Scenario Detail Data load
         dg_scenario_workpackLoadData(uniqueId);
         dg_scenario_equipmentLoadData(uniqueId);
@@ -51,6 +50,7 @@ function onLoadedScenario(){
         dg_scenario_sourceLoadData(uniqueId);
         dg_scenario_shieldLoadData(uniqueId);
         //dg_scenario_reportLoadData(uniqueId);
+        dg_scenario_fileListLoadData(uniqueId);
 
         chart_accumulated_collective_doseLoadData(uniqueId);
         chart_workers_dose_rateLoadData(uniqueId);
@@ -448,6 +448,61 @@ function dg_scenario_reportLoadData(uniqueId){
         error: function(result) {
 
         }
+    });
+}
+
+function dg_scenario_fileListLoadData(uniqueId){
+    $("#dg_scenario_fileList" + uniqueId).kendoGrid({
+        columns: [
+            {
+                field: "id", title: "Sample",
+                template: "<div class='product-photo' style='background-image: url(../../../static/img/alfresco/doclib.png); background-repeat: no-repeat; background-position: center center; height: 80px; width: 100%;'></div>"
+            },
+            { field: "name" },
+            { field: "description" },
+            {
+                filed: "download", title: "Download",
+                template: "<div> " +
+                    "<button class='k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-' type='button' form='scenarioPropertyForm' style='height: 30px;' id='btn_scenario_download' onclick='alert(\"download\")'>" +
+                    "<span class='k-button-icon k-icon k-i-paperclip-alt'></span>" +
+                    "<span class='k-button-text'>Download</span></button></div>",
+            }
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getWorkerList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
+                        type: 'GET',
+                        async: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                            options.success(result);
+                        },
+                        error: function(result) {
+                            options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "number" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                    }
+                }
+            },
+            pageSize: 5,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
     });
 }
 
