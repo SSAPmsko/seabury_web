@@ -552,16 +552,18 @@ function chart_accumulated_collective_doseLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Accumulated collective dose'
-            },
-            legend: {
-                display: true,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Accumulated collective dose'
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv',
@@ -570,8 +572,8 @@ function chart_accumulated_collective_doseLoadData(uniqueId){
                         autoSkip: true,
                         maxRotation : 0,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     type: "time",
                     distribution: 'series',
                     time: {
@@ -583,8 +585,8 @@ function chart_accumulated_collective_doseLoadData(uniqueId){
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     })
@@ -625,16 +627,18 @@ function chart_workers_dose_rateLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Workers dose-rate'
-            },
-            legend: {
-                display: true,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Workers dose-rate'
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                }
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv/h',
@@ -643,9 +647,10 @@ function chart_workers_dose_rateLoadData(uniqueId){
                         autoSkip: true,
                         maxRotation : 0,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     type: "time",
+                    distribution: 'series',
                     time: {
                         unit: 'second',
                         displayFormats: {
@@ -655,8 +660,8 @@ function chart_workers_dose_rateLoadData(uniqueId){
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     });
@@ -714,16 +719,18 @@ function chart_workers_accumulated_doseLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Workers accumulated dose'
-            },
-            legend: {
-                display: true,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Workers accumulated dose'
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                }
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv',
@@ -732,8 +739,8 @@ function chart_workers_accumulated_doseLoadData(uniqueId){
                         autoSkip: true,
                         maxRotation : 0,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     type: "time",
                     time: {
                         unit: 'second',
@@ -744,8 +751,8 @@ function chart_workers_accumulated_doseLoadData(uniqueId){
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     });
@@ -781,16 +788,18 @@ function chart_maximum_individual_dose_rateLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Maximum individual dose-rate'
-            },
-            legend: {
-                display: false,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Maximum individual dose-rate'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                }
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv/h',
@@ -800,13 +809,13 @@ function chart_maximum_individual_dose_rateLoadData(uniqueId){
                         maxRotation: 0,
                         beginAtZero: true,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     });
@@ -842,16 +851,18 @@ function chart_minimum_individual_dose_rateLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Minimum individual dose-rate'
-            },
-            legend: {
-                display: false,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Minimum individual dose-rate'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                }
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv/h',
@@ -861,13 +872,13 @@ function chart_minimum_individual_dose_rateLoadData(uniqueId){
                         maxRotation: 0,
                         beginAtZero: true,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     });
@@ -903,16 +914,18 @@ function chart_accumulated_collective_dose_per_stepLoadData(uniqueId){
             datasets: datasets,
         },
         options: {
-            title: {
-                display: true,
-                text: 'Accumulated collective dose per step'
-            },
-            legend: {
-                display: false,
-                position: 'bottom',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Accumulated collective dose per step'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                }
             },
             scales: {
-                yAxes: [{
+                y: {
                     scaleLabel: {
                         display: true,
                         labelString : 'mSv/h',
@@ -922,13 +935,13 @@ function chart_accumulated_collective_dose_per_stepLoadData(uniqueId){
                         maxRotation: 0,
                         beginAtZero: true,
                     }
-                }],
-                xAxes: [{
+                },
+                x: {
                     ticks: {
                         autoSkipPadding: 10,
                         maxRotation: 0,
-                    },
-                }],
+                    }
+                }
             }
         }
     });
