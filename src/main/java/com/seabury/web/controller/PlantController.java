@@ -82,7 +82,7 @@ public class PlantController {
         return rp;
     }
 
-    @RequestMapping(value = {"/getPlantList"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/getPlantListId"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexplantList(@RequestParam(value = "id", required = false) Integer id) {
         PlantEntity wherePlant = new PlantEntity();
 

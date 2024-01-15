@@ -1,7 +1,7 @@
 var detailid;
 var idurl;
 var url;
-var formData = {};
+var pickerformData = {};
 var structype;
 var strucData = {};
 
@@ -19,6 +19,32 @@ $(document).ready(function () {
 
 });
 
+$("#txt_type").change(function () {
+    var type = $('#txt_type option:checked').val();
+
+    switch (type) {
+        case "Site":
+            pickerformData.type = null;
+            pickerLoadData(uniqueId);
+            break;
+        case "Plant":
+            pickerformData.type = "Site";
+            pickerLoadData(uniqueId);
+            break;
+        case "Unit":
+            pickerformData.type = "Plant";
+            pickerLoadData(uniqueId);
+            break;
+        case "Room":
+            pickerformData.type = "Unit";
+            pickerLoadData(uniqueId);
+            break;
+        default:
+            break;
+    }
+});
+
+
 function onLoadedStruc(){
     // 클릭한 위치 active 적용
     //$("#" + rootName).addClass('active');
@@ -26,6 +52,8 @@ function onLoadedStruc(){
     // 최초 로드시 projectId 추출, unique ID 생성
     var strucId = $("#txt_strucId").val();
     var uniqueId;
+
+
     if (strucId !== "" && strucId !== "${id}" && strucId !== undefined) {
         uniqueId = "_" + strucId;
     } else if (strucId === "") {
@@ -74,31 +102,20 @@ function loadData() {
 }
 
 function pickerLoadData(uniqueId) {
-    var type = $('#txt_type' + uniqueId).val();
-    switch (type) {
-        case "Site":
-            formData.type = null;
-            break;
-        case "Plant":
-            formData.type = "Site";
-            break;
-        case "Unit":
-            formData.type = "Plant";
-            break;
-        default:
-            break;
-    }
 
     //structure 리스트
     $.ajax({
         type: 'POST',
         url: "/getStructureList",
-        data: JSON.stringify(formData),
+        data: JSON.stringify(pickerformData),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
         error: function (request, status, error) {
+            alert("실패");
         },
         success: function (data) {
+            alert("성공");
+
             var parentSelect = $('#parent_picker' + uniqueId);
             data.forEach(item => {
                 var parentid = $("#txt_parentId"+ uniqueId).val();

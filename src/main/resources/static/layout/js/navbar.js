@@ -29,6 +29,9 @@ function addDockItem(id, title, path, properties){
 
 
             for (const [k, v] of Object.entries(properties.result)){
+                if (k === "report"){
+                    htmlStr = customReport(k, v, htmlStr);
+                }
                 htmlStr = htmlStr.replace('${' + k + '}' ,v);
             }
             // Empty Value Init
@@ -92,6 +95,30 @@ function replaceFormNewId(formName, srcId, distId) {
         form.id = form.id.replace(srcId, distId);
     } else{
     }
+}
+
+function customReport(k, v, htmlStr){
+    for (const [k2, v2] of Object.entries(v.Report)){
+
+        switch (k2) {
+            case "reportHeader":
+            case "projectSummary":
+            case "scenarioSummary":
+                for (const [k3, v3] of Object.entries(v2)){
+                    htmlStr = htmlStr.replace('${' +  k + "." + k2 + "." + k3 + '}', v3);
+                }
+                break;
+            case "scenarioDetails":
+                for (const [k3, v3] of Object.entries(v2)){
+                    htmlStr = htmlStr.replace('${' +  k + "." + k2 + "." + k3 + '}', JSON.stringify(v3).replaceAll("\"", "'"));
+                }
+            break;
+            default:
+                break;
+
+        }
+    }
+    return htmlStr;
 }
 
 /*

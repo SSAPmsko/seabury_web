@@ -1,5 +1,9 @@
 var rootName = "unit";
-
+var parentformUnit = {};
+parentformUnit.type = "Plant";
+var IDformUnit = {};
+IDformUnit.type = "Unit";
+var strucUnitID;
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     //$("#unit").addClass('active');
@@ -27,21 +31,80 @@ function onLoadedUnit(){
     var isFirst = replaceFormId('unitPropertyForm', uniqueId);
 
     if (isFirst === true){
+        LoadUnitParent(uniqueId);
+        LoadUnitID(uniqueId)
 
 
         // button event
         $("#btn_unit_save" + uniqueId).on("click", function(e) {
             dg_unitSaveExecute(uniqueId);
-        });
+        })
 
         $("#btn_unit_delete" + uniqueId).on("click", function(e) {
             dg_unitDeleteExecute(uniqueId);
         });
     }
 }
+function LoadUnitID(uniqueId) {
+
+    var unitIntId = $('#txt_unitId'+ uniqueId).val();
+
+    IDformUnit.objectID =  parseInt(unitIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureID",
+        data: JSON.stringify(IDformUnit),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucUnitID = item.id;
+            });
+        }
+    }).done(function (fragment) {
+
+    });
+}
+function LoadUnitParent(uniqueId) {
+//structure 리스트
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureType",
+        data: JSON.stringify(parentformUnit),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+        },
+        success: function (data) {
+            var parentSelect = $('#unit_parent' + uniqueId);
+            data.forEach(item => {
+                var parentid = $("#txt_parentId"+ uniqueId).val();
+
+                if (parentid == item.objectID)
+                {
+                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                }
+                else{
+                    parentSelect.append(new Option(item.name, item.objectID, false, false));
+                }
+
+            });
+        }
+    });
+}
 
 function dg_unitSaveExecute(uniqueId){
-    var url;
+    var structureform = {};
+    structureform.id = strucUnitID;
+    structureform.name = $('#txt_name' + uniqueId).val();
+    structureform.objectID = $('#txt_unitId' + uniqueId).val();
+    structureform.parentID = $("#unit_parent"+ uniqueId).val();
+    structureform.description = $('#txt_description' + uniqueId).val();
+
     var formData = {};
     formData.name = $('#txt_name' + uniqueId).val();
     formData.operator = $('#txt_operator' + uniqueId).val();
@@ -54,86 +117,80 @@ function dg_unitSaveExecute(uniqueId){
     formData.thermalCapacity = $('#txt_thermalcapacity' + uniqueId).val();
     formData.id = $('#txt_unitId' + uniqueId).val();
 
-    // Update
-        url = "/unitUpdate";
 
     $.ajax({
-        url : url,
+        url: "/structureUpdate",
         type: 'POST',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        success : function(data) {
-            //location.href = "unitDetail?" + "id=" + data.result.id;
-            alert('저장이 완료 되었습니다.');
+        success: function (data) {
+            $.ajax({
+                url : "/unitUpdate",
+                type: 'POST',
+                async: false,
+                data: JSON.stringify(formData),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "unitDetail?" + "id=" + data.result.id;
+                    alert('저장이 완료 되었습니다.');
 
-            // 리스트 리로드
-            dg_unitReloadExecute();
+                    // 리스트 리로드
+                    dg_unitReloadExecute();
 
-            // 저장된 데이터가 신규 인 경우
-            var newUnitContainer = myLayout.root.getItemsById('unitDetail_newItem');
-
-            if (newUnitContainer !== undefined) {
-                var oldId = "_newItem";
-
-                $('#btn_unit_save' + oldId).off("click");
-                $('#btn_unit_delete' + oldId).off("click");
-                $('#btn_unit_delete' + oldId).removeClass("visually-hidden");
-
-                var unitId = data.result.id;
-                newUnitContainer[0].setTitle(formData.name);
-                newUnitContainer[0].config.id = 'unitDetail_' + unitId;
-
-                var newId = "_" + unitId;
-
-                $('#txt_unitId' + oldId).val(unitId);
-
-                replaceFormNewId('unitPropertyForm', oldId, newId);
-
-                // button event
-                $("#btn_unit_save" + newId).on("click", function(e) {
-                    dg_unitSaveExecute(newId);
-                });
-
-                $("#btn_unit_delete" + newId).on("click", function(e) {
-                    dg_unitDeleteExecute(newId);
-                });
-            }
-        },
-        error : function(data) {
-            alert("정상 처리에 실패 하였습니다.");
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         }
     });
 }
 
 function dg_unitDeleteExecute(uniqueId){
+    var structureform = {};
+    structureform.id = strucUnitID;
+
     var formData = {};
     formData.id = $('#txt_unitId' + uniqueId).val();
 
+
     $.ajax({
-        url : "/unitDelete",
+        url: "/structureDelete",
         type: 'DELETE',
         async: false,
-        data: JSON.stringify(formData),
+        data: JSON.stringify(structureform),
         processData: false,
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
-        success : function(data) {
-            //location.href = "unitList";
-            alert('삭제가 완료 되었습니다.');
+        success: function (data) {
+            $.ajax({
+                url : "/unitDelete",
+                type: 'DELETE',
+                async: false,
+                data: JSON.stringify(formData),
+                processData: false,
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success : function(data) {
+                    //location.href = "unitList";
+                    alert('삭제가 완료 되었습니다.');
 
-            // 해당 패널 닫기
-            var unitDetailContainer = myLayout.root.getItemsById('unitDetail_' + $('#txt_unitId' + uniqueId).val());
-            if (unitDetailContainer !== undefined) {
-                unitDetailContainer[0].close();
-            }
+                    // 해당 패널 닫기
+                    var unitDetailContainer = myLayout.root.getItemsById('unitDetail_' + $('#txt_unitId' + uniqueId).val());
+                    if (unitDetailContainer !== undefined) {
+                        unitDetailContainer[0].close();
+                    }
 
-            // 리스트 리로드
-            dg_unitReloadExecute();
-        },
-        error : function(data) {
-            alert("정상 처리에 실패 하였습니다.");
+                    // 리스트 리로드
+                    dg_unitReloadExecute();
+                },
+                error : function(data) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            });
         }
     });
 }
@@ -174,9 +231,7 @@ function dataGridSaveExecute() {
 
     var url;
     var formData = {};
-    //formData.type = $('#txt_type1').val();
-    //  formData.parent = $('#txt_parent1').val();
-    //formData.name = $('#txt_name1').val();
+
     formData.description = $('#txt_description').val();
     formData.operator = $('#txt_operator').val();
     formData.status = $('#txt_status').val();
@@ -208,7 +263,3 @@ function dataGridDeleteExecute() {
     }
 }
 
-function dg_unitReloadExecute(){
-    $('#dg_unit').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
-    $('#dg_unit').data('kendoGrid').refresh(); <!--  refresh current UI -->
-}

@@ -61,10 +61,19 @@ public class StructureController {
         return rp;
     }
 
-    @RequestMapping(value = {"/getStructureList"}, method = RequestMethod.POST)
-    public @ResponseBody List<StructureEntity> getStructureFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+    @RequestMapping(value = {"/getStructureType"}, method = RequestMethod.POST)
+    public @ResponseBody List<StructureEntity> getStructureTypeFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
         StructureEntity whereStructure = new StructureEntity();
         whereStructure.setType(message.get("type").toString());
+        List<StructureEntity> qq = structureService.getStructureList(whereStructure);
+        return qq;
+    }
+
+    @RequestMapping(value = {"/getStructureID"}, method = RequestMethod.POST)
+    public @ResponseBody List<StructureEntity> getStructureIDFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+        StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setType(message.get("type").toString());
+        whereStructure.setObjectID((Integer) message.get("objectID"));
         List<StructureEntity> qq = structureService.getStructureList(whereStructure);
         return qq;
     }

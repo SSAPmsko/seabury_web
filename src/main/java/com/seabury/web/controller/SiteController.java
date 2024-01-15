@@ -35,7 +35,7 @@ public class SiteController {
         List<SiteEntity> qq = siteService.getSiteList(whereSite);
         return qq;
     }
-    @RequestMapping(value = {"/getSiteList"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/getSiteListId"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexsiteList(@RequestParam(value = "id", required = false) Integer id) {
         SiteEntity whereSite = new SiteEntity();
 

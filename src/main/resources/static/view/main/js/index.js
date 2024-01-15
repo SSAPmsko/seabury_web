@@ -39,11 +39,11 @@
     },
     options: {
       scales: {
-        yAxes: [{
+        y: {
           ticks: {
             beginAtZero: false
           }
-        }]
+        }
       },
       legend: {
         display: false

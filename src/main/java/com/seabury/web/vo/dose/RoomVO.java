@@ -9,4 +9,8 @@ import lombok.Setter;
 public class RoomVO {
     Integer ID;
     String Name;
+    String Operator;
+    String Description;
+    Integer ProjectID;
+    String ProjectName;
 }

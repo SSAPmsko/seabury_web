@@ -33,8 +33,34 @@ function dg_scenarioCreateExecute(){
     });
 }
 
+function dg_scenarioCompareExecute(){
+    if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0) {
+        var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
+        var projectId = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].projectId;
+        var scenarioName = "Compare_" + $("#dg_scenario").data("kendoGrid").getSelectedData()[0].name;
+
+        $.ajax({
+            url : "/scenarioCompare?projectId=" + projectId + "&id=" + id,
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('scenarioCompare_' + id, scenarioName, 'scenario/scenarioCompare', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
+    } else{
+
+    }
+}
+
 function dg_scenarioDeleteExecute(){
-    if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0){
+    if ($("#dg_scenario").data("kendoGrid").getSelectedData().length > 0) {
         if(confirm("해당 아이템을 삭제 하시겠습니까?")){
             var id = $("#dg_scenario").data("kendoGrid").getSelectedData()[0].id;
             return true;
@@ -123,4 +149,35 @@ function dg_scenarioLoadData() {
 function dg_scenarioReloadExecute(){
     $('#dg_scenario').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
     $('#dg_scenario').data('kendoGrid').refresh(); <!--  refresh current UI -->
+}
+
+function popupScenarioCompare(){
+    var wnd = $("#popup_compare_scenario");
+    var dialog = wnd.kendoWindow({
+        anchor: $("#btn_compare"),
+        visible: false,
+        modal: true,
+        resizable: false,
+        draggable: false,
+        width: "400px",
+        height: "300px",
+        title: "Compare Scenario",
+        open: function(e) {
+            $.ajax({
+                url : location.origin + "/getScenarioList",
+                method : "POST",
+                type : "json",
+                async : false,
+                contentType : "application/json",
+                success : function(result) {
+
+                },
+                error : function(result) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
+            }).done(function(fragment){
+
+            });
+        }
+    }).data("kendoWindow").center().open();
 }

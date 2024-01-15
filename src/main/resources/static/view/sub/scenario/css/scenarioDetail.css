@@ -1,0 +1,12 @@
+fieldset legend {
+    font-weight: bold;
+}
+fieldset legend .subtitle {
+    font-weight: bold;
+    font-size: 85%;
+}
+
+fieldset legend .detailtitle {
+    font-weight: bold;
+    font-size: 70%;
+}

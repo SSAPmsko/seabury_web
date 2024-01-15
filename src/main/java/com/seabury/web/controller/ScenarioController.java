@@ -4,6 +4,10 @@ import com.google.api.client.util.ArrayMap;
 import com.seabury.web.service.*;
 import com.seabury.web.vo.alfresco.AlfrescoPropertiesVO;
 import com.seabury.web.vo.dose.project.ReturnParam;
+import com.seabury.web.vo.dose.report.XML_Report;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,15 +60,11 @@ public class ScenarioController {
 
     @RequestMapping(value = {"/getScenarioList"}, method = RequestMethod.POST)
     public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarioList(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = false) Map<String, Object> message) {
-        ArrayMap<String, Object> q = vrDoseReportService.getReport("1");
-        ArrayList<ArrayMap<String, Object>> qq = vrDoseReportService.getReports();
-
         return vrDoseService.getAllScenario("");
     }
 
     @RequestMapping(value = {"/getScenarios"}, method = RequestMethod.GET)
     public @ResponseBody ArrayList<ArrayMap<String, Object>> getScenarios(@RequestParam(required = false) String projectId) {
-        ArrayList<ArrayMap<String, Object>> qq =vrDoseService.getScenarios(projectId);
         return vrDoseService.getScenarios(projectId);
     }
 
@@ -111,6 +111,20 @@ public class ScenarioController {
         } else {
             result = vrDoseService.getScenario(id);
             result.put("editMode", true);
+
+            ArrayMap<String, Object> report = vrDoseReportService.getReport(id);
+            if (!report.isEmpty()){
+                JSONObject reportJson = XML.toJSONObject(report.get("reportXml").toString());
+
+                Map<String, Object> reportMap = reportJson.toMap();
+                result.put("report", reportMap);
+
+                ArrayList<ArrayMap<String, Object>> list = (ArrayList<ArrayMap<String, Object>>)report.get("dosimeterInfo");
+                JSONArray array = new JSONArray(list);
+
+                String dosimeterInfo = array.toString().replace("\"", "'");
+                result.put("dosimeterInfo", dosimeterInfo);
+            }
         }
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
@@ -118,6 +132,58 @@ public class ScenarioController {
         rp.setSuccess("");
 
         return rp;
+    }
+
+    @RequestMapping(value = {"/scenarioCompare"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> scenarioCompare(@RequestParam(value = "projectId", required = false) String projectId, @RequestParam(value = "id", required = false) String id) {
+
+        // id가 null 이면 생성, null 이 아니면 수정
+        Map<String, Object> result;
+        if (StringUtils.isEmpty(id)){
+            result = new HashMap<>();
+            result.put("editMode", false);
+            result.put("date", LocalDate.now());
+            result.put("lastModified", LocalDate.now());
+            result.put("startTime", LocalDate.now());
+            result.put("endTime", LocalDate.now());
+        } else {
+            result = vrDoseService.getScenario(id);
+            result.put("editMode", true);
+
+            ArrayMap<String, Object> report = vrDoseReportService.getReport(id);
+            if (!report.isEmpty()){
+                JSONObject reportJson = XML.toJSONObject(report.get("reportXml").toString());
+
+                Map<String, Object> reportMap = reportJson.toMap();
+
+                Map<String, Object> castingReportMap = (Map<String, Object>)reportMap.get("Report");
+                if (!castingReportMap.isEmpty()){
+                    Map<String, Object> scenarioSummaryMap = (Map<String, Object>)castingReportMap.get("scenarioSummary");
+
+                    result.put("scenarioSummary_duration", scenarioSummaryMap.get("duration"));
+                    result.put("scenarioSummary_workTime", scenarioSummaryMap.get("workTime"));
+                    result.put("scenarioSummary_maxDose", scenarioSummaryMap.get("maxDose"));
+                    result.put("scenarioSummary_collectiveDose", scenarioSummaryMap.get("collectiveDose"));
+                }
+
+                result.put("report", reportMap);
+            }
+        }
+        // ReturnParam 작성
+        ReturnParam rp = new ReturnParam();
+        rp.put("result", result);
+        rp.setSuccess("");
+
+        return rp;
+    }
+
+    @RequestMapping(value = {"/scenarioCompare"}, method = RequestMethod.POST)
+    public void scenarioCompare(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            commonService.sendRedirect(request, response, "scenarioCompare");
+        } catch (Exception e) {;
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value={"/scenarioInsert"}, method = RequestMethod.POST)

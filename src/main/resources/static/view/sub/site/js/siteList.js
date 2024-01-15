@@ -31,6 +31,10 @@ $("#site_picker").change(function () {
             addDockItem('unit', '유닛 목록', 'unit/unitList')
 
             break;
+        case "Room":
+            addDockItem('room', '룸 목록', 'room/roomList')
+
+            break;
         default:
             break;
     }
@@ -292,5 +296,9 @@ function dg_unitLoadData() {
         resizable: true,
         pageable: true
     });
+}
+function dg_siteReloadExecute(){
+    $('#dg_site').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_site').data('kendoGrid').refresh(); <!--  refresh current UI -->
 }
 

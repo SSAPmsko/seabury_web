@@ -1,5 +1,8 @@
 var rootName = "Room";
+var testformData = {};
+testformData.type = "Room";
 
+var idformData = {};
 $(document).ready(function(){
     // DataGrid Data load
     dg_roomLoadData();
@@ -9,6 +12,29 @@ $(document).ready(function(){
         dg_roomModifyExecute();
     });
 });
+
+$("#room_picker").change(function () {
+    var type = $("#room_picker option:checked").val();
+
+    switch (type) {
+        case "Site":
+            addDockItem('site', '사이트 목록', 'site/siteList')
+            break;
+        case "Plant":
+            addDockItem('plant', '플랜트 목록', 'plant/plantList')
+            break;
+        case "Unit":
+            addDockItem('unit', '유닛 목록', 'unit/unitList')
+            break;
+        case "Room":
+            addDockItem('room', '룸 목록', 'room/roomList')
+
+            break;
+        default:
+            break;
+    }
+});
+
 
 
 function dg_roomCreateExecute(){
@@ -22,7 +48,7 @@ function dg_roomCreateExecute(){
         async : false,
         contentType : "application/json",
         success : function(result) {
-            addDockItem('createDetail_' + 'newItem', 'createDetail_' + 'newItem', 'create/createDetail', result);
+            addDockItem('roomcreateDetail_' + 'newItem', 'roomcreateDetail_' + 'newItem', 'create/roomcreateDetail', result);
         },
         error : function(result) {
             alert("정상 처리에 실패 하였습니다.");
@@ -39,21 +65,20 @@ function dg_roomModifyExecute(){
         var roomName = $("#dg_room").data("kendoGrid").getSelectedData()[0].name;
 
 
-        $.ajax({
-            url : "/roomDetailProperties",
-            data : {"id" : roomId},
-            method : "GET",
-            type : "json",
-            async : false,
-            contentType : "application/json",
-            success : function(result) {
-                addDockItem('roomDetail_' + roomId, roomName, 'room/roomDetail', result);
-            },
-            error : function(result) {
-                alert("정상 처리에 실패 하였습니다.");
-            }
-        }).done(function(fragment){
-
+        idformData.name =  roomName;
+            $.ajax({
+                url : "/roomDetailProperties",
+                data : {"id" : roomId},
+                method : "GET",
+                type : "json",
+                async : false,
+                contentType : "application/json",
+                success : function(result) {
+                    addDockItem('roomDetail_' + roomId, roomName, 'room/roomDetail', result);
+                },
+                error : function(result) {
+                    alert("정상 처리에 실패 하였습니다.");
+                }
         });
     }
 }
@@ -64,6 +89,8 @@ function dg_roomLoadData() {
         columns: [
             { field: "id" },
             { field: "name" },
+            { field: "operator" },
+            { field: "description" },
         ],
         dataSource: {
             transport: {
@@ -89,6 +116,8 @@ function dg_roomLoadData() {
                     fields: {
                         id: { type: "string" },
                         name: { type: "string" },
+                        operator: { type: "string" },
+                        description: { type: "string" },
 
                     }
                 }
@@ -103,4 +132,9 @@ function dg_roomLoadData() {
         pageable: true
     });
 }
+function dg_roomReloadExecute(){
+    $('#dg_room').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_room').data('kendoGrid').refresh(); <!--  refresh current UI -->
+}
+
 
