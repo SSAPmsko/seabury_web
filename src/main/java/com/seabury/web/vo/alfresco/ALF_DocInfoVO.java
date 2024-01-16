@@ -1,5 +1,6 @@
 package com.seabury.web.vo.alfresco;
 
+import com.google.api.client.util.DateTime;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -16,7 +17,21 @@ public class ALF_DocInfoVO {
 
     // 23.12.06 ife custom field
     private String ProjectId;
+    private String ProjectName;
     private String ScenarioId;
+    private String ScenarioName;
+    private String CreatedBy;
+    private Date CreateDate;
+    private String FileContentsB64;
+    private String RenditionContentsB64;
+
+    // Secondary Field
+    private Boolean isFavorites;
+    private Boolean isLock;
+    private String Permission;
+    private String HighLight;
+    private String ThumbnailUrl;
+
 
     // isu custom field
 /*
@@ -65,11 +80,6 @@ public class ALF_DocInfoVO {
     private String BookNumber;
 */
 
-    // Secondary Field
-    private Boolean isFavorites;
-    private Boolean isLock;
-    private String Permission;
-    private String HighLight;
-    private String ThumbnailUrl;
+
 
 }

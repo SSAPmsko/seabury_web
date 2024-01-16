@@ -19,7 +19,11 @@
                 <input type="text" class="form-control" id="txt_projectId" form="scenarioPropertyForm" th:value="${projectId}">
                 <input type="text" class="form-control" id="txt_scenarioId" form="scenarioPropertyForm" th:value="${id}">
                 <input type="text" class="form-control" id="txt_dosimeterInfo" form="scenarioPropertyForm" th:value="${dosimeterInfo}">
+                <input type="text" class="form-control" id="txt_workersInfo" form="scenarioPropertyForm" th:value="${report.scenarioDetails.workersInfo}">
                 <input type="text" class="form-control" id="txt_workPlanInfo" form="scenarioPropertyForm" th:value="${report.scenarioDetails.workPlanInfo}">
+                <input type="text" class="form-control" id="txt_equipmentInfo" form="scenarioPropertyForm" th:value="${report.scenarioDetails.equipmentInfo}">
+                <input type="text" class="form-control" id="txt_radiologicalConditionOnStart" form="scenarioPropertyForm" th:value="${report.scenarioDetails.radiologicalConditionOnStart}">
+                <input type="text" class="form-control" id="txt_radiologicalConditionOnEnd" form="scenarioPropertyForm" th:value="${report.scenarioDetails.radiologicalConditionOnEnd}">
             </div>
 
             <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
@@ -46,6 +50,7 @@
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link active" id="scenarioTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#scenarioContent" type="button" role="tab" aria-controls="scenarioContent" aria-selected="false">Scenario</a>
                     </li>
+                    <!--
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="workpackTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workpackContent" type="button" role="tab" aria-controls="workpackContent" aria-selected="false">Workpack</a>
                     </li>
@@ -61,6 +66,7 @@
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="sourceTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#sourceContent" type="button" role="tab" aria-controls="sourceContent" aria-selected="false">Source</a>
                     </li>
+                    -->
                     <!--
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="workPlanTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workPlanContent" type="button" role="tab" aria-controls="workPlanContent" aria-selected="false">Report</a>
@@ -183,6 +189,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div class="tab-pane fade" id="workpackContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workpackTab">
 
                         <div id="dg_scenario_workpack" form="scenarioPropertyForm">
@@ -213,6 +220,7 @@
 
                         </div>
                     </div>
+                    -->
 
                     <div class="tab-pane fade" id="reportContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="reportTab">
                         <div class="row p-0">
@@ -301,14 +309,6 @@
                                     </legend>
 
                                     <div class="row g-3">
-                                        <!-- Location -->
-                                        <!--
-                                        <div class="col-sm-12">
-                                            <label class="form-label">Location:</label>
-                                            <input type="text" class="form-control" value="">
-                                        </div>
-                                        -->
-
                                         <!-- Start time -->
                                         <div class="col-sm-6">
                                             <label class="form-label">Start time:</label>
@@ -348,18 +348,30 @@
                                     <legend>Work Plan
                                         <br><span class="subtitle">Workers</span>
                                     </legend>
+
+                                    <div id="dg_scenario_worker" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
                                 <fieldset>
                                     <legend>
                                         <span class="subtitle">Equipment</span>
                                     </legend>
+
+                                    <div id="dg_scenario_equipment" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
                                 <fieldset>
                                     <legend>
                                         <span class="subtitle">Work Steps</span>
                                     </legend>
+
+                                    <div id="dg_scenario_workpack" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
                                 <fieldset>
@@ -430,19 +442,29 @@
                                     <legend>
                                         <span class="detailtitle">Sources</span>
                                     </legend>
+
+                                    <div id="dg_scenario_start_source" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
                                 <fieldset>
                                     <legend>
                                         <span class="detailtitle">Shields</span>
                                     </legend>
+
+                                    <div id="dg_scenario_start_shield" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
+                                <!--
                                 <fieldset>
                                     <legend>
                                         <span class="detailtitle">Dose map</span>
                                     </legend>
                                 </fieldset>
+                                -->
 
                                 <fieldset>
                                     <legend><span class="subtitle">End Start</span>
@@ -453,19 +475,29 @@
                                     <legend>
                                         <span class="detailtitle">Sources</span>
                                     </legend>
+
+                                    <div id="dg_scenario_end_source" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
                                 <fieldset>
                                     <legend>
                                         <span class="detailtitle">Shields</span>
                                     </legend>
+
+                                    <div id="dg_scenario_end_shield" form="scenarioPropertyForm">
+
+                                    </div>
                                 </fieldset>
 
-                                <fieldset>
+                               <!--
+                               <fieldset>
                                     <legend>
                                         <span class="detailtitle">Dose map</span>
                                     </legend>
                                 </fieldset>
+                                -->
                             </div>
                         </div>
                     </div>

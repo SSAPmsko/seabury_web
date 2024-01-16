@@ -26,15 +26,13 @@ function onLoadedScenarioCompare(){
     if (isFirst === true){
 
         chart_DurationLoadData(uniqueId);
-        // chart_WorkLoadData(uniqueId);
-        // chart_MaxIndividualDoseLoadData(uniqueId);
-        // chart_CollectiveDoseLoadData(uniqueId);
+        chart_WorkTimeLoadData(uniqueId);
+        chart_MaxIndividualDoseLoadData(uniqueId);
+        chart_CollectiveDoseLoadData(uniqueId);
 
         createCheckBoxGroup(uniqueId);
     }
 }
-
-var qq;
 
 function createCheckBoxGroup(uniqueId){
     let dataSource;
@@ -88,6 +86,10 @@ function createCheckBoxGroup(uniqueId){
                             contentType: "application/json;charset=UTF-8",
                             success: function (result) {
                                 chart_DurationAddData(uniqueId, selectedScenarioId, result.result.name, result.result.scenarioSummary_duration / 360000);
+                                chart_WorkTimeAddData(uniqueId, selectedScenarioId, result.result.name, result.result.scenarioSummary_workTime);
+                                chart_MaxIndividualDoseAddData(uniqueId, selectedScenarioId, result.result.name, result.result.scenarioSummary_maxDose);
+                                chart_CollectiveDoseAddData(uniqueId, selectedScenarioId, result.result.name, result.result.scenarioSummary_collectiveDose);
+
                             },
                             error: function (result) {
                                 alert("정상 처리에 실패 하였습니다.");
@@ -95,6 +97,10 @@ function createCheckBoxGroup(uniqueId){
                         });
                     } else{
                         chart_DurationRemoveData(uniqueId, selectedScenarioId);
+                        chart_WorkTimeRemoveData(uniqueId, selectedScenarioId);
+                        chart_MaxIndividualDoseRemoveData(uniqueId, selectedScenarioId);
+                        chart_CollectiveDoseRemoveData(uniqueId, selectedScenarioId);
+
                     }
                 }
             }
@@ -181,6 +187,267 @@ function chart_DurationAddData(uniqueId, id, xValue, yValue){
 
 function chart_DurationRemoveData(uniqueId, id){
     let chart = Chart.getChart("chart_scenarioDuration" + uniqueId);
+
+    // 라벨 삭제
+    // chart.data.labels.splice(-1,1);//라벨 삭제
+    let idx;
+    for (let i = 0; i < chart.data.datasets.length; i++){
+        let dataset =  chart.data.datasets[i];
+        if (dataset.data[0].id === id){
+            idx = i;
+            break;
+        }
+    }
+
+    if (idx !== 0){
+        chart.data.datasets.splice(idx, 1);
+    }
+    chart.update();	//차트 업데이트
+}
+
+function chart_WorkTimeLoadData(uniqueId){
+    const dataArray = [];
+    const datasets = [];
+    const data= {
+        id : $("#txt_scenarioId" + uniqueId).val(),
+        xValue : $("#txt_scenarioName" + uniqueId).val(),
+        yValue : $("#txt_scenarioWorkTime" + uniqueId).val(),
+    };
+    dataArray.push(data);
+
+    const dataset = {
+        data: dataArray,
+        backgroundColor: sample_colors[0],
+        fill: true,
+    };
+    datasets.push(dataset);
+
+    // Graphs
+    var div_chart = document.getElementById("chart_scenarioWorkTime" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            datasets: datasets,
+        },
+        options: {
+            parsing: {
+                xAxisKey: 'xValue',
+                yAxisKey: 'yValue',
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Work (man/hrs)'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                },
+            }
+        }
+    });
+}
+
+function chart_WorkTimeAddData(uniqueId, id, xValue, yValue){
+    let chart = Chart.getChart("chart_scenarioWorkTime" + uniqueId);
+
+    if (chart !== undefined){
+        const dataArray = [];
+        const data= {
+            id : id,
+            xValue : xValue,
+            yValue : yValue,
+        };
+        dataArray.push(data);
+
+        const dataset = {
+            data: dataArray,
+            backgroundColor: sample_colors[chart.data.datasets.length],
+            fill: true,
+        };
+
+        chart.data.datasets.push(dataset);
+
+        chart.update();	//차트 업데이트
+    }
+}
+
+function chart_WorkTimeRemoveData(uniqueId, id){
+    let chart = Chart.getChart("chart_scenarioWorkTime" + uniqueId);
+
+    // 라벨 삭제
+    // chart.data.labels.splice(-1,1);//라벨 삭제
+    let idx;
+    for (let i = 0; i < chart.data.datasets.length; i++){
+        let dataset =  chart.data.datasets[i];
+        if (dataset.data[0].id === id){
+            idx = i;
+            break;
+        }
+    }
+
+    if (idx !== 0){
+        chart.data.datasets.splice(idx, 1);
+    }
+    chart.update();	//차트 업데이트
+}
+
+function chart_MaxIndividualDoseLoadData(uniqueId){
+    const dataArray = [];
+    const datasets = [];
+    const data= {
+        id : $("#txt_scenarioId" + uniqueId).val(),
+        xValue : $("#txt_scenarioName" + uniqueId).val(),
+        yValue : $("#txt_scenarioMaxDose" + uniqueId).val(),
+    };
+    dataArray.push(data);
+
+    const dataset = {
+        data: dataArray,
+        backgroundColor: sample_colors[0],
+        fill: true,
+    };
+    datasets.push(dataset);
+
+    // Graphs
+    var div_chart = document.getElementById("chart_scenarioMaxIndividualDose" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            datasets: datasets,
+        },
+        options: {
+            parsing: {
+                xAxisKey: 'xValue',
+                yAxisKey: 'yValue',
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Max Individual Dose (mSV)'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                },
+            }
+        }
+    });
+}
+
+function chart_MaxIndividualDoseAddData(uniqueId, id, xValue, yValue){
+    let chart = Chart.getChart("chart_scenarioMaxIndividualDose" + uniqueId);
+
+    if (chart !== undefined){
+        const dataArray = [];
+        const data= {
+            id : id,
+            xValue : xValue,
+            yValue : yValue,
+        };
+        dataArray.push(data);
+
+        const dataset = {
+            data: dataArray,
+            backgroundColor: sample_colors[chart.data.datasets.length],
+            fill: true,
+        };
+
+        chart.data.datasets.push(dataset);
+
+        chart.update();	//차트 업데이트
+    }
+}
+
+function chart_MaxIndividualDoseRemoveData(uniqueId, id){
+    let chart = Chart.getChart("chart_scenarioMaxIndividualDose" + uniqueId);
+
+    // 라벨 삭제
+    // chart.data.labels.splice(-1,1);//라벨 삭제
+    let idx;
+    for (let i = 0; i < chart.data.datasets.length; i++){
+        let dataset =  chart.data.datasets[i];
+        if (dataset.data[0].id === id){
+            idx = i;
+            break;
+        }
+    }
+
+    if (idx !== 0){
+        chart.data.datasets.splice(idx, 1);
+    }
+    chart.update();	//차트 업데이트
+}
+
+function chart_CollectiveDoseLoadData(uniqueId){
+    const dataArray = [];
+    const datasets = [];
+    const data= {
+        id : $("#txt_scenarioId" + uniqueId).val(),
+        xValue : $("#txt_scenarioName" + uniqueId).val(),
+        yValue : $("#txt_scenarioCollectiveDose" + uniqueId).val(),
+    };
+    dataArray.push(data);
+
+    const dataset = {
+        data: dataArray,
+        backgroundColor: sample_colors[0],
+        fill: true,
+    };
+    datasets.push(dataset);
+
+    // Graphs
+    var div_chart = document.getElementById("chart_scenarioCollectiveDose" + uniqueId);
+    var chart = new Chart(div_chart, {
+        type: 'bar',
+        data: {
+            datasets: datasets,
+        },
+        options: {
+            parsing: {
+                xAxisKey: 'xValue',
+                yAxisKey: 'yValue',
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Collective Dose (man - mSv)'
+                },
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                },
+            }
+        }
+    });
+}
+
+function chart_CollectiveDoseAddData(uniqueId, id, xValue, yValue){
+    let chart = Chart.getChart("chart_scenarioCollectiveDose" + uniqueId);
+
+    if (chart !== undefined){
+        const dataArray = [];
+        const data= {
+            id : id,
+            xValue : xValue,
+            yValue : yValue,
+        };
+        dataArray.push(data);
+
+        const dataset = {
+            data: dataArray,
+            backgroundColor: sample_colors[chart.data.datasets.length],
+            fill: true,
+        };
+
+        chart.data.datasets.push(dataset);
+
+        chart.update();	//차트 업데이트
+    }
+}
+
+function chart_CollectiveDoseRemoveData(uniqueId, id){
+    let chart = Chart.getChart("chart_scenarioCollectiveDose" + uniqueId);
 
     // 라벨 삭제
     // chart.data.labels.splice(-1,1);//라벨 삭제
