@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("alfresco")
+@ConfigurationProperties(prefix = "alfresco")
 @Getter
 @Setter
 public class AlfrescoPropertiesVO {

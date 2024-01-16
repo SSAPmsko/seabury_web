@@ -5,6 +5,7 @@ import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.seabury.web.vo.alfresco.*;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.runtime.OperationContextImpl;
@@ -576,15 +577,16 @@ public class AlfrescoServiceImpl implements AlfrescoService {
         String searchText = (String) message.get("SearchName");
         int skipNo = (Integer) message.get("CurrentPage");
 
-        Map<String, Object> permissions = (Map<String, Object>) message.get("user_permissions");
+        //Map<String, Object> permissions = (Map<String, Object>) message.get("user_permissions");
 
+        String test1 = getAlfrescoAPIUrl() + getHomeNetwork() + "/public/search/versions/1/search";
         GenericUrl gUrl = new GenericUrl(getAlfrescoAPIUrl() + getHomeNetwork() + "/public/search/versions/1/search");
 
         Map<String, Object> returnMap = new HashMap<>();
 
         String bodyStr = "";
-        String maxItems = "10";
-        String skipCount = String.valueOf((skipNo - 1) * 10);
+        String maxItems = "100";
+        String skipCount = String.valueOf((skipNo - 1) * 100);
 
         if (searchText.isEmpty()) {
             bodyStr = String.format("{" +
@@ -593,7 +595,6 @@ public class AlfrescoServiceImpl implements AlfrescoService {
                     "\"query\" :\"PATH:'/app:company_home/st:sites/cm:" + alfrescoVo.getSite() + "/cm:documentLibrary/*'" +
                     " AND TYPE:\\\"cm:content\\\"" +
                     " AND NOT cm:workingCopyLabel:'(Working Copy)'" +
-                    " AND " + alfrescoVo.getConnection() + ":DocAutoNo:*" +
                     "\"" +
                     "}," +
                     "\"paging\":{\"maxItems\":\"" + maxItems + "\",\"skipCount\":\"" + skipCount + "\"}," +
@@ -606,18 +607,6 @@ public class AlfrescoServiceImpl implements AlfrescoService {
                     "\"query\" :\"PATH:'/app:company_home/st:sites/cm:" + alfrescoVo.getSite() + "/cm:documentLibrary/*'" +
                     " AND TYPE:\\\"cm:content\\\"" +
                     " AND NOT cm:workingCopyLabel:'(Working Copy)'" +
-                    " AND (" + alfrescoVo.getConnection() + ":No : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":BookName : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":ChargePart : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":Department : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":DocClass : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":DocContent : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":DrawingDescription : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":EquipmentNo : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":FunctionalLocation : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":MaintenancePlant : '*" + searchText + "*'" +
-                    " OR " + alfrescoVo.getConnection() + ":Writer : '*" + searchText + "*'" +
-                    " OR cm:content : '*" + searchText + "*')\"" +
                     "}," +
                     "\"highlight\":{\"fields\":[{\"field\":\"cm:content\",\"prefix\":\"(\",\"postfix\":\")\"}]" +
                     "}," +
@@ -635,45 +624,50 @@ public class AlfrescoServiceImpl implements AlfrescoService {
             List<ALF_DocInfoVO> result = new ArrayList<>();
             for (ALF_DocumentEntry entry : docList.list.entries) {
                 ALF_DocInfoVO data = getDocument(session, entry.entry.id, false);
-                String thumbnailId = "";
-                OperationContext context = new OperationContextImpl();
-                context.setRenditionFilterString("cmis:thumbnail");
 
-                // 21.11.22 Thumbnail null error
-                try {
-                    CmisObject cmObj = session.getObject(entry.entry.id, context);
-                    List<Rendition> renditions = cmObj.getRenditions();
+                //24.01.09 ife document check
+                if(data != null){
+                    String thumbnailId = "";
+                    OperationContext context = new OperationContextImpl();
+                    context.setRenditionFilterString("cmis:thumbnail");
 
-                    if (renditions != null && renditions.size() > 0) {
-                        InputStream thumbStream = renditions.get(0).getContentStream().getStream();
+                    // 21.11.22 Thumbnail null error
+                    try {
+                        CmisObject cmObj = session.getObject(entry.entry.id, context);
+                        List<Rendition> renditions = cmObj.getRenditions();
 
-                        byte[] imgBytes = IOUtils.toByteArray(thumbStream);
-                        byte[] encodeBase64 = Base64.getEncoder().encode(imgBytes);
-                        String base64DataString = new String(encodeBase64, "UTF-8");
-                        data.setThumbnailUrl(base64DataString);
+                        if (renditions != null && renditions.size() > 0) {
+                            InputStream thumbStream = renditions.get(0).getContentStream().getStream();
+
+                            byte[] imgBytes = IOUtils.toByteArray(thumbStream);
+                            byte[] encodeBase64 = Base64.getEncoder().encode(imgBytes);
+                            String base64DataString = new String(encodeBase64, "UTF-8");
+                            data.setThumbnailUrl(base64DataString);
+                        }
+                        else{
+                            File file = org.springframework.util.ResourceUtils.getFile("classpath:static/img/docmng/doclib.png");
+                            FileInputStream stream = new FileInputStream(file);
+                            byte byteArray[] = new byte[(int)file.length()];
+                            stream.read(byteArray);
+                            byte[] encodeBase64 = Base64.getEncoder().encode(byteArray);
+                            String base64DataString = new String(encodeBase64, "UTF-8");
+                            data.setThumbnailUrl(base64DataString);
+                            stream.close();
+                        }
                     }
-                    else{
-                        File file = org.springframework.util.ResourceUtils.getFile("classpath:static/img/docmng/doclib.png");
-                        FileInputStream stream = new FileInputStream(file);
-                        byte byteArray[] = new byte[(int)file.length()];
-                        stream.read(byteArray);
-                        byte[] encodeBase64 = Base64.getEncoder().encode(byteArray);
-                        String base64DataString = new String(encodeBase64, "UTF-8");
-                        data.setThumbnailUrl(base64DataString);
-                        stream.close();
+                    catch (Exception e){
+                        //data.setThumbnailUrl(base64DataString);
                     }
-                } catch (Exception e){
-                    //data.setThumbnailUrl(base64DataString);
+
+
+                    if (entry.entry.search.highlight != null) {
+                        if (entry.entry.search.highlight.get(0).snippets != null) {
+                            data.setHighLight(entry.entry.search.highlight.get(0).snippets.get(0));
+                        }
+                    }
+
+                    result.add(data);
                 }
-
-
-                if (entry.entry.search.highlight != null) {
-                    if (entry.entry.search.highlight.get(0).snippets != null) {
-                        data.setHighLight(entry.entry.search.highlight.get(0).snippets.get(0));
-                    }
-                }
-
-                result.add(data);
             }
 
             returnMap.put("total", docList.list.pagination.totalItems);
@@ -834,7 +828,7 @@ public class AlfrescoServiceImpl implements AlfrescoService {
     @Override
     public ALF_DocInfoVO getDocument(Session session, String objectId, Boolean alfrescoDoc) throws ParseException {
 
-        String query = "SELECT D.* FROM " + alfrescoVo.getConnection() + ":document as D " +
+        String query = "SELECT D.* FROM ife:document as D " +
                 "WHERE CONTAINS(D, 'PATH:\"/app:company_home/st:sites/cm:" + alfrescoVo.getSite() + "//*\"') " +
                 "AND D.cmis:objectId = '" + objectId + "' " +
                 "";
@@ -862,14 +856,19 @@ public class AlfrescoServiceImpl implements AlfrescoService {
 
         OperationContext context = new OperationContextImpl();
         context.setRenditionFilterString("application/pdf");
+
         CmisObject obj = session.getObject(objectId, context);
+
 
         if (obj instanceof Document) {
             Document doc = (Document) obj;
 
             String extension = this.getExtension(doc.getName());
 
-            Property<?> docContent = doc.getProperty(alfrescoVo.getConnection() + ":DocContent");
+            //Property<?> docContent = doc.getProperty(alfrescoVo.getConnection() + ":DocContent");
+
+            //kyc 20231220
+            Property<?> docContent = doc.getProperty("cmis:name");
 
             if (docContent != null) {
                 String docTitle = (String) docContent.getFirstValue();
@@ -1661,6 +1660,13 @@ public class AlfrescoServiceImpl implements AlfrescoService {
         ALF_DocInfoVO data = new ALF_DocInfoVO();
         data.setName((String)resultRow.getPropertyByQueryName("D.cmis:name").getFirstValue());
         data.setObjectId((String)resultRow.getPropertyByQueryName("D.cmis:objectId").getFirstValue());
+
+        //Add Properties
+        data.setProjectId((String)resultRow.getPropertyByQueryName("D.ife:ProjectId").getFirstValue());
+        data.setScenarioId((String)resultRow.getPropertyByQueryName("D.ife:ScenarioId").getFirstValue());
+
+        data.setCreatedBy((String)resultRow.getPropertyByQueryName("D.cmis:createdBy").getFirstValue());
+        data.setCreateDate(Object2Date(resultRow.getPropertyByQueryName("D.cmis:creationDate").getFirstValue()));
 
         // AclService - Permissions
         AclService aclService = session.getBinding().getAclService();
