@@ -3,7 +3,11 @@ var rootName = "scenario";
 var sample_colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
 
 var dosimeterInfo;
+var workersInfo;
+var equipmentInfo;
 var workPlanInfo;
+var radiologicalConditionOnStart;
+var radiologicalConditionOnEnd;
 
 $(document).ready(function(){
     onLoadedScenario();
@@ -40,15 +44,31 @@ function onLoadedScenario(){
         var dosimeterInfoStr = $("#txt_dosimeterInfo" + uniqueId).val();
         dosimeterInfo = JSON.parse(dosimeterInfoStr.replace(/'/g, '"'));
 
+        var workersInfoStr = $("#txt_workersInfo" + uniqueId).val();
+        workersInfo = JSON.parse(workersInfoStr.replace(/'/g, '"'));
+
+        var equipmentInfoStr = $("#txt_equipmentInfo" + uniqueId).val();
+        equipmentInfo = JSON.parse(equipmentInfoStr.replace(/'/g, '"'));
+
         var workPlanInfoStr = $("#txt_workPlanInfo" + uniqueId).val();
         workPlanInfo = JSON.parse(workPlanInfoStr.replace(/'/g, '"'));
+
+        var radiologicalConditionOnStartStr = $("#txt_radiologicalConditionOnStart" + uniqueId).val();
+        radiologicalConditionOnStart = JSON.parse(radiologicalConditionOnStartStr.replace(/'/g, '"'));
+
+        var radiologicalConditionOnEndStr = $("#txt_radiologicalConditionOnEnd" + uniqueId).val();
+        radiologicalConditionOnEnd = JSON.parse(radiologicalConditionOnEndStr.replace(/'/g, '"'));
+
+        console.log(workersInfo + "\r\n" + equipmentInfo + "\r\n" + workPlanInfo + "\r\n" + radiologicalConditionOnStart + "\r\n" + radiologicalConditionOnEnd);
 
         // Scenario Detail Data load
         dg_scenario_workpackLoadData(uniqueId);
         dg_scenario_equipmentLoadData(uniqueId);
         dg_scenario_workerLoadData(uniqueId);
-        dg_scenario_sourceLoadData(uniqueId);
-        dg_scenario_shieldLoadData(uniqueId);
+        dg_scenario_start_sourceLoadData(uniqueId);
+        dg_scenario_start_shieldLoadData(uniqueId);
+        dg_scenario_end_sourceLoadData(uniqueId);
+        dg_scenario_end_shieldLoadData(uniqueId);
         //dg_scenario_reportLoadData(uniqueId);
         dg_scenario_fileListLoadData(uniqueId);
 
@@ -196,14 +216,14 @@ function dg_pullscreenplanner(uniqueId){
 function dg_scenario_workpackLoadData(uniqueId) {
     $("#dg_scenario_workpack" + uniqueId).kendoGrid({
         columns: [
-            { field: "id" },
-            /*{ field: "projectId" },*/
-            /*{ field: "scenarioId" },*/
             { field: "name" },
-            { field: "description" }
+            { field: "startTime" },
+            { field: "duration" },
+            { field: "workers"},
         ],
         dataSource: {
-            transport: {
+            data: workPlanInfo.WorkStepInfo,
+            /*transport: {
                 read: function(options){
                     $.ajax({
                         url : "/getWorkpackList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
@@ -219,15 +239,14 @@ function dg_scenario_workpackLoadData(uniqueId) {
                         }
                     });
                 }
-            },
+            },*/
             schema: {
                 model: {
                     fields: {
-                        id: { type: "string" },
-                        /*projectId: { type: "number" },*/
-                        /*scenarioId: { type: "number" },*/
                         name: { type: "string" },
-                        description: { type: "string" },
+                        startTime: { type: "string" },
+                        duration: { type: "string"},
+                        workers: {type: "string"},
                     }
                 }
             },
@@ -238,7 +257,7 @@ function dg_scenario_workpackLoadData(uniqueId) {
         filterable: true,
         sortable: true,
         resizable: true,
-        pageable: true
+        pageable: false
     });
 }
 
@@ -246,13 +265,12 @@ function dg_scenario_equipmentLoadData(uniqueId) {
     $("#dg_scenario_equipment" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            /*{ field: "projectId" },*/
-            /*{ field: "scenarioId" },*/
             { field: "name" },
             { field: "description" },
         ],
         dataSource: {
-            transport: {
+            data: equipmentInfo.Equipment,
+            /*transport: {
                 read: function(options){
                     $.ajax({
                         url : "/getEquipmentList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
@@ -268,13 +286,11 @@ function dg_scenario_equipmentLoadData(uniqueId) {
                         }
                     });
                 }
-            },
+            },*/
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
-                        /*projectId: { type: "number" },*/
-                        /*scenarioId: { type: "number" },*/
+                        id: { type: "string" },
                         name: { type: "string" },
                         description: { type: "string" },
                     }
@@ -287,21 +303,19 @@ function dg_scenario_equipmentLoadData(uniqueId) {
         filterable: true,
         sortable: false,
         resizable: true,
-        pageable: true
+        pageable: false
     });
 }
 
-function dg_scenario_sourceLoadData(uniqueId) {
-    $("#dg_scenario_source" + uniqueId).kendoGrid({
+function dg_scenario_start_sourceLoadData(uniqueId) {
+    $("#dg_scenario_start_source" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            /*{ field: "projectId" },*/
-            /*{ field: "scenarioId" },*/
             { field: "name" },
-            { field: "description" },
         ],
         dataSource: {
-            transport: {
+            data:radiologicalConditionOnStart.Source,
+            /*transport: {
                 read: function(options){
                     $.ajax({
                         url : "/getSourceList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
@@ -317,15 +331,12 @@ function dg_scenario_sourceLoadData(uniqueId) {
                         }
                     });
                 }
-            },
+            },*/
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
-                        /*projectId: { type: "number" },*/
-                        /*scenarioId: { type: "number" },*/
+                        id: { type: "string" },
                         name: { type: "string" },
-                        description: { type: "string" },
                     }
                 }
             },
@@ -336,21 +347,20 @@ function dg_scenario_sourceLoadData(uniqueId) {
         filterable: true,
         sortable: true,
         resizable: true,
-        pageable: true
+        pageable: false
     });
 }
 
-function dg_scenario_shieldLoadData(uniqueId) {
-    $("#dg_scenario_shield" + uniqueId).kendoGrid({
+function dg_scenario_start_shieldLoadData(uniqueId) {
+    $("#dg_scenario_start_shield" + uniqueId).kendoGrid({
         columns: [
             { field: "id" },
-            /*{ field: "projectId" },*/
-            /*{ field: "scenarioId" },*/
             { field: "name" },
-            { field: "description" },
+            { field: "material" },
         ],
         dataSource: {
-            transport: {
+            data:radiologicalConditionOnStart.Shield,
+            /*transport: {
                 read: function(options){
                     $.ajax({
                         url : "/getShieldList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
@@ -367,15 +377,13 @@ function dg_scenario_shieldLoadData(uniqueId) {
                         }
                     });
                 }
-            },
+            },*/
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
-                        /*projectId: { type: "number" },*/
-                        /*scenarioId: { type: "number" },*/
+                        id: { type: "string" },
                         name: { type: "string" },
-                        description: { type: "string" },
+                        material: { type: "string" },
                     }
                 }
             },
@@ -386,7 +394,98 @@ function dg_scenario_shieldLoadData(uniqueId) {
         filterable: true,
         sortable: true,
         resizable: true,
-        pageable: true
+        pageable: false
+    });
+}
+
+function dg_scenario_end_sourceLoadData(uniqueId) {
+    $("#dg_scenario_end_source" + uniqueId).kendoGrid({
+        columns: [
+            { field: "id" },
+            { field: "name" },
+        ],
+        dataSource: {
+            data:radiologicalConditionOnEnd.Source,
+            /*transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getSourceList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
+                        type: 'GET',
+                        async: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },*/
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: false
+    });
+}
+
+function dg_scenario_end_shieldLoadData(uniqueId) {
+    $("#dg_scenario_end_shield" + uniqueId).kendoGrid({
+        columns: [
+            { field: "id" },
+            { field: "name" },
+            { field: "material" },
+        ],
+        dataSource: {
+            data:radiologicalConditionOnEnd.Shield,
+            /*transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getShieldList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
+                        type: 'GET',
+                        async: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                          options.success(result);
+
+                        },
+                        error: function(result) {
+                          options.error(result);
+                        }
+                    });
+                }
+            },*/
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        material: { type: "string" },
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: false
     });
 }
 
@@ -395,10 +494,11 @@ function dg_scenario_workerLoadData(uniqueId) {
         columns: [
             { field: "id" },
             { field: "name" },
-            { field: "description" },
+            { field: "protection"},
         ],
         dataSource: {
-            transport: {
+            data: workersInfo.Worker,
+            /*transport: {
                 read: function(options){
                     $.ajax({
                         url : "/getWorkerList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
@@ -414,13 +514,13 @@ function dg_scenario_workerLoadData(uniqueId) {
                         }
                     });
                 }
-            },
+            },*/
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
+                        id: { type: "string" },
                         name: { type: "string" },
-                        description: { type: "string" },
+                        protection: { type: "string" },
                     }
                 }
             },
@@ -431,7 +531,7 @@ function dg_scenario_workerLoadData(uniqueId) {
         filterable: true,
         sortable: true,
         resizable: true,
-        pageable: true
+        pageable: false
     });
 }
 
@@ -502,7 +602,7 @@ function dg_scenario_fileListLoadData(uniqueId){
         filterable: true,
         sortable: true,
         resizable: true,
-        pageable: true
+        pageable: false
     });
 }
 
