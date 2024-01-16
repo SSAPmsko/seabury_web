@@ -16,7 +16,9 @@ public class PlantServiceImpl implements PlantService {
 
 
     @Override
-    public List<PlantEntity> getPlantList(PlantEntity plantEntity) { return plantMapper.getPlantList(plantEntity); }
+    public List<PlantEntity> getPlantList(PlantEntity plantEntity) {
+        return plantMapper.getPlantList(plantEntity);
+    }
 
     @Override
     public int insertPlant(PlantEntity plantEntity) {

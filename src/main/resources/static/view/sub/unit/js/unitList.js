@@ -2,7 +2,15 @@ var rootName = "Unit";
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     //$("#unit").addClass('active');
+    $(document).ready(function () {
+        $("#unit_picker").kendoDropDownList({
+            change : onChange
+        });
+    });
 
+    function onChange() {
+        $("#unit_picker").data("kendoGrid").dataSource.read();
+    }
     // DataGrid Data load
     dg_unitLoadData();
 

@@ -129,18 +129,29 @@ function loadTreeData() {
         },
         success: function(data) {
             const tempList = [];
+
             data.forEach(item => {
                 const node = { tags : [item.objectID, item.parentID], text : item.name , href : typeToHref(item.type), type : item.type };
                 tempList.push(node);
             });
 
+            //objectID 정렬
+            /*const SortingList = tempList.sort((a,b) => (a.tags[0] - b.tags[0]));*/
+
+            //text 정렬
+            const SortingList = tempList.sort((a,b) => {
+                if(a.text > b.text) return 1;
+                if(a.text < b.text) return -1;
+                return 0;
+            });
+
             // Sorting Node - Site
-            tempList.filter(n => n.type === 'Site').forEach(item => {
+            SortingList.filter(n => n.type === 'Site').forEach(item => {
                 resultList.push(item);
 
             });
             // Sorting Node - Plant
-            tempList.filter(n => n.type === 'Plant').forEach(item => {
+            SortingList.filter(n => n.type === 'Plant').forEach(item => {
                 const parentNode = resultList.find(n => n.tags[0] === item.tags[1]);
 
                 if (parentNode !== undefined) {
@@ -151,7 +162,7 @@ function loadTreeData() {
                 }
             });
             // Sorting Node - Unit
-            tempList.filter(n => n.type === 'Unit').forEach(item => {
+            SortingList.filter(n => n.type === 'Unit').forEach(item => {
                 resultList.forEach(parentItem => {
                     if (parentItem.nodes !== undefined) {
                         const parentNode = parentItem.nodes.find(m => m.type === 'Plant' && m.tags[0] === item.tags[1]);
@@ -166,7 +177,7 @@ function loadTreeData() {
                 });
             });
             // Sorting Node - Room
-            tempList.filter(n => n.type === 'Room').forEach(item => {
+            SortingList.filter(n => n.type === 'Room').forEach(item => {
                 resultList.forEach(parentItem => {
                     if (parentItem.nodes !== undefined) {
                         parentItem.nodes.forEach(plantItem => {
@@ -174,7 +185,7 @@ function loadTreeData() {
                                 const parentNode = plantItem.nodes.find(m => m.type === 'Unit' && m.tags[0] === item.tags[1]);
                                 if (parentNode != null) {
                                     if (parentNode.nodes === undefined) {
-                                        parentNode.nodes = [];
+                                         parentNode.nodes = [];
                                     }
                                     parentNode.nodes.push(item);
                                 }
@@ -184,7 +195,7 @@ function loadTreeData() {
                 });
             });
             // Sorting Node - Project
-            tempList.filter(n => n.type === 'Project').forEach(item => {
+            SortingList.filter(n => n.type === 'Project').forEach(item => {
                 resultList.forEach(parentItem => {
                     if (parentItem.nodes !== undefined) {
                         parentItem.nodes.forEach(plantItem => {
@@ -258,6 +269,7 @@ function dg_sideloadExecute()
     loadTreeData();
 }
 
+
 function sampleProject(data, parentId){
     return {tags: [data.id, parentId], text: data.name, href: typeToHref("Project"), type: "project"};
 }
@@ -279,10 +291,10 @@ function setParentNode (projectList, resultList){
         });
     });*/
 }
-/*function dg_unitReloadExecute(){
+function dg_unitReloadExecute(){
     $('#bt_treeview_div').data(' ').dataSource.read(); <!--  first reload data source -->
     $('#bt_treeview_div').data('kendoGrid').refresh(); <!--  refresh current UI -->
-}*/
+}
 
 function typeToHref(type){
     switch (type){

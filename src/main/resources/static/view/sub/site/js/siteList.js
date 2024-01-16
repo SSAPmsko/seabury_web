@@ -3,9 +3,34 @@ var rootName = "Site";
 $(document).ready(function(){
     // 클릭한 위치 active 적용
     //$("#site").addClass('active');
+    $(document).ready(function () {
+        $("#site_picker").kendoDropDownList({
+            change : onChange
+        });
+    });
+    siteLoad();
+
+    function onChange() {
+        $("#site_picker").data("kendoGrid").dataSource.read();
+    }
+});
+function siteLoad(){
+    var formName = "sitePropertyForm";
+    var siteId = $("#txt_siteId").val();
+    var uniqueId;
+    uniqueId = "_" + formName + "_" + "1";
+    var isFirst = replaceFormId('sitePropertyForm', uniqueId);
+
+    if (isFirst === true){
+        replaceTabFormId('siteTabForm', uniqueId);
+    }
+
 
     // DataGrid Data load
-    dg_siteLoadData();
+    dg_siteLoadData(uniqueId);
+    dg_plantLoadData(uniqueId);
+    dg_unitLoadData(uniqueId);
+    dg_roomLoadData(uniqueId);
 
     // DataGrid Double Click Event
     $("#dg_site").on("dblclick", "table", function(e) {
@@ -14,7 +39,52 @@ $(document).ready(function(){
 
     // CheckButton Selected Event
     //$("#dg_site tbody").on("click", ".k-checkbox", onSelected);
-});
+}
+function replaceTabFormId(formName, uniqueId) {
+    var form = document.getElementById(formName);
+
+    if (form !== undefined){
+        var formList = $("[form=" + formName + "]");
+
+        for(var i= 0; i <formList.length; i++){
+            formList[i].id = formList[i].id + uniqueId;
+
+            switch (formList [i].tagName){
+                case "A":
+                    formList[i].attributes['data-bs-target'].value = formList[i].attributes['data-bs-target'].value + uniqueId;
+                    formList[i].attributes['aria-controls'].value = formList[i].attributes['aria-controls'].value + uniqueId;
+                    break;
+                case "DIV":
+                    formList[i].attributes['aria-labelledby'].value = formList[i].attributes['aria-labelledby'].value + uniqueId;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        form.id = formName + uniqueId;
+
+        return true;
+    } else{
+        return false;
+    }
+}
+
+function replaceTabFormNewId(formName, srcId, distId) {
+    var form = document.getElementById(formName + srcId);
+
+    if (form !== undefined){
+        var formList = $("[form="+ formName + srcId+ "]");
+
+        for(var i= 0; i < formList.length; i++){
+            formList[i].id = formList[i].id.replace(srcId, distId);
+            formList[i].attributes['form'].value = formList[i].attributes['form'].value.replace(srcId, distId);
+        }
+
+        form.id = form.id.replace(srcId, distId);
+    } else{
+    }
+}
 
 $("#site_picker").change(function () {
     var type = $("#site_picker option:checked").val();
@@ -62,10 +132,10 @@ function dg_siteCreateExecute(){
     });
 }
 
-function dg_siteModifyExecute(){
-    if ($("#dg_site").data("kendoGrid").getSelectedData().length > 0){
-        var siteId = $("#dg_site").data("kendoGrid").getSelectedData()[0].id;
-        var siteName = $("#dg_site").data("kendoGrid").getSelectedData()[0].name;
+function dg_siteModifyExecute(uniqueId){
+    if ($("#dg_site" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
+        var siteId = $("#dg_site" + uniqueId).data("kendoGrid").getSelectedData()[0].id;
+        var siteName = $("#dg_site" + uniqueId).data("kendoGrid").getSelectedData()[0].name;
 
         $.ajax({
             url : "/siteDetailProperties",
@@ -103,8 +173,8 @@ function dg_siteModifyExecute(){
     }
 }
 
-function dg_siteLoadData() {
-    $("#dg_site").kendoGrid({
+function dg_siteLoadData(uniqueId) {
+    $("#dg_site_site" + uniqueId).kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -167,9 +237,8 @@ function dg_siteLoadData() {
         pageable: true
     });
 }
-
-function dg_siteLoadData() {
-    $("#dg_site").kendoGrid({
+function dg_plantLoadData(uniqueId) {
+    $("#dg_site_plant" + uniqueId).kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -187,7 +256,7 @@ function dg_siteLoadData() {
             transport: {
                 read: function(options){
                     $.ajax({
-                        url : "/getSiteDetailList",
+                        url : "/getPlantDetailList",
                         type: 'POST',
                         async: false,
                         processData: false,
@@ -233,8 +302,8 @@ function dg_siteLoadData() {
     });
 }
 
-function dg_unitLoadData() {
-    $("#dg_unit").kendoGrid({
+function dg_unitLoadData(uniqueId) {
+    $("#dg_site_unit" + uniqueId).kendoGrid({
         columns: [
             /*{ selectable: true, headerTemplate: '<input type="checkbox" style="visibility:collapse;" />'},*/
             { field: "id" },
@@ -259,7 +328,7 @@ function dg_unitLoadData() {
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function(result) {
-                            options.success(result);
+                             options.success(result);
                         },
                         error: function(result) {
                             options.error(result);
@@ -297,8 +366,59 @@ function dg_unitLoadData() {
         pageable: true
     });
 }
+
+function dg_roomLoadData(uniqueId) {
+    $("#dg_site_room" + uniqueId).kendoGrid({
+        columns: [
+            { field: "id" },
+            { field: "name" },
+            { field: "operator" },
+            { field: "description" },
+        ],
+        dataSource: {
+            transport: {
+                read: function(options){
+                    $.ajax({
+                        url : "/getRoomDetailList",
+                        type: 'POST',
+                        async: false,
+                        processData: false,
+                        dataType: "json",
+                        contentType: "application/json;charset=UTF-8",
+                        success: function(result) {
+                            options.success(result);
+                        },
+                        error: function(result) {
+                            options.error(result);
+                        }
+                    });
+                }
+            },
+            schema: {
+                model: {
+                    fields: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        operator: { type: "string" },
+                        description: { type: "string" },
+
+                    }
+                }
+            },
+            pageSize: 10,
+        },
+        selectable: "row",
+        scrollable: false,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true
+    });
+}
+
+
 function dg_siteReloadExecute(){
-    $('#dg_site').data('kendoGrid').dataSource.read(); <!--  first reload data source -->
-    $('#dg_site').data('kendoGrid').refresh(); <!--  refresh current UI -->
+    $('#dg_site' +uniqueId ).data('kendoGrid').dataSource.read(); <!--  first reload data source -->
+    $('#dg_site' + uniqueId).data('kendoGrid').refresh(); <!--  refresh current UI -->
 }
 

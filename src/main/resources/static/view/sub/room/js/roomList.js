@@ -4,6 +4,17 @@ testformData.type = "Room";
 
 var idformData = {};
 $(document).ready(function(){
+    $(document).ready(function () {
+        $("#room_picker").kendoDropDownList({
+            change : onChange
+        });
+    });
+
+    function onChange() {
+        $("#room_picker").data("kendoGrid").dataSource.read();
+    }
+
+
     // DataGrid Data load
     dg_roomLoadData();
 
@@ -103,7 +114,13 @@ function dg_roomLoadData() {
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function(result) {
-                            options.success(result);
+                            const tempList = result.sort((a,b) => {
+                                if(a.name > b.name) return 1;
+                                if(a.name < b.name) return -1;
+                                return 0;
+                            });
+                            console.log(tempList)
+                            options.success(tempList);
                         },
                         error: function(result) {
                             options.error(result);

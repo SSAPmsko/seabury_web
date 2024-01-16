@@ -83,7 +83,12 @@ function LoadPlantParent(uniqueId) {
         },
         success: function (data) {
             var parentSelect = $('#plant_parent' + uniqueId);
-            data.forEach(item => {
+            const tempList = data.sort((a,b) => {
+                if(a.name > b.name) return 1;
+                if(a.name < b.name) return -1;
+                return 0;
+            });
+            tempList.forEach(item => {
                 var parentid = $("#txt_parentId"+ uniqueId).val();
 
                 if (parentid == item.objectID)
@@ -138,7 +143,7 @@ function dg_plantSaveExecute(uniqueId){
                 success : function(data) {
                     //location.href = "plantDetail?" + "id=" + data.result.id;
                     alert('저장이 완료 되었습니다.');
-
+                    loadTreeData();
                     // 리스트 리로드
                     dg_plantReloadExecute();
                 },
