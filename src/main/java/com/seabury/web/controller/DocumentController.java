@@ -29,8 +29,6 @@ public class DocumentController {
     @Autowired
     AlfrescoService alfrescoService;
 
-    private Session alf_session;
-
     @Autowired
     VRDoseService vrDoseService;
 
@@ -40,14 +38,11 @@ public class DocumentController {
         List<ALF_DocInfoVO> documentList = new ArrayList<>();
 
         Map<String, Object> returnMap = new HashMap<>();
-
-        alf_session = alfrescoService.getCmisSession("vrdose","admin","admin");
-
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("SearchName", "");
         parameters.put("CurrentPage", 1);
 
-        returnMap = alfrescoService.getFullSearchDoc(alf_session, parameters);
+        returnMap = alfrescoService.getFullSearchDoc(parameters);
 
         //Add vrdose project, Scenario
         for(ALF_DocInfoVO alf_doc : (List<ALF_DocInfoVO>) returnMap.get("list")){
@@ -73,13 +68,14 @@ public class DocumentController {
         ALF_DocInfoVO whereDocument = new ALF_DocInfoVO();
         whereDocument.setObjectId(id);
 
+        Session alf_session = alfrescoService.getCmisSession();
+
         ALF_DocInfoVO documentItem = alfrescoService.getDocument(alf_session,id, false );
 
         OperationContext context = new OperationContextImpl();
         context.setRenditionFilterString("application/pdf");
 
         CmisObject cmisObject = alf_session.getObject(documentItem.getObjectId(), context);
-
 
         InputStream inputStream;
         if (cmisObject instanceof Document){

@@ -186,6 +186,23 @@ public class ScenarioController {
         }
     }
 
+    @RequestMapping(value = {"/scenarioDetailDocuments"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> scenarioDetailDocuments(@RequestParam(value = "id", required = false) String id) {
+
+        ReturnParam rp = new ReturnParam();
+        try {
+        // ReturnParam 작성
+        Map<String, Object> scenarioDocuments = alfrescoService.getScenarioDocuments(id, 1);
+            if (!scenarioDocuments.isEmpty()){
+                rp.put("Documents", scenarioDocuments.get("list"));
+            }
+        rp.setSuccess("");
+        } catch (Exception e) {
+        rp.setFail("");
+        }
+        return rp;
+    }
+
     @RequestMapping(value={"/scenarioInsert"}, method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> scenarioInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String,Object> requestMap){
         // ReturnParam 작성

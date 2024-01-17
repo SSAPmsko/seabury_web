@@ -94,7 +94,7 @@ function dg_documentModifyExecute(){
                 addDockItem('documentDetail_' + docName, docName, 'document/documentDetail', result);
             },
             error : function(result) {
-                alert("정상 처리에 실패 하였습니다!!!!.");
+                alert("정상 처리에 실패 하였습니다.");
             }
         }).done(function(fragment){
 
