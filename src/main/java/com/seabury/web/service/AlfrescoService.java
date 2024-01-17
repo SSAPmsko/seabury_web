@@ -19,7 +19,7 @@ public interface AlfrescoService {
 
     public void setLogin(String id, String password);
 
-    public Session getCmisSession(String connectionName, String id, String password);
+    public Session getCmisSession();
 
     public ALF_PeopleEntry createPeople(Session session, ALF_People alf_people) throws IOException;
 
@@ -83,7 +83,9 @@ public interface AlfrescoService {
     public Boolean cancelCheckOut(Session alf_session, String docObjectId);
 
     //통합검색
-    public Map<String, Object> getFullSearchDoc(Session session, Map<String, Object> message) throws Exception;
+    public Map<String, Object> getFullSearchDoc(Map<String, Object> message) throws Exception;
+
+    public Map<String, Object> getScenarioDocuments(String scenarioId, Integer skipNo) throws Exception;
 
     //상세검색
     public Map<String, Object> getDetailSearchDoc(Session session, Map<String, Object> message) throws Exception;

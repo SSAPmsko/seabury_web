@@ -59,8 +59,6 @@ function onLoadedScenario(){
         var radiologicalConditionOnEndStr = $("#txt_radiologicalConditionOnEnd" + uniqueId).val();
         radiologicalConditionOnEnd = JSON.parse(radiologicalConditionOnEndStr.replace(/'/g, '"'));
 
-        console.log(workersInfo + "\r\n" + equipmentInfo + "\r\n" + workPlanInfo + "\r\n" + radiologicalConditionOnStart + "\r\n" + radiologicalConditionOnEnd);
-
         // Scenario Detail Data load
         dg_scenario_workpackLoadData(uniqueId);
         dg_scenario_equipmentLoadData(uniqueId);
@@ -554,31 +552,37 @@ function dg_scenario_reportLoadData(uniqueId){
 function dg_scenario_fileListLoadData(uniqueId){
     $("#dg_scenario_fileList" + uniqueId).kendoGrid({
         columns: [
-            {
-                field: "id", title: "Sample",
+/*            { field: "thumbnailUrl", title: "Thumbnail",
+                template: "<img></img>",
+            },*/
+           /* {
+                field: "objectId", title: "ObjectId",
                 template: "<div class='product-photo' style='background-image: url(../../../static/img/alfresco/doclib.png); background-repeat: no-repeat; background-position: center center; height: 80px; width: 100%;'></div>"
-            },
+            },*/
             { field: "name" },
-            { field: "description" },
+            /*{ field: "description" },
             {
                 filed: "download", title: "Download",
                 template: "<div> " +
                     "<button class='k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-' type='button' form='scenarioPropertyForm' style='height: 30px;' id='btn_scenario_download' onclick='alert(\"download\")'>" +
                     "<span class='k-button-icon k-icon k-i-paperclip-alt'></span>" +
                     "<span class='k-button-text'>Download</span></button></div>",
-            }
+            },*/
+            { field: "createdBy" },
+            { field: "createDate" },
         ],
         dataSource: {
             transport: {
                 read: function(options){
                     $.ajax({
-                        url : "/getWorkerList?scenarioId=" + $('#txt_scenarioId' + uniqueId).val(),
+                        url : "/scenarioDetailDocuments?id=" + $('#txt_scenarioId' + uniqueId).val(),
                         type: 'GET',
                         async: false,
                         dataType: "json",
                         contentType: "application/json;charset=UTF-8",
                         success: function(result) {
-                            options.success(result);
+                            console.log(result);
+                            options.success(result.Documents);
                         },
                         error: function(result) {
                             options.error(result);
@@ -589,9 +593,11 @@ function dg_scenario_fileListLoadData(uniqueId){
             schema: {
                 model: {
                     fields: {
-                        id: { type: "number" },
+                        /*thumbnailUrl:{ type: "string"},*/
+                        /*objectId: { type: "string" },*/
                         name: { type: "string" },
-                        description: { type: "string" },
+                        createdBy: { type: "string" },
+                        createDate: { type: "string" },
                     }
                 }
             },
@@ -687,7 +693,9 @@ function chart_accumulated_collective_doseLoadData(uniqueId){
                         maxRotation: 0,
                     }
                 }
-            }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
         }
     })
 }
@@ -1090,6 +1098,33 @@ function replaceTabFormNewId(formName, srcId, distId) {
 
         form.id = form.id.replace(srcId, distId);
     } else{
+    }
+}
+
+function dg_scenario_fileListModifyExecute(uniqueId){
+    if ($("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
+
+        var docUid = $("#dg_document").data("kendoGrid").getSelectedData()[0].uid;
+        var dateitem = $("#dg_document").data("kendoGrid").dataSource.getByUid(docUid);
+
+        var docName = dateitem.name;
+
+        $.ajax({
+            url : "/documentDetailProperties",
+            data : {"id" : dateitem.objectId},
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+                addDockItem('documentDetail_' + docName, docName, 'document/documentDetail', result);
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
     }
 }
 

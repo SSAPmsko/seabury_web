@@ -75,8 +75,6 @@ public class AlfrescoServiceImpl implements AlfrescoService {
     public String homeNetwork;
 
     private HttpRequestFactory requestFactory;
-    private Session session;
-
     /**
      * 알프래스코 로그인 프로퍼티를 설정한다.
      *
@@ -92,23 +90,20 @@ public class AlfrescoServiceImpl implements AlfrescoService {
     /**
      * 알프래스코의 새션을 가저온다.
      *
-     * @param connectionName 새션 이름
-     * @param id             아이디
-     * @param password       패스워드
      * @return 알프래스코 세션
      */
     @Override
-    public Session getCmisSession(String connectionName, String id, String password) {
-        Session session = connections.get(id);
+    public Session getCmisSession() {
+        Session session = connections.get(alfrescoVo.getId());
         if (session == null) {
             System.out.println(("Not connected, creating new connection to Alfresco with the connection id ("
-                    + connectionName + ")"));
+                    + alfrescoVo.getConnection() + ")"));
 
             // No connection to Alfresco available, create  a new one
             SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
             Map<String, String> parameters = new HashMap<String, String>();
-            parameters.put(SessionParameter.USER, id);
-            parameters.put(SessionParameter.PASSWORD, password);
+            parameters.put(SessionParameter.USER, alfrescoVo.getId());
+            parameters.put(SessionParameter.PASSWORD, alfrescoVo.getPassword());
             parameters.put(SessionParameter.ATOMPUB_URL, getAlfrescoAPIUrl() + getHomeNetwork() + ATOM_URL);
             parameters.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
             parameters.put(SessionParameter.COMPRESSION, "true");
@@ -133,13 +128,13 @@ public class AlfrescoServiceImpl implements AlfrescoService {
                 session = alfrescoRepository.createSession();
 
                 // Save connection for reuse
-                connections.put(connectionName, session);
+                connections.put(alfrescoVo.getConnection(), session);
             } catch (Exception e) {
                 throw new CmisConnectionException(e.getMessage());
             }
 
         } else {
-            System.out.println("Already connected to Alfresco with the connection id (" + connectionName + ")");
+            System.out.println("Already connected to Alfresco with the connection id (" + alfrescoVo.getConnection() + ")");
         }
         return session;
     }
@@ -568,18 +563,17 @@ public class AlfrescoServiceImpl implements AlfrescoService {
     /**
      * 알프래스코의 속성, 업로드 속성, 문서의 내용을 검색한다.
      *
-     * @param session 알프래스코 세션
      * @param message 검색을 위한 맵 데이터 (검색내용, 페이지 정보, 사용자 권한 등)
      * @return 검색된 문서의 결과를 맵으로 반환
      */
     @Override
-    public Map<String, Object> getFullSearchDoc(Session session, Map<String, Object> message) throws Exception {
+    public Map<String, Object> getFullSearchDoc(Map<String, Object> message) throws Exception {
+
+        Session alf_session = getCmisSession();
+
         String searchText = (String) message.get("SearchName");
         int skipNo = (Integer) message.get("CurrentPage");
 
-        //Map<String, Object> permissions = (Map<String, Object>) message.get("user_permissions");
-
-        String test1 = getAlfrescoAPIUrl() + getHomeNetwork() + "/public/search/versions/1/search";
         GenericUrl gUrl = new GenericUrl(getAlfrescoAPIUrl() + getHomeNetwork() + "/public/search/versions/1/search");
 
         Map<String, Object> returnMap = new HashMap<>();
@@ -623,7 +617,7 @@ public class AlfrescoServiceImpl implements AlfrescoService {
 
             List<ALF_DocInfoVO> result = new ArrayList<>();
             for (ALF_DocumentEntry entry : docList.list.entries) {
-                ALF_DocInfoVO data = getDocument(session, entry.entry.id, false);
+                ALF_DocInfoVO data = getDocument(alf_session, entry.entry.id, false);
 
                 //24.01.09 ife document check
                 if(data != null){
@@ -633,7 +627,103 @@ public class AlfrescoServiceImpl implements AlfrescoService {
 
                     // 21.11.22 Thumbnail null error
                     try {
-                        CmisObject cmObj = session.getObject(entry.entry.id, context);
+                        CmisObject cmObj = alf_session.getObject(entry.entry.id, context);
+                        List<Rendition> renditions = cmObj.getRenditions();
+
+                        if (renditions != null && renditions.size() > 0) {
+                            InputStream thumbStream = renditions.get(0).getContentStream().getStream();
+
+                            byte[] imgBytes = IOUtils.toByteArray(thumbStream);
+                            byte[] encodeBase64 = Base64.getEncoder().encode(imgBytes);
+                            String base64DataString = new String(encodeBase64, "UTF-8");
+                            data.setThumbnailUrl(base64DataString);
+                        }
+                        else{
+                            File file = org.springframework.util.ResourceUtils.getFile("classpath:static/img/docmng/doclib.png");
+                            FileInputStream stream = new FileInputStream(file);
+                            byte byteArray[] = new byte[(int)file.length()];
+                            stream.read(byteArray);
+                            byte[] encodeBase64 = Base64.getEncoder().encode(byteArray);
+                            String base64DataString = new String(encodeBase64, "UTF-8");
+                            data.setThumbnailUrl(base64DataString);
+                            stream.close();
+                        }
+                    }
+                    catch (Exception e){
+                        //data.setThumbnailUrl(base64DataString);
+                    }
+
+
+                    if (entry.entry.search.highlight != null) {
+                        if (entry.entry.search.highlight.get(0).snippets != null) {
+                            data.setHighLight(entry.entry.search.highlight.get(0).snippets.get(0));
+                        }
+                    }
+
+                    result.add(data);
+                }
+            }
+
+            returnMap.put("total", docList.list.pagination.totalItems);
+            returnMap.put("list", result);
+        } else {
+            returnMap.put("total", 0);
+            returnMap.put("list", new ArrayList<>());
+        }
+
+        //return result.stream().filter(n -> n.getPermission() != null).collect(Collectors.toList());
+        return returnMap;
+    }
+
+    // Add 24.01.17 by kms
+    @Override
+    public Map<String, Object> getScenarioDocuments(String scenarioId, Integer skipNo) throws Exception {
+
+        Session alf_session = getCmisSession();
+
+        GenericUrl gUrl = new GenericUrl(getAlfrescoAPIUrl() + getHomeNetwork() + "/public/search/versions/1/search");
+
+        Map<String, Object> returnMap = new HashMap<>();
+
+        String bodyStr = "";
+        String maxItems = "100";
+        String skipCount = String.valueOf((skipNo - 1) * 100);
+
+        if (!scenarioId.isEmpty()) {
+            bodyStr = String.format("{" +
+                    "\"query\":{" +
+                    "\"language\":\"afts\"," +
+                    "\"query\" :\"PATH:'/app:company_home/st:sites/cm:" + alfrescoVo.getSite() + "/cm:documentLibrary/*'" +
+                    " AND TYPE:\\\"cm:content\\\"" +
+                    " AND NOT cm:workingCopyLabel:'(Working Copy)'" +
+                    " AND (" + alfrescoVo.getConnection() + ":ScenarioId" + ":'" + scenarioId + "')\"" +
+                    "}," +
+                    "\"highlight\":{\"fields\":[{\"field\":\"cm:content\",\"prefix\":\"(\",\"postfix\":\")\"}]" +
+                    "}," +
+                    "\"paging\":{\"maxItems\":\"" + maxItems + "\",\"skipCount\":\"" + skipCount + "\"}," +
+                    "\"sort\": [{\"type\":\"FIELD\",\"field\":\"cm:created\",\"ascending\":\"false\"}]" +
+                    "}");
+        }
+
+        if (!StringUtils.isEmpty(bodyStr)) {
+            HttpContent content = new ByteArrayContent("application/json", bodyStr.getBytes());
+
+            HttpRequest request = getRequestFactory().buildPostRequest(gUrl, content);
+            ALF_DocumentList docList = request.execute().parseAs(ALF_DocumentList.class);
+
+            List<ALF_DocInfoVO> result = new ArrayList<>();
+            for (ALF_DocumentEntry entry : docList.list.entries) {
+                ALF_DocInfoVO data = getDocument(alf_session, entry.entry.id, false);
+
+                //24.01.09 ife document check
+                if(data != null){
+                    String thumbnailId = "";
+                    OperationContext context = new OperationContextImpl();
+                    context.setRenditionFilterString("cmis:thumbnail");
+
+                    // 21.11.22 Thumbnail null error
+                    try {
+                        CmisObject cmObj = alf_session.getObject(entry.entry.id, context);
                         List<Rendition> renditions = cmObj.getRenditions();
 
                         if (renditions != null && renditions.size() > 0) {
