@@ -351,11 +351,15 @@ function dg_projectLoadData(uniqueId) {
 
                 if (projectid == item.id)
                 {
-                    $("#room_project option[value=projectid]").remove();
+                    projectSelect.append(new Option(item.name, item.id, false, true));
+
+                    /*$("#room_project option[value=projectid]").remove();*/
                 }
                 else{
                     projectSelect.append(new Option(item.name, item.id, false, false));
+
                 }
+
 
             });
         },

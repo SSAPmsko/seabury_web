@@ -10,6 +10,7 @@
             <div class="visually-hidden">
                 <input type="text" class="form-control" id="txt_roomId" form="roomPropertyForm" th:value="${id}">
                 <input type="text" class="form-control" id="txt_projectId" form="roomPropertyForm" th:value="${projectID}">
+                <input type="text" class="form-control" id="txt_projectname" form="roomPropertyForm" th:value="${projectName}">
             </div>
 
             <div class="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3 border-bottom">
@@ -47,10 +48,6 @@
                             <label  class="form-label">Parent Name</label>
                             <select class="form-select" aria-label="Default select example" form="roomPropertyForm" id="room_parent">
                             </select>
-                        </div>
-                        <div class="col-sm-6">
-                           <label for="txt_projectname" class="form-label">Project Name</label>
-                           <input type="text" class="form-control" id="txt_projectname" form="roomPropertyForm" th:value="${projectName}">
                         </div>
                         <div class="col-sm-6">
                             <label  class="form-label">Project Picker</label>

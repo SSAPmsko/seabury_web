@@ -261,7 +261,7 @@ function loadTreeData() {
     });
     ////////////////// 23.09.13 Demo 용도 //////////////////
 */
-
+console.log(resultList);
     return JSON.stringify(resultList);
 }
 function dg_sideloadExecute()

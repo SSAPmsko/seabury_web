@@ -1,6 +1,8 @@
 var rootName = "unit";
 var parentformUnit = {};
 parentformUnit.type = "Plant";
+var UnitTypeform = {};
+UnitTypeform.type = "Unit"
 var IDformUnit = {};
 IDformUnit.type = "Unit";
 var strucUnitID;
@@ -69,6 +71,11 @@ function LoadUnitID(uniqueId) {
 
     });
 }
+function  LoadUnitParentId()
+{
+
+
+}
 function LoadUnitParent(uniqueId) {
 //structure 리스트
     $.ajax({
@@ -86,9 +93,11 @@ function LoadUnitParent(uniqueId) {
                 if(a.name < b.name) return -1;
                 return 0;
             });
+            console.log(tempList)
             tempList.forEach(item => {
-                var parentid = $("#txt_parentId"+ uniqueId).val();
+                var parentid = $("#txt_unitId"+ uniqueId).val();
 
+                console.log(parentid)
                 if (parentid == item.objectID)
                 {
                     parentSelect.append(new Option(item.name, item.objectID, true, true));
