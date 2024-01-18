@@ -88,6 +88,11 @@ function onLoadedScenario(){
         $("#btn_planner_open" + uniqueId).on("click", function(e) {
             dg_pullscreenplanner(uniqueId);
         });
+
+        // DataGrid Double Click Event
+        $("#dg_scenario_fileList" + uniqueId).on("dblclick", "table", function(e) {
+            dg_scenario_fileListModifyExecute(uniqueId);
+        });
     }
 }
 
@@ -1104,8 +1109,8 @@ function replaceTabFormNewId(formName, srcId, distId) {
 function dg_scenario_fileListModifyExecute(uniqueId){
     if ($("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
 
-        var docUid = $("#dg_document").data("kendoGrid").getSelectedData()[0].uid;
-        var dateitem = $("#dg_document").data("kendoGrid").dataSource.getByUid(docUid);
+        var docUid = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData()[0].uid;
+        var dateitem = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").dataSource.getByUid(docUid);
 
         var docName = dateitem.name;
 
