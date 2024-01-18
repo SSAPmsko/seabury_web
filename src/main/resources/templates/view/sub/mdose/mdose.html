@@ -6,8 +6,39 @@
 <!-- Begin Page Content -->
 <th:block>
     <section class="h-100" style="overflow:auto; min-width: 430px;" layout:fragment="content">
-        <div class="row container-fluid m-0">
-            <iframe src="http://121.152.150.170:8083/epd2" width="100%" height="700px"></iframe>
+        <div class="col-12 h-100">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a data-load="false" class="nav-link active" id="m1_RadTracker_1_Tab" data-bs-toggle="tab" data-bs-target="#m1_RadTracker_1_Content" type="button" role="tab" aria-controls="m1_RadTracker_1_Content" aria-selected="false">m1_RadTracker_1</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a data-load="false" class="nav-link" id="m1_RadTracker_2_Tab" data-bs-toggle="tab" data-bs-target="#m1_RadTracker_2_Content" type="button" role="tab" aria-controls="m1_RadTracker_2_Content" aria-selected="false">m1_RadTracker_2</a>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <a data-load="false" class="nav-link" id="m1_RadTracker_3_Tab" data-bs-toggle="tab" data-bs-target="#m1_RadTracker_3_Content" type="button" role="tab" aria-controls="m1_RadTracker_3_Content" aria-selected="false">m1_RadTracker_3</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" style="height:calc(100vh - 230px);">
+                <div class="tab-pane fade show active h-100" id="m1_RadTracker_1_Content" role="tabpanel" aria-labelledby="m1_RadTracker_1_Tab">
+                    <div class="row p-0 h-100">
+                        <iframe src="http://121.152.150.170:8083/epd2" class="h-100 p-0"></iframe>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade h-100" id="m1_RadTracker_2_Content" role="tabpanel" aria-labelledby="m1_RadTracker_2_Tab">
+                    <div class="row p-0 h-100">
+                        <iframe src="http://121.152.150.170:8083/epd3" class="h-100 p-0"></iframe>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade h-100" id="m1_RadTracker_3_Content" role="tabpanel" aria-labelledby="m1_RadTracker_3_Tab">
+                    <div class="row p-0 h-100">
+                        <iframe src="http://121.152.150.170:8083/epd4" class="h-100 p-0"></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </th:block>
