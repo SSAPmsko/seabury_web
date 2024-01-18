@@ -4,6 +4,8 @@ parentformPlant.type = "Site";
 var IDformPlant = {};
 IDformPlant.type = "Plant";
 var strucPlantID;
+var PlantTypeform = {};
+PlantTypeform.type = "Plant";
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -31,6 +33,7 @@ function onLoadedPlant(){
     var isFirst = replaceFormId('plantPropertyForm', uniqueId);
 
     if (isFirst === true){
+        LoadPlantParentId(uniqueId);
         LoadPlantParent(uniqueId);
         LoadPlantID(uniqueId)
 
@@ -70,6 +73,32 @@ function LoadPlantID(uniqueId) {
 
     });
 }
+function LoadPlantParentId(uniqueId)
+{
+    var plantIntId = $('#txt_plantId'+ uniqueId).val();
+
+    PlantTypeform.objectID =  parseInt(plantIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureParentID",
+        data: JSON.stringify(PlantTypeform),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error")
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucpicker = item.parentID;
+            });
+
+        }
+    }).done(function (fragment) {
+
+    });
+
+}
 
 function LoadPlantParent(uniqueId) {
 //structure 리스트
@@ -90,8 +119,7 @@ function LoadPlantParent(uniqueId) {
             });
             tempList.forEach(item => {
                 var parentid = $("#txt_parentId"+ uniqueId).val();
-
-                if (parentid == item.objectID)
+                if (strucpicker == item.objectID)
                 {
                     parentSelect.append(new Option(item.name, item.objectID, true, true));
                 }

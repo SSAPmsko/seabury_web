@@ -2,9 +2,12 @@ var rootName = "room";
 var parentformRoom = {};
 parentformRoom.type = "Unit";
 var IDformRoom = {};
-
+var RoomTypeform = {};
+RoomTypeform.type = "Room"
 var strucRoomID;
 var strucProjectID;
+
+
 
 $(document).ready(function () {
     // 클릭한 위치 active 적용
@@ -31,6 +34,7 @@ function onLoadedRoom(){
     var isFirst = replaceFormId('roomPropertyForm', uniqueId);
 
     if (isFirst === true){
+        LoadRoomParentId(uniqueId)
         LoadRoomParent(uniqueId);
         LoadRoomID(uniqueId);
         LoadProjectID(uniqueId)
@@ -74,6 +78,33 @@ function onLoadedRoom(){
         }
     });
 }*/
+
+function LoadRoomParentId(uniqueId)
+{
+    var roomIntId = $('#txt_roomId'+ uniqueId).val();
+
+    RoomTypeform.objectID =  parseInt(roomIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureParentID",
+        data: JSON.stringify(RoomTypeform),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error")
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucpicker = item.parentID;
+            });
+
+        }
+    }).done(function (fragment) {
+
+    });
+
+}
 function LoadRoomID(uniqueId) {
 
     var roomIntId = $('#txt_roomId'+ uniqueId).val();
@@ -148,8 +179,7 @@ function LoadRoomParent(uniqueId) {
             });
             tempList.forEach(item => {
                 var parentid = $("#txt_parentId"+ uniqueId).val();
-
-                if (parentid == item.objectID)
+                if (strucpicker == item.objectID)
                 {
                     parentSelect.append(new Option(item.name, item.objectID, true, true));
                 }
@@ -346,21 +376,36 @@ function dg_projectLoadData(uniqueId) {
         contentType: "application/json;charset=UTF-8",
         success: function(result) {
             var projectSelect = $('#room_project' + uniqueId);
+            var projectid = $("#txt_projectId"+ uniqueId).val();
+
+            if(projectid == "null")
+            {
+                projectSelect.append(new Option("null",null,false,true))
+            }
+
             result.forEach(item => {
-                var projectid = $("#txt_projectId"+ uniqueId).val();
-
-                if (projectid == item.id)
+                if (projectid == `null` ){
+                    if (projectid == item.id)
+                    {
+                        projectSelect.append(new Option(item.name, item.id, false, false));
+                        /*$("#room_project option[value=projectid]").remove();*/
+                    }
+                    else{
+                        projectSelect.append(new Option(item.name, item.id, false, false));
+                    }
+                }
+                else
                 {
-                    projectSelect.append(new Option(item.name, item.id, false, true));
+                    if (projectid == item.id)
+                    {
+                        projectSelect.append(new Option(item.name, item.id, false, true));
+                        /*$("#room_project option[value=projectid]").remove();*/
+                    }
+                    else{
+                        projectSelect.append(new Option(item.name, item.id, false, false));
 
-                    /*$("#room_project option[value=projectid]").remove();*/
+                    }
                 }
-                else{
-                    projectSelect.append(new Option(item.name, item.id, false, false));
-
-                }
-
-
             });
         },
         error: function(result) {
