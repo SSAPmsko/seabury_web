@@ -6,6 +6,7 @@ UnitTypeform.type = "Unit"
 var IDformUnit = {};
 IDformUnit.type = "Unit";
 var strucUnitID;
+var strucpicker;
 $(document).ready(function () {
     // 클릭한 위치 active 적용
     //$("#unit").addClass('active');
@@ -33,8 +34,10 @@ function onLoadedUnit(){
     var isFirst = replaceFormId('unitPropertyForm', uniqueId);
 
     if (isFirst === true){
+        LoadUnitParentId(uniqueId)
         LoadUnitParent(uniqueId);
         LoadUnitID(uniqueId)
+
 
 
         // button event
@@ -66,14 +69,36 @@ function LoadUnitID(uniqueId) {
             data.forEach(item => {
                 strucUnitID = item.id;
             });
+
         }
     }).done(function (fragment) {
 
     });
 }
-function  LoadUnitParentId()
+function LoadUnitParentId(uniqueId)
 {
+    var unitIntId = $('#txt_unitId'+ uniqueId).val();
 
+    UnitTypeform.objectID =  parseInt(unitIntId);
+
+    $.ajax({
+        type: 'POST',
+        url: "/getStructureParentID",
+        data: JSON.stringify(UnitTypeform),
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        error: function (request, status, error) {
+            alert("error")
+        },
+        success: function (data) {
+            data.forEach(item => {
+                strucpicker = item.parentID;
+            });
+
+        }
+    }).done(function (fragment) {
+
+    });
 
 }
 function LoadUnitParent(uniqueId) {
@@ -93,14 +118,12 @@ function LoadUnitParent(uniqueId) {
                 if(a.name < b.name) return -1;
                 return 0;
             });
-            console.log(tempList)
             tempList.forEach(item => {
                 var parentid = $("#txt_unitId"+ uniqueId).val();
 
-                console.log(parentid)
-                if (parentid == item.objectID)
+                if (strucpicker == item.objectID)
                 {
-                    parentSelect.append(new Option(item.name, item.objectID, true, true));
+                    parentSelect.append(new Option(item.name, item.objectID, false, true));
                 }
                 else{
                     parentSelect.append(new Option(item.name, item.objectID, false, false));
