@@ -54,8 +54,8 @@
 
 
 .lm_row > .lm_item:nth-child(1) .container-fluid .bd-sidebar .list-group li[data-nodeid="6"]:has(.indent) span:nth-last-child(3)::after { content: ""; width: 1px; position: absolute; top: -19px; left: 49px; background-color: #B7C3D1; z-index: 1; height: 100%}
-.lm_row > .lm_item:nth-child(1) .container-fluid .bd-sidebar .list-group li[data-nodeid="9"]:has(.indent) span:nth-last-child(4)::after { content: ""; width: 1px; position: absolute; top: -19px; left: 77px; background-color: #B7C3D1; z-index: 1; height: 100%}
-.lm_row > .lm_item:nth-child(1) .container-fluid .bd-sidebar .list-group li[data-nodeid="10"]:has(.indent) span:nth-last-child(3)::after { content: ""; width: 1px; position: absolute; top: -19px; left: 77px; background-color: #B7C3D1; z-index: 1; height: 100%}
+/*.lm_row > .lm_item:nth-child(1) .container-fluid .bd-sidebar .list-group li[data-nodeid="9"]:has(.indent) span:nth-last-child(4)::after { content: ""; width: 1px; position: absolute; top: -19px; left: 77px; background-color: #B7C3D1; z-index: 1; height: 100%}*/
+/*.lm_row > .lm_item:nth-child(1) .container-fluid .bd-sidebar .list-group li[data-nodeid="10"]:has(.indent) span:nth-last-child(3)::after { content: ""; width: 1px; position: absolute; top: -19px; left: 77px; background-color: #B7C3D1; z-index: 1; height: 100%}*/
 
 
 
