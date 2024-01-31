@@ -85,6 +85,8 @@ public class RoomController {
         return rp;
     }
 
+
+
     @RequestMapping(value = {"/getRoomList"}, method = RequestMethod.GET)
     public @ResponseBody Integer getindexroomList(@RequestParam(value = "id", required = false) Integer id) {
         RoomEntity whereRoom = new RoomEntity();
@@ -112,6 +114,13 @@ public class RoomController {
 
         return mav;
     }
+    @RequestMapping(value = {"/getRoomProjectName"}, method = RequestMethod.POST)
+    public @ResponseBody List<RoomEntity> getRoomFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+        RoomEntity whereRoom = new RoomEntity();
+        whereRoom.setName(message.get("projectName").toString());
+        List<RoomEntity> qq = roomService.getRoomList(whereRoom);
+        return qq;
+    }
 
     @RequestMapping(value = {"/roomInsert"}, method = RequestMethod.POST)
     public @ResponseBody Map<String, Object> roomInsert(HttpServletRequest request, HttpServletResponse response, @RequestBody RoomEntity message) {
@@ -128,7 +137,23 @@ public class RoomController {
         // ReturnParam 작성
         ReturnParam rp = new ReturnParam();
         rp.setSuccess("");
-        rp.put("result", roomService.updateRoom(message));
+
+        //1. project id  룸 리스트에 있는지
+        RoomEntity whereRoom = new RoomEntity();
+        whereRoom.setProjectID(message.getProjectID());
+
+        List<RoomEntity> qq = roomService.getRoomList(whereRoom);
+        if(qq.size() > 0){
+
+            RoomEntity beforeRoom = qq.get(0);
+            beforeRoom.setProjectID(null);
+            beforeRoom.setProjectName(null);
+            roomService.updateRoom(beforeRoom);
+
+            rp.put("result", roomService.updateRoom(message));
+        }else{
+            rp.put("result", roomService.updateRoom(message));
+        }
 
         return rp;
     }

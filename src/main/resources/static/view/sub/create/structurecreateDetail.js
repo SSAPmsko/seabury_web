@@ -88,7 +88,6 @@ function pickerLoadData(type) {
 
 function InsertPost() {
 
-
     formData.name = $('#txt_name').val();
     formData.description = $('#txt_description').val();
     formData.type = $('#type_picker').val();
@@ -106,8 +105,12 @@ function InsertPost() {
         default:
             break;
     }
+
+
     formData.objectID = $('#name_picker').val();
     formData.parentID = $('#parent_picker').val();
+
+
     url = "/structureInsert";
 
     $.ajax({

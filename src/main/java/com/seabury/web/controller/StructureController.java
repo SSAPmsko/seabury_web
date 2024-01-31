@@ -78,6 +78,14 @@ public class StructureController {
         return qq;
     }
 
+    @RequestMapping(value = {"/getStructureIDParent"}, method = RequestMethod.POST)
+    public @ResponseBody List<StructureEntity> getStructureIDParentFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
+        StructureEntity whereStructure = new StructureEntity();
+        whereStructure.setName(message.get("name").toString());
+        List<StructureEntity> qq = structureService.getStructureList(whereStructure);
+        return qq;
+    }
+
     @RequestMapping(value = {"/getStructureParentID"}, method = RequestMethod.POST)
     public @ResponseBody List<StructureEntity> getStructureParentIDFilter(HttpServletRequest request, HttpServletResponse response, @RequestBody(required = true) Map<String, Object> message) {
         StructureEntity whereStructure = new StructureEntity();
