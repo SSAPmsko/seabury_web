@@ -89,6 +89,14 @@ function onLoadedScenario(){
             dg_pullscreenplanner(uniqueId);
         });
 
+        $("#btn_scenario_file_save" + uniqueId).on("click", function(e) {
+            scenarioFileSaveExecute(uniqueId);
+        });
+
+        $("#btn_scenario_file_delete" + uniqueId).on("click", function(e) {
+            scenarioFileDeleteExecute(uniqueId);
+        });
+
         // DataGrid Double Click Event
         $("#dg_scenario_fileList" + uniqueId).on("dblclick", "table", function(e) {
             dg_scenario_fileListModifyExecute(uniqueId);
@@ -100,7 +108,6 @@ function historyBack(){
     //window.history.back();
     location.href = rootName +"List";
 }
-
 
 function dg_scenarioSaveExecute(uniqueId){
     var url;
@@ -1108,21 +1115,18 @@ function replaceTabFormNewId(formName, srcId, distId) {
 
 function dg_scenario_fileListModifyExecute(uniqueId){
     if ($("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
-
-        var docUid = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData()[0].uid;
-        var dateitem = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").dataSource.getByUid(docUid);
-
-        var docName = dateitem.name;
+        var gridUid = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData()[0].uid;
+        var docItem = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").dataSource.getByUid(gridUid);
 
         $.ajax({
             url : "/documentDetailProperties",
-            data : {"id" : dateitem.objectId},
+            data : {"id" : docItem.objectId},
             method : "GET",
             type : "json",
             async : false,
             contentType : "application/json",
             success : function(result) {
-                addDockItem('documentDetail_' + docName, docName, 'document/documentDetail', result);
+                addDockItem('documentDetail_' + docItem.name, docItem.name, 'document/documentDetail', result);
             },
             error : function(result) {
                 alert("정상 처리에 실패 하였습니다.");
@@ -1132,4 +1136,55 @@ function dg_scenario_fileListModifyExecute(uniqueId){
         });
     }
 }
+
+function scenarioFileSaveExecute(uniqueId){
+    if ($("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
+
+        var gridUid = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData()[0].uid;
+        var docItem = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").dataSource.getByUid(gridUid);
+
+        $.ajax({
+            url : "/createDocument",
+            data : {"result" : docItem},
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
+    }
+}
+
+function scenarioFileDeleteExecute(uniqueId){
+    if ($("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData().length > 0){
+
+        var gridUid = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").getSelectedData()[0].uid;
+        var docItem = $("#dg_scenario_fileList" + uniqueId).data("kendoGrid").dataSource.getByUid(gridUid);
+
+        $.ajax({
+            url : "/createDocument",
+            data : {"id" : docItem.objectId},
+            method : "GET",
+            type : "json",
+            async : false,
+            contentType : "application/json",
+            success : function(result) {
+
+            },
+            error : function(result) {
+                alert("정상 처리에 실패 하였습니다.");
+            }
+        }).done(function(fragment){
+
+        });
+    }
+}
+
 

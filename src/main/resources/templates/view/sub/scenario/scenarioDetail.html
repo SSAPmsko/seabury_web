@@ -11,7 +11,7 @@
     <form id="scenarioPropertyForm"></form>
     <form id="scenarioTabForm"></form>
 
-    <section class="h-100" style="overflow:auto" layout:fragment="content">
+    <section class="h-100" style="overflow:auto; overflow-x: hidden" layout:fragment="content">
         <div class="row container-fluid m-0">
             <!-- Hidden Field-->
             <div class="visually-hidden">
@@ -38,10 +38,6 @@
                         <span class="k-button-icon k-icon k-i-delete"></span>
                         <span class="k-button-text">Delete</span>
                     </button>
-
-                    <!--<a href="#" class="btn btn-primary" onclick="historyBack();">Back</a>-->
-                    <!--<a href="#" class="btn btn-primary" onclick="dg_projectSaveExecute();">Save</a>-->
-                    <!--<a href="#" class="btn btn-danger mx-3" id="btn_delete" onclick="dg_projectDeleteExecute();">Delete</a>-->
                 </div>
             </div>
 
@@ -50,28 +46,6 @@
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link active" id="scenarioTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#scenarioContent" type="button" role="tab" aria-controls="scenarioContent" aria-selected="false">Scenario</a>
                     </li>
-                    <!--
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="workpackTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workpackContent" type="button" role="tab" aria-controls="workpackContent" aria-selected="false">Workpack</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="equipmentTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#equipmentContent" type="button" role="tab" aria-controls="equipmentContent" aria-selected="false">Equipment</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="workerTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workerContent" type="button" role="tab" aria-controls="workerContent" aria-selected="false">Worker</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="shieldTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#shieldContent" type="button" role="tab" aria-controls="shieldContent" aria-selected="false">Shield</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="sourceTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#sourceContent" type="button" role="tab" aria-controls="sourceContent" aria-selected="false">Source</a>
-                    </li>
-                    -->
-                    <!--
-                    <li class="nav-item" role="presentation">
-                        <a data-load="false" class="nav-link" id="workPlanTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#workPlanContent" type="button" role="tab" aria-controls="workPlanContent" aria-selected="false">Report</a>
-                    </li>
-                    -->
                     <li class="nav-item" role="presentation">
                         <a data-load="false" class="nav-link" id="reportTab" form="scenarioTabForm" data-bs-toggle="tab" data-bs-target="#reportContent" type="button" role="tab" aria-controls="reportContent" aria-selected="false">Report</a>
                     </li>
@@ -165,21 +139,6 @@
 
                                     <!-- File Upload -->
                                     <div class="col-sm-12">
-                                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0 pt-3">
-                                            <div></div>
-                                            <div class="btn-toolbar">
-                                                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="scenarioPropertyForm" style="height: 30px" id="btn_scenario_save2">
-                                                    <span class="k-button-icon k-icon k-i-add"></span>
-                                                    <span class="k-button-text">Add</span>
-                                                </button>
-
-                                                <button class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base ms-3" type="button" form="scenarioPropertyForm" style="height: 30px" id="btn_scenario_delete2">
-                                                    <span class="k-button-icon k-icon k-i-minus"></span>
-                                                    <span class="k-button-text">Delete</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
                                         <div class="" id="dg_scenario_fileList" form="scenarioPropertyForm">
 
                                         </div>
@@ -188,39 +147,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!--
-                    <div class="tab-pane fade" id="workpackContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workpackTab">
-
-                        <div id="dg_scenario_workpack" form="scenarioPropertyForm">
-
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="equipmentContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="equipmentTab">
-                        <div id="dg_scenario_equipment" form="scenarioPropertyForm">
-
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="workerContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="workerCTab">
-                        <div id="dg_scenario_worker" form="scenarioPropertyForm">
-
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="shieldContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="shieldTab">
-                        <div id="dg_scenario_shield" form="scenarioPropertyForm">
-
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="sourceContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="sourceTab">
-                        <div id="dg_scenario_source" form="scenarioPropertyForm">
-
-                        </div>
-                    </div>
-                    -->
 
                     <div class="tab-pane fade" id="reportContent" form="scenarioTabForm" role="tabpanel" aria-labelledby="reportTab">
                         <div class="row p-0">
@@ -458,14 +384,6 @@
                                     </div>
                                 </fieldset>
 
-                                <!--
-                                <fieldset>
-                                    <legend>
-                                        <span class="detailtitle">Dose map</span>
-                                    </legend>
-                                </fieldset>
-                                -->
-
                                 <fieldset>
                                     <legend><span class="subtitle">End Start</span>
                                     </legend>
@@ -490,14 +408,6 @@
 
                                     </div>
                                 </fieldset>
-
-                               <!--
-                               <fieldset>
-                                    <legend>
-                                        <span class="detailtitle">Dose map</span>
-                                    </legend>
-                                </fieldset>
-                                -->
                             </div>
                         </div>
                     </div>
